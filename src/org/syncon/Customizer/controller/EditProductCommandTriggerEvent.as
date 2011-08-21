@@ -1,0 +1,124 @@
+package org.syncon.Customizer.controller
+{
+	
+	import flash.events.Event;
+	
+	import flashx.undo.IOperation;
+	
+	public class EditProductCommandTriggerEvent extends Event implements IOperation
+	{
+		public static const ADD_TEXT_LAYER:String = 'ADD_TEXT_LAYER.w';
+		public static const TEXT_LAYER_ADDED:String = 'TEXT_LAYER_ADDED.w';		
+		
+		public static const ADD_IMAGE_LAYER:String = 'ADD_IMAGE_LAYER.w';
+		public static const IMAGE_LAYER_ADDED:String = 'IMAGE_LAYER_ADDED.w';				
+		
+		public static const CHANGE_FONT_SIZE:String = 'CHANGE_FONT_SIZE.w';
+		public static const FONT_SIZE_CHANGED:String = 'FONT_SIZE_CHANGED.w';			
+		
+		public static const CHANGE_FONT_FAMILY:String = 'FONT_FAMILY_CHANGED.w';
+		public static const FONT_FAMILY_CHANGED:String = 'FONT_FAMILY_CHANGED.w';			
+		
+		public static const CHANGE_COLOR:String = 'CHANGE_COLOR.w';
+		public static const COLOR_CHANGED:String = 'COLOR_CHANGED.w';			
+		
+		public static const LOAD_PRODUCT:String = 'LOAD_PRODUCT.w';	
+		
+		public static const MOVE_LAYER:String = 'MOVE_LAYER.w';
+		public static const LAYER_MOVED:String = 'LAYER_MOVED.w';				
+		
+		public static const RESIZE_LAYER:String = 'RESIZE_LAYER.w';
+		public static const LAYER_RESIZED:String = 'LAYER_RESIZED.w';			
+		
+		static public var fxAnimate : Function;  
+		
+		public var data : Object; 		
+		public var data2 : Object;
+		public var data3 : Object;
+		
+		public var undo:Boolean;
+		public var redo : Boolean;
+		
+		public var oldData:Object;
+		public var oldData2:Object;
+		public var oldData3:Object;
+			/**
+			 * first time so we don' destroy something on redo ... ? 
+			 * */
+		public var firstTime:Boolean=true;
+		
+		public function EditProductCommandTriggerEvent(type:String , data :  Object = null , data2 : Object = null , 
+													   data3 : Object = null ) 
+		{	
+			this.data = data
+			this.data2 = data2
+			this.data3 = data3
+			super(type, true);
+		}
+		
+		override public function clone() : Event
+		{
+			var e : EditProductCommandTriggerEvent = new EditProductCommandTriggerEvent(type, data, data2, data3);
+			e.oldData = this.oldData; 
+			e.oldData2 = this.oldData2; 
+			e.oldData3 = this.oldData3; 		
+			e.firstTime = this.firstTime; 
+			e.undo = this.undo 
+			e.redo = this.redo; 
+			return e
+		}
+		public function performUndo() : void
+		{
+			this.firstTime = false; 
+			this.undo = true
+			this.redo = false; 
+			fxAnimate( this )  
+		}
+		public function performRedo() : void
+		{
+			this.firstTime = false; 
+			this.undo = false
+			this.redo = true; 
+			fxAnimate( this )  
+		}			
+		
+		/**
+		 * Maps command b/c names are so long 
+		 * @param commandMap
+		 * 
+		 */
+		static public function mapCommands( commandMap : Object, commandClass : Class ) : void
+		{
+			
+			var types : Array = [
+				/*
+				ModifyCommandTriggerEvent.CHANGE_NAME,
+				ModifyCommandTriggerEvent.CHANGED_NAME,
+				
+				ModifyCommandTriggerEvent.ADD_LIST,
+				ModifyCommandTriggerEvent.ADDED_LIST,
+				*/
+				ADD_TEXT_LAYER,
+				//TEXT_LAYER_ADDED,		
+				ADD_IMAGE_LAYER,
+				//IMAGE_LAYER_ADDED,		
+				CHANGE_FONT_FAMILY,
+				CHANGE_FONT_SIZE,
+				CHANGE_COLOR,
+				
+				MOVE_LAYER,
+				RESIZE_LAYER,
+				
+				//LAYER_MOVED,
+				LOAD_PRODUCT
+				
+			]
+			for each ( var command : String in types ) 
+			{
+				commandMap.mapEvent(command, commandClass, EditProductCommandTriggerEvent, false );			
+			}
+			
+		}
+		
+	}
+}

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="100%" height="100%">
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		
+		<!--This component will need to know via json:
+			Engravable surfaces, arrray [true, true, true, true]
+			Eligible fonts and limits: map [font1:size limit,font2:size limit]
+			Product Images : map [font:zoom, back:zoom]
+			Any saved text already on the lighter - if the product is being edited - (we might handle this somewhere else)
+		-->
+		
+		<!--This component will send signals to controller/model for:
+			engraving text changed - whenever user deletes or adds text
+			Flip product image - whenever user needs to rotate main lighter image to show other side
+			New engraved surface - whenever user starts engraving a new surface, so we can update the right-most mini cart
+				remove engraved surface
+			
+			display notice - whenever user clicks question mark - let the main application handle displaying a message to the users
+		-->
+	</fx:Declarations>
+	<s:Rect radiusX="8" radiusY="8"
+			width="100%" height="100%" >
+		<s:fill >
+			<s:SolidColor color="0xffffff" />
+		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke color="0xe9e9e9"/>
+		</s:stroke>
+	</s:Rect>
+	
+	
+	<s:VGroup id="menu" width="100%" height="100%" gap="10"
+			  paddingBottom="12" paddingLeft="12" paddingRight="12" paddingTop="16">
+		
+		
+		
+		
+		
+		<s:HGroup width="100%" height="26">
+			<s:Label text="Front Top" styleName="arialSubHeading"/>
+			<s:Label text="|" styleName="arialSubHeading"/>
+			<s:Label text="Front Bottom" styleName="arialSubHeading"/>
+			<s:Label text="|" styleName="arialSubHeading"/>
+			<s:Label text="Back Top" styleName="arialSubHeading"/>
+			<s:Label text="|" styleName="arialSubHeading"/>
+			<s:Label text="Back Bottom" styleName="arialSubHeading" />	
+		</s:HGroup>
+
+		
+		<s:HGroup width="100%" height="60">
+			<s:VGroup width="194">
+				<s:HGroup width="50%">
+					<s:Label text="Choose A Font"
+							 styleName="subHeading"/>
+					<s:Label text="45 charectors max" styleName="Arial grayTxt"/>
+					
+				</s:HGroup>
+				<s:DropDownList id="fontSelect" width="100%" />			
+			</s:VGroup>
+	
+			
+			<s:VGroup width="50%">
+				<s:HGroup><s:CheckBox label="Right to Left" styleName="Arial grayTxt"/></s:HGroup>
+				<s:HGroup><s:CheckBox label="Monogram" styleName="Arial grayTxt"/></s:HGroup>
+				
+			</s:VGroup>
+		</s:HGroup>
+
+		
+		
+		
+		<s:VGroup width="100%">
+			<s:HGroup width="100%" horizontalAlign="left">
+				<s:Label text="ADD Text" 
+						 styleName="subHeading" textAlign="left"/>
+			</s:HGroup>
+
+		
+			<s:HGroup width="100%">
+				<s:TextInput text="Text" width="100%"/>
+				<s:Button label="ADD MY TEXT" 
+						  skinClass="org.virid.skins.simpleBlackBtn"
+						  height="20"/>
+					
+			</s:HGroup>			
+		</s:VGroup>
+
+		
+		
+		
+		
+	</s:VGroup>
+</s:Group>

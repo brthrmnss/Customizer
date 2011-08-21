@@ -1,0 +1,77 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+
+global
+{
+	font-family: "BEBAS___";
+	color:#151517;
+	typographicCase:uppercase;
+}
+
+@font-face
+{
+	fontFamily: "ARIALN";
+	src: url("images/ARIAL.TTF");
+	embedAsCFF: true;
+}
+@font-face
+{
+	fontFamily: "ARIALN";
+	src: url("images/ARIALBD.TTF");
+	embedAsCFF: true;
+	fontWeight:bold;
+}
+@font-face
+{
+	fontFamily: "BEBAS___";
+	src: url("images/BEBAS___.TTF");
+	embedAsCFF: true;
+}
+.redTxt{
+	color:#f60e1c;
+}
+.grayTxt{
+	color:#898989;
+}
+.whiteTxt{
+	color:#ffffff;	
+}
+.tight{
+	letterSpacing:0px;	
+}
+.subHeading{
+	fontSize:14px;	
+}
+.arialSubHeading{
+	fontSize:11px;
+	fontWeight:bold;
+	color:#898989;
+	fontFamily:"ARIALN";
+	fontAntiAliasType:advanced;
+	typographicCase:default;
+	letterSpacing:-1px;
+}
+.note
+{
+	fontFamily:"ARIALN";
+	color:#898989;
+	fontSize:11px;
+	typographicCase:default;
+}
+.price{
+	color:#f60e1c;
+}
+.bold{fontWeight:bold;}
+.Arial{
+	fontFamily:"ARIALN";
+	fontSize:12px;
+	typographicCase:default;
+	letterSpacing:-1px;
+	fontAntiAliasType:advanced;
+}
+
+s|Button{fontSize:12px;}
+.removeBtn{backgroundImage:url("");
+}

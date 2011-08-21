@@ -1,0 +1,71 @@
+package  org.syncon.Customizer.vo
+{
+	import org.syncon.onenote.onenotehelpers.base.IPageVO;
+	import mx.collections.ArrayCollection;
+
+	/**
+	 * 
+	 * Contains information to setup this product
+	 * */
+	public class StoreItemVO  implements  IPageVO
+	{
+		public var name :  String = '';
+		/**
+		 * Image to show in background 
+		 * */
+		public var base_image_url : String = ''; 
+		public var more_info_url : String = ''; 
+		 
+		public var limits : Object   = { }; 
+		
+		
+		private var _height : Number; 
+		public function set height ( h : Number ) : void
+		{
+			this._height = h; 
+		}
+		public function get  height () : Number 
+		{
+			return this._height  
+		}		
+		
+		private var _width : Number;
+		public function get width():Number
+		{
+			return _width;
+		}
+		
+		public function set width(value:Number):void
+		{
+			_width = value;
+		}
+		
+		private var _scrollX :  Number = 0; 
+		public function get scrollX():Number
+		{ return _scrollX; }
+		public function set scrollX(value:Number):void
+		{ _scrollX = value; }
+		
+		private var _scrollY :  Number = 0; 		
+		public function get scrollY():Number
+		{ return _scrollY; }
+		public function set scrollY(value:Number):void
+		{ _scrollY = value; }
+		
+		
+		
+		private var  _lists  :  ArrayCollection  = new ArrayCollection();
+		[Transient]
+		public function get lists():ArrayCollection
+		{
+			return _lists;
+		}
+		
+		public function set lists(value:ArrayCollection):void
+		{
+			_lists = value;
+		}
+		
+		
+	}
+}

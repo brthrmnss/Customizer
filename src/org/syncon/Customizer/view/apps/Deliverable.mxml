@@ -71,7 +71,7 @@
 	</fx:Declarations>
 	
 	<s:layout>
-		<s:VerticalLayout paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"/>
+		<s:VerticalLayout />
 		
 	</s:layout>	
 	

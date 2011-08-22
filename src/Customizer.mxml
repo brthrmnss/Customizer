@@ -3,7 +3,7 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:apps="org.syncon.Customizer.view.apps.*"
-			   height="380" width="920"
+			   height="350" width="890"
 			   initialize="application1_initializeHandler(event)">
 	<!--
 	width="1700" height="850"
@@ -76,7 +76,7 @@
 		<!--
 		<apps:FlexBaseTester/>
 		-->
-		<apps:Deliverable x="10" y="10"/>
+		<apps:Deliverable x="0" y="0"/>
 	
 	</s:Scroller>
 	<!--<apps:Customizer_MaskTest />-->

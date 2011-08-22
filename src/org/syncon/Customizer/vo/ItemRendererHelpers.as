@@ -1,13 +1,15 @@
 package org.syncon.Customizer.vo
 {
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	
+	import mx.core.UIComponent;
 	
 	import org.syncon2.utils.ArrayListMoveableHelper;
 	
 	import spark.components.Button;
-	import flash.events.MouseEvent;
- 
- 
+	
+	
 	public class ItemRendererHelpers
 	{
 		public var _this:Object; 
@@ -62,28 +64,31 @@ package org.syncon.Customizer.vo
 		public var arr : ArrayListMoveableHelper = new ArrayListMoveableHelper(); 
 		private var oldUp:Button;
 		private var oldDown:Button;
-		private var oldRemove:Button;		
-		public function fxSetup( up : Button, down  : Button, remove : Button ) : void
+		private var oldRemove:UIComponent;		
+		public function fxSetup( up : Button, down  : Button, remove :  UIComponent ) : void
 		{
 			if ( up != oldUp && oldUp != null ) 
 			{
 				oldUp.removeEventListener( MouseEvent.CLICK, this.onUp ) ;
 			}
-			up.addEventListener( MouseEvent.CLICK, this.onUp, false, 0, true ) ;
+			if ( up != null ) 
+				up.addEventListener( MouseEvent.CLICK, this.onUp, false, 0, true ) ;
 			this.oldUp = up
-				
+			
 			if ( down != oldDown && oldDown != null ) 
 			{
 				oldDown.removeEventListener( MouseEvent.CLICK, this.onUp ) ;
 			}
-			down.addEventListener( MouseEvent.CLICK, this.onDown, false, 0, true ) ; 
-			this.oldUp = down
-				
+			if ( down != null ) 
+				down.addEventListener( MouseEvent.CLICK, this.onDown, false, 0, true ) ; 
+			this.oldDown = down
+			
 			if ( remove != oldRemove && oldRemove != null )  
 			{
 				oldRemove.removeEventListener( MouseEvent.CLICK, this.onUp ) ;
 			}
-			remove.addEventListener( MouseEvent.CLICK, this.onRemove, false, 0, true ) ; 
+			if ( remove != null ) 
+				remove.addEventListener( MouseEvent.CLICK, this.onRemove, false, 0, true ) ; 
 			this.oldRemove = remove
 		}	
 		
@@ -101,9 +106,9 @@ package org.syncon.Customizer.vo
 			this.arr.trypToRemove( this._this.data ) ; 
 		}
 		
-		 
 		
-
+		
+		
 		
 	}
 }

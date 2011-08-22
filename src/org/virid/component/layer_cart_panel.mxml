@@ -1,37 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="100%" xmlns:smallComponents="org.virid.smallComponents.*">
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:smallComponents="org.virid.smallComponents.*"
+		 width="400" height="100%" creationComplete="onInit(event)">
 	<s:layout>
 		<s:VerticalLayout/>
 	</s:layout>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import org.syncon.Customizer.model.CustomEvent;
+			
+			import spark.events.IndexChangeEvent;
+			static public const  CHANGE_LIST : String = 'changeList'  ; 
+			
+			protected function list_changeHandler(event: IndexChangeEvent):void
+			{
+				this.dispatchEvent( new CustomEvent( CHANGE_LIST,  
+					this.list.dataProvider.getItemAt(event.newIndex)  ) )
+			}
+			
+			
+			protected function onInit(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+		]]>
+	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		
 		<!--This component will need to know via json:
-			Any prearranged layers
+		Any prearranged layers
 		-->
 		
 		<!--This compnent will recieve signals from controller 
-			to pop, state for undo / redo
-			flip/side or reset stage
-			new image/layer loaded - when library assets have been loaded
+		to pop, state for undo / redo
+		flip/side or reset stage
+		new image/layer loaded - when library assets have been loaded
 		-->
 		
 		<!--This component will send signals to controller/model for:
-			layer deleted or (rearranged? if easy)
-			
-			display notice - whenever user clicks question mark - let the main application handle displaying a message to the users
+		layer deleted or (rearranged? if easy)
+		
+		display notice - whenever user clicks question mark - let the main application handle displaying a message to the users
 		-->
 	</fx:Declarations>
-
 	
-	<s:VGroup id="menu" width="100%" >
+	
+	<s:VGroup id="menu" width="100%">
 		
 		
 		
-
-
+		
+		
 		<smallComponents:LayerListItemRenderer labelText="Layer 1"/>
 		<s:Line width="100%">
 			<s:stroke>
@@ -46,10 +73,18 @@
 		</s:Line>
 		
 		
+		<s:List id="list" width="100%" height="300" borderVisible="false"
+				change="list_changeHandler(event)" contentBackgroundAlpha="0"
+				itemRenderer="org.virid.smallComponents.LayerListItemRenderer_V2">
+			<s:layout>
+				<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>
+			</s:layout>
+			
+		</s:List>
 		
 		<s:Group width="100%">
 			<s:Label styleName="bold Arial" text="SubTotal"/>
-			<s:Label styleName="bold price" text="$32.00" right="0"/>
+			<s:Label right="0" styleName="bold price" text="$32.00"/>
 		</s:Group>
 		
 		

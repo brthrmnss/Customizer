@@ -6,10 +6,14 @@
 		 width="100%" height="63">
 	<fx:Script>
 		<![CDATA[
+			import org.syncon.Customizer.model.CustomEvent;
 			import mx.events.FlexEvent;
 			
 			import spark.skins.spark.ButtonSkin;
-			
+			public static var ADD_TEXT:String='ADD_TEXT';
+			public static var ADD_IMAGE:String='ADD_IMAGE';
+			public static var REDO:String='REDO';
+			public static var UNDO:String='UNDO';
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
 				// TODO Auto-generated method stub
@@ -19,6 +23,11 @@
 			protected function swithModes_clickHandler(event:MouseEvent):void
 			{
 				this.parentDocument.currentState = (this.parentDocument.currentState == "engrave" )?"normal" : "engrave";
+			}
+			
+			protected function onUndo(event:MouseEvent):void
+			{
+				this.dispatchEvent( new CustomEvent( UNDO ))
 			}
 			
 		]]>
@@ -39,9 +48,10 @@
 	
 	<s:HGroup gap="-4"
 			  paddingBottom="5" paddingLeft="0" paddingRight="5" paddingTop="5">
-		<s:Button label="undo" 
+		<s:Button label="undo"   id="btnUndo"
 				  icon="org/virid/assets/images/undo.jpg" iconPlacement="top"
 				  skinClass="org.virid.skins.MainMenuBtnSkin"
+				   click="onUndo(event)"
 				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
 		<s:Button label="Background" visible="false" includeInLayout="false"

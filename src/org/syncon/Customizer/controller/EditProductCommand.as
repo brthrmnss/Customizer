@@ -83,7 +83,8 @@ package org.syncon.Customizer.controller
 					{
 						var txtLayer : TextLayerVO = new TextLayerVO(); 
 						txtLayer.name = 'Text ' + (this.model.getLayersByType(TextLayerVO).length+1); ; 
-						txtLayer.text = 'Enter Text Here';
+						txtLayer.text =  event.data.toString() ; //'Enter Text Here';
+						//txtLayer.fontFamily =  event.data2.toString() ; //font ... what should default be? ...
 						this.model.addLayer( txtLayer ); 
 						event.oldData = txtLayer; 
 						//this.model.currentPage.name = newName 
@@ -276,7 +277,7 @@ package org.syncon.Customizer.controller
 						colorLayer.name = 'Color Base Image';
 						colorLayer.url = product.base_image_url; 
 						colorLayer.locked = true; 
-						colorLayer.showInList = true; 
+						colorLayer.showInList = false; 
 						this.model.addLayer( colorLayer ) ;
 						if ( event.firstTime ) 
 						{
@@ -287,6 +288,7 @@ package org.syncon.Customizer.controller
 						
 						
 					}
+					//this.model.undo.clearAll(); 
 					this.model.layersChanged(); 
 				}
 				else

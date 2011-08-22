@@ -294,7 +294,7 @@ package org.syncon.Customizer.view.ui
 					itemMovementCons.maxY = this.model.baseLayer.y +  this.model.baseLayer.height; 
 					itemMovementCons.minX =   this.model.baseLayer.x; ; 
 					itemMovementCons.minY =   this.model.baseLayer.y;  ; 
-					 constraints.push( itemMovementCons )
+					// constraints.push( itemMovementCons )
 				}
 				
 				

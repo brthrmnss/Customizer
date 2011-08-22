@@ -143,7 +143,7 @@
 	</s:Rect>
 	
 	<s:VGroup paddingBottom="32" paddingLeft="32" paddingRight="32" paddingTop="32" >
-		<s:Label text="Select" />
+		<s:Label text="Select Clipart" />
 		
 		<s:List id="list" width="420" height="300" borderVisible="false"
 				
@@ -161,8 +161,8 @@
 		</s:List>
 		
 		<s:HGroup width="100%" horizontalAlign="center" >
-			<s:Button label="Back" click="onBack()" />
-			<s:Button label="Upload" click="onUpload(event)" />
+		<!--	<s:Button label="Back" click="onBack()" />
+			<s:Button label="Upload" click="onUpload(event)" />-->
 			<s:Button label="Cancel"  click="onCancel()" />
 		</s:HGroup>
 	</s:VGroup>

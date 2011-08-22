@@ -1,4 +1,4 @@
-package   org.syncon.Customizer.view.ui
+package  org.virid.component
 {
 	import flash.events.MouseEvent;
 	
@@ -18,18 +18,14 @@ package   org.syncon.Customizer.view.ui
 				this.onBaseItemChanged);	
 			this.onBaseItemChanged( null ) 
 			
-			this.ui.addEventListener( DesignView.UPDATE_JSON, 
-				this.onUpdateJSON);	
-			
+			 
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.LAYERS_CHANGED, 
 				this.onLayersChanged);				
 			
 			this.model.viewer = this.ui.viewer22
 			this.ui.viewer22.groupBg.visible = false; 
-			
+			this.ui.viewer22.bgBorder.alpha = 0; // = false; 
 			this.ui.viewer22.scroller.addEventListener(MouseEvent.CLICK, this.onClickBg ) ; 
-			
-			this.ui.viewer22.groupBg3.visible = false
 		}
 		
 		protected function onClickBg(event:MouseEvent):void
@@ -53,12 +49,7 @@ package   org.syncon.Customizer.view.ui
 			this.ui.viewer22.controller.dataProvider  = this.model.baseItem; 
 			//this.ui.list.dataProvider = this.model.layers; 
 		}
-		
-		private function onUpdateJSON(e:  CustomEvent): void
-		{
-			var obj : Object = e.data
-			
-		}		
+ 
 		
 		
 		

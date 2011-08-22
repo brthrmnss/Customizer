@@ -2,7 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="270" height="340"
-		 creationComplete="group1_creationCompleteHandler(event)">
+		 creationComplete="group1_creationCompleteHandler(event)" xmlns:component="org.virid.component.*">
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
@@ -67,17 +67,17 @@
 		</s:stroke>
 	</s:Rect>
 	
+	<!-- transform stage-->
+	<component:DesignView  width="240" height="290"
+						   
+						    horizontalCenter="0" verticalCenter="0"/>
+	
 	<s:Group width="100%" height="100%">
 		
 		
 		<mx:Canvas verticalCenter="0" horizontalCenter="0">
-			<s:Image id="productImageArea" source="" />
+			<s:Image id="productImageArea" source=""  visible="false" />
 		</mx:Canvas>
-		
-		
-		
-		
-		
 		
 		
 		<s:Group height="16" horizontalCenter="0" >

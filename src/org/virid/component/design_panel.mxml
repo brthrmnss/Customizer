@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"  creationComplete="onInit(event)"
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%" 
 		 xmlns:smallComponents="org.virid.smallComponents.*">
+	<fx:Script>
+		<![CDATA[
+			import org.syncon.Customizer.model.CustomEvent;
+			import mx.events.FlexEvent;
+			
+			public static const CHANGE_FONT_FAMILY:String='CHANGE_FONT_FAMILY';
+			public static const CHANGE_COLOR:String='CHANGE_COLOR';
+			public static const ADD_UPLOAD_IMAGE:String='ADD_UPLOAD_IMAGE';
+			public static const ADD_IMAGE:String='ADD_IMAGE';
+			
+			protected function onInit(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+			}
+			
+			protected function openClipart_clickHandler(event:MouseEvent):void
+			{
+				this.dispatchEvent( new CustomEvent( ADD_IMAGE) ) ;
+			}
+			
+			protected function openImageUpload_clickHandler(event:MouseEvent):void
+			{
+				this.dispatchEvent( new CustomEvent( ADD_UPLOAD_IMAGE) ) ;
+			}
+			
+		]]>
+	</fx:Script>
 	<fx:Declarations>
+		
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		
 		<!--This component will need to know via json:
@@ -119,6 +147,7 @@
 			
 			<s:Image id="openImageUpload" verticalCenter="0" 
 					 right="0" width="55" height="30"
+					 click="openImageUpload_clickHandler(event)"
 					 buttonMode="true" useHandCursor="true" mouseChildren="false"
 					 source="org/virid/assets/images/none.jpg"/>
 			
@@ -146,7 +175,7 @@
 			</s:VGroup>
 			
 			<s:Image id="openClipart" 
-					  right="0" width="55" height="30"
+					  right="0" width="55" height="30" click="openClipart_clickHandler(event)"
 					  buttonMode="true" useHandCursor="true" mouseChildren="false"
 					  source="org/virid/assets/images/none.jpg" verticalCenter="0"/>
 			

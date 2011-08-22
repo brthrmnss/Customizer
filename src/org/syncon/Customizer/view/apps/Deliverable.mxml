@@ -2,13 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:view="org.syncon.Customizer.view.*"
-		 xmlns:NightStand="org.syncon.NightStand.*"
-		 xmlns:FilterTester="org.syncon.TalkingClock.view.FilterTester.*"
-		 xmlns:subview="org.syncon.Customizer.view.subview.*"
-		 xmlns:lite="views.lite.*"
-		 xmlns:mobile="org.syncon.TalkingClock.view.mobile.*"
 		 xmlns:Customizer="org.syncon.Customizer.*"
-		 xmlns:edit="org.syncon.TalkingClock.view.edit.*"
 		 xmlns:view1="org.syncon2.utils.mobile.view.*"
 		 xmlns:ui="org.syncon.Customizer.view.ui.*"
 		 xmlns:component="org.virid.component.*"
@@ -19,6 +13,9 @@
 			
 			import org.syncon.Customizer.ContextNightStand_PopupContext;
 			import org.syncon.Customizer.ContextNightStand_ViewsSubContext;
+			import org.syncon.Customizer.Virid_ViewsSubContext;
+			import org.syncon.Customizer.vo.LayerBaseVO;
+			import org.syncon.Customizer.vo.TextLayerVO;
 			protected function onInit(event:FlexEvent):void
 			{
 				var xx : ContextNightStand_ViewsSubContext = new ContextNightStand_ViewsSubContext()
@@ -27,8 +24,46 @@
 				var xxx : ContextNightStand_PopupContext = new ContextNightStand_PopupContext()
 				this.context.addSubContext( xxx ) ;
 				
+				var xxxx : Virid_ViewsSubContext = new Virid_ViewsSubContext()
+				this.context.addSubContext( xxxx ) ;
+				
+				
+				
 			}
 			
+			
+			
+			
+			private var _layer : LayerBaseVO = new LayerBaseVO() ;
+			public function get layer() : LayerBaseVO  { return this._layer;  }
+			public function set layer (str : LayerBaseVO ) : void
+			{
+  				this._layer = str; 
+				/* 
+				this.size.layer = this.layer; 
+				if ( this.layer is ImageLayerVO ) 
+				{
+					this.currentState  = 'Image'; 
+					image.layer =layer  as ImageLayerVO
+				}				
+				if ( layer is TextLayerVO ) 
+				{
+					this.currentState = 'Text'; 
+					text.layer = layer as TextLayerVO
+				}
+				if ( layer is ColorLayerVO ) 
+				{
+					this.currentState = 'Color'; 
+					colorR.layer = layer as ColorLayerVO
+				}	  		
+				 */
+				if ( layer is TextLayerVO ) 
+				{
+					this.currentState = 'Text'; 
+					text.layer = layer as TextLayerVO
+				}
+				return; 
+			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -42,7 +77,8 @@
 	
 	<s:states>
 		<s:State name="normal"/>
-		<s:State id="design" name="engrave"/>
+		<s:State  name="engrave"/>
+		<s:State name="Text"/>
 	</s:states>
 	<s:Group width="884" height="350">
 		
@@ -52,9 +88,12 @@
 					
 					<component:MainMenuBar height="67"/>
 					<s:Spacer height="-1"/>
-					<component:engrave_panel includeIn="engrave" width="350" height="260"/>
+					<!--<component:engrave_panel includeIn="engrave" width="350" height="260"/>-->
+					<component:text_panel  includeIn="engrave" width="350" height="260"/>
 					<component:design_panel includeIn="normal" width="350" height="260"/>
-					
+					 <component:LayerTextInspector id="text"  includeIn="Text" width="350" height="260"/> 
+					<!--<component:design_panel includeIn="normal" width="350" height="260"/>
+					-->
 				</s:VGroup>	
 				
 				<s:Spacer width="20"/>

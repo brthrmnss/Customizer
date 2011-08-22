@@ -40,7 +40,7 @@
 	 -->
  
 	<!--<impl:viewer2  y="50" id="viewer22" height="500" width="500" /> -->
-	<impl:viewer2_store   id="viewer22" height="500" width="500" /> 
+	<impl:viewer2_store   id="viewer22" height="250" width="250" /> 
 	
 	<!-- <ui:DesignViewList id="list" />-->
 </s:Group>

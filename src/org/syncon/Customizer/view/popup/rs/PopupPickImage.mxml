@@ -145,7 +145,7 @@
 	<s:VGroup paddingBottom="32" paddingLeft="32" paddingRight="32" paddingTop="32" >
 		<s:Label text="Select Clipart" />
 		
-		<s:List id="list" width="420" height="300" borderVisible="false"
+		<s:List id="list" width="420" height="200" borderVisible="false"
 				
 				change="list_changeHandler(event)" contentBackgroundAlpha="0"
 				itemRenderer="org.syncon.Customizer.view.popup.rs.PickImageRenderer">

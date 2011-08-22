@@ -54,21 +54,23 @@
 				   click="onUndo(event)"
 				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
-		<s:Button label="Background" visible="false" includeInLayout="false"
+		<s:Button label="Background" visible="true" includeInLayout="true"
 				  icon="org/virid/assets/images/background.jpg" iconPlacement="top"
 				  skinClass="org.virid.skins.MainMenuBtnSkin"
+				  click="swithModes_clickHandler(event)"
 				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
-		<s:Button label="Choose a Location" visible="true"
+		<s:Button label="Choose a Location" visible="false" includeInLayout="false"
 				  icon="org/virid/assets/images/location.jpg" iconPlacement="top"
 				  skinClass="org.virid.skins.MainMenuBtnSkin"
 				  click="swithModes_clickHandler(event)"
 				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
 		
-		<s:Button label="Text" visible="false" includeInLayout="false"
+		<s:Button label="Text" visible="true" includeInLayout="true"
 				  icon="org/virid/assets/images/engrave.jpg" iconPlacement="top"
 				  skinClass="org.virid.skins.MainMenuBtnSkin"
+				  click="swithModes_clickHandler(event)"
 				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
 		<s:Button label="Preview" 

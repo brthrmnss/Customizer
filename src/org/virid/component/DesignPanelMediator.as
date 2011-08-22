@@ -33,7 +33,7 @@ package  org.virid.component
 			var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP, 
 				'PopupPickImage', [this.onPickedImage], 'done' ) 		
 			this.dispatch( event_ ) */
-			var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP, 
+			var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP,
 				'PopupUploadImage', [null], 'done' ) 		
 			this.dispatch( event_ ) 
 		}

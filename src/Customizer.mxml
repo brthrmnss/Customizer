@@ -3,7 +3,7 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:apps="org.syncon.Customizer.view.apps.*"
-			   height="750" width="1200"
+			   height="380" width="920"
 			   initialize="application1_initializeHandler(event)">
 	<!--
 	width="1700" height="850"

@@ -1,7 +1,6 @@
 package org.syncon.Customizer
 {
-	import org.syncon.TalkingClock.view.edit.*;
-	import org.syncon.TalkingClock.view.mobile.*;
+
 	import org.syncon.Customizer.view.subview.*;
 	import org.syncon.Customizer.view.ui.*;
 	import org.syncon.onenote.onenotehelpers.impl.layer_item_renderer;

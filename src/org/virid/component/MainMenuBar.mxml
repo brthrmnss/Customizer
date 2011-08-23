@@ -3,7 +3,7 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark"  
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 creationComplete="group1_creationCompleteHandler(event)"
-		 width="100%" height="63">
+		 width="100%" height="63" xmlns:smallComponents="org.virid.smallComponents.*">
 	<fx:Script>
 		<![CDATA[
 			import org.syncon.Customizer.model.CustomEvent;
@@ -14,6 +14,7 @@
 			public static var ADD_IMAGE:String='ADD_IMAGE';
 			public static var REDO:String='REDO';
 			public static var UNDO:String='UNDO';
+			public static var EXPORTJSON:String='EXPORTJSON';
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
 				// TODO Auto-generated method stub
@@ -28,6 +29,12 @@
 			protected function onUndo(event:MouseEvent):void
 			{
 				this.dispatchEvent( new CustomEvent( UNDO ))
+			}
+			
+			protected function onSave(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				this.dispatchEvent( new Event(EXPORTJSON) );
 			}
 			
 		]]>
@@ -48,40 +55,32 @@
 	
 	<s:HGroup gap="-4"
 			  paddingBottom="5" paddingLeft="0" paddingRight="5" paddingTop="5">
-		<s:Button label="undo"   id="btnUndo"
-				  icon="org/virid/assets/images/undo.jpg" iconPlacement="top"
-				  skinClass="org.virid.skins.MainMenuBtnSkin"
-				   click="onUndo(event)"
-				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
-		<s:Button label="Background" visible="true" includeInLayout="true"
-				  icon="org/virid/assets/images/background.jpg" iconPlacement="top"
-				  skinClass="org.virid.skins.MainMenuBtnSkin"
-				  click="swithModes_clickHandler(event)"
-				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+		<smallComponents:MainMenuButton label="undo"   id="btnUndo" 
+										icon="org/virid/assets/images/undo.jpg" 
+										click="onUndo(event)"
+										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+		<smallComponents:MainMenuButton label="Background" visible="true" includeInLayout="true" 
+										icon="org/virid/assets/images/background.jpg"
+										click="swithModes_clickHandler(event)"
+										buttonMode="true" useHandCursor="true" mouseChildren="false"/>		
+		<smallComponents:MainMenuButton icon="org/virid/assets/images/location.jpg" visible="false" includeInLayout="false"
+										label="Choose a Location"
+										click="swithModes_clickHandler(event)"
+										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
-		<s:Button label="Choose a Location" visible="false" includeInLayout="false"
-				  icon="org/virid/assets/images/location.jpg" iconPlacement="top"
-				  skinClass="org.virid.skins.MainMenuBtnSkin"
-				  click="swithModes_clickHandler(event)"
-				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		
-		
-		<s:Button label="Text" visible="true" includeInLayout="true"
-				  icon="org/virid/assets/images/engrave.jpg" iconPlacement="top"
-				  skinClass="org.virid.skins.MainMenuBtnSkin"
-				  click="swithModes_clickHandler(event)"
-				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		
-		<s:Button label="Preview" 
-				  icon="org/virid/assets/images/preview.jpg" iconPlacement="top"
-				  skinClass="org.virid.skins.MainMenuBtnSkin"
-				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		
-		<s:Button label="Save It" 
-				  icon="org/virid/assets/images/star.jpg" iconPlacement="top"
-				  skinClass="org.virid.skins.MainMenuBtnSkin"
-				  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+		<smallComponents:MainMenuButton icon="org/virid/assets/images/engrave.jpg"
+										label="Text"
+										click="swithModes_clickHandler(event)"
+										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+		<smallComponents:MainMenuButton icon="org/virid/assets/images/preview.jpg"
+										label="Preview" 
+										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+		<smallComponents:MainMenuButton icon="org/virid/assets/images/star.jpg" 
+										label="Save It" 
+										click="onSave(event)"
+										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+
 	</s:HGroup>
 	
 </s:Group>

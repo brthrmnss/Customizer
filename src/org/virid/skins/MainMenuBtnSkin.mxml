@@ -197,7 +197,7 @@ in accordance with the terms of the license agreement accompanying it.
 	<s:Label id="labelDisplay"
 			 textAlign="center" styleName="grayTxt"
 			 maxDisplayedLines="1"
-			 horizontalCenter="0" verticalCenter="1" verticalAlign="bottom"
+			 horizontalCenter="0"   verticalAlign="bottom"
 			 left="10" right="10" top="2" bottom="2">
 	</s:Label>
 	

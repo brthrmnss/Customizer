@@ -8,6 +8,7 @@ package  org.virid.component
 	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
+	import org.syncon.Customizer.controller.ExportJSONCommandTriggerEvent;
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
@@ -26,10 +27,19 @@ package  org.virid.component
 			this.ui.addEventListener( MainMenuBar.ADD_IMAGE,  this.onAddImage);	
 			this.ui.addEventListener( MainMenuBar.UNDO,  this.onUndo);	
 			this.ui.addEventListener( MainMenuBar.REDO,  this.onRedo);	
+			this.ui.addEventListener( MainMenuBar.EXPORTJSON, this.onJSONEXPORT);
 			
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.UNDOS_CHANGED, 
 				this.checkUndoButtons);	
 			this.checkUndoButtons(); 
+		}
+		
+		protected function onJSONEXPORT(event:Event):void
+		{
+			// TODO Auto-generated method stub
+			var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(ExportJSONCommandTriggerEvent.EXPORT_JSON, '');
+			this.dispatch(trgevent);
+			
 		}
 		
 		protected function onRedo(event:Event):void

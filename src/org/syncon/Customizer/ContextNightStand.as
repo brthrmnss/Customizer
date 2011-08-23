@@ -27,6 +27,9 @@ package org.syncon.Customizer
 			InitMainContextCommandTriggerEvent.mapCommands( this.commandMap, InitMainContextCommand ); 
 			
 			this.commandMap.mapEvent( CreateDefaultDataTriggerEvent.CREATE, CreateDefaultDataCommand );
+
+			this.commandMap.mapEvent( ExportJSONCommandTriggerEvent.EXPORT_JSON, ExportJSONCommand );
+
 			
 			EditProductCommandTriggerEvent.mapCommands( this.commandMap, EditProductCommand ) ; 
 			EditProductCommandTriggerEvent.fxAnimate = this.dispatchEvent; 

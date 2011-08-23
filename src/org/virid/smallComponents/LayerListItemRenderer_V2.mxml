@@ -22,9 +22,9 @@
 				super.data = value; 
 				this.help.listenForObj(value,LayerBaseVO.UPDATED, this.updateItemRenderer )
 				layer = value as LayerBaseVO
-				this.help.disableIfNull( value, new LayerBaseVO, 'filter' )  
+				this.help.disableIfNull( value, new LayerBaseVO, 'layer' )  
 				this.help.setupParent( this.owner ) ;
-				this.help.fxSetup( null, null, this.btnDelete  ) ; 
+				//this.help.fxSetup( null, null, this.btnDelete  ) ; 
 				this.updateItemRenderer()
 			} 
 			

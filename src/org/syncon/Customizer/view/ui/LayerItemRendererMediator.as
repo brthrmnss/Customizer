@@ -191,9 +191,12 @@ package org.syncon.Customizer.view.ui
 				return;
 				if ( this.ui.image.resizedOnce == false ) 
 				return; */
+				/*
+				//8-23-11: had to take this out b/c of cache ...
 				//for some reason iange resize is distapched isntantly ... wait till it is proper first ... 
 				if ( this.ui.image.img.bitmapData == null && this.ui.image.img.source != '' ) 
-					return; 
+					return;
+				*/
 				//this.ui.image.img.sourceHeight
 			}			
 			if ( this.layer.vertStartAlignment == 'center' ) 

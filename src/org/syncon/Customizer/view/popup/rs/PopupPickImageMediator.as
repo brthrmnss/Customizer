@@ -39,6 +39,7 @@ package  	org.syncon.Customizer.view.popup.rs
 		private function onSelect(e:CustomEvent):void
 		{
 			this.ui.list.selectedIndex = -1
+				this.ui.list.selectedItem = null; 
 			var img : ImageVO = e.data as ImageVO; 
 			//	img.name = 'foo'; 
 			this.ui.hide()

@@ -32,12 +32,18 @@
 			public function set data ( value :   Object ) : void
 			{
 				this.img.source = null; 
-				
+
 				layer = value as ImageLayerVO
 				if ( this.parentDocument == null ) 
 					return; 
-				this.parentDocument.resetting= false; 
+				this.parentDocument.resetting= true; 
+				this.img.height = NaN ; 
+				this.img.width = NaN; 
+				//this.parentDocument.height = NaN ; 
+				//this.parentDocument.width = NaN; 
+				
 
+				
 				
 				if ( layer == null ) 
 				{
@@ -54,8 +60,12 @@
 					return; 
 				if ( this.layer == null ) 
 					return; 
-				
-				this.resizedOnce = true; 
+				if ( this.parentDocument == null ) 
+					return; 
+				if ( isNaN(this.img.height ) ) 
+					return;
+				if ( this.img.height == 0 ) 
+					return;
 				this.height = this.img.height; 
 				this.width = this.img.width; 
 				
@@ -64,10 +74,24 @@
 				this.layer.nonChromeWidth = this.width; 
 				this.layer.nonChromeHeight = this.height; 
 				this.layer.update(); 
+				
+				
+				 
+				if ( this.parentDocument.resetting== true ) 
+				{
+					this.parentDocument.resetting=  false;
+					this.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
+					
+				}
+				
+				
 				//this.parentDocument.parentDocument.height = this.img.height; 
 				//this.parentDocument.parentDocument.width = this.img.width; 
 				//this.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
 				//this.parentDocument.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
+				/* if ( this.resizedOnce == true && ! isNaN( this.img.height ) )//wasn't invalidatte 
+					this.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ;
+				this.resizedOnce = true;  */
 			}
 			
 			protected function onComplete(event:Event):void

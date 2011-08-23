@@ -165,7 +165,7 @@
 						return
 					}
 					image.data = a ; 
-					this._resetting = false;
+					//this._resetting = false;
 					/* this._resetting = true;
 					this.img.source = null; 
 					this._resetting = false;
@@ -182,7 +182,7 @@
 						return
 					}
 					colorR.data = a ; 
-					this._resetting = false;
+					//this._resetting = false;
 					/* this._resetting = true;
 					this.img.source = null; 
 					this._resetting = false;

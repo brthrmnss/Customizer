@@ -14,7 +14,7 @@ package org.syncon.Customizer.controller
 		[Inject] public var model:NightStandModel;
 		[Inject] public var event:EditProductCommandTriggerEvent
 		
-		private var debugUndos : Boolean = false; 
+		private var debugUndos : Boolean = true; 
 		
 		override public function execute():void
 		{
@@ -373,8 +373,8 @@ package org.syncon.Customizer.controller
 						/*txtLayer.x = 0; 
 						txtLayer.y = 100; */
 					}		
-					if ( layer.x == event.data && layer.y == event.data2 ) 
-						return; 
+				/*	if ( layer.x == event.data && layer.y == event.data2 ) 
+						return; */
 					event.oldData = layer.x; 
 					event.oldData2 = layer.y; 
 					this.model.blockUndos=true
@@ -440,13 +440,13 @@ package org.syncon.Customizer.controller
 					if ( event.type == EditProductCommandTriggerEvent.MOVE_LAYER
 						&& event.data3 == lastUndo.data3)
 					{
-						if ( debugUndos ) trace('merging'); 
+						if ( debugUndos ) trace('merging', event, event.type); 
 						this.model.lastUndo.data = event.data; 
 						this.model.lastUndo.data2 = event.data2
 						return; 
 					}
 				}
-				if ( debugUndos ) trace('merging');  trace('addeded one')
+				if ( debugUndos )   trace('addeded one', event.type)
 				this.model.lastUndo = event; 
 				this.model.undo.pushUndo( event ) ;
 				this.dispatch( new NightStandModelEvent(NightStandModelEvent.UNDOS_CHANGED) ) 

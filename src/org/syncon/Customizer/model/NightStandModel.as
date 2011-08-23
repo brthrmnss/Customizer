@@ -265,6 +265,10 @@ package org.syncon.Customizer.model
 		 * Store the last added undo item so we can compare it later
 		 * */
 		public var lastUndo: EditProductCommandTriggerEvent;
+		/**
+		 * Will run action, not block undo 
+		 * */
+		public var blockUndoAdding:Boolean=false
 		private var _blockUndos:Boolean;
 
 		/**
@@ -322,6 +326,23 @@ package org.syncon.Customizer.model
 			this.recreateDisplayableLayers()
 			this.layersChanged();
 		}
+/*		public function removeLayer(layer : LayerBaseVO ) : void
+		{
+			var i : int = this.layers.getItemIndex( layer ) ; 
+			if ( i == -1 ) 
+				return; 
+			this.layers.removeItemAt( i ) ; 
+			this.recreateDisplayableLayers()
+			this.layersChanged();
+		}
+		*/
+		public function removeLayer( layer : LayerBaseVO ) : void
+		{
+			var index : int = this.layers.getItemIndex( layer ) ;
+			this.layers.removeItemAt( index ) ; 
+			this.recreateDisplayableLayers()
+			this.layersChanged();
+		}
 		
 		private function recreateDisplayableLayers():void
 		{
@@ -337,14 +358,7 @@ package org.syncon.Customizer.model
 			
 			this.addAllTo( this.layersVisible, newLayersVisible )
 		}
-		
-		public function removeLayer( layer : LayerBaseVO ) : void
-		{
-			var index : int = this.layers.getItemIndex( layer ) ;
-			this.layers.removeItemAt( index ) ; 
-			this.recreateDisplayableLayers()
-			this.layersChanged();
-		}
+
 		
 		public function collect() : void
 		{

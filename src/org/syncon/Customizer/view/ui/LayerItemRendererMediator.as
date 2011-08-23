@@ -337,6 +337,15 @@ package org.syncon.Customizer.view.ui
 		protected function onLayerRemoved(event:Event):void
 		{
 			this.model.objectHandles.unregisterComponent( this.ui ) ; 
+			this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
+			if ( this.layer != null ) 
+			{
+				this.layer.removeEventListener(LayerBaseVO.LAYER_REMOVED, this.onLayerRemoved ) 
+				this.layer.removeEventListener(LayerBaseVO.LAYER_REDD, this.onLayerReAdd ) 
+			}
+			this.ui.layer.loadedIntoLister = null;//key it will recreate from scratch
+			this.ui.layer = null; 
+			this.ui.data = null; 
 		}
 		/**
 		 * dispathec when layer is added back to the screen ...

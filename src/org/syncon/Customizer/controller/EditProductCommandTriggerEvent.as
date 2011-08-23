@@ -13,6 +13,9 @@ package org.syncon.Customizer.controller
 		public static const ADD_IMAGE_LAYER:String = 'ADD_IMAGE_LAYER.w';
 		public static const IMAGE_LAYER_ADDED:String = 'IMAGE_LAYER_ADDED.w';				
 		
+		public static const REMOVE_LAYER:String = 'REMOVE_LAYER.w';
+		public static const LAYER_REMOVED:String = 'LAYER_REMOVED.w';					
+		
 		public static const CHANGE_FONT_SIZE:String = 'CHANGE_FONT_SIZE.w';
 		public static const FONT_SIZE_CHANGED:String = 'FONT_SIZE_CHANGED.w';			
 		
@@ -112,6 +115,7 @@ package org.syncon.Customizer.controller
 				
 				MOVE_LAYER,
 				RESIZE_LAYER,
+				REMOVE_LAYER,
 				
 				//LAYER_MOVED,
 				LOAD_PRODUCT

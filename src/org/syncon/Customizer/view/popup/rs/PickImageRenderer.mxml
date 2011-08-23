@@ -124,7 +124,9 @@
 								  color.selected="0xF50D1B"/>
 				</s:fill>
 			</s:Rect> 
-			<s:Image    id="img" horizontalCenter="0" verticalCenter="0" height="50" width="75" >
+			<s:Image    id="img" horizontalCenter="0" verticalCenter="0" 
+						 useHandCursor="true" buttonMode="true"
+						height="50" width="75" >
 				
 			</s:Image>
 			<s:filters>

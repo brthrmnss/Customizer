@@ -1,10 +1,12 @@
 package org.virid.component
 {
+	import flash.events.Event;
+	
 	import org.robotlegs.mvcs.Mediator;
+	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
-	import org.syncon.Customizer.view.ui.LayersList;
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	
 	public class LayerCartPanelMediator extends Mediator 
@@ -20,7 +22,16 @@ package org.virid.component
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.CURRENT_LAYER_CHANGED, 
 				this.onLayerChanged);	
 			this.onLayerChanged( null ) 
-			this.ui.addEventListener( LayersList.CHANGE_LIST, this.onSelectLayer ) 
+			this.ui.addEventListener( layer_cart_panel.CHANGE_LIST, this.onSelectLayer ) 
+			this.ui.addEventListener( layer_cart_panel.REMOVE_LAYER, this.onRemoveLayer ) 
+			
+		}
+		
+		protected function onRemoveLayer(event:CustomEvent):void
+		{
+			var layer :  LayerBaseVO = event.data as LayerBaseVO
+			this.dispatch( new EditProductCommandTriggerEvent (
+				EditProductCommandTriggerEvent.REMOVE_LAYER, layer) ) ; 
 		}
 		
 		private function onLayersChanged(e:NightStandModelEvent):void

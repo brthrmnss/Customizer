@@ -27,7 +27,10 @@ package  org.virid.component
 			
 			this.ui.addEventListener( design_panel.CHANGE_COLOR,  this.onChangeColor);			
 			
-			this.onChangeColor(null, this.ui.getSelectedColor ) ; 
+			//set default color if defined ... do not make na undo fo rthis ....
+			this.model.blockUndoAdding = true; 
+			this.onChangeColor(null, this.ui.getSelectedColor ) ;
+			this.model.blockUndoAdding = false; 
 		}
 		
 		//use Object b/c uint does not like null...

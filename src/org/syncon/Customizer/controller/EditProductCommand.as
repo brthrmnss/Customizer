@@ -235,14 +235,14 @@ package org.syncon.Customizer.controller
 			
 			//how to map this? ... use a string for layer association
 			if ( event.type == EditProductCommandTriggerEvent.CHANGE_LAYER_COLOR 
-				  )  
+			)  
 			{
 				if ( event.undo == false )
 				{
 					//if ( event.data2 != null ) 
 					//this.model.getColorLayer(event.data2 )
 					colorLayer = this.model.layerColor; //this.model.currentLayer as ColorLayerVO; 
-			 	
+					
 					event.oldData = colorLayer.color; 
 					colorLayer.color = ( event.data ); 
 					colorLayer.update('color'); 
@@ -286,7 +286,7 @@ package org.syncon.Customizer.controller
 						}
 						//this.model.currentLayer = imgLayer; 
 						this.model.baseLayer = imgLayer; 
-						 
+						
 						
 						var colorLayer : ColorLayerVO = new ColorLayerVO(); 
 						colorLayer.name = 'Color Base Image';
@@ -373,8 +373,8 @@ package org.syncon.Customizer.controller
 						/*txtLayer.x = 0; 
 						txtLayer.y = 100; */
 					}		
-				/*	if ( layer.x == event.data && layer.y == event.data2 ) 
-						return; */
+					/*	if ( layer.x == event.data && layer.y == event.data2 ) 
+					return; */
 					event.oldData = layer.x; 
 					event.oldData2 = layer.y; 
 					this.model.blockUndos=true
@@ -432,17 +432,41 @@ package org.syncon.Customizer.controller
 				this.dispatch( new EditProductCommandTriggerEvent(
 					EditProductCommandTriggerEvent.LAYER_RESIZED, event, null ) ) 
 			}	
-			if ( event.firstTime && undoable) 
+			
+			
+			if ( event.type == EditProductCommandTriggerEvent.REMOVE_LAYER ) 
+			{
+				if ( event.undo == false )
+				{
+					layer = event.data as LayerBaseVO; 
+					this.model.removeLayer( layer ) ; 
+					layer.layerRemoved()
+				}
+				else
+				{
+					layer = event.data as LayerBaseVO; 
+					this.model.addLayer( layer ) ; 
+					this.model.currentLayer = layer; 
+					//layer.update(); 
+				}		
+				//this.model.currentPage.updated();
+				this.model.layersChanged(); 
+				this.dispatch( new EditProductCommandTriggerEvent(
+					EditProductCommandTriggerEvent.LAYER_REMOVED, event, null ) ) 
+			}	
+			
+			if ( event.firstTime && undoable && this.model.blockUndoAdding == false) 
 			{
 				var lastUndo : EditProductCommandTriggerEvent = this.model.lastUndo
 				if ( lastUndo != null && lastUndo.type == event.type ) 
 				{
 					if ( event.type == EditProductCommandTriggerEvent.MOVE_LAYER
-						&& event.data3 == lastUndo.data3)
+						&& event.data3 == lastUndo.data3) //check for time
 					{
 						if ( debugUndos ) trace('merging', event, event.type); 
 						this.model.lastUndo.data = event.data; 
 						this.model.lastUndo.data2 = event.data2
+						//this.model.lastUndo.time = new Date()
 						return; 
 					}
 				}

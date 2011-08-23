@@ -6,9 +6,12 @@
 		 initialize="group1_initializeHandler(event)">
 	<fx:Script>
 		<![CDATA[
-			import org.syncon.Customizer.vo.LayerBaseVO;
-			import org.syncon.Customizer.vo.ItemRendererHelpers;
 			import mx.events.FlexEvent;
+			
+			import org.syncon.Customizer.model.CustomEvent;
+			import org.syncon.Customizer.vo.ItemRendererHelpers;
+			import org.syncon.Customizer.vo.LayerBaseVO;
+			import org.virid.component.layer_cart_panel;
 			[Bindable]
 			private var txtText:String = "";
 			public var creationComplete:Boolean = false
@@ -58,6 +61,12 @@
 				this.labelText = this._labelText; 
 			}
 			
+			protected function onRemove(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				this.dispatchEvent( new CustomEvent(layer_cart_panel.REMOVE_LAYER, this.layer) ) ; 
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -90,7 +99,7 @@
 				 color.selected="0xFFFFFFF" styleName="grayTxt Arial" />
 		<s:HGroup right="0">
 			<s:Label styleName="price" text="$14.00" paddingTop="8" />
-			<s:Image  id="btnDelete"
+			<s:Image  id="btnDelete"  click="onRemove(event)"
 				styleName="removeBtn" source="org/virid/assets/images/x.jpg"
 				width="14" height="14" />
 		</s:HGroup>

@@ -265,10 +265,24 @@ package org.syncon.Customizer.model
 		 * Store the last added undo item so we can compare it later
 		 * */
 		public var lastUndo: EditProductCommandTriggerEvent;
+		private var _blockUndos:Boolean;
+
 		/**
 		 * When undoing moving and resizing ... do not allow adding further undos 
 		 * */
-		public var blockUndos:Boolean;
+		public function get blockUndos():Boolean
+		{
+			return _blockUndos;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set blockUndos(value:Boolean):void
+		{
+			_blockUndos = value;
+		}
+
 		/**
 		 * hardcoded reference to color layer 
 		 * in future, use strings references based on type 

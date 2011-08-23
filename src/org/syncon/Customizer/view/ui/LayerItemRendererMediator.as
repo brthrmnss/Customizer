@@ -5,6 +5,7 @@ package org.syncon.Customizer.view.ui
 	import com.roguedevelopment.objecthandles.HandleDescription;
 	import com.roguedevelopment.objecthandles.HandleRoles;
 	import com.roguedevelopment.objecthandles.ObjectHandles;
+	import com.roguedevelopment.objecthandles.constraints.MaintainProportionConstraint;
 	import com.roguedevelopment.objecthandles.constraints.MovementConstraint;
 	import com.roguedevelopment.objecthandles.constraints.SizeConstraint;
 	
@@ -67,7 +68,7 @@ package org.syncon.Customizer.view.ui
 			this.flexModel1.x = this.layer.x ; 
 			this.flexModel1.y = this.layer.y ; 
 			this.layer.width; 
-			this.flexModel1.width =  this.layer.nonChromeWidth;//this.ui.width; 
+			this.flexModel1.width = this.layer.nonChromeWidth;//this.ui.width; 
 			this.flexModel1.height = this.layer.nonChromeHeight;//this.ui.height; 
 			//copyLayerToModel()
 		}
@@ -83,13 +84,13 @@ package org.syncon.Customizer.view.ui
 				m.maxY = this.model.viewer.height; 
 				m.minX = 0; 
 				m.minY = 0; 
-				this.model.objectHandles.addDefaultConstraint( m )
+				//this.model.objectHandles.addDefaultConstraint( m )
 				var sZ : SizeConstraint = new SizeConstraint()
 				sZ.maxHeight = this.model.viewer.height; 
 				sZ.maxWidth = this.model.viewer.width; 
 				sZ.minHeight = 20
 				sZ.minWidth = 30
-				this.model.objectHandles.addDefaultConstraint( sZ )
+				//this.model.objectHandles.addDefaultConstraint( sZ )
 			}
 			//this.model.objectHandles.addDefaultConstraint(
 			//this.model.objectHandles
@@ -108,6 +109,10 @@ package org.syncon.Customizer.view.ui
 			this.registered = true ;
 			this.flexModel1.addEventListener( PropertyChangeEvent.PROPERTY_CHANGE, this.onModelChange ) ; 
 		}
+		
+		/**
+		 * Set new sizes from simplemodel on layerVO
+		 * */
 		protected function onModelChange( event:PropertyChangeEvent):void
 		{
 			if ( this.isText && ['width', 'height', ].indexOf(event.property ) != -1 ) 
@@ -123,7 +128,7 @@ package org.syncon.Customizer.view.ui
 					if ( silent == false )
 						this.dispatch( new EditProductCommandTriggerEvent ( 
 							EditProductCommandTriggerEvent.MOVE_LAYER, this.ui.x, this.ui.y
-						) )  
+						) ) 
 					break;
 				case "y":
 					this.ui.y = event.newValue as Number; 
@@ -131,7 +136,7 @@ package org.syncon.Customizer.view.ui
 					if ( silent == false )
 						this.dispatch( new EditProductCommandTriggerEvent ( 
 							EditProductCommandTriggerEvent.MOVE_LAYER, this.ui.x, this.ui.y
-						) )  
+						) ) 
 					break;
 				case "rotation":
 					this.ui.rotation = event.newValue as Number;
@@ -147,7 +152,7 @@ package org.syncon.Customizer.view.ui
 					if ( silent == false )
 						this.dispatch( new EditProductCommandTriggerEvent ( 
 							EditProductCommandTriggerEvent.RESIZE_LAYER, this.ui.width, this.ui.height
-						) )  					
+						) ) 					
 					break;
 				case "height": 
 					this.ui.height = event.newValue as Number;
@@ -159,7 +164,7 @@ package org.syncon.Customizer.view.ui
 					if ( silent == false )
 						this.dispatch( new EditProductCommandTriggerEvent ( 
 							EditProductCommandTriggerEvent.RESIZE_LAYER, this.ui.width, this.ui.height
-						) )  					
+						) ) 					
 					break;
 				default: return;
 			}
@@ -205,7 +210,7 @@ package org.syncon.Customizer.view.ui
 			//if image maintain aspect ration
 			if ( this.isImage ) 
 			{
-				/*var itemMovementCons :   MaintainProportionConstraint = new MaintainProportionConstraint()
+				/*var itemMovementCons : MaintainProportionConstraint = new MaintainProportionConstraint()
 				this.unregister()
 				this.register([ itemMovementCons] )*/
 			}
@@ -295,13 +300,19 @@ package org.syncon.Customizer.view.ui
 				{
 					var itemMovementCons : MovementConstraint = new MovementConstraint()
 					itemMovementCons.maxX = this.model.baseLayer.x + this.model.baseLayer.width; 
-					itemMovementCons.maxY = this.model.baseLayer.y +  this.model.baseLayer.height; 
-					itemMovementCons.minX =   this.model.baseLayer.x; ; 
-					itemMovementCons.minY =   this.model.baseLayer.y;  ; 
+					itemMovementCons.maxY = this.model.baseLayer.y + this.model.baseLayer.height; 
+					itemMovementCons.minX = this.model.baseLayer.x; ; 
+					itemMovementCons.minY = this.model.baseLayer.y; ; 
 					// constraints.push( itemMovementCons )
 				}
 				
 				
+				//need all images to lock aspect ration 
+				if ( this.isImage ) 
+				{
+					var mpCon : MaintainProportionConstraint = new MaintainProportionConstraint()
+					constraints.push( mpCon ) 
+				}
 				
 				this.model.objectHandles.registerComponent( flexModel1, this.ui ,null, true, constraints);
 				this.model.objectHandles.selectionManager.setSelected( this.flexModel1 ) ; 

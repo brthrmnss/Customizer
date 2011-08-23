@@ -65,7 +65,7 @@ package org.syncon.Customizer.controller
 				{
 					imgLayer = event.oldData as ImageLayerVO; 
 					this.model.removeLayer( imgLayer ) ; 
-					txtLayer.layerRemoved()
+					imgLayer.layerRemoved()
 					//oldName = event.oldData.toString(); 
 					//this.model.currentPage.name = oldName
 				}		
@@ -373,6 +373,8 @@ package org.syncon.Customizer.controller
 						/*txtLayer.x = 0; 
 						txtLayer.y = 100; */
 					}		
+					if ( layer.x == event.data && layer.y == event.data2 ) 
+						return; 
 					event.oldData = layer.x; 
 					event.oldData2 = layer.y; 
 					this.model.blockUndos=true

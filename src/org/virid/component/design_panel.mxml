@@ -5,8 +5,9 @@
 		 xmlns:smallComponents="org.virid.smallComponents.*">
 	<fx:Script>
 		<![CDATA[
-			import org.syncon.Customizer.model.CustomEvent;
 			import mx.events.FlexEvent;
+			
+			import org.syncon.Customizer.model.CustomEvent;
 			
 			public static const CHANGE_FONT_FAMILY:String='CHANGE_FONT_FAMILY';
 			public static const CHANGE_COLOR:String='CHANGE_COLOR';
@@ -15,7 +16,13 @@
 			
 			protected function onInit(event:FlexEvent):void
 			{
-				// TODO Auto-generated method stub
+				//send up initial color
+				//this.dispatchEvent( new CustomEvent(CHANGE_COLOR, this.selectedColorSwatch.color ) ) ; 
+			}
+			
+			public function get getSelectedColor() : uint
+			{
+				return this.selectedColorSwatch.color;
 			}
 			
 			protected function openClipart_clickHandler(event:MouseEvent):void
@@ -26,6 +33,13 @@
 			protected function openImageUpload_clickHandler(event:MouseEvent):void
 			{
 				this.dispatchEvent( new CustomEvent( ADD_UPLOAD_IMAGE) ) ;
+			}
+			
+			
+			public function set changeColor( u : uint ) : void
+			{
+				this.selectedColorSwatch.color = u; 
+				this.dispatchEvent( new CustomEvent(CHANGE_COLOR, u ) ) ; 
 			}
 			
 		]]>

@@ -22,6 +22,9 @@ package org.syncon.Customizer.controller
 		public static const CHANGE_COLOR:String = 'CHANGE_COLOR.w';
 		public static const COLOR_CHANGED:String = 'COLOR_CHANGED.w';			
 		
+		public static const CHANGE_LAYER_COLOR:String = 'CHANGE_LAYER_COLOR.w';
+		public static const LAYER_COLOR_CHANGED:String = 'LAYER_COLOR_CHANGED.w';		
+		
 		public static const LOAD_PRODUCT:String = 'LOAD_PRODUCT.w';	
 		
 		public static const MOVE_LAYER:String = 'MOVE_LAYER.w';
@@ -105,6 +108,7 @@ package org.syncon.Customizer.controller
 				CHANGE_FONT_FAMILY,
 				CHANGE_FONT_SIZE,
 				CHANGE_COLOR,
+				CHANGE_LAYER_COLOR,
 				
 				MOVE_LAYER,
 				RESIZE_LAYER,

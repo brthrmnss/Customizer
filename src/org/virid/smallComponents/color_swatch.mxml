@@ -35,6 +35,7 @@
 				//alert('punch');
 				trace('crunch');
 				this.parentDocument.selectedColorSwatch.color = this.mainSwatch.color;
+				this.parentDocument.changeColor = this.mainSwatch.color; 
 			}
 			
 		]]>
@@ -69,7 +70,7 @@
 	</s:transitions>	
 	
 	
-	<s:Rect id="rect" width="10" height="10" >
+	<s:Rect id="rect" width="10" height="10"  >
 		<s:fill >
 			<s:SolidColor id="mainSwatch" />
 		</s:fill>

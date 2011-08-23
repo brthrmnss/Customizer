@@ -134,7 +134,7 @@
 	
 	
 	
-	<s:Scroller id="scroller" width="100%" height="100%" 
+	<s:Scroller id="scroller" width="100%" height="100%"  horizontalScrollPolicy="off" verticalScrollPolicy="off"
 				focusEnabled="false" minViewportInset="1" measuredSizeIncludesScrollBars="false">
 		<s:Group id="workspace">
 			
@@ -155,22 +155,32 @@
 	</s:Scroller>
 	<!--
 	<local:TLFContainer id="contain" />-->
-	
+	<!--
 	<s:Group id="maskLayer" blendMode="erase"
 			 mouseEnabled="false" mouseChildren="false"
 			 mouseEnabledWhereTransparent="false" alpha="1"   width="100%" height="100%">
-		<!--			<s:Rect left="0" right="0" top="0" bottom="0">
+ 
+		<s:Image id="img"    mouseEnabled="false" mouseChildren="false"
+				 />
+	</s:Group>
+-->
+	
+	<!-- layer replicates existing stage -->
+	<s:Group id="maskLayer" blendMode="erase"
+			 mouseEnabled="false" mouseChildren="false"
+			 mouseEnabledWhereTransparent="false" alpha="1"   width="100%" height="100%">
+					<s:Rect left="0" right="0" top="0" bottom="0">
 		<s:stroke>
 		<s:SolidColorStroke color="0x000000" weight="1"/>
 		</s:stroke>
 		<s:fill>
 		<s:SolidColor color="#FF0000" alpha="0.2"/>
 		</s:fill>
-		</s:Rect>-->
+		</s:Rect>
 		<s:Image id="img"    mouseEnabled="false" mouseChildren="false"
 				 />
 	</s:Group>
-
+	
 	
 	
 </s:Group>

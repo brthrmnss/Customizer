@@ -5,7 +5,6 @@ package org.syncon.Customizer.view.ui
 	import com.roguedevelopment.objecthandles.HandleDescription;
 	import com.roguedevelopment.objecthandles.HandleRoles;
 	import com.roguedevelopment.objecthandles.ObjectHandles;
-	import com.roguedevelopment.objecthandles.constraints.MaintainProportionConstraint;
 	import com.roguedevelopment.objecthandles.constraints.MovementConstraint;
 	import com.roguedevelopment.objecthandles.constraints.SizeConstraint;
 	
@@ -13,7 +12,6 @@ package org.syncon.Customizer.view.ui
 	import flash.events.Event;
 	import flash.geom.Point;
 	
-	import mx.effects.MaskEffect;
 	import mx.events.PropertyChangeEvent;
 	import mx.events.ResizeEvent;
 	
@@ -213,8 +211,13 @@ package org.syncon.Customizer.view.ui
 			}
 			if ( this.isImage )
 			{
+				//make this a new type ....
+				//we are copying the url and sizing to the mask layer that is already laid down 
 				if ( this.ui.image.layer.mask )
 				{
+					this.ui.visible = false;
+					//so visible does not work, but alpha does...
+					this.ui.alpha = 0.1
 					var v : viewer2_store = this.model.viewer as viewer2_store
 					v.img.source = this.ui.image.layer.url; 
 					v.img.x = this.ui.x; 
@@ -272,6 +275,7 @@ package org.syncon.Customizer.view.ui
 			this.layer.addEventListener(LayerBaseVO.LAYER_REMOVED, this.onLayerRemoved ) 
 			this.layer.model = this.flexModel1; 
 			this.model.objectHandles.unregisterComponent( this.ui ) ; 
+			this.ui.visible = true; //masking turns this off ... ... or just turn of mask layer here too
 			//this.model.objectHandles.unregisterModel( this.model ) ; 
 			//this.registered = false
 			//unlock any layre automatically

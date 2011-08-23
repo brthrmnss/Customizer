@@ -29,7 +29,7 @@ package   org.syncon.Customizer.view.ui
 			
 			this.ui.viewer22.scroller.addEventListener(MouseEvent.CLICK, this.onClickBg ) ; 
 			
-			this.ui.viewer22.groupBg3.visible = false
+			//this.ui.viewer22.groupBg3.visible = false
 		}
 		
 		protected function onClickBg(event:MouseEvent):void

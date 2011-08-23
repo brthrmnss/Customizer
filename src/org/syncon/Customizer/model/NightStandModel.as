@@ -269,6 +269,11 @@ package org.syncon.Customizer.model
 		 * When undoing moving and resizing ... do not allow adding further undos 
 		 * */
 		public var blockUndos:Boolean;
+		/**
+		 * hardcoded reference to color layer 
+		 * in future, use strings references based on type 
+		 * */
+		public var layerColor:ColorLayerVO;
 		
 		public function get mute():Boolean
 		{

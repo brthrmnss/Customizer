@@ -25,13 +25,27 @@ package  org.virid.component
 			this.ui.addEventListener( design_panel.ADD_IMAGE,  this.onAddImage);	
 			this.ui.addEventListener( design_panel.ADD_UPLOAD_IMAGE,  this.onAddUploadImage);	
 			
+			this.ui.addEventListener( design_panel.CHANGE_COLOR,  this.onChangeColor);			
+			
+			this.onChangeColor(null, this.ui.getSelectedColor ) ; 
+		}
+		
+		//use Object b/c uint does not like null...
+		protected function onChangeColor(event:CustomEvent, color_ :  Object = null ):void
+		{
+			if ( color_ ==null ) 
+			var color : uint = uint(event.data ) 
+			else
+				color = uint(color_ ) 
+			this.dispatch( new EditProductCommandTriggerEvent (
+				EditProductCommandTriggerEvent.CHANGE_LAYER_COLOR,color) ) ; 
 		}
 		
 		protected function onAddUploadImage(e:CustomEvent):void
 		{
-		/*	var obj : Object = e.data
+			/*	var obj : Object = e.data
 			var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP, 
-				'PopupPickImage', [this.onPickedImage], 'done' ) 		
+			'PopupPickImage', [this.onPickedImage], 'done' ) 		
 			this.dispatch( event_ ) */
 			var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP,
 				'PopupUploadImage', [null], 'done' ) 		

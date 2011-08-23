@@ -38,7 +38,7 @@ package org.syncon2.utils.sound
 			/*if ( currentSoundId !=  -1 ) 
 			this.stopSound();*/
 			//url = "G:/My Documents/work/mobile3/SoundBoardEllips/bin-debug/assets/sub/gow/sounds/Baird - No shit.mp3"
-
+			
 			if ( this.cpu ) 
 			{
 				
@@ -49,7 +49,7 @@ package org.syncon2.utils.sound
 				pattern  = /\\/g
 				url = url.replace(pattern, '/' )
 				Alert.show(url, 'url' ) ; 
-
+				
 				var soundID:int = SystemAPI.loadSoundFile(url);
 				if ( soundID == -1 ) 
 				{
@@ -86,18 +86,18 @@ package org.syncon2.utils.sound
 			{
 				/*if ( this.currentSoundId != -1 )
 				{
-					//if ( soundID !=  -1 ) 
-						this.stopSound();
-					//	SystemAPI.stopSoundFile(currentSoundId);
+				//if ( soundID !=  -1 ) 
+				this.stopSound();
+				//	SystemAPI.stopSoundFile(currentSoundId);
 				}
-				 soundID = SystemAPI.loadSoundFile(url);
-				 if ( soundID == -1 ) 
-				 {
-					 //try agin 
-					 trace( 'again 1', soundID ); 
-					 soundID = SystemAPI.loadSoundFile(url);
-				 }
-				 Alert.show(soundID.toString(), 'play'); 
+				soundID = SystemAPI.loadSoundFile(url);
+				if ( soundID == -1 ) 
+				{
+				//try agin 
+				trace( 'again 1', soundID ); 
+				soundID = SystemAPI.loadSoundFile(url);
+				}
+				Alert.show(soundID.toString(), 'play'); 
 				SystemAPI.playSoundFile(soundID);*/
 				
 				
@@ -108,17 +108,31 @@ package org.syncon2.utils.sound
 					//	SystemAPI.stopSoundFile(currentSoundId);
 				}
 				soundID = SystemAPI.loadSoundFile(url);
+				
 				if ( soundID == -1 ) 
 				{
 					//try agin 
+					
 					trace( 'again 1', soundID ); 
 					soundID = SystemAPI.loadSoundFile(url);
 					/*trace( 'again 2', soundID ); 
 					soundID = SystemAPI.loadSoundFile(url);*/
 				}
+				/*			
+				soundID = SystemAPI.loadSoundFile(url);
+				trace( 'after 1', soundID ); 
+				if ( soundID == -1 ) 
+				{
+				//try agin 
+				trace( 'again 1', soundID ); 
+				soundID = SystemAPI.loadSoundFile(url);
+				}*/
+				
 				//Alert.show(soundID.toString(), 'play'); 
 				SystemAPI.playSoundFile(soundID);
+				SystemAPI.playSoundFile(soundID);
 				this.currentSoundId= soundID
+			//	PlatformGlobals.show('play sound sound '  + this.currentSoundId  )
 			}
 			//SystemAPI.pauseSoundFile(soundID);
 			//soundID = SystemAPI.loadSoundFile(url);
@@ -137,10 +151,11 @@ package org.syncon2.utils.sound
 		
 		protected function onSoundComplete(event:Event):void
 		{
-			
+			//PlatformGlobals.show('stop sound '  + this.currentSoundId  )
+			this.stopSound(); 
 			if ( fxCallAfterSoundCompletePlaying != null ) 
 				fxCallAfterSoundCompletePlaying(event); 
-			this.stopSound(); 
+			
 		}
 		
 		public function stopSound():void{

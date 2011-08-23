@@ -116,9 +116,9 @@
 	<fx:Declarations>
 		
 	</fx:Declarations>
-	<s:Image id="img" blendMode="colordodge" complete="onComplete(event)"
+	<s:Image id="img" blendMode="erase" complete="onComplete(event)" alpha="0.6"
 			 resize="img_resizeHandler(event)"/>
-	<s:Group id="colorLayer" width="100%" height="100%" maskType="alpha">
+	<s:Group id="colorLayer" width="100%" height="100%" maskType="alpha" mask="{this.img}">
 		<s:Rect left="0" right="0" top="0" bottom="0">
 			<s:stroke>
 				<s:SolidColorStroke color="0x000000" weight="1"/>

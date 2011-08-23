@@ -14,6 +14,8 @@ package org.syncon.Customizer.controller
 		[Inject] public var model:NightStandModel;
 		[Inject] public var event:EditProductCommandTriggerEvent
 		
+		private var debugUndos : Boolean = false; 
+		
 		override public function execute():void
 		{
 			if ( this.model.blockUndos )
@@ -231,6 +233,35 @@ package org.syncon.Customizer.controller
 			}
 			
 			
+			//how to map this? ... use a string for layer association
+			if ( event.type == EditProductCommandTriggerEvent.CHANGE_LAYER_COLOR 
+				  )  
+			{
+				if ( event.undo == false )
+				{
+					//if ( event.data2 != null ) 
+					//this.model.getColorLayer(event.data2 )
+					colorLayer = this.model.layerColor; //this.model.currentLayer as ColorLayerVO; 
+			 	
+					event.oldData = colorLayer.color; 
+					colorLayer.color = ( event.data ); 
+					colorLayer.update('color'); 
+					event.data3 = colorLayer ; 
+				}
+				else
+				{
+					colorLayer = event.data3 as ColorLayerVO; 
+					colorLayer.color = ( event.oldData ); 
+					colorLayer.update('color'); 
+				}		
+				//this.model.currentPage.updated();
+				//this.model.layersChanged(); 
+				this.dispatch( new EditProductCommandTriggerEvent(
+					EditProductCommandTriggerEvent.LAYER_COLOR_CHANGED, event, null ) ) 
+			}
+			
+			
+			
 			
 			if ( event.type == EditProductCommandTriggerEvent.LOAD_PRODUCT ) 
 			{
@@ -255,23 +286,7 @@ package org.syncon.Customizer.controller
 						}
 						//this.model.currentLayer = imgLayer; 
 						this.model.baseLayer = imgLayer; 
-						
-						
-						imgLayer = new ImageLayerVO(); 
-						imgLayer.name = 'Mask  Image';
-						imgLayer.url = product.base_image_url; 
-						imgLayer.locked = true; 
-						imgLayer.showInList = false; 
-						imgLayer.mask = true; 
-						this.model.addLayer( imgLayer ) ;
-						if ( event.firstTime ) 
-						{
-							imgLayer.x = 0; 
-							imgLayer.y = 100; 
-						}
-						//	this.model.currentLayer = imgLayer; 
-						this.model.layerMask = imgLayer; 
-						
+						 
 						
 						var colorLayer : ColorLayerVO = new ColorLayerVO(); 
 						colorLayer.name = 'Color Base Image';
@@ -284,7 +299,26 @@ package org.syncon.Customizer.controller
 							colorLayer.x = 0; 
 							colorLayer.y = 100; 
 						}
-						this.model.currentLayer = colorLayer; 
+						this.model.layerColor = colorLayer; 
+						
+						//order doesn't matter as it doesn't appear ...
+						imgLayer = new ImageLayerVO(); 
+						imgLayer.name = 'Mask  Image';
+						imgLayer.url = product.base_image_url; 
+						//imgLayer.url = 'assets/images/img.jpg'
+						imgLayer.locked = true; 
+						imgLayer.showInList = false; 
+						imgLayer.mask = true; 
+						this.model.addLayer( imgLayer ) ;
+						if ( event.firstTime ) 
+						{
+							imgLayer.x = 0; 
+							imgLayer.y = 100; 
+						}
+						//	this.model.currentLayer = imgLayer; 
+						this.model.layerMask = imgLayer; 
+						
+						//this.model.currentLayer = colorLayer; 
 						
 						
 					}
@@ -346,7 +380,7 @@ package org.syncon.Customizer.controller
 					layer.update(); 
 					event.data3 = layer ; 
 					this.model.blockUndos=false
-					trace('go', event.data, event.data2 )
+					if ( debugUndos )   trace('go', event.data, event.data2 )
 				}
 				else
 				{
@@ -354,7 +388,7 @@ package org.syncon.Customizer.controller
 					layer = event.data3 as LayerBaseVO; 
 					layer.setXY( event.oldData, event.oldData2 ) ; 
 					layer.update(); 
-					trace('redo', event.data, event.data2 )
+					if ( debugUndos )  trace('redo', event.data, event.data2 )
 					this.model.blockUndos=false
 				}		
 				//this.model.currentPage.updated();
@@ -404,13 +438,13 @@ package org.syncon.Customizer.controller
 					if ( event.type == EditProductCommandTriggerEvent.MOVE_LAYER
 						&& event.data3 == lastUndo.data3)
 					{
-						trace('merging'); 
+						if ( debugUndos ) trace('merging'); 
 						this.model.lastUndo.data = event.data; 
 						this.model.lastUndo.data2 = event.data2
 						return; 
 					}
 				}
-				trace('addeded one')
+				if ( debugUndos ) trace('merging');  trace('addeded one')
 				this.model.lastUndo = event; 
 				this.model.undo.pushUndo( event ) ;
 				this.dispatch( new NightStandModelEvent(NightStandModelEvent.UNDOS_CHANGED) ) 

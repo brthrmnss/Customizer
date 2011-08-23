@@ -62,7 +62,7 @@ package org.syncon.Customizer.controller
 					
 					var base : StoreItemVO = new StoreItemVO(); 
 					base.name = 'Zippo'
-					base.base_image_url = 'assets/images/imgbase.jpg'
+					base.base_image_url = 'assets/images/imgbase.png'
 					this.model.baseItem = base; 
 					/*var l :  Array = [] ; 
 					l = MakeVOs.makeObjs(['L1', 'L2'], LessonVO, 'name' )

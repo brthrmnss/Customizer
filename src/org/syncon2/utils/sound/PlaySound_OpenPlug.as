@@ -37,7 +37,7 @@ package org.syncon2.utils.sound
 			
 			/*if ( currentSoundId !=  -1 ) 
 			this.stopSound();*/
-			//url = "G:/My Documents/work/mobile3/SoundBoardEllips/bin-debug/assets/sub/gow/sounds/Baird - No shit.mp3"
+			//url = "G:/My Documents/work/mobile3/SoundBoardEllips/bin-debugassets/sub/gow/sounds/Baird - No shit.mp3"
 			
 			if ( this.cpu ) 
 			{

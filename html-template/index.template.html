@@ -1,15 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0014)about:internet -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
-    <!-- 
-    Smart developers always View Source. 
-    
-    This application was built using Adobe Flex, an open source framework
-    for building rich Internet applications that get delivered via the
-    Flash Player or to desktops via Adobe AIR. 
-    
-    Learn more about Flex at http://flex.org 
-    // -->
+
     <head>
         <title>${title}</title>
         <meta name="google" value="notranslate" />         
@@ -28,6 +20,7 @@
             #flashContent { display:none; }
         </style>
         
+        
         <!-- Enable Browser History by replacing useBrowserHistory tokens with two hyphens -->
         <!-- BEGIN Browser History required section ${useBrowserHistory}>
         <link rel="stylesheet" type="text/css" href="history/history.css" />
@@ -40,7 +33,14 @@
             var swfVersionStr = "${version_major}.${version_minor}.${version_revision}";
             // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
             var xiSwfUrlStr = "${expressInstallSwf}";
-            var flashvars = {settings:'%7B%22name%22%3A%22testname%22%2C%22sku%22%3A%221234%22%2C%22desc%22%3A%22lorem%20isum%20description%20of%20testname%22%2C%22Faces%22%3A%5B%7B%22name%22%3A%22front%22%2C%22image%22%3A%22img%2Ffrontimage.jpg%22%2C%22mask%22%3A%22img%2Ffrontmask.jpg%22%2C%22Layers%22%3A%5B%7B%22name%22%3A%22color%22%2C%22type%22%3A%22color%22%2C%22Media%22%3A%7B%22source%22%3A%220xffffff%22%2C%22type%22%3A%22color%22%7D%2C%22Fonts%22%3Anull%2C%22transform%22%3A%7B%22width%22%3A%22100%25%22%2C%22height%22%3A%22100%25%22%2C%22x%22%3Anull%2C%22y%22%3Anull%2C%22rotation%22%3Anull%7D%2C%22orientation%22%3A%22horizontal%22%2C%22required%22%3Atrue%2C%22default%22%3Anull%7D%2C%7B%22name%22%3A%22color%22%2C%22type%22%3A%22image%22%2C%22Media%22%3A%7B%22source%22%3A%22%5C%22img%2Flayer1%2Fjpg%5C%22%22%2C%22Fonts%22%3Anull%2C%22type%22%3A%22image%22%7D%2C%22transform%22%3A%7B%22width%22%3A%22100%22%2C%22height%22%3A%22100%22%2C%22x%22%3A%2210%22%2C%22y%22%3A%2210%22%2C%22rotation%22%3A%220%22%7D%2C%22orientation%22%3A%22horizontal%22%2C%22required%22%3Afalse%2C%22default%22%3Anull%7D%2C%7B%22name%22%3A%22color%22%2C%22type%22%3A%22text%22%2C%22Media%22%3A%7B%22source%22%3A%22helloworld%22%2C%22type%22%3A%22text%22%7D%2C%22Fonts%22%3A%5B%7B%22name%22%3A%22arial%22%2C%22size%22%3A%2210%22%2C%22weight%22%3A%22normal%22%7D%2C%7B%22name%22%3A%22bebas%22%2C%22size%22%3A%2215%22%2C%22weight%22%3A%22bold%22%7D%5D%2C%22transform%22%3A%7B%22width%22%3A%22100%22%2C%22height%22%3A%22100%22%2C%22x%22%3A%2210%22%2C%22y%22%3A%2210%22%2C%22rotation%22%3A%220%22%7D%2C%22orientation%22%3A%22horizontal%22%2C%22required%22%3Afalse%2C%22default%22%3Anull%7D%2C%7B%22name%22%3A%22layer%201%22%2C%22type%22%3A%22clipart%22%2C%22Media%22%3A%7B%22source%22%3A%2223%22%2C%22type%22%3A%22clipart%22%7D%2C%22Fonts%22%3Anull%2C%22transform%22%3A%7B%22width%22%3A%22100%22%2C%22height%22%3A%22100%22%2C%22x%22%3A%2250%22%2C%22y%22%3A%2250%22%2C%22rotation%22%3A%220%22%7D%2C%22orientation%22%3A%22horizontal%22%2C%22required%22%3Afalse%2C%22default%22%3Anull%7D%5D%7D%5D%7D'};
+			
+			var inputString = '%7B%22name%22%3A%22testname%22%2C%0A%22sku%22%3A%221234%22%2C%0A%22desc%22%3A%22lorem%20isum%20description%20of%20testname%22%2C%0A%22Faces%22%3A%5B%7B%22name%22%3A%22front%22%2C%0A%22image%22%3A%22img%2Ffrontimage.jpg%22%2C%0A%22mask%22%3A%22img%2Ffrontmask.jpg%22%2C%0A%22Layers%22%3A%5B%7B%22name%22%3A%22color%22%2C%0A%22type%22%3A%22color%22%2C%0A%22Media%22%3A%7B%22source%22%3A%220xffffff%22%2C%0A%22type%22%3A%22color%22%7D%2C%0A%22Fonts%22%3Anull%2C%0A%22transform%22%3A%7B%22width%22%3A%22100%25%22%2C%0A%22height%22%3A%22100%25%22%2C%0A%22x%22%3Anull%2C%0A%22y%22%3Anull%2C%0A%22rotation%22%3Anull%7D%2C%0A%22orientation%22%3A%22horizontal%22%2C%0A%22required%22%3Atrue%2C%0A%22default%22%3Anull%7D%2C%0A%7B%22name%22%3A%22color%22%2C%0A%22type%22%3A%22image%22%2C%0A%22Media%22%3A%7B%22source%22%3A%22assets%2Fimages%2Fimg.jpg%22%2C%0A%22Fonts%22%3Anull%2C%0A%22type%22%3A%22image%22%7D%2C%0A%22transform%22%3A%7B%22width%22%3A%22100%22%2C%0A%22height%22%3A%22100%22%2C%0A%22x%22%3A%2210%22%2C%0A%22y%22%3A%2210%22%2C%0A%22rotation%22%3A%220%22%7D%2C%0A%22orientation%22%3A%22horizontal%22%2C%0A%22required%22%3Afalse%2C%0A%22default%22%3Anull%7D%2C%0A%7B%22name%22%3A%22color%22%2C%0A%22type%22%3A%22text%22%2C%0A%22Media%22%3A%7B%22source%22%3A%22helloworld%22%2C%0A%22type%22%3A%22text%22%7D%2C%0A%22Fonts%22%3A%5B%7B%22name%22%3A%22arial%22%2C%0A%22size%22%3A%2210%22%2C%0A%22weight%22%3A%22normal%22%7D%2C%0A%7B%22name%22%3A%22bebas%22%2C%0A%22size%22%3A%2215%22%2C%0A%22weight%22%3A%22bold%22%7D%5D%2C%0A%22transform%22%3A%7B%22width%22%3A%22100%22%2C%0A%22height%22%3A%22100%22%2C%0A%22x%22%3A%2210%22%2C%0A%22y%22%3A%2210%22%2C%0A%22rotation%22%3A%220%22%7D%2C%0A%22orientation%22%3A%22horizontal%22%2C%0A%22required%22%3Afalse%2C%0A%22default%22%3Anull%7D%2C%0A%7B%22name%22%3A%22layer%201%22%2C%0A%22type%22%3A%22clipart%22%2C%0A%22Media%22%3A%7B%22source%22%3A%2223%22%2C%0A%22type%22%3A%22clipart%22%7D%2C%0A%22Fonts%22%3Anull%2C%0A%22transform%22%3A%7B%22width%22%3A%22100%22%2C%0A%22height%22%3A%22100%22%2C%0A%22x%22%3A%2250%22%2C%0A%22y%22%3A%2250%22%2C%0A%22rotation%22%3A%220%22%7D%2C%0A%22orientation%22%3A%22horizontal%22%2C%0A%22required%22%3Afalse%2C%0A%22default%22%3Anull%7D%5D%7D%5D%7D';
+			/*var encodedInputString=escape(inputString);
+  encodedInputString=encodedInputString.replace("+", "%2B");
+  encodedInputString=encodedInputString.replace("/", "%2F");
+  console.log(encodedInputString);*/
+			
+            var flashvars = {settings:inputString};
             var params = {};
             params.quality = "high";
             params.bgcolor = "${bgcolor}";

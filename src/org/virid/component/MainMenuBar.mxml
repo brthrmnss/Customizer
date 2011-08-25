@@ -57,26 +57,26 @@
 			  paddingBottom="5" paddingLeft="0" paddingRight="5" paddingTop="5">
 		
 		<smallComponents:MainMenuButton label="undo"   id="btnUndo" 
-										icon="org/virid/assets/images/undo.jpg" 
+										icon="/asset/images/undo.jpg" 
 										click="onUndo(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Background" visible="true" includeInLayout="true" 
-										icon="org/virid/assets/images/background.jpg"
+										icon="/assets/images/background.jpg"
 										click="swithModes_clickHandler(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>		
-		<smallComponents:MainMenuButton icon="org/virid/assets/images/location.jpg" visible="false" includeInLayout="false"
+		<smallComponents:MainMenuButton icon="asset/images/location.jpg" visible="false" includeInLayout="false"
 										label="Choose a Location"
 										click="swithModes_clickHandler(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
-		<smallComponents:MainMenuButton icon="org/virid/assets/images/engrave.jpg"
+		<smallComponents:MainMenuButton icon="/asset/images/engrave.jpg"
 										label="Text"
 										click="swithModes_clickHandler(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton icon="org/virid/assets/images/preview.jpg"
+		<smallComponents:MainMenuButton icon="/asset/images/preview.jpg"
 										label="Preview" 
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton icon="org/virid/assets/images/star.jpg" 
+		<smallComponents:MainMenuButton icon="/asset/images/star.jpg" 
 										label="Save It" 
 										click="onSave(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>

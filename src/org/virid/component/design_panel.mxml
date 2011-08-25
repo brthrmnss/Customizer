@@ -163,7 +163,7 @@
 					 right="0" width="55" height="30"
 					 click="openImageUpload_clickHandler(event)"
 					 buttonMode="true" useHandCursor="true" mouseChildren="false"
-					 source="org/virid/assets/images/none.jpg"/>
+					 source="assets/images/none.jpg"/>
 			
 		</s:Group>
 
@@ -191,7 +191,7 @@
 			<s:Image id="openClipart" 
 					  right="0" width="55" height="30" click="openClipart_clickHandler(event)"
 					  buttonMode="true" useHandCursor="true" mouseChildren="false"
-					  source="org/virid/assets/images/none.jpg" verticalCenter="0"/>
+					  source="assets/images/none.jpg" verticalCenter="0"/>
 			
 		</s:Group>
 

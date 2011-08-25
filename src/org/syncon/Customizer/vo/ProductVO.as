@@ -5,7 +5,10 @@ package  org.syncon.Customizer.vo
 		public var name  :  String = ''; 
 		public var url : String = ''; 
 		
+		public var layers:Array = [];
+		
 		public static var Type:String= 'LED';
+		public var color_overlay_layer:Object;
 		public function get type():String
 		{
 			return Type;

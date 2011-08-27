@@ -46,7 +46,7 @@
 		<s:HGroup right="0">
 			<s:Label styleName="price" text="$14.00" paddingTop="8" />
 			<s:Image 
-				styleName="removeBtn" source="org/virid/assets/images/x.jpg"
+				styleName="removeBtn" source="assets/images/x.jpg"
 				width="14" height="14" />
 		</s:HGroup>
 	</s:Group>

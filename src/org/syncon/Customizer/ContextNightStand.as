@@ -29,6 +29,7 @@ package org.syncon.Customizer
 			this.commandMap.mapEvent( CreateDefaultDataTriggerEvent.CREATE, CreateDefaultDataCommand );
 
 			this.commandMap.mapEvent( ExportJSONCommandTriggerEvent.EXPORT_JSON, ExportJSONCommand );
+			this.commandMap.mapEvent( ImportJSONCommandTriggerEvent.IMPORT_JSON, ImportJSONCommand );
 
 			
 			EditProductCommandTriggerEvent.mapCommands( this.commandMap, EditProductCommand ) ; 
@@ -95,6 +96,9 @@ package org.syncon.Customizer
 			
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) ) ; 
+			
+			this.dispatchEvent( new ImportJSONCommandTriggerEvent(
+				ImportJSONCommandTriggerEvent.IMPORT_JSON,this.importJsonStr)) ; 
 			/*
 			this.dispatchEvent( new LoadSoundsTriggerEvent(
 			LoadSoundsTriggerEvent.LOAD_SOUNDS ) ) ; 
@@ -131,6 +135,13 @@ package org.syncon.Customizer
 		}
 		
 		public var subContexts : Array = []; 
+		private var importJsonStr:String;
+		
+		public function importJson(str:String):void{
+				this.importJsonStr=str;
+
+			
+		}
 		public function newMultipler( n : Number ) : void
 		{
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(

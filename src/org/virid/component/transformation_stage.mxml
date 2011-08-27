@@ -27,7 +27,7 @@
 			
 			protected function switchSide_clickHandler(event:MouseEvent):void
 			{
-				this.productImageArea.source = (_prodImageReverese)?"org/virid/assets/images/product_hero1r.jpg":"org/virid/assets/images/product_hero1.jpg"; 
+				this.productImageArea.source = (_prodImageReverese)?"assets/images/product_hero1r.jpg":"assets/images/product_hero1.jpg"; 
 				_prodImageReverese = !_prodImageReverese;
 			}
 			
@@ -115,7 +115,7 @@
 				<s:Button id="switchSide"
 						  click="switchSide_clickHandler(event)"
 						  left="0" bottom="0"
-						  icon="org/virid/assets/images/flip.jpg" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"
+						  icon="assets/images/flip.jpg" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"
 						  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 			
 			
@@ -138,7 +138,7 @@
 
 				<s:Button id="zoom" visible="false" includeInLayout="false"
 						  right="0" bottom="0"
-						  icon="org/virid/assets/images/zoom.jpg" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"/>
+						  icon="assets/images/zoom.jpg" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"/>
 		</s:Group>
 		
 		

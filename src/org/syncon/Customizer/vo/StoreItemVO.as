@@ -55,6 +55,8 @@ package  org.syncon.Customizer.vo
 		
 		
 		private var  _lists  :  ArrayCollection  = new ArrayCollection();
+		public var color_overlay_layer:Object;
+		public var layers:Array = [];
 		[Transient]
 		public function get lists():ArrayCollection
 		{

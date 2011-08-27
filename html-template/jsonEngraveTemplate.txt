@@ -1,0 +1,51 @@
+Faces[
+	{
+		"name": "Front",
+		"image": "/thelighterimage.jpg",
+		"mask": null,
+		"Layers": [
+			{
+				"name":"Engrave Top",
+				"type":","engrave",
+				“price":5.25,
+				"Media":{“source":"","type":"engrave"},
+				"Fonts": [
+					{ "name": "Avalon","size": "12","weight": "normal"  ,"max:16"  },
+					{ "name": "Century","size": "12", "weight": "normal"  ,"max:16"  },
+					{ "name": "Helvetica", "size": "12", "weight": "normal" ,"max:16"  },
+					{ "name": "OldEnglish", "size": "12","weight": "normal" ,"max:16" },
+					{ "name": "RomanUL","size": "12","weight": "normal" ,"max:16"  },
+					{ "name": "Script", "size": "12","weight": "normal" ,"max:16" }
+					{ "name": "Avalon","size": "30","weight": "normal"  ,"max:3"  },
+					{ "name": "Century","size": "30", "weight": "normal"  ,"max:3"  },
+					{ "name": "Helvetica", "size": "30", "weight": "normal" ,"max:3"  },
+					{ "name": "OldEnglish", "size": "30","weight": "normal" ,"max:3" },
+					{ "name": "RomanUL","size": "30","weight": "normal" ,"max:3"  },
+					{ "name": "Script", "size": "30","weight": "normal" ,"max:3" }
+				],
+				"transform": {“width":85, “height":28,"x":??,"y":??,"rotation:null },
+				"orientation": "horizontal",
+				"required": false,
+				"default": null
+			},
+			{
+				"name":"Engrave Bottom,
+				"type":","engrave",
+				“price":5.25,
+				"Media":{“source":"","type":"engrave" ,"max:16" },
+				"Fonts": [
+				{ "name": "Avalon","size": "12","weight": "normal" ,"max:16"  },
+				{ "name": "Century","size": "12", "weight": "normal" ,"max:16"  },
+				{ "name": "Helvetica", "size": "12", "weight": "normal" ,"max:16"  },
+				{ "name": "OldEnglish", "size": "12","weight": "normal" ,"max:16" },
+				{ "name": "RomanUL","size": "12","weight": "normal" ,"max:16"  },
+				{ "name": "Script", "size": "12","weight": "normal" ,"max:16" }
+				],
+				"transform": {“width":85, “height":28,"x":??,"y":??,"rotation:null },
+				"orientation": "horizontal",
+				"required": false,
+				"default": null
+			}
+		]
+	}
+]

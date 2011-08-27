@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
+
+    <head>
+        <title>${title}</title>
+        <meta name="google" value="notranslate" />         
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!-- Include CSS to eliminate any default margins/padding and set the height of the html element and 
+             the body element to 100%, because Firefox, or any Gecko based browser, interprets percentage as 
+             the percentage of the height of its parent container, which has to be set explicitly.  Fix for
+             Firefox 3.6 focus border issues.  Initially, don't display flashContent div so it won't show 
+             if JavaScript disabled.
+        -->
+        <style type="text/css" media="screen"> 
+            html, body  { height:100%; }
+            body { margin:0; padding:0; overflow:auto; text-align:center; 
+                   background-color: ${bgcolor}; }   
+            object:focus { outline:none; }
+            #flashContent { display:none; }
+        </style>
+        
+        
+        <!-- Enable Browser History by replacing useBrowserHistory tokens with two hyphens -->
+        <!-- BEGIN Browser History required section ${useBrowserHistory}>
+        <link rel="stylesheet" type="text/css" href="history/history.css" />
+        <script type="text/javascript" src="history/history.js"></script>
+        <!${useBrowserHistory} END Browser History required section -->  
+            
+        <script type="text/javascript" src="swfobject.js"></script>
+        <script type="text/javascript">
+            // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+            var swfVersionStr = "${version_major}.${version_minor}.${version_revision}";
+            // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+            var xiSwfUrlStr = "${expressInstallSwf}";
+           var jsonSansNL = '{"name":"testname", "sku":"1234", "desc":"lorem isum description of testname", "Faces":[{"name":"front", "image":"img/frontimage.jpg", "mask":"img/frontmask.jpg", "Layers":[{"name":"color", "type":"color", "Media":{"source":"0xffffff", "type":"color"}, "Fonts":null, "transform":{"width":"100%", "height":"100%", "x":null, "y":null, "rotation":null}, "orientation":"horizontal", "required":true, "default":null}, {"name":"color", "type":"image", "Media":{"source":"assets/images/img.jpg", "Fonts":null, "type":"image"}, "transform":{"width":"100", "height":"100", "x":"10", "y":"10", "rotation":"0"}, "orientation":"horizontal", "required":false, "default":null}, {"name":"color", "type":"text", "Media":{"source":"helloworld", "type":"text"}, "Fonts":[{"name":"arial", "size":"10", "weight":"normal"}, {"name":"bebas", "size":"15", "weight":"bold"}], "transform":{"width":"100", "height":"100", "x":"10", "y":"10", "rotation":"0"}, "orientation":"horizontal", "required":false, "default":null}, {"name":"layer 1", "type":"clipart", "Media":{"source":"23", "type":"clipart"}, "Fonts":null, "transform":{"width":"100", "height":"100", "x":"50", "y":"50", "rotation":"0"}, "orientation":"horizontal", "required":false, "default":null}]}]}';
+			var inputString = '%7B%22name%22%3A%22testname%22%2C%0A%22sku%22%3A%221234%22%2C%0A%22desc%22%3A%22lorem%20isum%20description%20of%20testname%22%2C%0A%22Faces%22%3A%5B%7B%22name%22%3A%22front%22%2C%0A%22image%22%3A%22img%2Ffrontimage.jpg%22%2C%0A%22mask%22%3A%22img%2Ffrontmask.jpg%22%2C%0A%22Layers%22%3A%5B%7B%22name%22%3A%22color%22%2C%0A%22type%22%3A%22color%22%2C%0A%22Media%22%3A%7B%22source%22%3A%220xffffff%22%2C%0A%22type%22%3A%22color%22%7D%2C%0A%22Fonts%22%3Anull%2C%0A%22transform%22%3A%7B%22width%22%3A%22100%25%22%2C%0A%22height%22%3A%22100%25%22%2C%0A%22x%22%3Anull%2C%0A%22y%22%3Anull%2C%0A%22rotation%22%3Anull%7D%2C%0A%22orientation%22%3A%22horizontal%22%2C%0A%22required%22%3Atrue%2C%0A%22default%22%3Anull%7D%2C%0A%7B%22name%22%3A%22color%22%2C%0A%22type%22%3A%22image%22%2C%0A%22Media%22%3A%7B%22source%22%3A%22assets%2Fimages%2Fimg.jpg%22%2C%0A%22Fonts%22%3Anull%2C%0A%22type%22%3A%22image%22%7D%2C%0A%22transform%22%3A%7B%22width%22%3A%22100%22%2C%0A%22height%22%3A%22100%22%2C%0A%22x%22%3A%2210%22%2C%0A%22y%22%3A%2210%22%2C%0A%22rotation%22%3A%220%22%7D%2C%0A%22orientation%22%3A%22horizontal%22%2C%0A%22required%22%3Afalse%2C%0A%22default%22%3Anull%7D%2C%0A%7B%22name%22%3A%22color%22%2C%0A%22type%22%3A%22text%22%2C%0A%22Media%22%3A%7B%22source%22%3A%22helloworld%22%2C%0A%22type%22%3A%22text%22%7D%2C%0A%22Fonts%22%3A%5B%7B%22name%22%3A%22arial%22%2C%0A%22size%22%3A%2210%22%2C%0A%22weight%22%3A%22normal%22%7D%2C%0A%7B%22name%22%3A%22bebas%22%2C%0A%22size%22%3A%2215%22%2C%0A%22weight%22%3A%22bold%22%7D%5D%2C%0A%22transform%22%3A%7B%22width%22%3A%22100%22%2C%0A%22height%22%3A%22100%22%2C%0A%22x%22%3A%2210%22%2C%0A%22y%22%3A%2210%22%2C%0A%22rotation%22%3A%220%22%7D%2C%0A%22orientation%22%3A%22horizontal%22%2C%0A%22required%22%3Afalse%2C%0A%22default%22%3Anull%7D%2C%0A%7B%22name%22%3A%22layer%201%22%2C%0A%22type%22%3A%22clipart%22%2C%0A%22Media%22%3A%7B%22source%22%3A%2223%22%2C%0A%22type%22%3A%22clipart%22%7D%2C%0A%22Fonts%22%3Anull%2C%0A%22transform%22%3A%7B%22width%22%3A%22100%22%2C%0A%22height%22%3A%22100%22%2C%0A%22x%22%3A%2250%22%2C%0A%22y%22%3A%2250%22%2C%0A%22rotation%22%3A%220%22%7D%2C%0A%22orientation%22%3A%22horizontal%22%2C%0A%22required%22%3Afalse%2C%0A%22default%22%3Anull%7D%5D%7D%5D%7D';
+			/*var encodedInputString=escape(inputString);
+  encodedInputString=encodedInputString.replace("+", "%2B");
+  encodedInputString=encodedInputString.replace("/", "%2F");
+  console.log(encodedInputString);*/
+			
+            var flashvars = {settings:inputString};
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "${bgcolor}";
+            params.allowscriptaccess = "sameDomain";
+            params.allowfullscreen = "true";
+            var attributes = {};
+            attributes.id = "${application}";
+            attributes.name = "${application}";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "${swf}.swf", "flashContent", 
+                "${width}", "${height}", 
+                swfVersionStr, xiSwfUrlStr, 
+                flashvars, params, attributes);
+            // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
+            swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+        </script>
+    </head>
+    <body>
+        <!-- SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough 
+             JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
+             when JavaScript is disabled.
+        -->
+        <div id="flashContent">
+            <p>
+                To view this page ensure that Adobe Flash Player version 
+                ${version_major}.${version_minor}.${version_revision} or greater is installed. 
+            </p>
+            <script type="text/javascript"> 
+                var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://"); 
+                document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
+                                + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
+            </script> 
+        </div>
+        
+        <noscript>
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="${width}" height="${height}" id="${application}">
+                <param name="movie" value="${swf}.swf" />
+                <param name="quality" value="high" />
+                <param name="bgcolor" value="${bgcolor}" />
+                <param name="allowScriptAccess" value="sameDomain" />
+                <param name="allowFullScreen" value="true" />
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="${swf}.swf" width="${width}" height="${height}">
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="${bgcolor}" />
+                    <param name="allowScriptAccess" value="sameDomain" />
+                    <param name="allowFullScreen" value="true" />
+                <!--<![endif]-->
+                <!--[if gte IE 6]>-->
+                    <p style="float:left; width:500px; margin-top:10px;"> 
+                        Either scripts and active content are not permitted to run or Adobe Flash Player version
+                        ${version_major}.${version_minor}.${version_revision} or greater is not installed.
+                    </p>
+                <!--<![endif]-->
+                    <a href="http://www.adobe.com/go/getflashplayer" style="float:left;">
+                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+                    </a>
+                <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+        </noscript>     
+   </body>
+</html>

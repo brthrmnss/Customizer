@@ -1,0 +1,31 @@
+Faces[
+	{
+		"name": "Front",
+		"image": "/thelighterimage.jpg",
+		"mask": null,
+		"Layers": [
+					{
+						"name": "MonogramLayer",
+						"type": "monogram",
+						"price": "??",
+						"Media": { "source": null,"type": "engrave","max": 3},
+						"Fonts": [
+								{ "name": "Avalon","size": "15mm","weight": "normal" },
+								{ "name": "Century","size": "15mm", "weight": "normal" },
+								{ "name": "Helvetica", "size": "15mm", "weight": "normal" },
+								{ "name": "OldEnglish", "size": "15mm","weight": "normal"},
+								{ "name": "RomanUL","size": "15mm","weight": "normal" },
+								{ "name": "Script", "size": "15mm","weight": "normal"}
+						],
+						"transform": {
+									"width": 22,"height": 62,
+									"x": 63,"y": -21,
+									"rotation": null
+						},
+						"orientation": "vertical",
+						"required": true,
+						"default": null
+					}
+		]
+	}
+]

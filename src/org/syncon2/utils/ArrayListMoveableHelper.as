@@ -1,6 +1,7 @@
 package  org.syncon2.utils
 {
 	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayList;
 	import mx.collections.IList;
 	
 	public class  ArrayListMoveableHelper 
@@ -73,7 +74,7 @@ package  org.syncon2.utils
 			trace( arr.toArray().join(', ') , result ); 
 			
 			
-			trace('ArrayListMovableHelper', 'test' , 'complete'  ) ; 
+			trace('ArrayCollectionMovableHelper', 'test' , 'complete'  ) ; 
 			return ;
 		}
 		

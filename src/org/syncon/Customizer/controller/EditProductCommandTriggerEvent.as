@@ -29,6 +29,7 @@ package org.syncon.Customizer.controller
 		public static const LAYER_COLOR_CHANGED:String = 'LAYER_COLOR_CHANGED.w';		
 		
 		public static const LOAD_PRODUCT:String = 'LOAD_PRODUCT.w';	
+		public static const PRODUCT_LOADED:String = 'PRODUCT_LOADED.w';			
 		
 		public static const MOVE_LAYER:String = 'MOVE_LAYER.w';
 		public static const LAYER_MOVED:String = 'LAYER_MOVED.w';				

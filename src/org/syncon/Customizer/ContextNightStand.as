@@ -27,10 +27,10 @@ package org.syncon.Customizer
 			InitMainContextCommandTriggerEvent.mapCommands( this.commandMap, InitMainContextCommand ); 
 			
 			this.commandMap.mapEvent( CreateDefaultDataTriggerEvent.CREATE, CreateDefaultDataCommand );
-
+			
 			this.commandMap.mapEvent( ExportJSONCommandTriggerEvent.EXPORT_JSON, ExportJSONCommand );
 			this.commandMap.mapEvent( ImportJSONCommandTriggerEvent.IMPORT_JSON, ImportJSONCommand );
-
+			
 			
 			EditProductCommandTriggerEvent.mapCommands( this.commandMap, EditProductCommand ) ; 
 			EditProductCommandTriggerEvent.fxAnimate = this.dispatchEvent; 
@@ -97,8 +97,11 @@ package org.syncon.Customizer
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) ) ; 
 			
-			this.dispatchEvent( new ImportJSONCommandTriggerEvent(
-				ImportJSONCommandTriggerEvent.IMPORT_JSON,this.importJsonStr)) ; 
+			if ( this.importJsonStr != null ) 
+			{
+				this.dispatchEvent( new ImportJSONCommandTriggerEvent(
+					ImportJSONCommandTriggerEvent.IMPORT_JSON,this.importJsonStr)) ;
+			}
 			/*
 			this.dispatchEvent( new LoadSoundsTriggerEvent(
 			LoadSoundsTriggerEvent.LOAD_SOUNDS ) ) ; 
@@ -135,11 +138,12 @@ package org.syncon.Customizer
 		}
 		
 		public var subContexts : Array = []; 
-		private var importJsonStr:String;
+		private var importJsonStr:String =  '{"name":"testname", "sku":"1234", "desc":"lorem isum description of testname", "Faces":[{"name":"front", "image":"img/frontimage.jpg", "mask":"img/frontmask.jpg", "Layers":[{"name":"color", "type":"color", "Media":{"source":"0xffffff", "type":"color"}, "Fonts":null, "transform":{"width":"100%", "height":"100%", "x":null, "y":null, "rotation":null}, "orientation":"horizontal", "required":true, "default":null}, {"name":"color", "type":"image", "Media":{"source":"assets/images/img.jpg", "Fonts":null, "type":"image"}, "transform":{"width":"100", "height":"100", "x":"10", "y":"10", "rotation":"0"}, "orientation":"horizontal", "required":false, "default":null}, {"name":"color", "type":"text", "Media":{"source":"helloworld", "type":"text"}, "Fonts":[{"name":"arial", "size":"10", "weight":"normal"}, {"name":"bebas", "size":"15", "weight":"bold"}], "transform":{"width":"100", "height":"100", "x":"10", "y":"10", "rotation":"0"}, "orientation":"horizontal", "required":false, "default":null}, {"name":"layer 1", "type":"clipart", "Media":{"source":"23", "type":"clipart"}, "Fonts":null, "transform":{"width":"100", "height":"100", "x":"50", "y":"50", "rotation":"0"}, "orientation":"horizontal", "required":false, "default":null}]}]}';;
 		
 		public function importJson(str:String):void{
-				this.importJsonStr=str;
-
+			if ( str == null ) return; 
+			this.importJsonStr=str;
+			
 			
 		}
 		public function newMultipler( n : Number ) : void

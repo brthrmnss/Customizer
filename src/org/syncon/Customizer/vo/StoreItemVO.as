@@ -1,7 +1,8 @@
 package  org.syncon.Customizer.vo
 {
-	import org.syncon.onenote.onenotehelpers.base.IPageVO;
 	import mx.collections.ArrayCollection;
+	
+	import org.syncon.onenote.onenotehelpers.base.IPageVO;
 
 	/**
 	 * 
@@ -14,6 +15,13 @@ package  org.syncon.Customizer.vo
 		 * Image to show in background 
 		 * */
 		public var base_image_url : String = ''; 
+		
+		/**
+		 * Image to show with obscure color layer mask 
+		 * */
+		public var image_color_overlay : String = ''; 
+		public var image_mask : String = ''; 
+		
 		public var more_info_url : String = ''; 
 		 
 		public var limits : Object   = { }; 

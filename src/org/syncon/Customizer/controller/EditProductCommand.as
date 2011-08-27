@@ -242,7 +242,13 @@ package org.syncon.Customizer.controller
 					//if ( event.data2 != null ) 
 					//this.model.getColorLayer(event.data2 )
 					colorLayer = this.model.layerColor; //this.model.currentLayer as ColorLayerVO; 
-					
+					if ( colorLayer == null ) 
+					{
+						trace('EditProductCommand','warning:', 
+							EditProductCommandTriggerEvent.CHANGE_LAYER_COLOR, 
+							'cannot set color, color layer not defined'); 
+						return; 
+					}
 					event.oldData = colorLayer.color; 
 					colorLayer.color = ( event.data ); 
 					colorLayer.update('color'); 
@@ -287,7 +293,7 @@ package org.syncon.Customizer.controller
 						//this.model.currentLayer = imgLayer; 
 						this.model.baseLayer = imgLayer; 
 						
-						//if layers are not predefied, add default
+						//if layers are not predefied, add default, for testing purposes 
 						if ( product.layers  == null )
 						{
 							var colorLayer : ColorLayerVO = new ColorLayerVO(); 
@@ -326,6 +332,24 @@ package org.syncon.Customizer.controller
 						{
 							//disable adding undos 
 							this.model.blockUndoAdding = true; 
+							
+							if ( product.image_color_overlay != null &&  product.image_color_overlay != ''  ) 
+							{
+								colorLayer  = new ColorLayerVO(); 
+								colorLayer.name = 'Color Base Image';
+								colorLayer.url = product.image_color_overlay; 
+								colorLayer.locked = true; 
+								colorLayer.showInList = false; 
+								this.model.addLayer( colorLayer ) ;
+								if ( event.firstTime ) 
+								{
+									colorLayer.x = 0; 
+									colorLayer.y = 100; 
+								}
+								this.model.layerColor = colorLayer; 
+							}		
+							
+							
 							for each ( layer in product.layers ) 
 							{
 								if ( layer is ImageLayerVO ) 
@@ -340,11 +364,14 @@ package org.syncon.Customizer.controller
 									this.dispatch( new EditProductCommandTriggerEvent(
 										EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer.text ) ) ; 
 								}								
-								
+							}	
+							
+							if ( product.image_mask !=null && product.image_mask != ''   ) 
+							{
 								//use mask layer as well ..
 								imgLayer = new ImageLayerVO(); 
 								imgLayer.name = 'Mask  Image';
-								imgLayer.url = product.base_image_url; 
+								imgLayer.url = product.image_mask; 
 								//imgLayer.url = 'assets/images/img.jpg'
 								imgLayer.locked = true; 
 								imgLayer.showInList = false; 
@@ -352,12 +379,11 @@ package org.syncon.Customizer.controller
 								this.model.addLayer( imgLayer ) ;
 								//	this.model.currentLayer = imgLayer; 
 								this.model.layerMask = imgLayer; 
-								
-								
-							}
+							}	
+							
 							this.model.blockUndoAdding = false; 
+							
 						}
-						
 					}
 					this.model.undo.clearAll(); 
 					this.model.layersChanged(); 
@@ -371,7 +397,7 @@ package org.syncon.Customizer.controller
 				//this.model.currentPage.updated();
 				this.model.layersChanged(); 
 				this.dispatch( new EditProductCommandTriggerEvent(
-					EditProductCommandTriggerEvent.IMAGE_LAYER_ADDED, event, null ) ) 
+					EditProductCommandTriggerEvent.PRODUCT_LOADED, event, null ) ) 
 			}
 			/*	if ( event.type == EditProductCommandTriggerEvent.MOVE_LAYER ) 
 			{

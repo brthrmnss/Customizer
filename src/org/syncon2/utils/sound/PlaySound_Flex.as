@@ -6,6 +6,7 @@ package org.syncon2.utils.sound
 	import flash.net.URLRequest;
 	
 	import mx.core.SoundAsset;
+	
 	import org.syncon.TalkingClock.vo.SoundVO;
 	
 	
@@ -26,13 +27,13 @@ package org.syncon2.utils.sound
 		public var soundControl:SoundChannel;
 		
 		public var sound : Sound; 
-		public function playSound( s : SoundVO, fxCallAfterSoundCompletePlaying_ : Function = null ) : void
+		public function playSound( s : Object, fxCallAfterSoundCompletePlaying_ : Function = null ) : void
 		{
 			//NightStandConstants.PlaySound.playSound( s, fxCallAfterSoundCompletePlaying_ ); 
 			this.playSound2( s.url ); 
 			this.fxCallAfterSoundCompletePlaying = fxCallAfterSoundCompletePlaying_
 		}
-		public function playSound2(url : String , times : int = 1 ) : void
+		public function playSound2(url : String , times : int = 1, x : Object = null, fxDone : Function = null ) : void
 		{
 			
 			var soundReq:URLRequest = new URLRequest(url);

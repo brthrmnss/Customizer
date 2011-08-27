@@ -60,6 +60,11 @@
 										icon="assets/images/undo.jpg" 
 										click="onUndo(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+		<smallComponents:MainMenuButton label="redo"   id="btnRedo" 
+										icon="assets/images/redo.jpg" 
+										click=""
+										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+		
 		<smallComponents:MainMenuButton label="Background" visible="true" includeInLayout="true" 
 										icon="assets/images/background.jpg"
 										click="swithModes_clickHandler(event)"

@@ -14,11 +14,13 @@ package  org.virid.component
 		
 		override public function onRegister():void
 		{
-			eventMap.mapListener(eventDispatcher, NightStandModelEvent.BASE_ITEM_CHANGED, 
+			/*eventMap.mapListener(eventDispatcher, NightStandModelEvent.BASE_ITEM_CHANGED, 
 				this.onBaseItemChanged);	
 			this.onBaseItemChanged( null ) 
-			
-			 
+			*/
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.FACE_CHANGED, 
+				this.onFaceChanged);	
+			this.onFaceChanged( null ) 
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.LAYERS_CHANGED, 
 				this.onLayersChanged);				
 			
@@ -43,14 +45,18 @@ package  org.virid.component
 			//this.onBaseItemChanged(null); 
 			this.ui.viewer22.controller.displayDp(); 
 		}
-		
+		/*
 		private function onBaseItemChanged(param0:Object):void
 		{
 			this.ui.viewer22.controller.dataProvider  = this.model.baseItem; 
 			//this.ui.list.dataProvider = this.model.layers; 
 		}
- 
-		
+ 		*/
+		private function onFaceChanged(param0:Object):void
+		{
+			this.ui.viewer22.controller.dataProvider  = this.model.currentFace; 
+			//this.ui.list.dataProvider = this.model.layers; 
+		}
 		
 		
 	}

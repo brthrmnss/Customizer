@@ -31,6 +31,10 @@ package org.syncon.Customizer
 			this.commandMap.mapEvent( ExportJSONCommandTriggerEvent.EXPORT_JSON, ExportJSONCommand );
 			this.commandMap.mapEvent( ImportJSONCommandTriggerEvent.IMPORT_JSON, ImportJSONCommand );
 			
+			this.commandMap.mapEvent( ImportViridJSONCommandTriggerEvent.IMPORT_JSON, ImportViridJSONCommand );
+			
+			
+			
 			
 			EditProductCommandTriggerEvent.mapCommands( this.commandMap, EditProductCommand ) ; 
 			EditProductCommandTriggerEvent.fxAnimate = this.dispatchEvent; 
@@ -97,6 +101,12 @@ package org.syncon.Customizer
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) ) ; 
 			
+			if ( this.importJsonStrVirid != null ) 
+			{
+				this.dispatchEvent( new ImportViridJSONCommandTriggerEvent(
+					ImportViridJSONCommandTriggerEvent.IMPORT_JSON,this.importJsonStr)) ;
+			}
+			
 			if ( this.importJsonStr != null ) 
 			{
 				this.dispatchEvent( new ImportJSONCommandTriggerEvent(
@@ -138,14 +148,14 @@ package org.syncon.Customizer
 		}
 		
 		public var subContexts : Array = []; 
-		private var importJsonStr:String =  '{"name":"testname", "sku":"1234", "desc":"lorem isum description of testname", "Faces":[{"name":"front", "image":"img/frontimage.jpg", "mask":"img/frontmask.jpg", "Layers":[{"name":"color", "type":"color", "Media":{"source":"0xffffff", "type":"color"}, "Fonts":null, "transform":{"width":"100%", "height":"100%", "x":null, "y":null, "rotation":null}, "orientation":"horizontal", "required":true, "default":null}, {"name":"color", "type":"image", "Media":{"source":"assets/images/img.jpg", "Fonts":null, "type":"image"}, "transform":{"width":"100", "height":"100", "x":"10", "y":"10", "rotation":"0"}, "orientation":"horizontal", "required":false, "default":null}, {"name":"color", "type":"text", "Media":{"source":"helloworld", "type":"text"}, "Fonts":[{"name":"arial", "size":"10", "weight":"normal"}, {"name":"bebas", "size":"15", "weight":"bold"}], "transform":{"width":"100", "height":"100", "x":"10", "y":"10", "rotation":"0"}, "orientation":"horizontal", "required":false, "default":null}, {"name":"layer 1", "type":"clipart", "Media":{"source":"23", "type":"clipart"}, "Fonts":null, "transform":{"width":"100", "height":"100", "x":"50", "y":"50", "rotation":"0"}, "orientation":"horizontal", "required":false, "default":null}]}]}';;
-		
-		public function importJson(str:String):void{
+		private var importJsonStr:String ;//=  '{"name":"testname","sku":"1234","desc":"lorem isum description of testname","Faces":[{"name":"front","image":"assets/products/162-000003-Z_Configure.jpg","mask":"","layer_lock":true,"Layers":[{"name":"color","type":"color","Media":{"source":"0xffffff","type":"color"},"Fonts":null,"transform":{"width":"100%","height":"100%","x":null,"y":null,"rotation":null},"orientation":"horizontal","required":true,"default":null},{"name":"color","type":"image","Media":{"source":"","Fonts":null,"type":"image"},"transform":{"width":"100","height":"100","x":"10","y":"10","rotation":"0"},"orientation":"horizontal","required":false,"default":null},{"name":"Color Layer","type":"text","Media":{"source":"helloworld","type":"text"},"Fonts":[{"name":"arial","size":"10","weight":"normal"},{"name":"bebas","size":"15","weight":"bold"}],"transform":{"width":"100","height":"100","x":"10","y":"10","rotation":"0"},"orientation":"horizontal","required":false,"default":null},{"name":"Clipart Layer 1","type":"clipart","Media":{"source":"assets/images/pokemon.png","type":"clipart"},"Fonts":null,"transform":{"width":"100","height":"100","x":"50","y":"50","rotation":"0"},"orientation":"horizontal","required":false,"default":null},{"name":"Clipart Layer 2","type":"clipart","Media":{"source":null,"type":"clipart"},"Fonts":null,"transform":{"width":null,"height":null,"x":null,"y":null,"rotation":null},"orientation":"horizontal","required":false,"default":null},{"name":"Clipart Layer 3","type":"clipart","Media":{"source":null,"type":"clipart"},"Fonts":null,"transform":{"width":null,"height":null,"x":null,"y":null,"rotation":null},"orientation":"horizontal","required":false,"default":null}]}]}';
+		private var importJsonStrVirid : String; 
+		public function importJson(str:String):void
+		{
 			if ( str == null ) return; 
 			this.importJsonStr=str;
-			
-			
 		}
+		
 		public function newMultipler( n : Number ) : void
 		{
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(

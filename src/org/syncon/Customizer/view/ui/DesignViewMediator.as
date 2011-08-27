@@ -14,9 +14,9 @@ package   org.syncon.Customizer.view.ui
 		
 		override public function onRegister():void
 		{
-			eventMap.mapListener(eventDispatcher, NightStandModelEvent.BASE_ITEM_CHANGED, 
-				this.onBaseItemChanged);	
-			this.onBaseItemChanged( null ) 
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.FACE_CHANGED, 
+				this.onFaceChanged);	
+			this.onFaceChanged( null ) 
 			
 			this.ui.addEventListener( DesignView.UPDATE_JSON, 
 				this.onUpdateJSON);	
@@ -48,12 +48,16 @@ package   org.syncon.Customizer.view.ui
 			this.ui.viewer22.controller.displayDp(); 
 		}
 		
-		private function onBaseItemChanged(param0:Object):void
+/*		private function onBaseItemChanged(param0:Object):void
 		{
 			this.ui.viewer22.controller.dataProvider  = this.model.baseItem; 
 			//this.ui.list.dataProvider = this.model.layers; 
+		}*/
+		private function onFaceChanged(param0:Object):void
+		{
+			this.ui.viewer22.controller.dataProvider  = this.model.currentFace; 
+			//this.ui.list.dataProvider = this.model.layers; 
 		}
-		
 		private function onUpdateJSON(e:  CustomEvent): void
 		{
 			var obj : Object = e.data

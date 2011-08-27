@@ -2,6 +2,7 @@ package org.syncon.Customizer.controller
 {
 	import org.robotlegs.mvcs.Command;
 	import org.syncon.Customizer.model.NightStandModel;
+	import org.syncon.Customizer.vo.FaceVO;
 	import org.syncon.Customizer.vo.ImageVO;
 	import org.syncon.Customizer.vo.StoreItemVO;
 	import org.syncon2.utils.MakeVOs;
@@ -45,40 +46,11 @@ package org.syncon.Customizer.controller
 			
 			if ( event.type == InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) 
 			{
+				this.createDefaultProduct() ; 
+				this.createClipArtImages(); 
 				if ( this.model.flex ) 
 				{
-					var names : Array = [] ; 
-					for  (var i : int = 0 ; i < 150; i++ )
-					{
-						names.push( 'Title ' + i.toString() ) ; 
-					}
-					var imgs : Array = MakeVOs.makeObjs( names, ImageVO, 'name' )
-					for each ( var img : ImageVO in imgs ) 
-					{
-						img.url = 'assets/images/img.jpg'; 
-					}
-					this.model.loadImages( imgs ) ; 
 					
-					
-					var base : StoreItemVO = new StoreItemVO(); 
-					base.name = 'Zippo'
-					base.base_image_url = 'assets/images/imgbase.png'
-					this.model.baseItem = base; 
-					/*var l :  Array = [] ; 
-					l = MakeVOs.makeObjs(['L1', 'L2'], LessonVO, 'name' )
-					var lp : LessonGroupVO = new LessonGroupVO(); 
-					lp.lessons = new ArrayList( l ) ; 
-					//this.model.loadLessons( l ); 
-					
-					var firstLesson : LessonVO = lp.lessons.getItemAt( 0 ) as LessonVO
-					l =  MakeVOs.makeObjs(['Ls1', 'Ls2', 'Ls3'], LessonSetVO, 'name' )
-					firstLesson.sets = new ArrayList( l ) ; 
-					
-					var set : LessonSetVO = firstLesson.sets.getItemAt( 0 ) as LessonSetVO
-					l =  MakeVOs.makeObjs(['dog', '2', '3','4'], LessonItemVO, 'name' )
-					set.items = new ArrayList( l ) ; 					
-					
-					this.model.currentLessonPlan =  lp ; */
 				}
 			}	
 			
@@ -92,6 +64,46 @@ package org.syncon.Customizer.controller
 			
 		}
 		
+		private function createClipArtImages():void
+		{
+			var names : Array = [] ; 
+			for  (var i : int = 0 ; i < 150; i++ )
+			{
+				names.push( 'Title ' + i.toString() ) ; 
+			}
+			var imgs : Array = MakeVOs.makeObjs( names, ImageVO, 'name' )
+			for each ( var img : ImageVO in imgs ) 
+			{
+				img.url = 'assets/images/img.jpg'; 
+			}
+			this.model.loadImages( imgs ) ; 
+		}
+		
+		private function createDefaultProduct():void
+		{
+			var base : StoreItemVO = new StoreItemVO(); 
+			base.name = 'Zippo'
+			var face : FaceVO = new FaceVO()
+			
+			face.base_image_url = 'assets/images/imgbase.png'
+			base.faces.addItem( face ) 
+			this.model.baseItem = base; 
+			/*var l :  Array = [] ; 
+			l = MakeVOs.makeObjs(['L1', 'L2'], LessonVO, 'name' )
+			var lp : LessonGroupVO = new LessonGroupVO(); 
+			lp.lessons = new ArrayList( l ) ; 
+			//this.model.loadLessons( l ); 
+			
+			var firstLesson : LessonVO = lp.lessons.getItemAt( 0 ) as LessonVO
+			l =  MakeVOs.makeObjs(['Ls1', 'Ls2', 'Ls3'], LessonSetVO, 'name' )
+			firstLesson.sets = new ArrayList( l ) ; 
+			
+			var set : LessonSetVO = firstLesson.sets.getItemAt( 0 ) as LessonSetVO
+			l =  MakeVOs.makeObjs(['dog', '2', '3','4'], LessonItemVO, 'name' )
+			set.items = new ArrayList( l ) ; 					
+			
+			this.model.currentLessonPlan =  lp ; */
+		}		
 		
 		
 		

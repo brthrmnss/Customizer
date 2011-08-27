@@ -31,6 +31,9 @@ package org.syncon.Customizer.controller
 		public static const LOAD_PRODUCT:String = 'LOAD_PRODUCT.w';	
 		public static const PRODUCT_LOADED:String = 'PRODUCT_LOADED.w';			
 		
+		public static const LOAD_FACE:String = 'LOAD_FACE.w';	
+		public static const FACE_LOADED:String = 'FACE_LOADED.w';			
+		
 		public static const MOVE_LAYER:String = 'MOVE_LAYER.w';
 		public static const LAYER_MOVED:String = 'LAYER_MOVED.w';				
 		
@@ -119,7 +122,8 @@ package org.syncon.Customizer.controller
 				REMOVE_LAYER,
 				
 				//LAYER_MOVED,
-				LOAD_PRODUCT
+				LOAD_PRODUCT,
+				LOAD_FACE,
 				
 			]
 			for each ( var command : String in types ) 

@@ -8,24 +8,13 @@ package  org.syncon.Customizer.vo
 	 * 
 	 * Contains information to setup this product
 	 * */
-	public class StoreItemVO  implements  IPageVO
+	public class StoreItemVO  //implements  IPageVO
 	{
 		public var name :  String = '';
-		/**
-		 * Image to show in background 
-		 * */
-		public var base_image_url : String = ''; 
 		
-		/**
-		 * Image to show with obscure color layer mask 
-		 * */
-		public var image_color_overlay : String = ''; 
-		public var image_mask : String = ''; 
+		public var faces : ArrayCollection = new ArrayCollection()
 		
-		public var more_info_url : String = ''; 
-		 
-		public var limits : Object   = { }; 
-		
+		/*
 		
 		private var _height : Number; 
 		public function set height ( h : Number ) : void
@@ -75,7 +64,12 @@ package  org.syncon.Customizer.vo
 		{
 			_lists = value;
 		}
+		*/
 		
+		public function export() : void
+		{
+			
+		}
 		
 	}
 }

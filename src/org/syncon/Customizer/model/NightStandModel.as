@@ -158,12 +158,24 @@ package org.syncon.Customizer.model
 			if ( e.isDefaultPrevented() ) 
 				return; 
 			_baseItem = value;
-			this.layers = value.lists; 
+			//this.layers = value.lists; 
 			this.dispatch( new EditProductCommandTriggerEvent(
 				EditProductCommandTriggerEvent.LOAD_PRODUCT, value ) ) ; 
 			
 			this.dispatch( new NightStandModelEvent( NightStandModelEvent.BASE_ITEM_CHANGED, value ) ) 
 		}
+		
+		private var _currentFace:  FaceVO;
+		public function get currentFace(): FaceVO 	{ return _currentFace; }
+		public function set currentFace(value:FaceVO):void { 
+			var e : Event =  new NightStandModelEvent( NightStandModelEvent.FACE_CHANGING, value )
+			this.dispatch( e ) 
+			if ( e.isDefaultPrevented() ) 
+				return; 
+			_currentFace = value;
+			this.dispatch( new NightStandModelEvent( NightStandModelEvent.FACE_CHANGED, value ) ) 
+		}
+		
 		
 		private var _currentLayer:  LayerBaseVO;
 		public function get currentLayer(): LayerBaseVO 	{ return _currentLayer; }

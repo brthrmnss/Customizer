@@ -4,6 +4,7 @@ package org.syncon.Customizer.controller
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
 	import org.syncon.Customizer.vo.ColorLayerVO;
+	import org.syncon.Customizer.vo.FaceVO;
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.Customizer.vo.StoreItemVO;
@@ -268,20 +269,174 @@ package org.syncon.Customizer.controller
 			
 			
 			
-			
+			//try to grab first face and load it 
 			if ( event.type == EditProductCommandTriggerEvent.LOAD_PRODUCT ) 
 			{
 				if ( event.undo == false )
 				{
 					//event.oldData = this.model.cur
 					var product : StoreItemVO = event.data as StoreItemVO; 
+					var face : FaceVO = event.data2 as FaceVO //use data2 to load a specific face
+					if ( face == null ) 
+						face = product.faces.getItemAt( 0 ) as FaceVO
+					if ( face == null ) 
+						throw 'EditProductCommand', 'LOAD_PRODUCT', 'create face first' 
+					
+					//load in product stuff 
+					
+					//load in face
+					this.dispatch( new EditProductCommandTriggerEvent(
+						EditProductCommandTriggerEvent.LOAD_FACE, face, null ) ) 
+					/*	
 					this.model.layers.removeAll();
 					this.model.baseLayer = null; 
 					if ( product.base_image_url != null ) 
 					{
+					imgLayer = new ImageLayerVO(); 
+					imgLayer.name = 'Base Image';
+					imgLayer.url = product.base_image_url; 
+					imgLayer.locked = true; 
+					imgLayer.showInList = false; 
+					this.model.addLayer( imgLayer ) ;
+					if ( event.firstTime ) 
+					{
+					imgLayer.x = 0; 
+					imgLayer.y = 100; 
+					}
+					//this.model.currentLayer = imgLayer; 
+					this.model.baseLayer = imgLayer; 
+					
+					//if layers are not predefied, add default, for testing purposes 
+					if ( product.layers  == null )
+					{
+					var colorLayer : ColorLayerVO = new ColorLayerVO(); 
+					colorLayer.name = 'Color Base Image';
+					colorLayer.url = product.base_image_url; 
+					colorLayer.locked = true; 
+					colorLayer.showInList = false; 
+					this.model.addLayer( colorLayer ) ;
+					if ( event.firstTime ) 
+					{
+					colorLayer.x = 0; 
+					colorLayer.y = 100; 
+					}
+					this.model.layerColor = colorLayer; 
+					
+					//order doesn't matter as it doesn't appear ...
+					imgLayer = new ImageLayerVO(); 
+					imgLayer.name = 'Mask  Image';
+					imgLayer.url = product.base_image_url; 
+					//imgLayer.url = 'assets/images/img.jpg'
+					imgLayer.locked = true; 
+					imgLayer.showInList = false; 
+					imgLayer.mask = true; 
+					this.model.addLayer( imgLayer ) ;
+					if ( event.firstTime ) 
+					{
+					imgLayer.x = 0; 
+					imgLayer.y = 100; 
+					}
+					//	this.model.currentLayer = imgLayer; 
+					this.model.layerMask = imgLayer; 
+					
+					//this.model.currentLayer = colorLayer; 
+					}
+					else //add from layers 
+					{
+					//disable adding undos 
+					this.model.blockUndoAdding = true; 
+					
+					if ( product.image_color_overlay != null &&  product.image_color_overlay != ''  ) 
+					{
+					colorLayer  = new ColorLayerVO(); 
+					colorLayer.name = 'Color Base Image';
+					colorLayer.url = product.image_color_overlay; 
+					colorLayer.locked = true; 
+					colorLayer.showInList = false; 
+					this.model.addLayer( colorLayer ) ;
+					if ( event.firstTime ) 
+					{
+					colorLayer.x = 0; 
+					colorLayer.y = 100; 
+					}
+					this.model.layerColor = colorLayer; 
+					}		
+					
+					
+					for each ( layer in product.layers ) 
+					{
+					if ( layer is ImageLayerVO ) 
+					{
+					imgLayer = layer as ImageLayerVO
+					this.dispatch( new EditProductCommandTriggerEvent(
+					EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, imgLayer.url ) ) ; 
+					}
+					if ( layer is TextLayerVO ) 
+					{
+					txtLayer = layer as TextLayerVO
+					this.dispatch( new EditProductCommandTriggerEvent(
+					EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer.text ) ) ; 
+					}								
+					}	
+					
+					if ( product.image_mask !=null && product.image_mask != ''   ) 
+					{
+					//use mask layer as well ..
+					imgLayer = new ImageLayerVO(); 
+					imgLayer.name = 'Mask  Image';
+					imgLayer.url = product.image_mask; 
+					//imgLayer.url = 'assets/images/img.jpg'
+					imgLayer.locked = true; 
+					imgLayer.showInList = false; 
+					imgLayer.mask = true; 
+					this.model.addLayer( imgLayer ) ;
+					//	this.model.currentLayer = imgLayer; 
+					this.model.layerMask = imgLayer; 
+					}	
+					
+					this.model.blockUndoAdding = false; 
+					
+					}
+					}
+					this.model.undo.clearAll(); 
+					this.model.layersChanged(); */
+				}
+				else
+				{
+					undoable = false 
+					//oldName = event.oldData.toString(); 
+					//this.model.currentPage.name = oldName
+				}		
+				//this.model.currentPage.updated();
+				this.model.layersChanged(); 
+				this.dispatch( new EditProductCommandTriggerEvent(
+					EditProductCommandTriggerEvent.PRODUCT_LOADED, event, null ) ) 
+			}
+			
+			
+			//try to grab first face and load it 
+			if ( event.type == EditProductCommandTriggerEvent.LOAD_FACE ) 
+			{
+				undoable = false 
+				if ( event.undo == false )
+				{
+					
+					//event.oldData = this.model.cur
+					face  = event.data as FaceVO
+					if ( face == null ) 
+						throw 'EditProductCommand', 'LOAD_FACE', 'face is null'// face first' 
+					this.model.currentFace  = face; 
+					//load in product stuff 
+					//maybe save layers on the face?...
+					//this.model.layers.removeAll();
+					this.model.layers.source = face.layers.source; 
+					this.model.layers.refresh(); 
+					this.model.baseLayer = null; 
+					if ( face.base_image_url != null ) 
+					{
 						imgLayer = new ImageLayerVO(); 
 						imgLayer.name = 'Base Image';
-						imgLayer.url = product.base_image_url; 
+						imgLayer.url = face.base_image_url; 
 						imgLayer.locked = true; 
 						imgLayer.showInList = false; 
 						this.model.addLayer( imgLayer ) ;
@@ -292,13 +447,52 @@ package org.syncon.Customizer.controller
 						}
 						//this.model.currentLayer = imgLayer; 
 						this.model.baseLayer = imgLayer; 
-						
-						//if layers are not predefied, add default, for testing purposes 
-						if ( product.layers  == null )
+					}	
+					//if layers are not predefied, add default, for testing purposes 
+					if ( face.layersToImport  == null )
+					{
+						var colorLayer : ColorLayerVO = new ColorLayerVO(); 
+						colorLayer.name = 'Color Base Image';
+						colorLayer.url = face.base_image_url; 
+						colorLayer.locked = true; 
+						colorLayer.showInList = false; 
+						this.model.addLayer( colorLayer ) ;
+						if ( event.firstTime ) 
 						{
-							var colorLayer : ColorLayerVO = new ColorLayerVO(); 
+							colorLayer.x = 0; 
+							colorLayer.y = 100; 
+						}
+						this.model.layerColor = colorLayer; 
+						
+						//order doesn't matter as it doesn't appear ...
+						imgLayer = new ImageLayerVO(); 
+						imgLayer.name = 'Mask  Image';
+						imgLayer.url = face.base_image_url; 
+						//imgLayer.url = 'assets/images/img.jpg'
+						imgLayer.locked = true; 
+						imgLayer.showInList = false; 
+						imgLayer.mask = true; 
+						this.model.addLayer( imgLayer ) ;
+						if ( event.firstTime ) 
+						{
+							imgLayer.x = 0; 
+							imgLayer.y = 100; 
+						}
+						//	this.model.currentLayer = imgLayer; 
+						this.model.layerMask = imgLayer; 
+						
+						//this.model.currentLayer = colorLayer; 
+					}
+					else //add from layers 
+					{
+						//disable adding undos 
+						this.model.blockUndoAdding = true; 
+						
+						if ( face.image_color_overlay != null &&  face.image_color_overlay != ''  ) 
+						{
+							colorLayer  = new ColorLayerVO(); 
 							colorLayer.name = 'Color Base Image';
-							colorLayer.url = product.base_image_url; 
+							colorLayer.url = face.image_color_overlay; 
 							colorLayer.locked = true; 
 							colorLayer.showInList = false; 
 							this.model.addLayer( colorLayer ) ;
@@ -308,82 +502,42 @@ package org.syncon.Customizer.controller
 								colorLayer.y = 100; 
 							}
 							this.model.layerColor = colorLayer; 
-							
-							//order doesn't matter as it doesn't appear ...
+						}		
+						
+						
+						for each ( layer in face.layersToImport ) 
+						{
+							if ( layer is ImageLayerVO ) 
+							{
+								imgLayer = layer as ImageLayerVO
+								this.dispatch( new EditProductCommandTriggerEvent(
+									EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, imgLayer.url ) ) ; 
+							}
+							if ( layer is TextLayerVO ) 
+							{
+								txtLayer = layer as TextLayerVO
+								this.dispatch( new EditProductCommandTriggerEvent(
+									EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer.text ) ) ; 
+							}								
+						}	
+						
+						if ( face.image_mask !=null && face.image_mask != ''   ) 
+						{
+							//use mask layer as well ..
 							imgLayer = new ImageLayerVO(); 
 							imgLayer.name = 'Mask  Image';
-							imgLayer.url = product.base_image_url; 
+							imgLayer.url = face.image_mask; 
 							//imgLayer.url = 'assets/images/img.jpg'
 							imgLayer.locked = true; 
 							imgLayer.showInList = false; 
 							imgLayer.mask = true; 
 							this.model.addLayer( imgLayer ) ;
-							if ( event.firstTime ) 
-							{
-								imgLayer.x = 0; 
-								imgLayer.y = 100; 
-							}
 							//	this.model.currentLayer = imgLayer; 
 							this.model.layerMask = imgLayer; 
-							
-							//this.model.currentLayer = colorLayer; 
-						}
-						else //add from layers 
-						{
-							//disable adding undos 
-							this.model.blockUndoAdding = true; 
-							
-							if ( product.image_color_overlay != null &&  product.image_color_overlay != ''  ) 
-							{
-								colorLayer  = new ColorLayerVO(); 
-								colorLayer.name = 'Color Base Image';
-								colorLayer.url = product.image_color_overlay; 
-								colorLayer.locked = true; 
-								colorLayer.showInList = false; 
-								this.model.addLayer( colorLayer ) ;
-								if ( event.firstTime ) 
-								{
-									colorLayer.x = 0; 
-									colorLayer.y = 100; 
-								}
-								this.model.layerColor = colorLayer; 
-							}		
-							
-							
-							for each ( layer in product.layers ) 
-							{
-								if ( layer is ImageLayerVO ) 
-								{
-									imgLayer = layer as ImageLayerVO
-									this.dispatch( new EditProductCommandTriggerEvent(
-										EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, imgLayer.url ) ) ; 
-								}
-								if ( layer is TextLayerVO ) 
-								{
-									txtLayer = layer as TextLayerVO
-									this.dispatch( new EditProductCommandTriggerEvent(
-										EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer.text ) ) ; 
-								}								
-							}	
-							
-							if ( product.image_mask !=null && product.image_mask != ''   ) 
-							{
-								//use mask layer as well ..
-								imgLayer = new ImageLayerVO(); 
-								imgLayer.name = 'Mask  Image';
-								imgLayer.url = product.image_mask; 
-								//imgLayer.url = 'assets/images/img.jpg'
-								imgLayer.locked = true; 
-								imgLayer.showInList = false; 
-								imgLayer.mask = true; 
-								this.model.addLayer( imgLayer ) ;
-								//	this.model.currentLayer = imgLayer; 
-								this.model.layerMask = imgLayer; 
-							}	
-							
-							this.model.blockUndoAdding = false; 
-							
-						}
+						}	
+						
+						this.model.blockUndoAdding = false; 
+						
 					}
 					this.model.undo.clearAll(); 
 					this.model.layersChanged(); 
@@ -397,8 +551,13 @@ package org.syncon.Customizer.controller
 				//this.model.currentPage.updated();
 				this.model.layersChanged(); 
 				this.dispatch( new EditProductCommandTriggerEvent(
-					EditProductCommandTriggerEvent.PRODUCT_LOADED, event, null ) ) 
+					EditProductCommandTriggerEvent.FACE_LOADED, event, null ) ) 
 			}
+			
+			
+			
+			
+			
 			/*	if ( event.type == EditProductCommandTriggerEvent.MOVE_LAYER ) 
 			{
 			

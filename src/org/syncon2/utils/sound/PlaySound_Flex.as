@@ -6,10 +6,8 @@ package org.syncon2.utils.sound
 	import flash.net.URLRequest;
 	
 	import mx.core.SoundAsset;
-	
-	import org.syncon.Customizer.controller.GetSoundTriggerEvent;
-	import org.syncon.Customizer.model.NightStandConstants;
 	import org.syncon.TalkingClock.vo.SoundVO;
+	
 	
 	public class  PlaySound_Flex implements  IPlaySound
 	{
@@ -41,7 +39,7 @@ package org.syncon2.utils.sound
 			/*var e : GetSoundTriggerEvent = new GetSoundTriggerEvent( GetSoundTriggerEvent.GET_SOUND , url ) 
 			this.dispatch( e ) 
 			if ( e.urlReq != null ) 
-				soundReq = e.urlReq*/
+			soundReq = e.urlReq*/
 			if ( sound != null ) 
 			{this.stopSound()}
 			this.sound = new Sound(); 

@@ -3,7 +3,7 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx"  
 				height="100%" width="100%" creationComplete="onInit()"
-				autoDrawBackground="false" xmlns:alarm="org.syncon.TalkingClock.view.mobile.alarm.*">
+				autoDrawBackground="false" xmlns:alarm="org.syncon.RosettaStone.view.mobile.alarm.*">
 	
 	
 	<fx:Script> 
@@ -13,7 +13,7 @@
 			import mx.events.ResizeEvent;
 			
 			import org.syncon.Customizer.model.CustomEvent;
-			import org.syncon.TalkingClock.vo.AlarmVO;
+			import org.syncon.RosettaStone.vo.AlarmVO;
 			import org.syncon.Customizer.vo.MenuItemVO;
 			[Bindable] private var first : Boolean = false;
 			[Bindable] private var middle : Boolean = false;

@@ -3,12 +3,12 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx"  
 				height="100%" width="100%" creationComplete="onInit()"
-				autoDrawBackground="false" xmlns:alarm="org.syncon.TalkingClock.view.mobile.alarm.*">
+				autoDrawBackground="false" xmlns:alarm="org.syncon.RosettaStone.view.mobile.alarm.*">
 	
 	
 	<fx:Script> 
 		<![CDATA[ 
-			import org.syncon.TalkingClock.vo.AlarmVO;
+			import org.syncon.RosettaStone.vo.AlarmVO;
 			[Bindable] private var first : Boolean = false;
 			[Bindable] private var middle : Boolean = false;
 			[Bindable] private var last : Boolean = false		;

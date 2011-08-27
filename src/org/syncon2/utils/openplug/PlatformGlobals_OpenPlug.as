@@ -1,10 +1,12 @@
 package org.syncon2.utils.openplug
 {
+	import flash.events.Event;
 	import flash.events.TouchEvent;
 	
 	import openplug.elips.controls.Alert;
+	import openplug.elips.controls.List;
+	import openplug.elips.controls.listClasses.ListIndex;
 	import openplug.elips.events.ItemTouchTapEvent;
-	import flash.events.Event;
 	
 	public class PlatformGlobals_OpenPlug implements IPlatformGlobals
 	{
@@ -48,6 +50,28 @@ package org.syncon2.utils.openplug
 			//ui.removeEventListener(TouchEvent.TOUCH_TAP, fx ) ;//, false, 0, true )
 		}
 		
+		
+		
+		private var _fxMediate : Function;
+		public function setFxMediate(fx  :  Function ) : void
+		{
+			this._fxMediate = fx; 
+		}
+		
+		public function fxMediate(ui :  Object ) : void
+		{
+			this._fxMediate(ui)
+		}
+		
+		
+		public function setListSelectedIndex ( list : List, row : Number, section : Number =-1 ) : void
+		{
+			list.selectedIndex = new ListIndex(row, section )  ; 
+		}
+		public	function setListScrollPosition ( list : List, row : Number, section : Number =-1 ) : void
+		{
+			list.verticalScrollPosition =   new ListIndex(row, section ); 
+		}
 		
 	}
 }

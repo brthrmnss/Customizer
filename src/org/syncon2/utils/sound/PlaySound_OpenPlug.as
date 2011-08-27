@@ -27,14 +27,14 @@ package org.syncon2.utils.sound
 			return this._fxCallAfterSoundCompletePlaying  
 		}
 		
-		public function playSound( s : SoundVO, fxCallAfterSoundCompletePlaying_ : Function = null ) : void
+		public function playSound( s : Object, fxCallAfterSoundCompletePlaying_ : Function = null ) : void
 		{
 			this.playSound2( s.url ); 
 			this.fxCallAfterSoundCompletePlaying = fxCallAfterSoundCompletePlaying_			
 		}
-		public function playSound2(url : String , times : int = 1 ) : void
+		public function playSound2(url : String , times : int = 1, x : Object = null, fxDone : Function = null ) : void
 		{
-			
+			//PlatformGlobals.show('play ' + url ) ; 
 			/*if ( currentSoundId !=  -1 ) 
 			this.stopSound();*/
 			//url = "G:/My Documents/work/mobile3/SoundBoardEllips/bin-debug/assets/sub/gow/sounds/Baird - No shit.mp3"
@@ -134,6 +134,8 @@ package org.syncon2.utils.sound
 				this.currentSoundId= soundID
 			//	PlatformGlobals.show('play sound sound '  + this.currentSoundId  )
 			}
+			
+			this.fxCallAfterSoundCompletePlaying = fxDone; 
 			//SystemAPI.pauseSoundFile(soundID);
 			//soundID = SystemAPI.loadSoundFile(url);
 			/*	trace( '1', soundID ); 

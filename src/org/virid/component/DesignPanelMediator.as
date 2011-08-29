@@ -72,6 +72,13 @@ package  org.virid.component
 		
 		private function onPickedImage( e : ImageVO ) : void
 		{
+			//if a prompt layer, change the source, do not add a new one 
+			if ( this.model.currentLayer.prompt_layer && this.ui.layer == this.model.currentLayer ) 
+			{
+				this.dispatch( new EditProductCommandTriggerEvent (
+					EditProductCommandTriggerEvent.CHANGE_IMAGE_URL, e.url) ) ; 
+				return; 
+			}
 			this.dispatch( new EditProductCommandTriggerEvent (
 				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, e.url) ) ; 
 		}

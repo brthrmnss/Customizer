@@ -9,7 +9,10 @@
 			import mx.events.FlexEvent;
 			import mx.events.ResizeEvent;
 			
+			import org.syncon.Customizer.model.CustomEvent;
 			import org.syncon.Customizer.vo.ImageLayerVO;
+			import org.syncon.Customizer.vo.ItemRendererHelpers;
+			import org.syncon.Customizer.vo.LayerBaseVO;
 			
 			//public var list : ListVO; 
 			
@@ -30,13 +33,30 @@
 			public var resizedOnce:Boolean;
 			private var tesntin:Boolean;
 			
+			public var s : ItemRendererHelpers = new ItemRendererHelpers(null)
+			
 			public function set data ( value :   Object ) : void
 			{
 				this.img.source = null; 
 				
 				layer = value as ImageLayerVO
+				s.listenForObj( layer, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; 	
 				if ( this.parentDocument == null ) 
 					return; 
+				this.onUpdatedLayer(); 
+			}
+			private function onUpdatedLayer(e:Event=null):void
+			{
+				//do not accept events that are not related to the source being changed
+		 		if ( e != null ) 
+				{
+					if (  this.layer.propChanged == ImageLayerVO.RESIZE_COMPLETE ) 
+						return;					
+					trace('returned'); 
+					if ( this.layer.propChanged != ImageLayerVO.SOURCE_CHANGED ) 
+						return; 
+					this.dispatchEvent( new CustomEvent(layer_item_renderer.REPOSITION) ) 
+				}
 				this.parentDocument.resetting= true; 
 				this.img.height = NaN ; 
 				this.img.width = NaN; 
@@ -78,7 +98,7 @@
 				this.layer.nonChromeHeight = this.height; 
 				this.layer.height = this.img.height; 
 				this.layer.width = this.img.width;
-				this.layer.update(); 
+				this.layer.update(ImageLayerVO.RESIZE_COMPLETE); 
 				
 				
 				
@@ -120,6 +140,8 @@
 				*/
 				this.tesntin = false; 
 			}
+			
+
 			
 		]]>
 	</fx:Script>

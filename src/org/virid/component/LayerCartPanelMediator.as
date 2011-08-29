@@ -13,6 +13,7 @@ package org.virid.component
 	{
 		[Inject] public var ui :  layer_cart_panel;
 		[Inject] public var model : NightStandModel;
+		private var lastLayerRemoved:LayerBaseVO;
 		
 		override public function onRegister():void
 		{
@@ -30,6 +31,7 @@ package org.virid.component
 		protected function onRemoveLayer(event:CustomEvent):void
 		{
 			var layer :  LayerBaseVO = event.data as LayerBaseVO
+				this.lastLayerRemoved = layer; 
 			this.dispatch( new EditProductCommandTriggerEvent (
 				EditProductCommandTriggerEvent.REMOVE_LAYER, layer) ) ; 
 		}
@@ -63,9 +65,20 @@ package org.virid.component
 			this.ui.list.selectedIndex = i ; 
 		}		
 		
+		/**
+		 * Check if the last layer remove is this current layer, if so, 
+		 * do not select it ...
+		 * */
 		public function onSelectLayer ( e : CustomEvent ) : void
 		{
 			var layer : LayerBaseVO = e.data as LayerBaseVO;
+			
+			if ( this.lastLayerRemoved == layer ) 
+			{
+				this.lastLayerRemoved = null; 
+				return; 
+			}
+			
 			//auot select so it is visible ... 
 			layer.visible = true; 
 			layer.update(); 

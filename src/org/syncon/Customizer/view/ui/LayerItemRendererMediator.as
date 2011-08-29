@@ -56,6 +56,10 @@ package org.syncon.Customizer.view.ui
 			this.ui.addEventListener( layer_item_renderer.RESIZED_MANIALY, 
 				this.onResizedManually ) ; 
 			this.initHandles()
+				
+			this.ui.addEventListener( layer_item_renderer.REPOSITION, 
+				this.onReposition ) ; 
+			
 			/*
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.CURRENT_LAYER_CHANGED, 
 			this.onLayerChanged);	
@@ -212,15 +216,15 @@ package org.syncon.Customizer.view.ui
 				*/
 				//this.ui.image.img.sourceHeight
 				//clone baselayer height if possible ...
-				if ( this.layer != this.model.baseLayer && this.model.baseLayer != null  )
+				if ( this.layer != this.model.baseLayer && this.model.baseLayer != null )
 				{
-					if ( this.ui.width > this.model.baseLayer.width  ) 
+					if ( this.ui.width > this.model.baseLayer.width ) 
 					{
 						var wH : Number = this.ui.image.img.height/this.ui.image.img.width
 						this.flexModel1.width = this.model.baseLayer.width - 40; 
 						
 						this.ui.image.img.width = this.flexModel1.width; 
-						this.flexModel1.height =this.ui.image.img.width  *wH
+						this.flexModel1.height =this.ui.image.img.width *wH
 						this.ui.image.img.height = this.flexModel1.height; 						
 					}
 				}
@@ -311,6 +315,8 @@ package org.syncon.Customizer.view.ui
 				this.removeLayerListeners()
 			}
 			
+			this.returnUIToDefaultState()
+			
 			this.layer = this.ui.layer; 
 			this.layer.addEventListener(LayerBaseVO.LAYER_REDD, this.onLayerReAdd ) 
 			this.layer.addEventListener(LayerBaseVO.LAYER_REMOVED, this.onLayerRemoved ) 
@@ -325,7 +331,8 @@ package org.syncon.Customizer.view.ui
 			//unlock any layre automatically
 			if ( this.layer.locked ) 
 			{
-				
+				this.ui.buttonMode=false 
+				this.ui.useHandCursor=false
 			}
 			else //recreate the layers 
 			{
@@ -371,16 +378,85 @@ package org.syncon.Customizer.view.ui
 					
 					handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(100, 100), new Point(0, 0)));
 					
-					
+					// We need a zero point a lot, so lets not re-create it all the time.
+					 var zero:Point = new Point(0,0);
 					
 					handleDesc.push( new HandleDescription( HandleRoles.ROTATE,
 						new Point(100,50) , 
 						new Point(20,0) ) ); 
+					
+					
+					var defaultHandles : Array = handleDesc
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_UP + HandleRoles.RESIZE_LEFT, 
+						zero ,
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_UP ,
+						new Point(50,0) , 
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_UP + HandleRoles.RESIZE_RIGHT,
+						new Point(100,0) ,
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_RIGHT,
+						new Point(100,50) , 
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_DOWN + HandleRoles.RESIZE_RIGHT,
+						new Point(100,100) , 
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_DOWN ,
+						new Point(50,100) ,
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_DOWN + HandleRoles.RESIZE_LEFT,
+						new Point(0,100) ,
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_LEFT,
+						new Point(0,50) ,
+						zero ) ); 
+					
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.ROTATE,
+						new Point(100,50) , 
+						new Point(20,0) ) ); 
+					
+					
+					
+					
 					//handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 50), new Point(0, 0)));
-					//handleDesc = null
+					handleDesc = null
+						
+					  handleDesc   = this.model.objectHandles.defaultHandles.concat(); 
+					  handleDesc.pop(); 
+					  handleDesc.pop(); 
+					  handleDesc.pop(); 
+					  handleDesc = []
+						  
+					  handleDesc.push( new HandleDescription( HandleRoles.ROTATE,
+						  new Point(100,50) , 
+						  new Point(20,0) ) ); 
+					  //why must one add with no role? 
+					  //handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(50, 50), new Point(0, 0)));
+					  
+					 /* handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(0, 0), new Point(0, 0)));
+					  handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(100, 0), new Point(0, 0)));
+					  
+					  handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(0, 100), new Point(0, 0)));
+					  
+					  handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(100, 100), new Point(0, 0)));*/
+					  
+					  handleDesc.push( new HandleDescription( HandleRoles.NO_ROLE,
+						  new Point(0,50) , 
+						  new Point(-10,0) ) ); 
+					  
 				}
 				this.model.objectHandles.registerComponent( flexModel1, this.ui ,handleDesc, true, constraints);
-				if ( this.layer.visible)  //dont' select invisible layers
+				if ( this.layer.visible) //dont' select invisible layers
 					this.model.objectHandles.selectionManager.setSelected( this.flexModel1 ) ; 
 				/*		}*/
 			}
@@ -397,10 +473,24 @@ package org.syncon.Customizer.view.ui
 			}
 		}
 		
+		/**
+		 * will setup the repositioing listener again  again ...
+		 * */
+		private function onReposition(e:Event):void
+		{
+			this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
+		}
+		
+		private function returnUIToDefaultState():void
+		{
+			this.ui.buttonMode=true 
+			this.ui.useHandCursor=true
+		}
+		
 		protected function onLayerUpdated(event:Event):void
 		{
 			//remove sleection if not supposed to be selected
-			if (this.layer != null &&  this.layer.visible == false && this.model.currentLayer == this.layer) 
+			if (this.layer != null && this.layer.visible == false && this.model.currentLayer == this.layer) 
 			{
 				this.model.objectHandles.selectionManager.clearSelection()
 			}

@@ -135,6 +135,7 @@ package org.syncon.Customizer.controller
 			imageLayer.name = 'Upload'
 			imageLayer.url ='assets/images/pokemon.png'
 			imageLayer.prompt_layer = true; 
+			imageLayer.visible = false; 
 			imageLayer.image_source = 'upload';  	
 			face.layersToImport.push(imageLayer);
 			 

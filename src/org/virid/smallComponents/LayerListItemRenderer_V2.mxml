@@ -100,6 +100,8 @@
 		<s:HGroup right="0">
 			<s:Label styleName="price" text="$14.00" paddingTop="8" />
 			<s:Image  id="btnDelete"  click="onRemove(event)"
+					   useHandCursor="true" buttonMode="true"
+					    toolTip="Hide Layer"
 				styleName="removeBtn" source="assets/images/x.jpg"
 				width="14" height="14" />
 		</s:HGroup>

@@ -180,6 +180,8 @@ package org.syncon.Customizer.model
 		private var _currentLayer:  LayerBaseVO;
 		public function get currentLayer(): LayerBaseVO 	{ return _currentLayer; }
 		public function set currentLayer(value:LayerBaseVO):void { 
+			if ( value == this._currentLayer ) 
+				return; 
 			var e : Event =  new NightStandModelEvent( NightStandModelEvent.CURRENT_LAYER_CHANGING, value )
 			this.dispatch( e ) 
 			if ( e.isDefaultPrevented() ) 
@@ -411,7 +413,26 @@ package org.syncon.Customizer.model
 			return found; 
 		}
 		
-		
+		/**
+		 * Get next visible layer going upward ...
+		 * */
+		public function getNextLayer(startingIndex : int  = 0 ) :  LayerBaseVO
+		{
+			var foundLayer : LayerBaseVO; 
+			for ( var i : int =startingIndex ; i < this.layers.length ; i++ ) 
+			{
+				var layer : LayerBaseVO = this.layers.getItemAt( i )  as LayerBaseVO; 
+				if ( layer.visible == false ) 
+					continue; 
+				foundLayer = layer; 
+			}
+			
+			if ( foundLayer == null  )
+			{
+				return this.getNextLayer()
+			}
+			return foundLayer
+		}
 		public function isDescendent( e : Object , againsts : Object ) : Boolean 
 		{
 			var par : Object = e; 

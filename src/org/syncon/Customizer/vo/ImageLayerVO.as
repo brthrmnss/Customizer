@@ -18,6 +18,15 @@ package  org.syncon.Customizer.vo
 		 * Needed so we know size of base layer at all times ... or you could just look it up 
 		 * */
 		public var base_layer:Boolean;
+		/**
+		 * dispatched when layer is resized ...
+		 * ignored by itemrenderer to prevent updating loops
+		 * */
+		public static var RESIZE_COMPLETE:String= 'resizecom';
+		/**
+		 * ignore the adove resize_complete, dispatches when souce explicity changed
+		 * */
+		public static var SOURCE_CHANGED:String= 'SOURCE_CHANGED';
 		public override function get type():String 	{ return Type; }
 		
 /*		override public function clone() : LayerBaseVO

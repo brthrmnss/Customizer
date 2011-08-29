@@ -32,6 +32,8 @@
 			public static const DATA_CHANGED:String='DATA_CHANGED';
 			public static const MOVED:String='MOVED';
 			public static const RESIZED_MANIALY  : String = 'RESIZED_MANIALY';
+			public static const REPOSITION  : String = 'REPOSITION';
+			
 			//public var list : ListVO; 
 			
 			//public var dp : ArrayCollection = new ArrayCollection(); 
@@ -213,7 +215,17 @@
 					return; 
 				this.visible = this.layer.visible; 
 			}
-			
+			override public function set visible(value:Boolean):void
+			{
+				if ( value && this.layer.visible == false ) 
+				{
+					//8-28-11 bug ...
+					trace('set visible', 'false')
+					//Viewer3 is forcing it to be visible ... possibly change children ... 
+					value = this.layer.visible; 
+				}
+				super.visible = value; 
+			}
 			[Bindable] public var dp  :   ArrayCollection = new ArrayCollection()//.getInstance(); 
 			private var   _resetting  : Boolean = false 
 			public function get resetting():Boolean

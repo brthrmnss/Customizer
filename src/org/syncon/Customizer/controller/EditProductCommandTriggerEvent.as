@@ -19,6 +19,9 @@ package org.syncon.Customizer.controller
 		public static const CHANGE_FONT_SIZE:String = 'CHANGE_FONT_SIZE.w';
 		public static const FONT_SIZE_CHANGED:String = 'FONT_SIZE_CHANGED.w';			
 		
+		public static const CHANGE_IMAGE_URL:String = 'CHANGE_IMAGE_URL.w';
+		public static const IMAGE_URL_CHANGED:String = 'IMAGE_URL_CHANGED.w';		
+		
 		public static const CHANGE_FONT_FAMILY:String = 'FONT_FAMILY_CHANGED.w';
 		public static const FONT_FAMILY_CHANGED:String = 'FONT_FAMILY_CHANGED.w';			
 		
@@ -116,6 +119,8 @@ package org.syncon.Customizer.controller
 				CHANGE_FONT_SIZE,
 				CHANGE_COLOR,
 				CHANGE_LAYER_COLOR,
+				
+				CHANGE_IMAGE_URL,
 				
 				MOVE_LAYER,
 				RESIZE_LAYER,

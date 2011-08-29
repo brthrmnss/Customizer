@@ -154,7 +154,31 @@ package org.syncon.Customizer.controller
 					EditProductCommandTriggerEvent.TEXT_LAYER_ADDED, event, null ) ) 
 			}
 			
-			
+			if ( event.type == EditProductCommandTriggerEvent.CHANGE_IMAGE_URL ) 
+			{
+				if ( event.undo == false )
+				{
+					imgLayer = this.model.currentLayer as ImageLayerVO; 
+ 	
+					event.oldData = imgLayer.url; 
+					imgLayer.url  =   event.data.toString()
+					imgLayer.update(ImageLayerVO.SOURCE_CHANGED)//'fontSize'); 
+					imgLayer.horizStartAlignment  = 'center'  
+					imgLayer.vertStartAlignment  = 'center'  //need better way to refresh this 
+					this.model.currentLayer = imgLayer; 
+					event.data2 = imgLayer ; //don't like this feel like storing old layer should be automatic ...
+				}
+				else
+				{
+					imgLayer = event.data2 as ImageLayerVO; 
+					imgLayer.url = event.oldData.toString() 
+					imgLayer.update()
+				}		
+				//this.model.currentPage.updated();
+				//this.model.layersChanged(); 
+				this.dispatch( new EditProductCommandTriggerEvent(
+					EditProductCommandTriggerEvent.IMAGE_URL_CHANGED, event, null ) ) 
+			}	
 			
 			
 			
@@ -701,20 +725,27 @@ package org.syncon.Customizer.controller
 				if ( event.undo == false )
 				{
 					layer = event.data as LayerBaseVO; 
+					var layerIndex : int = this.model.layers.getItemIndex( layer ) ; 
+					
+					//var nextLayerIndex : int = layerIndex+1
 					
 					if ( layer.prompt_layer == true && 
 						this.model.currentFace.can_remove_prompt_layers == false ) 
 					{
 						layer.visible = false; 
 						layer.update(); 
-						return;
+						//return;
 					}		
 					else
 					{
 						this.model.removeLayer( layer ) ; 
 						layer.layerRemoved()
 					}
-					
+					//if ( nextLayerIndex >= this.model.layers.length ) 
+					//	nextLayerIndex = 0
+					//var nextLayer : LayerBaseVO = this.model.layers.getItemAt(   nextLayerIndex) as LayerBaseVO;
+					var nextLayer : LayerBaseVO =  this.model.getNextLayer() ;
+					this.model.currentLayer =nextLayer
 				}
 				else
 				{
@@ -724,6 +755,7 @@ package org.syncon.Customizer.controller
 					{
 						layer.visible = true; 
 						layer.update(); 
+						this.model.currentLayer = layer; 
 						return;
 					}		
 					else

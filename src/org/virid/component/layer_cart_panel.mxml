@@ -17,8 +17,20 @@
 			import spark.events.IndexChangeEvent;
 			static public const  CHANGE_LIST : String = 'changeList'  ; 
 			static public const  REMOVE_LAYER : String = 'REMOVE_LAYER'  ; 
-			protected function list_changeHandler(event: IndexChangeEvent):void
+			/**
+			 * When removing a later do not select it first 
+			 * so we delay selection until after a layer has been removed.
+			 * */
+			protected function list_changeHandler(event: IndexChangeEvent, wait : Boolean = false):void
 			{
+				if ( event.newIndex == - 1) 
+					return; 
+				
+				if ( wait ) 
+				{
+					this.callLater( this.list_changeHandler, [event, true])
+				}
+				
 				this.dispatchEvent( new CustomEvent( CHANGE_LIST,  
 					this.list.dataProvider.getItemAt(event.newIndex)  ) )
 			}

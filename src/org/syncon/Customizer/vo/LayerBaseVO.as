@@ -13,6 +13,7 @@ package org.syncon.Customizer.vo
 		{
 			propChanged = prop
 			this.dispatchEvent( new Event( UPDATED  ) ) ; 
+			this.propChanged = ''; 
 		}
 		
 		static public var LAYER_REMOVED : String = 'LAYER_REMOVED';

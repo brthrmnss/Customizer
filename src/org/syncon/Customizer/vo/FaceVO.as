@@ -89,6 +89,11 @@ package  org.syncon.Customizer.vo
 		 * Stores layers that were loade via json 
 		 * */
 		public var layersToImport: Array = [] ; ;
+		
+		/**
+		 * Can the user remove the prompt layers included here? 
+		 * */
+		public var can_remove_prompt_layers:Boolean;
 		[Transient]
 		public function get lists():ArrayCollection
 		{

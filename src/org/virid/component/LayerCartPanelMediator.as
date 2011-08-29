@@ -65,9 +65,13 @@ package org.virid.component
 		
 		public function onSelectLayer ( e : CustomEvent ) : void
 		{
-			this.model.currentLayer = e.data as LayerBaseVO;
+			var layer : LayerBaseVO = e.data as LayerBaseVO;
+			//auot select so it is visible ... 
+			layer.visible = true; 
+			layer.update(); 
+			this.model.currentLayer = layer; 
 			this.ui.list.selectedItem = this.model.currentLayer
-			this.model.objectHandles.selectionManager.setSelected( this.model.currentLayer.model ) ; 
+			
 		}
 		
 	}

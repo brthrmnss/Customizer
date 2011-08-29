@@ -152,7 +152,11 @@
 					return; 
 				}
 					
-				
+				this.visible = this.layer.visible; 
+				if ( this.layer.visible == false ) 
+				{
+					trace('not visible, klr' ); 
+				}
 				//a = a.data2
 				if ( a is ImageLayerVO ) 
 				{

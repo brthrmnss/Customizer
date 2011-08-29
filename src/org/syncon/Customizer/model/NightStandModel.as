@@ -31,7 +31,7 @@ package org.syncon.Customizer.model
 		
 		public var undo  : UndoManager = new UndoManager(); 
 		
- 
+		
 		
 		private var timerRefreshToken : Timer = new Timer(1501,1 ); 
 		private var timer_Alarms : Timer = new Timer(1000*60/60,0 ); 
@@ -185,9 +185,16 @@ package org.syncon.Customizer.model
 			if ( e.isDefaultPrevented() ) 
 				return; 
 			_currentLayer = value;
+			if ( value != null &&  value.visible == false ) 
+			{
+				trace('not visible, klr' ); 
+			}
 			//this.dispatch( new EditProductCommandTriggerEvent(
 			//	EditProductCommandTriggerEvent.LOAD_PRODUCT, value ) ) ; 
-			
+			if ( value != null ) 
+			{
+				this._currentLayer.layerSelected();
+			}
 			this.dispatch( new NightStandModelEvent( NightStandModelEvent.CURRENT_LAYER_CHANGED, value ) ) 
 		}
 		
@@ -282,7 +289,7 @@ package org.syncon.Customizer.model
 		 * */
 		public var blockUndoAdding:Boolean=false
 		private var _blockUndos:Boolean;
-
+		
 		/**
 		 * When undoing moving and resizing ... do not allow adding further undos 
 		 * */
@@ -290,7 +297,7 @@ package org.syncon.Customizer.model
 		{
 			return _blockUndos;
 		}
-
+		
 		/**
 		 * @private
 		 */
@@ -298,7 +305,7 @@ package org.syncon.Customizer.model
 		{
 			_blockUndos = value;
 		}
-
+		
 		/**
 		 * hardcoded reference to color layer 
 		 * in future, use strings references based on type 
@@ -338,14 +345,14 @@ package org.syncon.Customizer.model
 			this.recreateDisplayableLayers()
 			this.layersChanged();
 		}
-/*		public function removeLayer(layer : LayerBaseVO ) : void
+		/*		public function removeLayer(layer : LayerBaseVO ) : void
 		{
-			var i : int = this.layers.getItemIndex( layer ) ; 
-			if ( i == -1 ) 
-				return; 
-			this.layers.removeItemAt( i ) ; 
-			this.recreateDisplayableLayers()
-			this.layersChanged();
+		var i : int = this.layers.getItemIndex( layer ) ; 
+		if ( i == -1 ) 
+		return; 
+		this.layers.removeItemAt( i ) ; 
+		this.recreateDisplayableLayers()
+		this.layersChanged();
 		}
 		*/
 		public function removeLayer( layer : LayerBaseVO ) : void
@@ -370,14 +377,14 @@ package org.syncon.Customizer.model
 			
 			this.addAllTo( this.layersVisible, newLayersVisible )
 		}
-
+		
 		
 		public function collect() : void
 		{
 			this.dispatch( new NightStandModelEvent(NightStandModelEvent.COLLECT
 			) ) ; 
 		}
-  
+		
 		private function addAllTo( e:ArrayCollection, arr : Array, append : Boolean = false ) : void
 		{
 			if ( append == false ) 

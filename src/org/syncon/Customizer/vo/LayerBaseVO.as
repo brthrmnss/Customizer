@@ -20,11 +20,19 @@ package org.syncon.Customizer.vo
 		{
 			this.dispatchEvent( new Event( LAYER_REMOVED  ) ) ; 
 		}
+		
 		static public var LAYER_REDD : String = 'LAYER_REDD';
 		public function layerReAdded( ) : void
 		{
 			this.dispatchEvent( new Event( LAYER_REDD  ) ) ; 
 		}
+		
+		static public var LAYER_SELEECTED : String = 'LAYER_SELEECTED';
+		public function layerSelected( ) : void
+		{
+			this.dispatchEvent( new Event( LAYER_SELEECTED  ) ) ; 
+		}
+				
 		
 		/**
 		 * .
@@ -54,6 +62,12 @@ package org.syncon.Customizer.vo
 		
 		public var visible : Boolean = true; 
 		public var locked : Boolean = false; 
+		
+		/**
+		 * This layer cannot be deleted
+		 * */
+		public var prompt_layer : Boolean = false; 
+		
 		public var showInList : Boolean = true; 		
 		public var data2:Object; 
 		public static var Type:String= 'LED';
@@ -223,6 +237,56 @@ package org.syncon.Customizer.vo
 				this.model.height = hh; 
 			}
 			
+		}
+		
+		import flash.utils.describeType;
+		import flash.utils.getDefinitionByName;
+		import flash.utils.getQualifiedClassName;
+		public function copyPropsTo(clone :  LayerBaseVO): void
+		{
+		/*	for   ( var prop  : String in this ) 
+			{
+				clone[prop] = this[prop]
+			}*/
+			copyData(this, clone ); 
+		}
+		
+		
+		public static function copyData(source:Object, destination:Object):void {
+			
+			//copies data from commonly named properties and getter/setter pairs
+			if((source) && (destination)) {
+				
+				try {
+					var sourceInfo:XML = describeType(source);
+					var prop:XML;
+					
+					for each(prop in sourceInfo.variable) {
+						
+						if(destination.hasOwnProperty(prop.@name)) {
+							destination[prop.@name] = source[prop.@name];
+						}
+						
+					}
+					
+					for each(prop in sourceInfo.accessor) {
+						if(prop.@access == "readwrite") {
+							if(destination.hasOwnProperty(prop.@name)) {
+								destination[prop.@name] = source[prop.@name];
+							}
+							
+						}
+					}
+				}
+				catch (err:Object) {
+					;
+				}
+			}
+		}
+		
+		public function clone() : LayerBaseVO
+		{
+			return null; 
 		}
 	}
 }

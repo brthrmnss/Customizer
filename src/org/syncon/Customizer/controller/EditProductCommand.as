@@ -38,16 +38,36 @@ package org.syncon.Customizer.controller
 				{
 					if ( event.firstTime ) 
 					{
-						var imgLayer : ImageLayerVO = new ImageLayerVO(); 
-						imgLayer.name = 'Image ' +( this.model.getLayersByType(ImageLayerVO).length+1) 
-						this.model.addLayer( imgLayer ); 
+						//if first param is a string 
+						if ( event.data is String  ) 
+						{
+							var imgLayer : ImageLayerVO = new ImageLayerVO(); 
+							imgLayer.name = 'Image ' +( this.model.getLayersByType(ImageLayerVO).length+1) 
+							imgLayer.url = event.data.toString(); 
+						}
+						//if first paramt imagelayerVO, clone it 
+						if ( event.data is ImageLayerVO  ) 
+						{
+							imgLayer = event.data as ImageLayerVO
+							imgLayer = imgLayer.clone() as ImageLayerVO
+							/*	if ( imgLayer.prompt_layer )
+							imgLayer.visible = false; */
+						}
+						event.oldData = imgLayer; 
 						
+						this.model.addLayer( imgLayer ); 
+						/*
 						imgLayer.x = 0; 
 						imgLayer.y = 100; 
+						*/
+						imgLayer.x = 0; 
+						imgLayer.y = 0; 
+						//imgLayer.y = 100; 
 						
-						this.model.currentLayer = imgLayer; 
-						imgLayer.url = event.data.toString(); 
-						event.oldData = imgLayer; 
+						if (  imgLayer.visible ) //prompts are not by default visible ...
+							this.model.currentLayer = imgLayer; 
+						
+						
 						//event.oldData = oldName; 
 						//this.model.currentPage.name = newName 
 						
@@ -82,19 +102,36 @@ package org.syncon.Customizer.controller
 				//var newName : String = event.data.toString(); 
 				if ( event.undo == false )
 				{
+					//why the first time, ADD_IMAGE_LAYER image layer does not have it ? 
 					if ( event.firstTime ) 
 					{
-						var txtLayer : TextLayerVO = new TextLayerVO(); 
-						txtLayer.name = 'Text ' + (this.model.getLayersByType(TextLayerVO).length+1); ; 
-						txtLayer.text =  event.data.toString() ; //'Enter Text Here';
+						//if first param is a string 
+						if ( event.data is String  ) 
+						{
+							var txtLayer : TextLayerVO = new TextLayerVO(); 
+							txtLayer.name = 'Text ' + (this.model.getLayersByType(TextLayerVO).length+1); ; 
+							txtLayer.text =  event.data.toString() ; //'Enter Text Here';
+							/*
+							txtLayer.y = 100; 
+							txtLayer.x = 0; 
+							txtLayer.y = 100; 
+							*/
+						}
+						//if first param TextLayerVO, clone it 
+						if ( event.data is TextLayerVO  ) 
+						{
+							txtLayer = event.data as TextLayerVO
+							txtLayer = txtLayer.clone() as TextLayerVO
+						}
+						
+						txtLayer.x = 0; 
+						txtLayer.y = 100; 
+						
 						//txtLayer.fontFamily =  event.data2.toString() ; //font ... what should default be? ...
 						this.model.addLayer( txtLayer ); 
 						event.oldData = txtLayer; 
 						//this.model.currentPage.name = newName 
-						txtLayer.y = 100; 
 						
-						txtLayer.x = 0; 
-						txtLayer.y = 100; 
 					}	
 					else
 					{
@@ -429,13 +466,16 @@ package org.syncon.Customizer.controller
 					//load in product stuff 
 					//maybe save layers on the face?...
 					//this.model.layers.removeAll();
-					this.model.layers.source = face.layers.source; 
-					this.model.layers.refresh(); 
+					/*this.model.layers.source = face.layers.source; 
+					this.model.layers.refresh(); */
+					this.model.layers = face.layers; 
+					//no need to remove? ... no b/c no is allowed to bind to thise, they bind to layersVisible...
 					this.model.baseLayer = null; 
 					if ( face.base_image_url != null ) 
 					{
 						imgLayer = new ImageLayerVO(); 
 						imgLayer.name = 'Base Image';
+						imgLayer.base_layer = true; 
 						imgLayer.url = face.base_image_url; 
 						imgLayer.locked = true; 
 						imgLayer.showInList = false; 
@@ -449,7 +489,7 @@ package org.syncon.Customizer.controller
 						this.model.baseLayer = imgLayer; 
 					}	
 					//if layers are not predefied, add default, for testing purposes 
-					if ( face.layersToImport  == null )
+					if ( face.layersToImport  == null || face.layersToImport.length == 0  )
 					{
 						var colorLayer : ColorLayerVO = new ColorLayerVO(); 
 						colorLayer.name = 'Color Base Image';
@@ -511,13 +551,13 @@ package org.syncon.Customizer.controller
 							{
 								imgLayer = layer as ImageLayerVO
 								this.dispatch( new EditProductCommandTriggerEvent(
-									EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, imgLayer.url ) ) ; 
+									EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, imgLayer ) ) ; 
 							}
 							if ( layer is TextLayerVO ) 
 							{
 								txtLayer = layer as TextLayerVO
 								this.dispatch( new EditProductCommandTriggerEvent(
-									EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer.text ) ) ; 
+									EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer ) ) ; 
 							}								
 						}	
 						
@@ -661,14 +701,36 @@ package org.syncon.Customizer.controller
 				if ( event.undo == false )
 				{
 					layer = event.data as LayerBaseVO; 
-					this.model.removeLayer( layer ) ; 
-					layer.layerRemoved()
+					
+					if ( layer.prompt_layer == true && 
+						this.model.currentFace.can_remove_prompt_layers == false ) 
+					{
+						layer.visible = false; 
+						layer.update(); 
+						return;
+					}		
+					else
+					{
+						this.model.removeLayer( layer ) ; 
+						layer.layerRemoved()
+					}
+					
 				}
 				else
 				{
 					layer = event.data as LayerBaseVO; 
-					this.model.addLayer( layer ) ; 
-					this.model.currentLayer = layer; 
+					if ( layer.prompt_layer == true && 
+						this.model.currentFace.can_remove_prompt_layers == false ) 
+					{
+						layer.visible = true; 
+						layer.update(); 
+						return;
+					}		
+					else
+					{
+						this.model.addLayer( layer ) ; 
+						this.model.currentLayer = layer; 
+					}
 					//layer.update(); 
 				}		
 				//this.model.currentPage.updated();
@@ -683,6 +745,15 @@ package org.syncon.Customizer.controller
 				if ( lastUndo != null && lastUndo.type == event.type ) 
 				{
 					if ( event.type == EditProductCommandTriggerEvent.MOVE_LAYER
+						&& event.data3 == lastUndo.data3) //check for time
+					{
+						if ( debugUndos ) trace('merging', event, event.type); 
+						this.model.lastUndo.data = event.data; 
+						this.model.lastUndo.data2 = event.data2
+						//this.model.lastUndo.time = new Date()
+						return; 
+					}
+					if ( event.type == EditProductCommandTriggerEvent.RESIZE_LAYER
 						&& event.data3 == lastUndo.data3) //check for time
 					{
 						if ( debugUndos ) trace('merging', event, event.type); 

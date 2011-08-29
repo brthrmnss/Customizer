@@ -53,7 +53,7 @@
 				str = FlexGlobals.topLevelApplication.parameters.settings;
 				
 				
-				this.mainApp.context.importJson(str);
+				//this.mainApp.context.importJson(str);
 			}
 			
 
@@ -94,7 +94,8 @@
 		<!--
 		<apps:FlexBaseTester/>
 		-->
-		<apps:Deliverable id="mainApp" x="0" y="0"/>
+		<!-- <apps:Deliverable id="mainApp" x="0" y="0"/> -->
+		<apps:EngraveDeliverable id="engraveYo" x="0" y="0"/>
 	
 	</s:Scroller>
 	<!--<apps:Customizer_MaskTest />-->

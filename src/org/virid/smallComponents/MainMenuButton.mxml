@@ -61,7 +61,8 @@
 	</fx:Declarations>
 
 
-	<s:BitmapImage id="iconDisplay" horizontalCenter="0"/>
+	<!-- <s:Image id="iconDisplay" horizontalCenter="0"/> -->
+	<s:BitmapImage id="iconDisplay" width="32" height="32" horizontalCenter="0" smooth="true" smoothingQuality="high" />
 	<s:Label id="labelDisplay"
 			 textAlign="center" styleName="grayTxt"
 			 maxDisplayedLines="1"

@@ -57,7 +57,7 @@
 			  paddingBottom="5" paddingLeft="0" paddingRight="5" paddingTop="5">
 		
 		<smallComponents:MainMenuButton label="undo"   id="btnUndo" 
-										icon="assets/images/undo.jpg" 
+										icon="assets/images/undo.png" 
 										click="onUndo(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="redo"   id="btnRedo" 

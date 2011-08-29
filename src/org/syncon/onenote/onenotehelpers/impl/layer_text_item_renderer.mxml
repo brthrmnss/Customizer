@@ -39,13 +39,14 @@
 				this.resetNext = true; 
 				
 				layer = value as TextLayerVO
+				s.listenForObj( layer, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; 	
 				if ( layer == null ) 
 				{
 					this.txt.text = ''; 
 					this.txtEdit.text = ''; 
 					return; 
 				}
-				s.listenForObj( layer, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; 	
+
 				this.onUpdatedLayer(); 
 			}
 			
@@ -130,6 +131,8 @@
 				if ( this.active == false ) 
 					return; 
 				if ( this.layer == null ) 
+					return; 
+				if ( this.parentDocument == null ) //y are these necessary? b/c txt update doesnt 'care?
 					return; 
 				// TODO Auto-generated method stub
 				//

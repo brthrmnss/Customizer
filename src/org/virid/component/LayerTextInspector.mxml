@@ -32,6 +32,9 @@
 			public static const CHANGE_FONT_FAMILY:String='CHANGE_FONT_FAMILY';
 			public static const CHANGE_COLOR:String='CHANGE_COLOR';
 			public static const CHANGE_FONT_SIZE:String='CHANGE_FONT_SIZE';
+			public static const CHANGE_TEXT_ALIGN:String='CHANGE_TEXT_ALIGN';
+			public static const CHANGED_TEXT:String='CHANGED_TEXT';
+			public static const DATA_CHANGED:String='DATA_CHANGED';
 			
 			public var s : ItemRendererHelpers = new ItemRendererHelpers(null)
 			protected function onInit(event:FlexEvent):void
@@ -44,15 +47,28 @@
 				s.listenForObj( layer_, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; 	
 				this._layer = layer_; 
 				this.onUpdatedLayer(); 
+				this.dispatchEvent( new Event(DATA_CHANGED )  ) ; 
 			}
 			
 			private function onUpdatedLayer(e:Event=null):void
 			{
 				this.txt.text = this.layer.text
+				//only if fresh loading ...	
+				if ( e == null ) 
+				{
+					this.txt.setFocus(); //try this for now 
+					this.txt.selectRange( 0, this.txt.text.length ) ;
+				}
 				//this.fontFamily.selectedItem = this.layer.fontFamily
 				//this.fontSize.selectedItem = this.layer.fontSize; 
 				//.chkVisible.selected = this.layer.visible ; 
-				this.txt.maxChars
+				txtMaxChars.text = ''; 
+				if ( this.layer.maxChars > 0 ) 
+				{
+					this.txtMaxChars.text = this.layer.maxChars.toString( )+ ' characters max'; 
+					this.txt.maxChars = this.layer.maxChars
+				}
+				
 			}
 			
 			protected function chkVisible_changeHandler(event:Event):void
@@ -84,6 +100,7 @@
 			{
 				this.layer.text = this.txt.text; 
 				this.layer.update(); 
+				this.dispatchEvent( new CustomEvent( CHANGED_TEXT   ) ) 
 			}
 			protected function colorList_ClickHandler(event:Event):void
 			{
@@ -105,11 +122,16 @@
 			protected function colorList_focusInHandler(event:FocusEvent):void
 			{
 				return;
-				this.oldFocus = this.getFocus()
-				return; 
+				//this.oldFocus = this.getFocus()
 			}
 			
 			
+			
+			protected function chkBoxAlign_changeHandler(event:Event):void
+			{
+				this.dispatchEvent( new CustomEvent( CHANGE_TEXT_ALIGN, this.chkBoxAlign.selected   ) ) 
+				
+			}
 			
 		]]>
 	</fx:Script>
@@ -119,19 +141,19 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		
 		<!--This component will need to know via json:
-			Engravable surfaces, arrray [true, true, true, true]
-			Eligible fonts and limits: map [font1:size limit,font2:size limit]
-			Product Images : map [font:zoom, back:zoom]
-			Any saved text already on the lighter - if the product is being edited - (we might handle this somewhere else)
+		Engravable surfaces, arrray [true, true, true, true]
+		Eligible fonts and limits: map [font1:size limit,font2:size limit]
+		Product Images : map [font:zoom, back:zoom]
+		Any saved text already on the lighter - if the product is being edited - (we might handle this somewhere else)
 		-->
 		
 		<!--This component will send signals to controller/model for:
-			engraving text changed - whenever user deletes or adds text
-			Flip product image - whenever user needs to rotate main lighter image to show other side
-			New engraved surface - whenever user starts engraving a new surface, so we can update the right-most mini cart
-				remove engraved surface
-			
-			display notice - whenever user clicks question mark - let the main application handle displaying a message to the users
+		engraving text changed - whenever user deletes or adds text
+		Flip product image - whenever user needs to rotate main lighter image to show other side
+		New engraved surface - whenever user starts engraving a new surface, so we can update the right-most mini cart
+		remove engraved surface
+		
+		display notice - whenever user clicks question mark - let the main application handle displaying a message to the users
 		-->
 	</fx:Declarations>
 	<s:Rect radiusX="8" radiusY="8"
@@ -153,35 +175,38 @@
 		<!--
 		
 		<s:HGroup width="100%" height="26">
-			<s:Label text="Front Top" styleName="arialSubHeading"/>
-			<s:Label text="|" styleName="arialSubHeading"/>
-			<s:Label text="Front Bottom" styleName="arialSubHeading"/>
-			<s:Label text="|" styleName="arialSubHeading"/>
-			<s:Label text="Back Top" styleName="arialSubHeading"/>
-			<s:Label text="|" styleName="arialSubHeading"/>
-			<s:Label text="Back Bottom" styleName="arialSubHeading" />	
+		<s:Label text="Front Top" styleName="arialSubHeading"/>
+		<s:Label text="|" styleName="arialSubHeading"/>
+		<s:Label text="Front Bottom" styleName="arialSubHeading"/>
+		<s:Label text="|" styleName="arialSubHeading"/>
+		<s:Label text="Back Top" styleName="arialSubHeading"/>
+		<s:Label text="|" styleName="arialSubHeading"/>
+		<s:Label text="Back Bottom" styleName="arialSubHeading" />	
 		</s:HGroup>-->
-
+		
 		
 		<s:HGroup width="100%" height="60">
 			<s:VGroup width="194">
 				<s:HGroup width="50%">
 					<s:Label text="Choose A Font"
 							 styleName="subHeading"/>
-					<s:Label text="45 charectors max" styleName="Arial grayTxt"/>
+					<s:Label text="45 charectors max"  id="txtMaxChars" styleName="Arial grayTxt"/>
 					
 				</s:HGroup>
 				<s:DropDownList id="fontSelect" width="100%" />			
 			</s:VGroup>
-	
+			
 			
 			<s:VGroup width="50%">
-				<s:HGroup><s:CheckBox label="Right to Left" styleName="Arial grayTxt"/></s:HGroup>
+				<s:HGroup><s:CheckBox label="Right to Left"  
+									  id="chkBoxAlign"
+									  change="chkBoxAlign_changeHandler(event)"
+									  styleName="Arial grayTxt"/></s:HGroup>
 				<s:HGroup><s:CheckBox label="Monogram" styleName="Arial grayTxt"/></s:HGroup>
 				
 			</s:VGroup>
 		</s:HGroup>
-
+		
 		
 		
 		
@@ -190,38 +215,38 @@
 				<s:Label text="EDIT Text" 
 						 styleName="subHeading" textAlign="left"/>
 			</s:HGroup>
- 
-		
+			
+			
 			<s:HGroup width="100%">
-				<s:TextInput  id="txt" text="Text" change="txt_changeHandler(event)"  width="100%"/>
-				<s:Button label="ADD MY TEXT"  click="onAddText(event)"
+				<s:TextInput  id="txt" text="Text" change="txt_changeHandler(event)"  width="100%" paddingTop="10"/>
+				<s:Button label="ADD  MY  TEXT"  click="onAddText(event)"
 						  skinClass="org.virid.skins.simpleBlackBtn"
 						  height="20"/>
-					
+				
 			</s:HGroup>			
-  
+			
 			<!--		<s:DropDownList id="dropDownFont" />
 			<s:DropDownList id="dropDownSize" dataProvider="{new ArrayList([8,10,12,16,24,36,48,72])}" />-->
-		<!--
+			<!--
 			<s:ComboBox id="fontSize" width="50" cornerRadius="0" selectedItem="12"
-						change="fontSize_changeHandler(event)" toolTip="Font size"
-						dataProvider="{new ArrayCollection([6,7,8,9,10,11,12,13,14,15,16,18,20,22,24,26,28,32,36,40,44,48,54,60,66,72,80,88,96])}"/>
+			change="fontSize_changeHandler(event)" toolTip="Font size"
+			dataProvider="{new ArrayCollection([6,7,8,9,10,11,12,13,14,15,16,18,20,22,24,26,28,32,36,40,44,48,54,60,66,72,80,88,96])}"/>
 			
 			<s:ComboBox id="fontFamily" width="100" cornerRadius="0" selectedIndex="0"
-						change="fontFamily_changeHandler(event)" toolTip="Font family">
-				<s:dataProvider>
-					<s:ArrayCollection>
-						<fx:Object>Arial</fx:Object>
-						<fx:Object>Courier</fx:Object>
-						<fx:Object>Courier New</fx:Object>
-						<fx:Object>Geneva</fx:Object>
-						<fx:Object>Georgia</fx:Object>
-						<fx:Object>Helvetica</fx:Object>
-						<fx:Object>Times New Roman</fx:Object>
-						<fx:Object>Times</fx:Object>
-						<fx:Object>Verdana</fx:Object>
-					</s:ArrayCollection>
-				</s:dataProvider>
+			change="fontFamily_changeHandler(event)" toolTip="Font family">
+			<s:dataProvider>
+			<s:ArrayCollection>
+			<fx:Object>Arial</fx:Object>
+			<fx:Object>Courier</fx:Object>
+			<fx:Object>Courier New</fx:Object>
+			<fx:Object>Geneva</fx:Object>
+			<fx:Object>Georgia</fx:Object>
+			<fx:Object>Helvetica</fx:Object>
+			<fx:Object>Times New Roman</fx:Object>
+			<fx:Object>Times</fx:Object>
+			<fx:Object>Verdana</fx:Object>
+			</s:ArrayCollection>
+			</s:dataProvider>
 			</s:ComboBox>
 			-->
 			<!--- @private -->

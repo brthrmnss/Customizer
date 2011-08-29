@@ -34,6 +34,16 @@ package  org.syncon.Customizer.model
 		public static const WRONG_ITEM : String = 'WRONG_ITEM';
 		
 		/**
+		 * Must cancel event or showing will proceed
+		 * 
+		 * when prompt layers are clicked, that don't have data, this intent notifies this 
+		 * if event is canceled the layer will not be shown 
+		 * 
+		 * a sepeerate agent (mediator) will cancel the event, and fill in the appropriate data, and 
+		 * be responsible for displaying that layer
+		 * */
+		public static const SHOW_EMPTY_LAYER : String = 'SHOW_EMPTY_LAYER'; 
+		/**
 		 * Intent to add a filter
 		 * */
 		public static const ADD_FILTER : String = 'pleaseADD_FILTER';		
@@ -88,7 +98,7 @@ package  org.syncon.Customizer.model
 		
 		public function NightStandModelEvent(type:String, _data:Object = null)
 		{
-			super(type);
+			super(type,false,true);
 			data = _data;
 		}
 	

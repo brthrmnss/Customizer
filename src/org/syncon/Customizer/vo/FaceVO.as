@@ -28,6 +28,7 @@ package  org.syncon.Customizer.vo
 		public var image_mask : String = ''; 
 		
 		public var more_info_url : String = ''; 
+
 		
 		public var limits : Object   = { };
 		
@@ -94,6 +95,12 @@ package  org.syncon.Customizer.vo
 		 * Can the user remove the prompt layers included here? 
 		 * */
 		public var can_remove_prompt_layers:Boolean;
+		public var image_mask_alpha:Number=0.1;
+		
+		/**
+		 * had item been loaded before? 
+		 * */
+		public var imported:Boolean;
 		[Transient]
 		public function get lists():ArrayCollection
 		{

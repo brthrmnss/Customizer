@@ -304,7 +304,7 @@ package org.syncon.Customizer.controller
 					//this.model.getColorLayer(event.data2 )
 					colorLayer = this.model.layerColor; //this.model.currentLayer as ColorLayerVO; 
 					//can specify layer  name as well
-					if ( event.data2 != null ) 
+					if ( event.data2 != null && event.data2 != ''  ) 
 					{
 						var layerName : String = event.data2.toString()
 						colorLayer = this.model.getLayerByName( layerName  ) as ColorLayerVO; 
@@ -498,70 +498,52 @@ package org.syncon.Customizer.controller
 					/*this.model.layers.source = face.layers.source; 
 					this.model.layers.refresh(); */
 					this.model.layers = face.layers; 
+					var dbg : Array = [this.model.layers.length, this.model.layers.toArray() ] 
 					//no need to remove? ... no b/c no is allowed to bind to thise, they bind to layersVisible...
-					this.model.baseLayer = null; 
-					if ( face.base_image_url != null ) 
+					if ( face.imported ) 
 					{
-						imgLayer = new ImageLayerVO(); 
-						imgLayer.name = 'Base Image';
-						imgLayer.base_layer = true; 
-						imgLayer.url = face.base_image_url; 
-						imgLayer.locked = true; 
-						imgLayer.showInList = false; 
-						this.model.addLayer( imgLayer ) ;
-						if ( event.firstTime ) 
-						{
-							imgLayer.x = 0; 
-							imgLayer.y = 100; 
-						}
-						//this.model.currentLayer = imgLayer; 
-						this.model.baseLayer = imgLayer; 
-					}	
-					//if layers are not predefied, add default, for testing purposes 
-					if ( face.layersToImport  == null || face.layersToImport.length == 0  )
-					{
-						var colorLayer : ColorLayerVO = new ColorLayerVO(); 
-						colorLayer.name = 'Color Base Image';
-						colorLayer.url = face.base_image_url; 
-						colorLayer.locked = true; 
-						colorLayer.showInList = false; 
-						this.model.addLayer( colorLayer ) ;
-						if ( event.firstTime ) 
-						{
-							colorLayer.x = 0; 
-							colorLayer.y = 100; 
-						}
-						this.model.layerColor = colorLayer; 
+						//no need to import again
 						
-						//order doesn't matter as it doesn't appear ...
-						imgLayer = new ImageLayerVO(); 
-						imgLayer.name = 'Mask  Image';
-						imgLayer.url = face.base_image_url; 
-						//imgLayer.url = 'assets/images/img.jpg'
-						imgLayer.locked = true; 
-						imgLayer.showInList = false; 
-						imgLayer.mask = true; 
-						this.model.addLayer( imgLayer ) ;
-						if ( event.firstTime ) 
-						{
-							imgLayer.x = 0; 
-							imgLayer.y = 100; 
-						}
-						//	this.model.currentLayer = imgLayer; 
-						this.model.layerMask = imgLayer; 
 						
-						//this.model.currentLayer = colorLayer; 
+						for each ( layer in face.layers.toArray() ) 
+						{
+							if ( layer is ImageLayerVO ) 
+							{
+								imgLayer = layer as ImageLayerVO
+								if ( imgLayer.mask == true ) 
+									this.model.layerMask = layer; 
+							}
+						}	
+						
+						
 					}
-					else //add from layers 
+					else
 					{
-						//disable adding undos 
-						this.model.blockUndoAdding = true; 
 						
-						if ( face.image_color_overlay != null &&  face.image_color_overlay != ''  ) 
+						this.model.baseLayer = null; 
+						if ( face.base_image_url != null ) 
 						{
-							colorLayer  = new ColorLayerVO(); 
+							imgLayer = new ImageLayerVO(); 
+							imgLayer.name = 'Base Image';
+							imgLayer.base_layer = true; 
+							imgLayer.url = face.base_image_url; 
+							imgLayer.locked = true; 
+							imgLayer.showInList = false; 
+							this.model.addLayer( imgLayer ) ;
+							if ( event.firstTime ) 
+							{
+								imgLayer.x = 0; 
+								imgLayer.y = 100; 
+							}
+							//this.model.currentLayer = imgLayer; 
+							this.model.baseLayer = imgLayer; 
+						}	
+						//if layers are not predefied, add default, for testing purposes 
+						if ( face.layersToImport  == null || face.layersToImport.length == 0  )
+						{
+							var colorLayer : ColorLayerVO = new ColorLayerVO(); 
 							colorLayer.name = 'Color Base Image';
-							colorLayer.url = face.image_color_overlay; 
+							colorLayer.url = face.base_image_url; 
 							colorLayer.locked = true; 
 							colorLayer.showInList = false; 
 							this.model.addLayer( colorLayer ) ;
@@ -571,50 +553,92 @@ package org.syncon.Customizer.controller
 								colorLayer.y = 100; 
 							}
 							this.model.layerColor = colorLayer; 
-						}		
-						
-						
-						if ( face.image_mask !=null && face.image_mask != ''   ) 
-						{
-							//use mask layer as well ..
+							
+							//order doesn't matter as it doesn't appear ...
 							imgLayer = new ImageLayerVO(); 
 							imgLayer.name = 'Mask  Image';
-							imgLayer.url = face.image_mask; 
+							imgLayer.url = face.base_image_url; 
 							//imgLayer.url = 'assets/images/img.jpg'
 							imgLayer.locked = true; 
 							imgLayer.showInList = false; 
 							imgLayer.mask = true; 
 							this.model.addLayer( imgLayer ) ;
+							if ( event.firstTime ) 
+							{
+								imgLayer.x = 0; 
+								imgLayer.y = 100; 
+							}
 							//	this.model.currentLayer = imgLayer; 
 							this.model.layerMask = imgLayer; 
-						}	
-						
-						
-						for each ( layer in face.layersToImport ) 
+							
+							//this.model.currentLayer = colorLayer; 
+						}
+						else //add from layers 
 						{
-							if ( layer is ImageLayerVO ) 
+							//disable adding undos 
+							this.model.blockUndoAdding = true; 
+							
+							if ( face.image_color_overlay != null &&  face.image_color_overlay != ''  ) 
 							{
-								imgLayer = layer as ImageLayerVO
-								this.dispatch( new EditProductCommandTriggerEvent(
-									EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, imgLayer ) ) ; 
-							}
-							if ( layer is TextLayerVO ) 
+								colorLayer  = new ColorLayerVO(); 
+								colorLayer.name = 'Color Base Image';
+								colorLayer.url = face.image_color_overlay; 
+								colorLayer.locked = true; 
+								colorLayer.showInList = false; 
+								this.model.addLayer( colorLayer ) ;
+								if ( event.firstTime ) 
+								{
+									colorLayer.x = 0; 
+									colorLayer.y = 100; 
+								}
+								this.model.layerColor = colorLayer; 
+							}		
+							
+							
+							if ( face.image_mask !=null && face.image_mask != ''   ) 
 							{
-								txtLayer = layer as TextLayerVO
-								this.dispatch( new EditProductCommandTriggerEvent(
-									EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer ) ) ; 
+								//use mask layer as well ..
+								imgLayer = new ImageLayerVO(); 
+								imgLayer.name = 'Mask  Image';
+								imgLayer.url = face.image_mask; 
+								//imgLayer.url = 'assets/images/img.jpg'
+								imgLayer.locked = true; 
+								imgLayer.showInList = false; 
+								imgLayer.mask = true; 
+								this.model.addLayer( imgLayer ) ;
+								//	this.model.currentLayer = imgLayer; 
+								this.model.layerMask = imgLayer; 
 							}	
-							if ( layer is ColorLayerVO ) 
+							
+							
+							for each ( layer in face.layersToImport ) 
 							{
-								colorLayer = layer as ColorLayerVO
-								colorLayer = colorLayer.clone() as ColorLayerVO ; 
-								this.model.addLayer( colorLayer )
+								if ( layer is ImageLayerVO ) 
+								{
+									imgLayer = layer as ImageLayerVO
+									this.dispatch( new EditProductCommandTriggerEvent(
+										EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, imgLayer ) ) ; 
+								}
+								if ( layer is TextLayerVO ) 
+								{
+									txtLayer = layer as TextLayerVO
+									this.dispatch( new EditProductCommandTriggerEvent(
+										EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer ) ) ; 
+								}	
+								if ( layer is ColorLayerVO ) 
+								{
+									colorLayer = layer as ColorLayerVO
+									colorLayer = colorLayer.clone() as ColorLayerVO ; 
+									this.model.addLayer( colorLayer )
+								}	
 							}	
-						}	
-
-						this.model.blockUndoAdding = false; 
-						
+							
+							this.model.blockUndoAdding = false; 
+							
+						}
+						face.imported = true
 					}
+					dbg  = [this.model.layers.length, this.model.layers.toArray() ] 
 					this.model.undo.clearAll(); 
 					this.model.layersChanged(); 
 				}

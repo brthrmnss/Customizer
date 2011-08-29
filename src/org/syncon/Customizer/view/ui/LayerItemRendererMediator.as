@@ -45,6 +45,14 @@ package org.syncon.Customizer.view.ui
 		 * do not log undo events ...
 		 * */
 		private var silent:Boolean=true;
+		/**
+		 * when repositing make suer to update handle width adn ehgiht 
+		 * */
+		private var repositioning:Boolean;
+		/**
+		 * if true, clicking a layer will not select it
+		 * */
+		private var disableClickSelection:Boolean=true;
 		override public function onRegister():void
 		{
 			this.ui.addEventListener( layer_item_renderer.ON_CLICK, 
@@ -105,6 +113,9 @@ package org.syncon.Customizer.view.ui
 				sZ.maxWidth = this.model.viewer.width; 
 				sZ.minHeight = 20
 				sZ.minWidth = 30
+					
+				this.model.objectHandles.enableMultiSelect = false; 
+				this.model.objectHandles.disableHandleSelection = true; 
 				//this.model.objectHandles.addDefaultConstraint( sZ )
 			}
 			//this.model.objectHandles.addDefaultConstraint(
@@ -272,6 +283,10 @@ package org.syncon.Customizer.view.ui
 				}
 			}
 			this.copyLayerToModel();
+			if ( this.repositioning ) 
+			{
+				repositioning = false; 
+			}
 			this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
 			this.silent = false 
 		}
@@ -471,6 +486,10 @@ package org.syncon.Customizer.view.ui
 				//also when clicked in layerlist 
 				this.ui.depth = this.ui.parent.numChildren-1
 			}
+			if ( this.isImage && this.ui.image.layer.mask ) 
+			{
+				this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
+			}
 		}
 		
 		/**
@@ -478,6 +497,7 @@ package org.syncon.Customizer.view.ui
 		 * */
 		private function onReposition(e:Event):void
 		{
+			this.repositioning = true; 
 			this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
 		}
 		
@@ -533,7 +553,11 @@ package org.syncon.Customizer.view.ui
 			return;*/ 
 			if ( this.layer.locked ) 
 				return
-				this.model.currentLayer = this.ui.listData as LayerBaseVO; 
+				
+			if ( this.disableClickSelection ) 
+			return; 
+				
+			this.model.currentLayer = this.ui.listData as LayerBaseVO; 
 		}		
 		
 		private function get isText() : Boolean

@@ -10,8 +10,14 @@ package  org.syncon.Customizer.vo
 		 * Specifies limits on change this image ...internally does nothing
 		 * */
 		public var image_source : String = ''; 
+		
+		/***
+		 * when specifying default picks, this notifies us that the user did not change this 
+		 * */
+		public var default_url : String = ''; 
+		
 		/**
-		 * wtf?
+		 * wtf? ... should be titled global mask or make speerate type ...
 		 * */
 		public var mask:Boolean;
 		/**
@@ -43,6 +49,7 @@ package  org.syncon.Customizer.vo
 			this.copyPropsTo(img)  
 			img.image_source = this.image_source
 			img.mask = this.mask; 
+			img.default_url = this.default_url; 
 			return img; 
 		}
 		

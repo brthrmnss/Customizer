@@ -90,6 +90,11 @@ package com.roguedevelopment.objecthandles
 		 **/
 		public var enableMultiSelect:Boolean=true;
 		
+		/**
+		 * should user be allowed to select items by clicking? 
+		 * */
+		public var disableHandleSelection : Boolean = false; 
+		
         [Bindable] public var selectionManager:ObjectHandlesSelectionManager;
 		
         protected var handleFactory:IFactory;
@@ -1186,6 +1191,8 @@ package com.roguedevelopment.objecthandles
         
         public function handleSelection( event : MouseEvent ) : void
         {
+			if ( this.disableHandleSelection ) 
+				return; 
             var model:Object = findModel( event.target as DisplayObject );
             
             if( ! model ) { return; }
@@ -1218,6 +1225,8 @@ package com.roguedevelopment.objecthandles
             for each(var current:Object in selectionManager.currentlySelected) {
             	originalModelGeometry[current] = selectionManager.getGeometryForObject(current);
             }
+			if ( originalGeometry == null ) 
+				return;
             mouseDownRotation = originalGeometry.rotation + toDegrees( getAngleInRadians(event.stageX, event.stageY) );         
         }
         

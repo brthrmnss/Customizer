@@ -26,10 +26,10 @@
 				//NightStandConstants.FileLoader = new LoadConfig_Flex()
 				NightStandConstants.ResourcesDir = 'assets' + '/'// why is this  aproblem
 				
-			/* 	var dbg : Array = [	LoadConfig_Flex.getDir('/d/g'),
-					LoadConfig_Flex.getDir('/d/g/'),LoadConfig_Flex.getDir('/d/g.json')
+				/* 	var dbg : Array = [	LoadConfig_Flex.getDir('/d/g'),
+				LoadConfig_Flex.getDir('/d/g/'),LoadConfig_Flex.getDir('/d/g.json')
 				] 
-				 */
+				*/
 				ButtonSkin
 				this.addEventListener(MouseEvent.CLICK, this.onClick ) ; 
 				
@@ -52,11 +52,11 @@
 				var str:String;
 				str = FlexGlobals.topLevelApplication.parameters.settings;
 				
-				
-				this.mainApp.context.importJson(str);
+				if ( this.hasOwnProperty('mainApp' ) ) 
+					this['mainApp'].context.importJson(str);
 			}
 			
-
+			
 			
 		]]>
 	</fx:Script>
@@ -68,7 +68,7 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<!-- fonts are loaded in on base app -->
-<!--	<fx:Style source="assets/styles/font.css"/> 
+	<!--	<fx:Style source="assets/styles/font.css"/> 
 	<fx:Style source="assets/styles/Main.css"/> -->
 	<!--
 	<apps:FlexBaseTester />
@@ -85,7 +85,7 @@
 	<apps:Customizer_MaskTest />
 	<apps:FlexBaseTester/>
 	-->
-<!--	<apps:Customizer_MaskTest />-->
+	<!--	<apps:Customizer_MaskTest />-->
 	<fx:Style source="assets/ZippoConfiguratorViews.css"/>
 	<s:Scroller  width="100%" height="100%"     >
 		<!--<apps:Deliverable x="10" y="10"/>-->
@@ -96,7 +96,7 @@
 		-->
 		<apps:Deliverable id="mainApp" x="0" y="0"/>
 		<!--<apps:EngraveDeliverable id="engraveYo" x="0" y="0"/>-->
-	
+
 	</s:Scroller>
 	<!--<apps:Customizer_MaskTest />-->
 </s:Application>

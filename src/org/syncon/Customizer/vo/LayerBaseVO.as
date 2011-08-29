@@ -16,6 +16,12 @@ package org.syncon.Customizer.vo
 			this.propChanged = ''; 
 		}
 		
+		static public var LAYER_VISIBLITY : String = 'LAYER_VISIBLITY';
+		public function updateVisibility(prop:String='') : void
+		{
+			this.dispatchEvent( new Event( LAYER_VISIBLITY  ) ) ; 
+		}
+		
 		static public var LAYER_REMOVED : String = 'LAYER_REMOVED';
 		public function layerRemoved( ) : void
 		{
@@ -63,6 +69,17 @@ package org.syncon.Customizer.vo
 		
 		public var visible : Boolean = true; 
 		public var locked : Boolean = false; 
+		
+		public var _cost :  Number = 0
+		public function get cost():Number
+		{
+			return _cost;
+		}
+		
+		public function set cost(value:Number):void
+		{
+			_cost = value;
+		}
 		
 		/**
 		 * This layer cannot be deleted

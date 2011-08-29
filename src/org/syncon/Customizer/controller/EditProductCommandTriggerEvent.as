@@ -17,8 +17,11 @@ package org.syncon.Customizer.controller
 		public static const LAYER_REMOVED:String = 'LAYER_REMOVED.w';					
 		
 		public static const CHANGE_FONT_SIZE:String = 'CHANGE_FONT_SIZE.w';
-		public static const FONT_SIZE_CHANGED:String = 'FONT_SIZE_CHANGED.w';			
-		
+		public static const FONT_SIZE_CHANGED:String = 'FONT_SIZE_CHANGED.w';	
+
+		public static const CHANGE_TEXT_ALIGN:String = 'CHANGE_TEXT_ALIGN.w';
+		public static const TEX_ALIGN_CHANGED:String = 'TEX_ALIGN_CHANGED.w';		
+
 		public static const CHANGE_IMAGE_URL:String = 'CHANGE_IMAGE_URL.w';
 		public static const IMAGE_URL_CHANGED:String = 'IMAGE_URL_CHANGED.w';		
 		
@@ -42,6 +45,9 @@ package org.syncon.Customizer.controller
 		
 		public static const RESIZE_LAYER:String = 'RESIZE_LAYER.w';
 		public static const LAYER_RESIZED:String = 'LAYER_RESIZED.w';			
+		
+		public static const HIDE_LAYER:String = 'HIDE_LAYER.w';
+		public static const LAYER_HID:String = 'LAYER_HIDE.w';		
 		
 		static public var fxAnimate : Function;  
 		
@@ -117,10 +123,15 @@ package org.syncon.Customizer.controller
 				//IMAGE_LAYER_ADDED,		
 				CHANGE_FONT_FAMILY,
 				CHANGE_FONT_SIZE,
+				CHANGE_TEXT_ALIGN,
 				CHANGE_COLOR,
 				CHANGE_LAYER_COLOR,
 				
 				CHANGE_IMAGE_URL,
+				
+				
+				
+				HIDE_LAYER, 
 				
 				MOVE_LAYER,
 				RESIZE_LAYER,

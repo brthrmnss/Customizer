@@ -14,6 +14,7 @@ package  org.virid.component
 	import org.syncon.Customizer.model.NightStandModelEvent;
 	import org.syncon.Customizer.view.ui.Toolbar;
 	import org.syncon.Customizer.vo.ImageVO;
+	import org.syncon.Customizer.vo.TextLayerVO;
 	import org.syncon.popups.controller.ShowPopupEvent;
 	
 	public class  MainMenuBarMediator extends Mediator 
@@ -71,8 +72,17 @@ package  org.virid.component
 			this.ui.btnUndo.enabled = this.model.undo.canUndo() 
 		}
 		
-		private function onAddText(e:  CustomEvent): void
+		private function onAddText(e:  Event): void
 		{
+			//blocked by default 
+			var txtLayer  : TextLayerVO = this.model.getEmptyTextLayer();
+			
+			//seems wrong to do this here , make intention ... 
+			txtLayer.visible = true
+			txtLayer.update(); 
+			
+			this.model.currentLayer = txtLayer; 
+			return; 
 			var obj : Object = e.data
 			this.dispatch( new EditProductCommandTriggerEvent (
 				EditProductCommandTriggerEvent.ADD_TEXT_LAYER, e) ) ; 

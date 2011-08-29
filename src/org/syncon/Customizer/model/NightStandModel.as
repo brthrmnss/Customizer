@@ -29,7 +29,7 @@ package org.syncon.Customizer.model
 		{
 		}		
 		
-		public var undo  : UndoManager = new UndoManager(); 
+		public var undo : UndoManager = new UndoManager(); 
 		
 		
 		
@@ -150,10 +150,10 @@ package org.syncon.Customizer.model
 		
 		
 		
-		private var _baseItem:  StoreItemVO;
+		private var _baseItem: StoreItemVO;
 		public function get baseItem(): StoreItemVO 	{ return _baseItem; }
 		public function set baseItem(value:StoreItemVO):void { 
-			var e : Event =  new NightStandModelEvent( NightStandModelEvent.BASE_ITEM_CHANGING, value )
+			var e : Event = new NightStandModelEvent( NightStandModelEvent.BASE_ITEM_CHANGING, value )
 			this.dispatch( e ) 
 			if ( e.isDefaultPrevented() ) 
 				return; 
@@ -165,10 +165,10 @@ package org.syncon.Customizer.model
 			this.dispatch( new NightStandModelEvent( NightStandModelEvent.BASE_ITEM_CHANGED, value ) ) 
 		}
 		
-		private var _currentFace:  FaceVO;
+		private var _currentFace: FaceVO;
 		public function get currentFace(): FaceVO 	{ return _currentFace; }
 		public function set currentFace(value:FaceVO):void { 
-			var e : Event =  new NightStandModelEvent( NightStandModelEvent.FACE_CHANGING, value )
+			var e : Event = new NightStandModelEvent( NightStandModelEvent.FACE_CHANGING, value )
 			this.dispatch( e ) 
 			if ( e.isDefaultPrevented() ) 
 				return; 
@@ -177,17 +177,17 @@ package org.syncon.Customizer.model
 		}
 		
 		
-		private var _currentLayer:  LayerBaseVO;
+		private var _currentLayer: LayerBaseVO;
 		public function get currentLayer(): LayerBaseVO 	{ return _currentLayer; }
 		public function set currentLayer(value:LayerBaseVO):void { 
 			if ( value == this._currentLayer ) 
 				return; 
-			var e : Event =  new NightStandModelEvent( NightStandModelEvent.CURRENT_LAYER_CHANGING, value )
+			var e : Event = new NightStandModelEvent( NightStandModelEvent.CURRENT_LAYER_CHANGING, value )
 			this.dispatch( e ) 
 			if ( e.isDefaultPrevented() ) 
 				return; 
 			_currentLayer = value;
-			if ( value != null &&  value.visible == false ) 
+			if ( value != null && value.visible == false ) 
 			{
 				trace('not visible, klr' ); 
 			}
@@ -240,29 +240,7 @@ package org.syncon.Customizer.model
 		{ 
 			
 		}
-		
-		
-		private var _fontSize : Number = NaN; 
-		
-		
-		private var _alarmList : ArrayCollection = new ArrayCollection( ) ; 
-		
-		public function get alarmList():ArrayCollection
-		{
-			return _alarmList;
-		}
-		
-		public function set alarmList(value:ArrayCollection):void
-		{
-			_alarmList = value;
-		}
-		public function loadAlarms(value: Array):void
-		{
-			this.addAllTo( this.alarmList, value )
-		}
-		
-		
-		
+ 
 		private var _voiceList : ArrayCollection = new ArrayCollection( ) ; 
 		private var _mute:Boolean=false;
 		private var fxCallAfterSoundCompletePlaying:Function;
@@ -314,32 +292,10 @@ package org.syncon.Customizer.model
 		 * */
 		public var layerColor:ColorLayerVO;
 		
-		public function get mute():Boolean
-		{
-			return _mute;
-		}
-		
-		public function set mute(value:Boolean):void
-		{
-			if ( mute == value ) return; 
-			_mute = value;
-			this.dispatch(new NightStandModelEvent( NightStandModelEvent.MUTE_CHANGED ) ) 
-		}
-		
-		
-		public function get voiceList():ArrayCollection
-		{
-			return _voiceList;
-		}
-		
-		public function set voiceList(value:ArrayCollection):void
-		{
-			_voiceList = value;
-		}
-		public function loadVoices(value: Array):void
-		{
-			this.addAllTo( this.voiceList, value )
-		}
+		/**
+		 * Virid thing ...
+		 * */
+		public var allowSelectingBgToClearSelection:Boolean=false;
 		
 		public function addLayer(layer : LayerBaseVO ) : void
 		{
@@ -347,6 +303,15 @@ package org.syncon.Customizer.model
 			this.recreateDisplayableLayers()
 			this.layersChanged();
 		}
+		public function showLayer(layer : LayerBaseVO ) : void
+		{
+			//should inhibit redudant requests.
+			layer.visible = true; 
+			layer.updateVisibility(); 
+			layer.update(); 
+			
+		}
+		
 		/*		public function removeLayer(layer : LayerBaseVO ) : void
 		{
 		var i : int = this.layers.getItemIndex( layer ) ; 
@@ -401,7 +366,7 @@ package org.syncon.Customizer.model
 			}
 		}
 		
-		public function getLayersByType(clazz : Class ) :  Array
+		public function getLayersByType(clazz : Class ) : Array
 		{
 			var className : String = getQualifiedClassName( clazz ) 
 			var found : Array = [] ; 
@@ -416,28 +381,110 @@ package org.syncon.Customizer.model
 		/**
 		 * Get next visible layer going upward ...
 		 * */
-		public function getNextLayer(startingIndex : int  = 0 ) :  LayerBaseVO
+		public function getNextLayer(startingIndex : int = 0, inListOnly : Boolean = true ) : LayerBaseVO
 		{
 			var foundLayer : LayerBaseVO; 
 			for ( var i : int =startingIndex ; i < this.layers.length ; i++ ) 
 			{
-				var layer : LayerBaseVO = this.layers.getItemAt( i )  as LayerBaseVO; 
+				var layer : LayerBaseVO = this.layers.getItemAt( i ) as LayerBaseVO; 
 				if ( layer.visible == false ) 
+					continue; 
+				if ( inListOnly && layer.showInList == false ) 
 					continue; 
 				foundLayer = layer; 
 			}
 			
-			if ( foundLayer == null  )
+			//start from beggining if empty ..
+			if ( foundLayer == null && startingIndex != 0 )
 			{
 				return this.getNextLayer()
 			}
 			return foundLayer
 		}
-		public function getLayerByName( name : String    ) :  LayerBaseVO
+		
+		/**
+		 * prefer one with no text or default text, then will show any available one
+		 * */
+		public function getEmptyTextLayer() : TextLayerVO
+		{
+			var foundLayer : TextLayerVO; 
+			for ( var i : int = 0 ; i < this.layers.length ; i++ ) 
+			{
+				var layer_ : LayerBaseVO = this.layers.getItemAt( i ) as LayerBaseVO
+				if ( layer_.type != TextLayerVO.Type ) 
+					continue; 
+				var layer : TextLayerVO = layer_ as TextLayerVO; 
+				if ( layer.text == layer.default_text || layer.text == '' ) 
+					foundLayer = layer; 
+				if ( layer.visible == false ) // == layer.default_text || layer.text == '' ) 
+					foundLayer = layer; 
+				return foundLayer; 
+			}
+			
+			//return first text layer ...
+			if ( foundLayer == null )
+			{
+				for ( i = 0 ; i < this.layers.length ; i++ ) 
+				{
+					layer_ = this.layers.getItemAt( i ) as LayerBaseVO
+					if ( layer_.type != TextLayerVO.Type ) 
+						continue; 
+					layer = layer_ as TextLayerVO; 
+					return layer; 
+				}
+			}
+			return foundLayer
+		}
+		
+		
+		
+		/**
+		 * prefer one with no text or default text, then will show any available one
+		 * */
+		public function getEmptyImageLayer( sourcing : String = null ) : ImageLayerVO
+		{
+			var foundLayer : ImageLayerVO; 
+			for ( var i : int = 0 ; i < this.layers.length ; i++ ) 
+			{
+				var layer_ : LayerBaseVO = this.layers.getItemAt( i ) as LayerBaseVO
+				if ( layer_.type != ImageLayerVO.Type ) 
+					continue; 
+				var layer : ImageLayerVO = layer_ as ImageLayerVO; 
+				if ( sourcing != null ) 
+				{
+					if ( layer.image_source != sourcing  )
+						continue;
+				}
+				if ( layer.url =='' ||  layer.url ==null   || layer.url == null || layer.url == layer.default_url ) 
+					foundLayer = layer; 
+				if ( layer.visible == false ) //this is probably the most important ... if not using it , clear it out for the user
+					///// == layer.default_text || layer.text == '' ) 
+					foundLayer = layer; 
+				if ( foundLayer != null ) 
+					return foundLayer; 
+			}
+			
+			//return first text layer ...
+			if ( foundLayer == null )
+			{
+				for ( i = 0 ; i < this.layers.length ; i++ ) 
+				{
+					layer_ = this.layers.getItemAt( i ) as LayerBaseVO
+					if ( layer_.type != ImageLayerVO.Type ) 
+						continue; 
+					layer = layer_ as ImageLayerVO; 
+					return layer; 
+				}
+			}
+			return foundLayer
+		}
+		
+		
+		public function getLayerByName( name : String ) : LayerBaseVO
 		{
 			for ( var i : int =0 ; i < this.layers.length ; i++ ) 
 			{
-				var layer : LayerBaseVO = this.layers.getItemAt( i )  as LayerBaseVO; 
+				var layer : LayerBaseVO = this.layers.getItemAt( i ) as LayerBaseVO; 
 				if ( layer.name == name ) 
 					return layer; 
 			}
@@ -463,7 +510,7 @@ package org.syncon.Customizer.model
 		{
 			this.dispatch( new ShowAlertMessageTriggerEvent(
 				ShowAlertMessageTriggerEvent.SHOW_ALERT_POPUP, 
-				str, title  )  ) 
+				str, title ) ) 
 		}
 	}
 }

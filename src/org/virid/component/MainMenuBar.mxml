@@ -23,7 +23,8 @@
 			
 			protected function swithModes_clickHandler(event:MouseEvent):void
 			{
-				this.parentDocument.currentState = (this.parentDocument.currentState == "engrave" )?"normal" : "engrave";
+				//this.parentDocument.currentState = (this.parentDocument.currentState == "engrave" )?"normal" : "engrave";
+				this.parentDocument.currentState = (this.parentDocument.currentState == "Text" )?"normal" : "Text";
 			}
 			
 			protected function onUndo(event:MouseEvent):void
@@ -39,6 +40,11 @@
 			{
 				// TODO Auto-generated method stub
 				this.dispatchEvent( new Event(EXPORTJSON) );
+			}
+			
+			protected function onText(event:MouseEvent):void
+			{
+				this.dispatchEvent( new Event(ADD_TEXT) );
 			}
 			
 		]]>
@@ -80,7 +86,8 @@
 		
 		<smallComponents:MainMenuButton icon="assets/images/engrave.jpg"
 										label="Text"
-										click="swithModes_clickHandler(event)"
+										 id="btnText"
+										click="onText(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton icon="assets/images/preview.jpg"
 										label="Preview" 

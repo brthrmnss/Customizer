@@ -7,6 +7,7 @@ package org.virid.component
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
+	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	
 	public class LayerCartPanelMediator extends Mediator 
@@ -25,15 +26,35 @@ package org.virid.component
 			this.onLayerChanged( null ) 
 			this.ui.addEventListener( layer_cart_panel.CHANGE_LIST, this.onSelectLayer ) 
 			this.ui.addEventListener( layer_cart_panel.REMOVE_LAYER, this.onRemoveLayer ) 
+			this.calculateCost(); 
 			
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.CURRENT_LAYER_CHANGED, 
+				this.onCurrentLayerChanged);	
+			this.onCurrentLayerChanged( null ) 
+			
+		}
+		
+		protected function onCurrentLayerChanged(e:NightStandModelEvent):void
+		{
+			this.ui.list.selectedItem = this.model.currentLayer;
+			var i : int = this.ui.list.dataProvider.getItemIndex( this.model.currentLayer ); 
+			/*if ( i == -1 ) 
+				throw 'how this happen?, why did you select this? if not in list?';*/
+			this.ui.list.selectedIndex = i ; 
+			this.calculateCost(); 
+			trace('clear layer' ) ;
+			this.lastLayerRemoved = null; 
 		}
 		
 		protected function onRemoveLayer(event:CustomEvent):void
 		{
 			var layer :  LayerBaseVO = event.data as LayerBaseVO
-				this.lastLayerRemoved = layer; 
+			this.lastLayerRemoved = layer; 
 			this.dispatch( new EditProductCommandTriggerEvent (
 				EditProductCommandTriggerEvent.REMOVE_LAYER, layer) ) ; 
+			trace('remove layer', layer.name ) ; 
+			this.calculateCost(); 
+			
 		}
 		
 		private function onLayersChanged(e:NightStandModelEvent):void
@@ -63,6 +84,7 @@ package org.virid.component
 			if ( i == -1 ) 
 				throw 'how this happen?, why did you select this? if not in list?';
 			this.ui.list.selectedIndex = i ; 
+			this.calculateCost(); 
 		}		
 		
 		/**
@@ -75,16 +97,48 @@ package org.virid.component
 			
 			if ( this.lastLayerRemoved == layer ) 
 			{
+				trace('show layer','wait',  layer.name ) 
 				this.lastLayerRemoved = null; 
 				return; 
 			}
 			
-			//auot select so it is visible ... 
-			layer.visible = true; 
-			layer.update(); 
-			this.model.currentLayer = layer; 
-			this.ui.list.selectedItem = this.model.currentLayer
+			//don't show empty image layers it is confusing for user 
+			//if layer is empty show pick image popup instead .....
+			//move this to a better place
+			if ( layer is  ImageLayerVO )
+			{
+				var img : ImageLayerVO = layer as ImageLayerVO; 
+				if ( img.url == '' || img.url == null ) 
+				{
+					var event : Event = new NightStandModelEvent(NightStandModelEvent.SHOW_EMPTY_LAYER, img ) 
+					this.dispatch(event ) ;
+					if ( event.isDefaultPrevented() ) 
+						return; 
+				}
+			}
 			
+			//auot select so it is visible ... 
+			this.model.showLayer( layer ) ; 
+			this.model.currentLayer = layer; 
+			//this.ui.list.selectedItem = this.model.currentLayer //redundant
+			trace('show layer', layer.name ) ; 
+			this.calculateCost(); 
+		}
+		
+		private function calculateCost():void
+		{
+			var total : Number = 0
+				total += this.model.baseItem.price; 
+			for each ( var l : LayerBaseVO in this.model.layersVisible.toArray() )  
+			{
+				if ( l.visible ) 
+				{
+						total += l.cost; 
+				}
+			}
+			
+			this.ui.txtCost.text = '$'+total.toFixed(2); 
+			//this.model.currentFace.configured_price = total; 
 		}
 		
 	}

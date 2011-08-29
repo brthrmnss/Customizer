@@ -87,6 +87,7 @@
 		
 		<s:List id="list" width="100%" height="300" borderVisible="false"
 				change="list_changeHandler(event)" contentBackgroundAlpha="0"
+				 focusAlpha="0"
 				itemRenderer="org.virid.smallComponents.LayerListItemRenderer_V2">
 			<s:layout>
 				<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>
@@ -95,8 +96,8 @@
 		</s:List>
 		
 		<s:Group width="100%">
-			<s:Label styleName="bold Arial" text="SubTotal"/>
-			<s:Label right="0" styleName="bold price" text="$32.00"/>
+			<s:Label   text="SubTotal"/>
+			<s:Label id="txtCost" textAlign="right" right="18" styleName="price" text="$32.00"/>
 		</s:Group>
 		
 		

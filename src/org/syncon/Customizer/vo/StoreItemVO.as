@@ -65,6 +65,7 @@ package  org.syncon.Customizer.vo
 			_lists = value;
 		}
 		*/
+		public var price:Number;
 		
 		public function export() : void
 		{

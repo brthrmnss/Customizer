@@ -24,6 +24,11 @@ package  org.virid.component
 		
 		private function onLayersChanged(param0:Object):void
 		{
+			if ( this.model.currentLayer == null ) 
+			{
+				this.ui.currentState = 'normal' 
+				//this.ui.designPanel.hideImageOptions();//overkill
+			}
 			this.ui.layer = this.model.currentLayer; 
 		}
 		

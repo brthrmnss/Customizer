@@ -8,6 +8,7 @@ package org.virid.component
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.view.ui.LayerInspector;
 	import org.syncon.Customizer.vo.LayerBaseVO;
+	import org.syncon.Customizer.vo.TextLayerVO;
 	import org.syncon.onenote.onenotehelpers.impl.layer_item_renderer;
 	
 	public class LayerTextInspectorMediator extends Mediator 
@@ -24,7 +25,62 @@ package org.virid.component
 				this.onChangeColor);				
 			this.ui.addEventListener( LayerTextInspector.CHANGE_FONT_FAMILY, 
 				this.onChangeFontFamily);	
-			
+			this.ui.addEventListener( LayerTextInspector.CHANGE_TEXT_ALIGN, 
+				this.onChangeTextAlign);	
+			this.ui.addEventListener( LayerTextInspector.CHANGED_TEXT, 
+				this.onChangeText );	
+			this.ui.addEventListener( LayerTextInspector.DATA_CHANGED, 
+				this.onDataChanged );	
+			onDataChanged(null)
+		}
+		
+		protected function onDataChanged(event:Event):void
+		{
+			this.ui.txt.prompt = this.layer.default_text; 
+			this.onChangeText(null); 
+		}
+		
+		public function get layer () : TextLayerVO 
+		{
+			return this.ui.layer; 
+		}
+		protected function onChangeText(event:Event):void
+		{
+		/*	if ( this.layer.text == '' && this.layer.default_text!= ''  ) 
+			{*/
+				
+	/*		}*/
+			//noiw hwo to automate it? ... not worry about undos, i do it here 
+			if ( this.layer.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE ) 
+			{
+				var steps :  Number =( this.layer.maxFontSize - this.layer.minFontSize)/this.layer.maxChars; 
+				var charCount : int = this.ui.layer.text.length; 
+				var newFontSize : Number = this.layer.maxFontSize - charCount*steps
+				/*this.dispatch( new EditProductCommandTriggerEvent ( 
+					EditProductCommandTriggerEvent.CHANGE_FONT_SIZE, newFontSize 
+				) )  */
+				layer.fontSize = int( newFontSize ); 
+				layer.update('fontSize'); 
+			}
+		}
+		
+		/**
+		 * if check box selected, go to the left
+		 * */
+		protected function onChangeTextAlign(event:CustomEvent):void
+		{
+			if ( event.data ==  false ) 
+			{
+			this.dispatch( new EditProductCommandTriggerEvent ( 
+				EditProductCommandTriggerEvent.CHANGE_TEXT_ALIGN, 'left' 
+			) )  
+			}
+			else
+			{
+			this.dispatch( new EditProductCommandTriggerEvent ( 
+				EditProductCommandTriggerEvent.CHANGE_TEXT_ALIGN, 'right' 
+			) )  
+			}
 		}
 		
 		protected function onChangeFontSize(event:CustomEvent):void

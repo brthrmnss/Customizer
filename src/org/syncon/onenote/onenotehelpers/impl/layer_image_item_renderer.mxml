@@ -104,6 +104,10 @@
 				
 				if ( this.parentDocument.resetting== true ) 
 				{
+					//we have to set the parentDocument height, or else 
+					//viewer3 will resize the layer to it's old size 
+					this.parentDocument.height = this.img.height; 
+					this.parentDocument.width = this.img.width; 
 					this.parentDocument.resetting=  false;
 					this.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
 					

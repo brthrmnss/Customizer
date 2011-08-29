@@ -67,32 +67,32 @@
 			  paddingBottom="5" paddingLeft="0" paddingRight="5" paddingTop="5">
 		
 		<smallComponents:MainMenuButton label="undo"   id="btnUndo" 
-										icon="assets/images/undo.jpg" 
+										icon="assets/images/undo.png" 
 										click="onUndo(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="redo"   id="btnRedo" 
-										icon="assets/images/redo.jpg" 
+										icon="assets/images/redo.png" 
 										click="onRedo(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
 		<smallComponents:MainMenuButton label="Background" visible="true" includeInLayout="true" 
-										icon="assets/images/background.jpg"
+										icon="assets/images/background.png"
 										click="swithModes_clickHandler(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>		
-		<smallComponents:MainMenuButton icon="assets/images/location.jpg" visible="false" includeInLayout="false"
+		<smallComponents:MainMenuButton icon="assets/images/location.png" visible="false" includeInLayout="false"
 										label="Choose a Location"
 										click="swithModes_clickHandler(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
-		<smallComponents:MainMenuButton icon="assets/images/engrave.jpg"
+		<smallComponents:MainMenuButton icon="assets/images/engrave.png"
 										label="Text"
 										 id="btnText"
 										click="onText(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton icon="assets/images/preview.jpg"
+		<smallComponents:MainMenuButton icon="assets/images/preview.png"
 										label="Preview" 
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton icon="assets/images/star.jpg" 
+		<smallComponents:MainMenuButton icon="assets/images/save.png" 
 										label="Save It" 
 										click="onSave(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>

@@ -31,7 +31,7 @@ package org.syncon.Customizer.model
 		
 		public var undo  : UndoManager = new UndoManager(); 
 		
- 
+		
 		
 		private var timerRefreshToken : Timer = new Timer(1501,1 ); 
 		private var timer_Alarms : Timer = new Timer(1000*60/60,0 ); 
@@ -158,24 +158,45 @@ package org.syncon.Customizer.model
 			if ( e.isDefaultPrevented() ) 
 				return; 
 			_baseItem = value;
-			this.layers = value.lists; 
+			//this.layers = value.lists; 
 			this.dispatch( new EditProductCommandTriggerEvent(
 				EditProductCommandTriggerEvent.LOAD_PRODUCT, value ) ) ; 
 			
 			this.dispatch( new NightStandModelEvent( NightStandModelEvent.BASE_ITEM_CHANGED, value ) ) 
 		}
 		
+		private var _currentFace:  FaceVO;
+		public function get currentFace(): FaceVO 	{ return _currentFace; }
+		public function set currentFace(value:FaceVO):void { 
+			var e : Event =  new NightStandModelEvent( NightStandModelEvent.FACE_CHANGING, value )
+			this.dispatch( e ) 
+			if ( e.isDefaultPrevented() ) 
+				return; 
+			_currentFace = value;
+			this.dispatch( new NightStandModelEvent( NightStandModelEvent.FACE_CHANGED, value ) ) 
+		}
+		
+		
 		private var _currentLayer:  LayerBaseVO;
 		public function get currentLayer(): LayerBaseVO 	{ return _currentLayer; }
 		public function set currentLayer(value:LayerBaseVO):void { 
+			if ( value == this._currentLayer ) 
+				return; 
 			var e : Event =  new NightStandModelEvent( NightStandModelEvent.CURRENT_LAYER_CHANGING, value )
 			this.dispatch( e ) 
 			if ( e.isDefaultPrevented() ) 
 				return; 
 			_currentLayer = value;
+			if ( value != null &&  value.visible == false ) 
+			{
+				trace('not visible, klr' ); 
+			}
 			//this.dispatch( new EditProductCommandTriggerEvent(
 			//	EditProductCommandTriggerEvent.LOAD_PRODUCT, value ) ) ; 
-			
+			if ( value != null ) 
+			{
+				this._currentLayer.layerSelected();
+			}
 			this.dispatch( new NightStandModelEvent( NightStandModelEvent.CURRENT_LAYER_CHANGED, value ) ) 
 		}
 		
@@ -270,7 +291,7 @@ package org.syncon.Customizer.model
 		 * */
 		public var blockUndoAdding:Boolean=false
 		private var _blockUndos:Boolean;
-
+		
 		/**
 		 * When undoing moving and resizing ... do not allow adding further undos 
 		 * */
@@ -278,7 +299,7 @@ package org.syncon.Customizer.model
 		{
 			return _blockUndos;
 		}
-
+		
 		/**
 		 * @private
 		 */
@@ -286,7 +307,7 @@ package org.syncon.Customizer.model
 		{
 			_blockUndos = value;
 		}
-
+		
 		/**
 		 * hardcoded reference to color layer 
 		 * in future, use strings references based on type 
@@ -326,14 +347,14 @@ package org.syncon.Customizer.model
 			this.recreateDisplayableLayers()
 			this.layersChanged();
 		}
-/*		public function removeLayer(layer : LayerBaseVO ) : void
+		/*		public function removeLayer(layer : LayerBaseVO ) : void
 		{
-			var i : int = this.layers.getItemIndex( layer ) ; 
-			if ( i == -1 ) 
-				return; 
-			this.layers.removeItemAt( i ) ; 
-			this.recreateDisplayableLayers()
-			this.layersChanged();
+		var i : int = this.layers.getItemIndex( layer ) ; 
+		if ( i == -1 ) 
+		return; 
+		this.layers.removeItemAt( i ) ; 
+		this.recreateDisplayableLayers()
+		this.layersChanged();
 		}
 		*/
 		public function removeLayer( layer : LayerBaseVO ) : void
@@ -358,14 +379,14 @@ package org.syncon.Customizer.model
 			
 			this.addAllTo( this.layersVisible, newLayersVisible )
 		}
-
+		
 		
 		public function collect() : void
 		{
 			this.dispatch( new NightStandModelEvent(NightStandModelEvent.COLLECT
 			) ) ; 
 		}
-  
+		
 		private function addAllTo( e:ArrayCollection, arr : Array, append : Boolean = false ) : void
 		{
 			if ( append == false ) 
@@ -390,6 +411,37 @@ package org.syncon.Customizer.model
 					found.push(l)
 			}
 			return found; 
+		}
+		
+		/**
+		 * Get next visible layer going upward ...
+		 * */
+		public function getNextLayer(startingIndex : int  = 0 ) :  LayerBaseVO
+		{
+			var foundLayer : LayerBaseVO; 
+			for ( var i : int =startingIndex ; i < this.layers.length ; i++ ) 
+			{
+				var layer : LayerBaseVO = this.layers.getItemAt( i )  as LayerBaseVO; 
+				if ( layer.visible == false ) 
+					continue; 
+				foundLayer = layer; 
+			}
+			
+			if ( foundLayer == null  )
+			{
+				return this.getNextLayer()
+			}
+			return foundLayer
+		}
+		public function getLayerByName( name : String    ) :  LayerBaseVO
+		{
+			for ( var i : int =0 ; i < this.layers.length ; i++ ) 
+			{
+				var layer : LayerBaseVO = this.layers.getItemAt( i )  as LayerBaseVO; 
+				if ( layer.name == name ) 
+					return layer; 
+			}
+			return null
 		}
 		
 		

@@ -30,6 +30,10 @@
 			{
 				this.dispatchEvent( new CustomEvent( UNDO ))
 			}
+			protected function onRedo(event:MouseEvent):void
+			{
+				this.dispatchEvent( new CustomEvent( REDO ))
+			}
 			
 			protected function onSave(event:MouseEvent):void
 			{
@@ -62,7 +66,7 @@
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="redo"   id="btnRedo" 
 										icon="assets/images/redo.jpg" 
-										click=""
+										click="onRedo(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		
 		<smallComponents:MainMenuButton label="Background" visible="true" includeInLayout="true" 

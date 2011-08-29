@@ -5,9 +5,12 @@
 		 xmlns:smallComponents="org.virid.smallComponents.*">
 	<fx:Script>
 		<![CDATA[
+			import org.syncon.Customizer.vo.ItemRendererHelpers;
 			import mx.events.FlexEvent;
 			
 			import org.syncon.Customizer.model.CustomEvent;
+			import org.syncon.Customizer.vo.ImageLayerVO;
+			import org.syncon.Customizer.vo.LayerBaseVO;
 			
 			public static const CHANGE_FONT_FAMILY:String='CHANGE_FONT_FAMILY';
 			public static const CHANGE_COLOR:String='CHANGE_COLOR';
@@ -19,6 +22,45 @@
 				//send up initial color
 				//this.dispatchEvent( new CustomEvent(CHANGE_COLOR, this.selectedColorSwatch.color ) ) ; 
 			}
+			
+			public var s : ItemRendererHelpers = new ItemRendererHelpers(null)
+			
+			private var _layer :  ImageLayerVO = new ImageLayerVO() ;
+			public function get layer()  : ImageLayerVO { return this._layer } 
+			public function set layer (layer_ : ImageLayerVO ) : void
+			{
+				s.listenForObj( layer_, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; 	
+				this._layer = layer_; 
+				this.onUpdatedLayer(); 
+			}
+			
+			private function onUpdatedLayer(e:Event=null):void
+			{
+				//this.txt.text = this.layer.text
+				//this.fontFamily.selectedItem = this.layer.fontFamily
+				//this.fontSize.selectedItem = this.layer.fontSize; 
+				//.chkVisible.selected = this.layer.visible ; 
+				//this.txt.maxChars
+				this.secondRow.alpha = 1; 
+				this.thirdRow.alpha = 1
+				this.secondRow.enabled = true; 
+				this.thirdRow.enabled = true;
+				if ( this.layer.image_source == 'upload' ) 
+				{
+					this.secondRow.alpha = 1; 
+					this.thirdRow.alpha = 0.2
+					this.thirdRow.enabled = false; 
+				}
+				else if ( this.layer.image_source == 'clipart' ) 
+				{
+					this.thirdRow.alpha = 1; 
+					this.secondRow.alpha = 0.2
+					this.secondRow.enabled = false; 
+				}
+			}
+			
+			
+			
 			
 			public function get getSelectedColor() : uint
 			{
@@ -41,6 +83,9 @@
 				this.selectedColorSwatch.color = u; 
 				this.dispatchEvent( new CustomEvent(CHANGE_COLOR, u ) ) ; 
 			}
+			
+			
+			
 			
 		]]>
 	</fx:Script>

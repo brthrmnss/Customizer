@@ -9,7 +9,10 @@
 			import mx.events.FlexEvent;
 			import mx.events.ResizeEvent;
 			
+			import org.syncon.Customizer.model.CustomEvent;
 			import org.syncon.Customizer.vo.ImageLayerVO;
+			import org.syncon.Customizer.vo.ItemRendererHelpers;
+			import org.syncon.Customizer.vo.LayerBaseVO;
 			
 			//public var list : ListVO; 
 			
@@ -28,21 +31,39 @@
 			public var layer : ImageLayerVO = new ImageLayerVO(); 
 			public var active:Boolean=true;
 			public var resizedOnce:Boolean;
+			private var tesntin:Boolean;
+			
+			public var s : ItemRendererHelpers = new ItemRendererHelpers(null)
 			
 			public function set data ( value :   Object ) : void
 			{
 				this.img.source = null; 
-
+				
 				layer = value as ImageLayerVO
+				s.listenForObj( layer, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; 	
 				if ( this.parentDocument == null ) 
 					return; 
+				this.onUpdatedLayer(); 
+			}
+			private function onUpdatedLayer(e:Event=null):void
+			{
+				//do not accept events that are not related to the source being changed
+		 		if ( e != null ) 
+				{
+					if (  this.layer.propChanged == ImageLayerVO.RESIZE_COMPLETE ) 
+						return;					
+					trace('returned'); 
+					if ( this.layer.propChanged != ImageLayerVO.SOURCE_CHANGED ) 
+						return; 
+					this.dispatchEvent( new CustomEvent(layer_item_renderer.REPOSITION) ) 
+				}
 				this.parentDocument.resetting= true; 
 				this.img.height = NaN ; 
 				this.img.width = NaN; 
 				//this.parentDocument.height = NaN ; 
 				//this.parentDocument.width = NaN; 
 				
-
+				
 				
 				
 				if ( layer == null ) 
@@ -56,6 +77,8 @@
 			
 			protected function img_resizeHandler(event:ResizeEvent):void
 			{
+				if ( this.tesntin )
+					return; 
 				if ( this.active == false ) 
 					return; 
 				if ( this.layer == null ) 
@@ -73,10 +96,12 @@
 				this.layer.width = this.img.width;  */
 				this.layer.nonChromeWidth = this.width; 
 				this.layer.nonChromeHeight = this.height; 
-				this.layer.update(); 
+				this.layer.height = this.img.height; 
+				this.layer.width = this.img.width;
+				this.layer.update(ImageLayerVO.RESIZE_COMPLETE); 
 				
 				
-				 
+				
 				if ( this.parentDocument.resetting== true ) 
 				{
 					this.parentDocument.resetting=  false;
@@ -90,7 +115,7 @@
 				//this.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
 				//this.parentDocument.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
 				/* if ( this.resizedOnce == true && ! isNaN( this.img.height ) )//wasn't invalidatte 
-					this.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ;
+				this.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ;
 				this.resizedOnce = true;  */
 			}
 			
@@ -105,7 +130,18 @@
 				//this.callLater( this.dispatchEvent, [new ResizeEvent(ResizeEvent.RESIZE)] )
 				//this.parentDocument.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
 				//this.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
+				trace('loading complete', this.layer.url, this.img.sourceHeight, this.img.sourceWidth, this.parentDocument.resetting ) ;
+				trace('loading complete', this.layer.url, this.img.height, this.img.width, this.parentDocument.resetting ) ;
+				
+				this.tesntin = true; 
+				/* 
+				this.img.width = this.img.sourceWidth
+				this.img.height = this.img.sourceHeight
+				*/
+				this.tesntin = false; 
 			}
+			
+
 			
 		]]>
 	</fx:Script>

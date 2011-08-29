@@ -56,6 +56,10 @@
 			
 			private function onUpdatedLayer(e:Event=null):void
 			{
+				if ( this.parentDocument != null ) 
+				{
+					var d : Object = this.parentDocument.parentDocument
+				}
 				if ( this.active == false ) 
 					return; 
 				if ( layer == null ) 

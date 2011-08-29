@@ -2,6 +2,9 @@ package  org.syncon.Customizer.vo
 {
 	import flash.events.EventDispatcher;
 
+	/**
+	 * Stores clip art images
+	 * */
 	public class ImageVO  extends EventDispatcher
 	{
 		public var hiSpeedMode : Boolean = true; 

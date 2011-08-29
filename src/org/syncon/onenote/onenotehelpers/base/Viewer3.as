@@ -563,6 +563,11 @@ package org.syncon.onenote.onenotehelpers.base
 		private var currentListerIndex : int = 0 ; 
 		private var targetXs:Number=-1;
 		private var targetYs:Number=-1;
+		/*
+		will auto set x and y to 0 if NaN, 
+		probably what you want, don't see why you woldntw ant ti 
+		*/
+		private var setUninitXYTo0:Boolean=true;
 		
 		public function setup(class_ : Class, testList : IListable, workspace : Group, bg : Group, scroller : Scroller ) : void
 		{
@@ -788,6 +793,11 @@ package org.syncon.onenote.onenotehelpers.base
 			
 			for each ( var list : IListVO in this.listVOs() )
 			{
+				if ( this.setUninitXYTo0 ) 
+				{
+					if ( isNaN( list.x ) ) list.x = 0 
+					if ( isNaN( list.y ) ) list.y = 0 
+				}
 				var pad : Number = 100; 
 				//warn about invalid dimensions
 				if ( list.width == 0 || list.height == 0 || isNaN(list.width ) || isNaN( list.height ) )

@@ -56,6 +56,20 @@ package org.syncon.Customizer.view.ui
 			this.ui.addEventListener( layer_item_renderer.RESIZED_MANIALY, 
 				this.onResizedManually ) ; 
 			this.initHandles()
+				
+			this.ui.addEventListener( layer_item_renderer.REPOSITION, 
+				this.onReposition ) ; 
+			
+			/*
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.CURRENT_LAYER_CHANGED, 
+			this.onLayerChanged);	
+			this.onLayerChanged( null ) 
+			*/	
+		}
+		
+		private function onLayerSelected(param0:Object):void
+		{
+			this.model.objectHandles.selectionManager.setSelected( this.model.currentLayer.model ) ; 
 		}
 		
 		/**
@@ -75,7 +89,8 @@ package org.syncon.Customizer.view.ui
 		
 		private function initHandles():void
 		{
-			if ( this.model.objectHandles == null ) {
+			if ( this.model.objectHandles == null ) 
+			{
 				this.model.objectHandles = new ObjectHandles( this.model.viewer as Sprite, null, new Flex4HandleFactory(), 
 					new Flex4ChildManager() ) 
 				//this.model.objectHandles.defaultHandles
@@ -145,6 +160,8 @@ package org.syncon.Customizer.view.ui
 				case "width": 
 					this.ui.width = event.newValue as Number;
 					this.layer.width = this.ui.width
+				/*	var ddbg : Array = [ this.ui.width, this.ui.image.width, this.ui.image.visible, this.ui.image.alpha, 
+						this.ui.x, this.ui.image.x, this.ui.image.img.x] */
 					if ( this.isImage ) 
 					{
 						this.ui.image.img.width = this.ui.width; 
@@ -195,9 +212,22 @@ package org.syncon.Customizer.view.ui
 				//8-23-11: had to take this out b/c of cache ...
 				//for some reason iange resize is distapched isntantly ... wait till it is proper first ... 
 				if ( this.ui.image.img.bitmapData == null && this.ui.image.img.source != '' ) 
-					return;
+				return;
 				*/
 				//this.ui.image.img.sourceHeight
+				//clone baselayer height if possible ...
+				if ( this.layer != this.model.baseLayer && this.model.baseLayer != null )
+				{
+					if ( this.ui.width > this.model.baseLayer.width ) 
+					{
+						var wH : Number = this.ui.image.img.height/this.ui.image.img.width
+						this.flexModel1.width = this.model.baseLayer.width - 40; 
+						
+						this.ui.image.img.width = this.flexModel1.width; 
+						this.flexModel1.height =this.ui.image.img.width *wH
+						this.ui.image.img.height = this.flexModel1.height; 						
+					}
+				}
 			}			
 			if ( this.layer.vertStartAlignment == 'center' ) 
 			{
@@ -261,9 +291,16 @@ package org.syncon.Customizer.view.ui
 			this.flexModel1.x = this.layer.x ; 
 			this.flexModel1.y = this.layer.y ; 
 			this.flexModel1.width = this.layer.width; 
+			if ( this.layer.height == 16 ) 
+				trace('setting to 16'); 
 			this.flexModel1.height = this.layer.height; 
 		}
 		
+		/**
+		 * Dispatched when itemRender's data is changed. 
+		 * will regenerate all handles depending on layer properties 
+		 * first step is to clear any old event listeners to refresh component 
+		 * */
 		protected function onDataChanged(event:Event):void
 		{
 			if ( ui.layer == null ) 
@@ -274,23 +311,30 @@ package org.syncon.Customizer.view.ui
 			}
 			if ( this.layer != null ) 
 			{
-				this.layer.removeEventListener(LayerBaseVO.LAYER_REMOVED, this.onLayerRemoved ) 
-				this.layer.removeEventListener(LayerBaseVO.LAYER_REDD, this.onLayerReAdd ) 
+				this.layer.model = null; //? good idea 
+				this.removeLayerListeners()
 			}
+			
+			this.returnUIToDefaultState()
 			
 			this.layer = this.ui.layer; 
 			this.layer.addEventListener(LayerBaseVO.LAYER_REDD, this.onLayerReAdd ) 
 			this.layer.addEventListener(LayerBaseVO.LAYER_REMOVED, this.onLayerRemoved ) 
+			this.layer.addEventListener(LayerBaseVO.LAYER_SELEECTED, this.onLayerSelected ) ; 
+			
+			this.layer.addEventListener(LayerBaseVO.UPDATED, this.onLayerUpdated ) 
 			this.layer.model = this.flexModel1; 
 			this.model.objectHandles.unregisterComponent( this.ui ) ; 
-			this.ui.visible = true; //masking turns this off ... ... or just turn of mask layer here too
+			this.ui.visible = this.layer.visible; //masking turns this off ... ... or just turn of mask layer here too
 			//this.model.objectHandles.unregisterModel( this.model ) ; 
 			//this.registered = false
 			//unlock any layre automatically
 			if ( this.layer.locked ) 
 			{
-				
-			}else
+				this.ui.buttonMode=false 
+				this.ui.useHandCursor=false
+			}
+			else //recreate the layers 
 			{
 				var constraints : Array = []; 
 				constraints 
@@ -317,8 +361,103 @@ package org.syncon.Customizer.view.ui
 					constraints.push( mpCon ) 
 				}
 				
-				this.model.objectHandles.registerComponent( flexModel1, this.ui ,null, true, constraints);
-				this.model.objectHandles.selectionManager.setSelected( this.flexModel1 ) ; 
+				var itemSizeConstraint : SizeConstraint = new SizeConstraint()
+				itemSizeConstraint.minWidth = 16
+				itemSizeConstraint.minHeight = 10
+				constraints.push( itemSizeConstraint ) 
+				
+				if ( this.isText ) 
+				{
+					var handleDesc : Array = [];///this.model.objectHandles.defaultHandles.concat(); 
+					handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 50), new Point(0, 0)));
+					
+					handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(0, 0), new Point(0, 0)));
+					handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(100, 0), new Point(0, 0)));
+					
+					handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(0, 100), new Point(0, 0)));
+					
+					handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(100, 100), new Point(0, 0)));
+					
+					// We need a zero point a lot, so lets not re-create it all the time.
+					 var zero:Point = new Point(0,0);
+					
+					handleDesc.push( new HandleDescription( HandleRoles.ROTATE,
+						new Point(100,50) , 
+						new Point(20,0) ) ); 
+					
+					
+					var defaultHandles : Array = handleDesc
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_UP + HandleRoles.RESIZE_LEFT, 
+						zero ,
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_UP ,
+						new Point(50,0) , 
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_UP + HandleRoles.RESIZE_RIGHT,
+						new Point(100,0) ,
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_RIGHT,
+						new Point(100,50) , 
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_DOWN + HandleRoles.RESIZE_RIGHT,
+						new Point(100,100) , 
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_DOWN ,
+						new Point(50,100) ,
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_DOWN + HandleRoles.RESIZE_LEFT,
+						new Point(0,100) ,
+						zero ) ); 
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.RESIZE_LEFT,
+						new Point(0,50) ,
+						zero ) ); 
+					
+					
+					defaultHandles.push( new HandleDescription( HandleRoles.ROTATE,
+						new Point(100,50) , 
+						new Point(20,0) ) ); 
+					
+					
+					
+					
+					//handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 50), new Point(0, 0)));
+					handleDesc = null
+						
+					  handleDesc   = this.model.objectHandles.defaultHandles.concat(); 
+					  handleDesc.pop(); 
+					  handleDesc.pop(); 
+					  handleDesc.pop(); 
+					  handleDesc = []
+						  
+					  handleDesc.push( new HandleDescription( HandleRoles.ROTATE,
+						  new Point(100,50) , 
+						  new Point(20,0) ) ); 
+					  //why must one add with no role? 
+					  //handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(50, 50), new Point(0, 0)));
+					  
+					 /* handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(0, 0), new Point(0, 0)));
+					  handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(100, 0), new Point(0, 0)));
+					  
+					  handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(0, 100), new Point(0, 0)));
+					  
+					  handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(100, 100), new Point(0, 0)));*/
+					  
+					  handleDesc.push( new HandleDescription( HandleRoles.NO_ROLE,
+						  new Point(0,50) , 
+						  new Point(-10,0) ) ); 
+					  
+				}
+				this.model.objectHandles.registerComponent( flexModel1, this.ui ,handleDesc, true, constraints);
+				if ( this.layer.visible) //dont' select invisible layers
+					this.model.objectHandles.selectionManager.setSelected( this.flexModel1 ) ; 
 				/*		}*/
 			}
 			
@@ -334,19 +473,50 @@ package org.syncon.Customizer.view.ui
 			}
 		}
 		
+		/**
+		 * will setup the repositioing listener again  again ...
+		 * */
+		private function onReposition(e:Event):void
+		{
+			this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
+		}
+		
+		private function returnUIToDefaultState():void
+		{
+			this.ui.buttonMode=true 
+			this.ui.useHandCursor=true
+		}
+		
+		protected function onLayerUpdated(event:Event):void
+		{
+			//remove sleection if not supposed to be selected
+			if (this.layer != null && this.layer.visible == false && this.model.currentLayer == this.layer) 
+			{
+				this.model.objectHandles.selectionManager.clearSelection()
+			}
+		}
+		
 		protected function onLayerRemoved(event:Event):void
 		{
 			this.model.objectHandles.unregisterComponent( this.ui ) ; 
 			this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
 			if ( this.layer != null ) 
 			{
-				this.layer.removeEventListener(LayerBaseVO.LAYER_REMOVED, this.onLayerRemoved ) 
-				this.layer.removeEventListener(LayerBaseVO.LAYER_REDD, this.onLayerReAdd ) 
+				this.removeLayerListeners()
 			}
 			this.ui.layer.loadedIntoLister = null;//key it will recreate from scratch
 			this.ui.layer = null; 
 			this.ui.data = null; 
 		}
+		
+		private function removeLayerListeners() : void
+		{
+			this.layer.removeEventListener(LayerBaseVO.LAYER_REMOVED, this.onLayerRemoved ) 
+			this.layer.removeEventListener(LayerBaseVO.LAYER_REDD, this.onLayerReAdd )
+			this.layer.removeEventListener(LayerBaseVO.UPDATED, this.onLayerUpdated ) 
+			this.layer.removeEventListener(LayerBaseVO.LAYER_SELEECTED, this.onLayerSelected ) 
+		}
+		
 		/**
 		 * dispathec when layer is added back to the screen ...
 		 * */

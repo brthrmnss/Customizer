@@ -14,6 +14,7 @@
 			import org.syncon.Customizer.ContextNightStand_PopupContext;
 			import org.syncon.Customizer.ContextNightStand_ViewsSubContext;
 			import org.syncon.Customizer.Virid_ViewsSubContext;
+			import org.syncon.Customizer.vo.ImageLayerVO;
 			import org.syncon.Customizer.vo.LayerBaseVO;
 			import org.syncon.Customizer.vo.TextLayerVO;
 			protected function onInit(event:FlexEvent):void
@@ -62,6 +63,11 @@
 					this.currentState = 'Text'; 
 					text.layer = layer as TextLayerVO
 				}
+				if ( layer is ImageLayerVO ) 
+				{
+					this.currentState = 'normal'; 
+					designPanel.layer = layer as ImageLayerVO
+				}
 				return; 
 			}
 		]]>
@@ -90,7 +96,7 @@
 					<s:Spacer height="-1"/>
 					<!--<component:engrave_panel includeIn="engrave" width="350" height="260"/>-->
 					<component:text_panel  includeIn="engrave" width="350" height="260"/>
-					<component:design_panel includeIn="normal" width="350" height="260"/>
+					<component:design_panel id="designPanel" includeIn="normal" width="350" height="260"/>
 					 <component:LayerTextInspector id="text"  includeIn="Text" width="350" height="260"/> 
 					<!--<component:design_panel includeIn="normal" width="350" height="260"/>
 					-->

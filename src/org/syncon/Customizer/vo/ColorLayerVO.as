@@ -19,5 +19,16 @@ package  org.syncon.Customizer.vo
 		{
 			return [this.name , '(', this.text, ')' ].join(' ');
 		}
+		
+		
+		override  public function clone() : LayerBaseVO
+		{
+			var img : ColorLayerVO = new ColorLayerVO()
+			this.copyPropsTo(img)  
+			img.color = this.color
+			return img; 
+		}
+		
+		
 	}
 }

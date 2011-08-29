@@ -4,31 +4,33 @@ package  org.syncon.Customizer.controller
 	
 	import org.robotlegs.mvcs.Command;
 	import org.syncon.Customizer.model.NightStandModel;
-	import org.syncon.Customizer.vo.FaceVO;
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.StoreItemVO;
 	import org.syncon.Customizer.vo.TextLayerVO;
+	import org.syncon.Customizer.vo.FaceVO;
 	
 	
 	
-	public class ImportJSONCommand extends Command
+	public class ImportViridJSONCommand extends Command
 	{
 		[Inject] public var model:NightStandModel;
-		[Inject] public var event:ImportJSONCommandTriggerEvent;
+		[Inject] public var event:ImportViridJSONCommandTriggerEvent;
 		
 		
 		
 		override public function execute():void
 		{
-			if ( event.type == ImportJSONCommandTriggerEvent.IMPORT_JSON ) 
+			if ( event.type == ImportViridJSONCommandTriggerEvent.IMPORT_JSON ) 
 			{
-				this.importJSON()
+				this.importProduct()
+				
 			}	
 			
 			
 		}
 		
-		private function importJSON():void
+		
+		private function importProduct():void
 		{
 			event.str;
 			var json:Object = JSON.decode(event.str);
@@ -71,12 +73,6 @@ package  org.syncon.Customizer.controller
 			this.model.baseItem = product;
 			
 		}
-		/*		
-		private function loadSound():void
-		{
-		
-		}*/
-		
 		
 	}
 }

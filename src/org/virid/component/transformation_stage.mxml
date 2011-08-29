@@ -11,6 +11,8 @@
 			private var creationCompleteCalled:Boolean = false;
 			private var _prodImageReverese:Boolean = false;
 			
+			static public const SWITCH_FACE : String = 'switchFace' 
+			
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
 				this.creationCompleteCalled = true
@@ -27,8 +29,12 @@
 			
 			protected function switchSide_clickHandler(event:MouseEvent):void
 			{
+				/* 
 				this.productImageArea.source = (_prodImageReverese)?"assets/images/product_hero1r.jpg":"assets/images/product_hero1.jpg"; 
 				_prodImageReverese = !_prodImageReverese;
+				 */
+				this.dispatchEvent( new Event(SWITCH_FACE) ) 
+				
 			}
 			
 		]]>
@@ -112,9 +118,9 @@
 		
 		<s:Group 
 			height="15" bottom="0" horizontalCenter="0" width="100%">
-				<s:Button id="switchSide"
+				<s:Button id="btnSwitchSide"
 						  click="switchSide_clickHandler(event)"
-						  left="0" bottom="0"
+						  left="0" bottom="0" toolTip="Switch Sides"
 						  icon="assets/images/flip.jpg" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"
 						  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 			

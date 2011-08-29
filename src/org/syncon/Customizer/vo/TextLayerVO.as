@@ -17,5 +17,19 @@ package  org.syncon.Customizer.vo
 		{
 			return [this.name , '(', this.text, ')' ].join(' ');
 		}
+		
+		
+		override  public function clone() : LayerBaseVO
+		{
+			//var d :  Object = super.clone(); 
+			var img : TextLayerVO = new TextLayerVO()
+			this.copyPropsTo(img)  
+			img.text = this.text; 
+			img.fontSize = this.fontSize
+			img.fontFamily = this.fontFamily
+			img.color = this.color
+			img.fontSize = this.fontSize
+			return img; 
+		}
 	}
 }

@@ -19,6 +19,9 @@ package org.syncon.Customizer.controller
 		public static const CHANGE_FONT_SIZE:String = 'CHANGE_FONT_SIZE.w';
 		public static const FONT_SIZE_CHANGED:String = 'FONT_SIZE_CHANGED.w';			
 		
+		public static const CHANGE_IMAGE_URL:String = 'CHANGE_IMAGE_URL.w';
+		public static const IMAGE_URL_CHANGED:String = 'IMAGE_URL_CHANGED.w';		
+		
 		public static const CHANGE_FONT_FAMILY:String = 'FONT_FAMILY_CHANGED.w';
 		public static const FONT_FAMILY_CHANGED:String = 'FONT_FAMILY_CHANGED.w';			
 		
@@ -30,6 +33,9 @@ package org.syncon.Customizer.controller
 		
 		public static const LOAD_PRODUCT:String = 'LOAD_PRODUCT.w';	
 		public static const PRODUCT_LOADED:String = 'PRODUCT_LOADED.w';			
+		
+		public static const LOAD_FACE:String = 'LOAD_FACE.w';	
+		public static const FACE_LOADED:String = 'FACE_LOADED.w';			
 		
 		public static const MOVE_LAYER:String = 'MOVE_LAYER.w';
 		public static const LAYER_MOVED:String = 'LAYER_MOVED.w';				
@@ -114,12 +120,15 @@ package org.syncon.Customizer.controller
 				CHANGE_COLOR,
 				CHANGE_LAYER_COLOR,
 				
+				CHANGE_IMAGE_URL,
+				
 				MOVE_LAYER,
 				RESIZE_LAYER,
 				REMOVE_LAYER,
 				
 				//LAYER_MOVED,
-				LOAD_PRODUCT
+				LOAD_PRODUCT,
+				LOAD_FACE,
 				
 			]
 			for each ( var command : String in types ) 

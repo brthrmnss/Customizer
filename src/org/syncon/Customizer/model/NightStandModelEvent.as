@@ -49,6 +49,9 @@ package  org.syncon.Customizer.model
 		public static const BASE_ITEM_CHANGED : String = 'BASE_ITEM_CHANGED';
 		public static const BASE_ITEM_CHANGING : String = 'BASE_ITEM_CHANGING'
 		
+		public static const FACE_CHANGED : String = 'FACE_CHANGED';
+		public static const FACE_CHANGING : String = 'FACE_CHANGING'
+			
 		public static const CURRENT_LAYER_CHANGED : String = 'CURRENT_LAYER_CHANGED';
 		public static const CURRENT_LAYER_CHANGING : String = 'CURRENT_LAYER_CHANGING'
 			

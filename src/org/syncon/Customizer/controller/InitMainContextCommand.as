@@ -4,12 +4,13 @@ package org.syncon.Customizer.controller
 	
 	import org.robotlegs.mvcs.Command;
 	import org.syncon.Customizer.model.NightStandModel;
+	import org.syncon.Customizer.vo.ColorLayerVO;
 	import org.syncon.Customizer.vo.FaceVO;
+	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.ImageVO;
 	import org.syncon.Customizer.vo.StoreItemVO;
-	import org.syncon2.utils.MakeVOs;
 	import org.syncon.Customizer.vo.TextLayerVO;
-	import org.syncon.Customizer.vo.ImageLayerVO;
+	import org.syncon2.utils.MakeVOs;
 	
 	/**
 	 *
@@ -120,17 +121,54 @@ package org.syncon.Customizer.controller
 			
 			face.base_image_url = 'assets/images/imgbase.png'
 			base.faces.addItem( face ) 
+			/*
+			imgLayer = new ImageLayerVO(); 
+			imgLayer.name = 'Mask  Image';
+			imgLayer.url = face.base_image_url; 
+			//imgLayer.url = 'assets/images/img.jpg'
+			imgLayer.locked = true; 
+			imgLayer.showInList = false; 
+			imgLayer.mask = true; 
+			this.model.addLayer( imgLayer ) ;
+			if ( event.firstTime ) 
+			{
+			imgLayer.x = 0; 
+			imgLayer.y = 100; 
+			}
+			//	this.model.currentLayer = imgLayer; 
+			this.model.layerMask = imgLayer; 
+			*/
+				
+			face.image_mask = 'assets/images/imgbase.png'
+			//just have to get it to the mask layer on the model some how ... if you roll your own 
+			/*	
+			var colorLayer : ColorLayerVO; 
+			colorLayer = new ColorLayerVO;
+			colorLayer.name = 'Mask2'
+			colorLayer.url ='assets/images/imgbase.png'
+			//colorLayer.mask  = true
+			//imageLayer.showInList = false
+			colorLayer.locked = true;  //all masks should be locked by default 
+			face.layersToImport.push(colorLayer);
+			*/
+			var colorLayer : ColorLayerVO; 
 			
-			
+			colorLayer = new ColorLayerVO;
+			colorLayer.name = 'Color Layer'
+			colorLayer.url ='assets/images/imgbase.png'
+			//colorLayer.mask  = true
+			colorLayer.showInList = false
+			colorLayer.locked = true;  //all masks should be locked by default 
+			face.layersToImport.push(colorLayer);
 			
 			var textLayer: TextLayerVO = new TextLayerVO;
 			textLayer.text = 'Add Text' 
-				textLayer.name = 'Text'
+			textLayer.name = 'Text'
 			textLayer.prompt_layer = true; 
 			face.layersToImport.push(textLayer);
 			var imageLayer: ImageLayerVO
 			
-		 
+			
 			imageLayer = new ImageLayerVO;
 			imageLayer.name = 'Upload'
 			imageLayer.url ='assets/images/pokemon.png'
@@ -138,9 +176,10 @@ package org.syncon.Customizer.controller
 			imageLayer.visible = false; 
 			imageLayer.image_source = 'upload';  	
 			face.layersToImport.push(imageLayer);
-			 
+			
 			imageLayer = new ImageLayerVO;
 			imageLayer.url = ''
+			imageLayer.name = 'Clip Art 1'
 			imageLayer.visible = false; 
 			imageLayer.prompt_layer = true; 
 			imageLayer.image_source = 'clipart';  			
@@ -148,13 +187,15 @@ package org.syncon.Customizer.controller
 			
 			imageLayer = new ImageLayerVO;
 			//imageLayer.url = ''
+			imageLayer.name = 'Clip Art 2'
 			imageLayer.prompt_layer = true; 
 			imageLayer.visible = false; 
 			imageLayer.image_source = 'clipart';  						
 			face.layersToImport.push(imageLayer);
 			
 			imageLayer = new ImageLayerVO;
-			imageLayer.prompt_layer = true; 			
+			imageLayer.prompt_layer = true; 		
+			imageLayer.name = 'Clip Art 3'
 			imageLayer.image_source = 'clipart';  		
 			imageLayer.url ='assets/images/img.jpg'
 			imageLayer.visible = false; 

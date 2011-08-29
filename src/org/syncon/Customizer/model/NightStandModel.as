@@ -433,6 +433,18 @@ package org.syncon.Customizer.model
 			}
 			return foundLayer
 		}
+		public function getLayerByName( name : String    ) :  LayerBaseVO
+		{
+			for ( var i : int =0 ; i < this.layers.length ; i++ ) 
+			{
+				var layer : LayerBaseVO = this.layers.getItemAt( i )  as LayerBaseVO; 
+				if ( layer.name == name ) 
+					return layer; 
+			}
+			return null
+		}
+		
+		
 		public function isDescendent( e : Object , againsts : Object ) : Boolean 
 		{
 			var par : Object = e; 

@@ -45,6 +45,8 @@ package  org.virid.component
 		protected function onRedo(event:Event):void
 		{
 			// TODO Auto-generated method stub
+			if ( this.model.undo.canRedo() == false ) 
+				return; 
 			var op : IOperation = this.model.undo.popRedo()
 			op.performRedo()
 			this.model.undo.pushUndo( op ) ; 
@@ -54,8 +56,8 @@ package  org.virid.component
 		
 		protected function onUndo(event:Event):void
 		{
-			// TODO Auto-generated method stub
-			//	this.model.undo.undo()
+			if ( this.model.undo.canUndo() == false ) 
+				return; 
 			var op : IOperation = this.model.undo.popUndo()
 			op.performUndo()
 			this.model.undo.pushRedo( op ) ; 

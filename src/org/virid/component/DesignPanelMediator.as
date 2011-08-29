@@ -41,7 +41,7 @@ package  org.virid.component
 			else
 				color = uint(color_ ) 
 			this.dispatch( new EditProductCommandTriggerEvent (
-				EditProductCommandTriggerEvent.CHANGE_LAYER_COLOR,color) ) ; 
+				EditProductCommandTriggerEvent.CHANGE_LAYER_COLOR,color, 'Mask') ) ; 
 		}
 		
 		protected function onAddUploadImage(e:CustomEvent):void

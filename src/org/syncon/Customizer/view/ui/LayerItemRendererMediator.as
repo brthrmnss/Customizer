@@ -160,8 +160,8 @@ package org.syncon.Customizer.view.ui
 				case "width": 
 					this.ui.width = event.newValue as Number;
 					this.layer.width = this.ui.width
-					var ddbg : Array = [ this.ui.width, this.ui.image.width, this.ui.image.visible, this.ui.image.alpha, 
-						this.ui.x, this.ui.image.x, this.ui.image.img.x] 
+				/*	var ddbg : Array = [ this.ui.width, this.ui.image.width, this.ui.image.visible, this.ui.image.alpha, 
+						this.ui.x, this.ui.image.x, this.ui.image.img.x] */
 					if ( this.isImage ) 
 					{
 						this.ui.image.img.width = this.ui.width; 

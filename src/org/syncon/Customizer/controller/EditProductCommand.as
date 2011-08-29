@@ -159,7 +159,7 @@ package org.syncon.Customizer.controller
 				if ( event.undo == false )
 				{
 					imgLayer = this.model.currentLayer as ImageLayerVO; 
- 	
+					
 					event.oldData = imgLayer.url; 
 					imgLayer.url  =   event.data.toString()
 					imgLayer.update(ImageLayerVO.SOURCE_CHANGED)//'fontSize'); 
@@ -296,14 +296,19 @@ package org.syncon.Customizer.controller
 			
 			
 			//how to map this? ... use a string for layer association
-			if ( event.type == EditProductCommandTriggerEvent.CHANGE_LAYER_COLOR 
-			)  
+			if ( event.type == EditProductCommandTriggerEvent.CHANGE_LAYER_COLOR  	)  
 			{
 				if ( event.undo == false )
 				{
 					//if ( event.data2 != null ) 
 					//this.model.getColorLayer(event.data2 )
 					colorLayer = this.model.layerColor; //this.model.currentLayer as ColorLayerVO; 
+					//can specify layer  name as well
+					if ( event.data2 != null ) 
+					{
+						var layerName : String = event.data2.toString()
+						colorLayer = this.model.getLayerByName( layerName  ) as ColorLayerVO; 
+					}
 					if ( colorLayer == null ) 
 					{
 						trace('EditProductCommand','warning:', 
@@ -569,22 +574,6 @@ package org.syncon.Customizer.controller
 						}		
 						
 						
-						for each ( layer in face.layersToImport ) 
-						{
-							if ( layer is ImageLayerVO ) 
-							{
-								imgLayer = layer as ImageLayerVO
-								this.dispatch( new EditProductCommandTriggerEvent(
-									EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, imgLayer ) ) ; 
-							}
-							if ( layer is TextLayerVO ) 
-							{
-								txtLayer = layer as TextLayerVO
-								this.dispatch( new EditProductCommandTriggerEvent(
-									EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer ) ) ; 
-							}								
-						}	
-						
 						if ( face.image_mask !=null && face.image_mask != ''   ) 
 						{
 							//use mask layer as well ..
@@ -600,6 +589,29 @@ package org.syncon.Customizer.controller
 							this.model.layerMask = imgLayer; 
 						}	
 						
+						
+						for each ( layer in face.layersToImport ) 
+						{
+							if ( layer is ImageLayerVO ) 
+							{
+								imgLayer = layer as ImageLayerVO
+								this.dispatch( new EditProductCommandTriggerEvent(
+									EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, imgLayer ) ) ; 
+							}
+							if ( layer is TextLayerVO ) 
+							{
+								txtLayer = layer as TextLayerVO
+								this.dispatch( new EditProductCommandTriggerEvent(
+									EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer ) ) ; 
+							}	
+							if ( layer is ColorLayerVO ) 
+							{
+								colorLayer = layer as ColorLayerVO
+								colorLayer = colorLayer.clone() as ColorLayerVO ; 
+								this.model.addLayer( colorLayer )
+							}	
+						}	
+
 						this.model.blockUndoAdding = false; 
 						
 					}

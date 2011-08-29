@@ -214,10 +214,11 @@
     
     <!-- border --> 
     <!--- @private -->
-    <s:Rect left="0" right="0" top="0" bottom="0" id="border" radiusX="10" radiusY="10" >
+    <s:Rect left="0" right="0" top="0" bottom="0" id="border" radiusX="10" radiusY="10" 
+			>
         <s:stroke>     
             <!--- @private -->
-            <s:SolidColorStroke id="borderStroke" weight="1" />
+            <s:SolidColorStroke id="borderStroke" weight="1" color="0xefefef" pixelHinting="true"/>
         </s:stroke>
     </s:Rect>
 

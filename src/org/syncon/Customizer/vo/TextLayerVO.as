@@ -17,6 +17,8 @@ package  org.syncon.Customizer.vo
 		public var minFontSize: Number = -1 ;
 		public var maxFontSize: Number = -1 ;
 		public var default_text:String= 'Add Text';
+		public var subType:Object;
+		public var orientation:Object;
 		
 		public override function  get type():String
 		{

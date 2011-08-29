@@ -67,6 +67,7 @@ package  org.virid.component
 			var colorLayerName :  String =  'Mask'; 
 			colorLayerName =  'Color Layer';
 			var colorLayer : ColorLayerVO = this.model.getLayerByName( colorLayerName ) as ColorLayerVO
+			if(colorLayer == null)return;
 			this.ui.selectedColorSwatch.color = colorLayer.color
 
 		}

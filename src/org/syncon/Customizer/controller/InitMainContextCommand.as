@@ -159,7 +159,8 @@ package org.syncon.Customizer.controller
 			colorLayer.name = 'Color Layer'
 			colorLayer.url ='assets/images/imgbase.png'
 			//colorLayer.mask  = true
-			colorLayer.showInList = false
+			colorLayer.showInList = true;
+			colorLayer.prompt_layer = true;
 			colorLayer.color = 0x166571;
 			colorLayer.locked = true;  //all masks should be locked by default 
 			face.layersToImport.push(colorLayer);
@@ -181,7 +182,7 @@ package org.syncon.Customizer.controller
 			imageLayer.url ='assets/images/pokemon.png'
 			imageLayer.default_url ='assets/images/pokemon.png'
 			imageLayer.prompt_layer = true; 
-			imageLayer.visible = false; 
+			imageLayer.visible = true; 
 			imageLayer.cost = 8.95
 			imageLayer.image_source = ViridConstants.IMAGE_SOURCE_UPLOAD
 			face.layersToImport.push(imageLayer);

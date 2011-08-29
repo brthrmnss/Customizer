@@ -34,6 +34,10 @@ package org.syncon.Customizer
 			this.commandMap.mapEvent( ImportViridJSONCommandTriggerEvent.IMPORT_JSON, ImportViridJSONCommand );
 			
 			
+			this.commandMap.mapEvent(  TestImportViridJSONCommandTriggerEvent.TEST_IMPORT_VIRID_JSON, TestImportViridJSONCommand );
+			
+			
+			
 			
 			
 			EditProductCommandTriggerEvent.mapCommands( this.commandMap, EditProductCommand ) ; 
@@ -101,17 +105,31 @@ package org.syncon.Customizer
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) ) ; 
 			
+			this.importAnySpecifiedJSON(); 
+		}
+		
+		/**
+		 * Attempts to import json....
+		 * */
+		public function importAnySpecifiedJSON() : void
+		{
+			
 			if ( this.importJsonStrVirid != null ) 
 			{
 				this.dispatchEvent( new ImportViridJSONCommandTriggerEvent(
-					ImportViridJSONCommandTriggerEvent.IMPORT_JSON,this.importJsonStr)) ;
+					ImportViridJSONCommandTriggerEvent.IMPORT_JSON,this.importJsonStrVirid)) ;
+				return;
 			}
 			
 			if ( this.importJsonStr != null ) 
 			{
 				this.dispatchEvent( new ImportJSONCommandTriggerEvent(
 					ImportJSONCommandTriggerEvent.IMPORT_JSON,this.importJsonStr)) ;
+				return; 
 			}
+			
+			this.dispatchEvent( new TestImportViridJSONCommandTriggerEvent(
+				TestImportViridJSONCommandTriggerEvent.TEST_IMPORT_VIRID_JSON)) ;
 			/*
 			this.dispatchEvent( new LoadSoundsTriggerEvent(
 			LoadSoundsTriggerEvent.LOAD_SOUNDS ) ) ; 
@@ -154,6 +172,12 @@ package org.syncon.Customizer
 		{
 			if ( str == null ) return; 
 			this.importJsonStr=str;
+		}
+		
+		public function importViridJson(str:String):void
+		{
+			if ( str == null ) return; 
+			this.importJsonStrVirid=str;
 		}
 		
 		public function newMultipler( n : Number ) : void

@@ -53,7 +53,7 @@
 				str = FlexGlobals.topLevelApplication.parameters.settings;
 				
 				if ( this.hasOwnProperty('mainApp' ) ) 
-					this['mainApp'].context.importJson(str);
+					this['mainApp'].context.importViridJson(str);
 			}
 			
 			

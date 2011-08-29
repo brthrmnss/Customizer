@@ -69,6 +69,7 @@ package org.syncon.Customizer.vo
 		
 		public var visible : Boolean = true; 
 		public var locked : Boolean = false; 
+		public var required : Boolean = false;
 		
 		public var _cost :  Number = 0
 		public function get cost():Number

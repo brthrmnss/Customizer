@@ -83,7 +83,8 @@
 		
 			<s:HGroup width="100%">
 				<s:TextInput text="Text" width="100%"
-							 borderColor="0xefefef"/>
+							 borderColor="0xefefef"
+							 skinClass="org.virid.skins.LightGrayRoundedFormField"/>
 				<s:Button label="ADD MY TEXT" 
 						  skinClass="org.virid.skins.simpleBlackBtn"
 						  height="20"/>

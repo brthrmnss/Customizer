@@ -170,14 +170,16 @@ package  org.virid.component
 			var txtLayer  : TextLayerVO = this.model.getEmptyTextLayer();
 			
 			//seems wrong to do this here , make intention ... 
-			txtLayer.visible = true
-			txtLayer.update(); 
-			
-			this.model.currentLayer = txtLayer; 
-			return; 
-			var obj : Object = e.data
-			this.dispatch( new EditProductCommandTriggerEvent (
-				EditProductCommandTriggerEvent.ADD_TEXT_LAYER, e) ) ; 
+			if(txtLayer != null){//m:added check to avoid nullrefrence
+				txtLayer.visible = true
+				txtLayer.update(); 
+				
+				this.model.currentLayer = txtLayer; 
+				return; 
+				var obj : Object = e.data
+				this.dispatch( new EditProductCommandTriggerEvent (
+					EditProductCommandTriggerEvent.ADD_TEXT_LAYER, e) ) ; 
+			}
 		}		
 		
 		private function onAddImage(e:  CustomEvent): void

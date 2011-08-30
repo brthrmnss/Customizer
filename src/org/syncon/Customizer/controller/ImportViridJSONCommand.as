@@ -54,7 +54,7 @@ package  org.syncon.Customizer.controller
 					
 					if(layerImport.type == "color")
 					{
-						this.copyBasics(textLayer, layerImport );
+						//this.copyBasics(face.color_overlay_layer, layerImport );
 						face.color_overlay_layer = layerImport.Media.source;
 						
 					}
@@ -62,11 +62,11 @@ package  org.syncon.Customizer.controller
 					{
 						var imageLayer: ImageLayerVO = new ImageLayerVO;
 						
-						textLayer.prompt_layer = true; 
-						textLayer.locked = true;
+						imageLayer.prompt_layer = true; 
+						imageLayer.locked = true;
 						
 						imageLayer.url = layerImport.Media.source;
-						this.copyBasics(textLayer, layerImport );
+						this.copyBasics(imageLayer, layerImport );
 						
 						face.layersToImport.push(imageLayer);
 						

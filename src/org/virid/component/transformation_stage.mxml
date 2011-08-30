@@ -120,7 +120,7 @@
 			height="15" bottom="0" horizontalCenter="0" width="100%">
 				<s:Button id="btnSwitchSide"
 						  click="switchSide_clickHandler(event)"
-						  left="0" bottom="0" toolTip="Switch Sides"
+						  width="50" height="50" left="0" bottom="0" toolTip="Switch Sides"
 						  icon="assets/images/flip.png" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"
 						  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 			

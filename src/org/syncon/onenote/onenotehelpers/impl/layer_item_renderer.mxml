@@ -227,6 +227,7 @@
 					//Viewer3 is forcing it to be visible ... possibly change children ... 
 					value = this.layer.visible; 
 				}
+				value = this.layer.visible; 
 				super.visible = value; 
 			}
 			[Bindable] public var dp  :   ArrayCollection = new ArrayCollection()//.getInstance(); 

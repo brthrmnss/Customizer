@@ -60,8 +60,8 @@ package org.syncon.Customizer.controller
 						imgLayer.x = 0; 
 						imgLayer.y = 100; 
 						*/
-						imgLayer.x = 0; 
-						imgLayer.y = 0; 
+						/*imgLayer.x = 0; 
+						imgLayer.y = 0; */
 						//imgLayer.y = 100; 
 						
 						if (  imgLayer.visible ) //prompts are not by default visible ...
@@ -545,11 +545,11 @@ package org.syncon.Customizer.controller
 							imgLayer.locked = true; 
 							imgLayer.showInList = false; 
 							this.model.addLayer( imgLayer ) ;
-							if ( event.firstTime ) 
+							/*if ( event.firstTime ) 
 							{
 								imgLayer.x = 0; 
 								imgLayer.y = 100; 
-							}
+							}*/
 							//this.model.currentLayer = imgLayer; 
 							this.model.baseLayer = imgLayer; 
 						}	
@@ -562,11 +562,11 @@ package org.syncon.Customizer.controller
 							colorLayer.locked = true; 
 							colorLayer.showInList = false; 
 							this.model.addLayer( colorLayer ) ;
-							if ( event.firstTime ) 
+							/*if ( event.firstTime ) 
 							{
 								colorLayer.x = 0; 
 								colorLayer.y = 100; 
-							}
+							}*/
 							this.model.layerColor = colorLayer; 
 							
 							//order doesn't matter as it doesn't appear ...
@@ -578,11 +578,11 @@ package org.syncon.Customizer.controller
 							imgLayer.showInList = false; 
 							imgLayer.mask = true; 
 							this.model.addLayer( imgLayer ) ;
-							if ( event.firstTime ) 
+							/*if ( event.firstTime ) 
 							{
 								imgLayer.x = 0; 
 								imgLayer.y = 100; 
-							}
+							}*/
 							//	this.model.currentLayer = imgLayer; 
 							this.model.layerMask = imgLayer; 
 							
@@ -601,11 +601,11 @@ package org.syncon.Customizer.controller
 								colorLayer.locked = true; 
 								colorLayer.showInList = false; 
 								this.model.addLayer( colorLayer ) ;
-								if ( event.firstTime ) 
+								/*if ( event.firstTime ) 
 								{
 									colorLayer.x = 0; 
 									colorLayer.y = 100; 
-								}
+								}*/
 								this.model.layerColor = colorLayer; 
 							}		
 							
@@ -628,6 +628,7 @@ package org.syncon.Customizer.controller
 							
 							for each ( layer in face.layersToImport ) 
 							{
+								this.importLayer(layer); 
 								if ( layer is ImageLayerVO ) 
 								{
 									imgLayer = layer as ImageLayerVO
@@ -655,7 +656,8 @@ package org.syncon.Customizer.controller
 					}
 					dbg  = [this.model.layers.length, this.model.layers.toArray() ] 
 					this.model.undo.clearAll(); 
-					this.model.layersChanged(); 
+					this.model.recreateDisplayableLayers(); 
+					//this.model.layersChanged(); 
 				}
 				else
 				{
@@ -853,6 +855,23 @@ package org.syncon.Customizer.controller
 			}
 		}
 		
+		/***
+		 * Store import x's for later
+		 * */
+		private function importLayer(layer:LayerBaseVO):void
+		{
+			if ( !  isNaN( layer.x ) )
+			{
+				layer.importX = layer.x;
+				layer.horizStartAlignment = ''; 
+			}
+			if ( !  isNaN( layer.y ) )
+			{
+				layer.importY = layer.y;
+				layer.horizStartAlignment = ''; 
+			}
+				
+		}		
 		
 	}
 }

@@ -62,6 +62,19 @@ package org.syncon.onenote.onenotehelpers.base
 		public var timer_CompletionFault : Timer = new Timer(10000,1); 
 		public function measureLists( a : Array, fxDone : Function ) : void
 		{
+			var measure : Boolean = false; 
+			for each ( var list :  IListVO in a ) 
+			{
+				if (  isNaN(list.x) || isNaN(list.y) || isNaN(list.width) || isNaN(list.height) ) 
+				{
+					measure = true ; 
+				}
+				
+			}
+			if ( measure == false ) 
+			{
+				trace('skipping measure'); 
+			}
 			this.fxDone = fxDone; 
 			this.listsToMeasure = a
 			if ( this.listsToMeasure.length == 0 )

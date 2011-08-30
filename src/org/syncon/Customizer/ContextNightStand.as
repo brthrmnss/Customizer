@@ -101,10 +101,13 @@ package org.syncon.Customizer
 			
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT2 ) ) ; 
-			/*
+			
+			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
+				InitMainContextCommandTriggerEvent.CREATE_CLIP_ART_LIBRARY ) ) ; 
+			
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) ) ; 
-			return;*/
+			return;
 			this.importAnySpecifiedJSON(); 
 		}
 		
@@ -178,12 +181,6 @@ package org.syncon.Customizer
 		{
 			if ( str == null ) return; 
 			this.importJsonStrVirid=str;
-		}
-		
-		public function newMultipler( n : Number ) : void
-		{
-			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
-				InitMainContextCommandTriggerEvent.SET_MULTIPLER,false, false, n ) ) ; 
 		}
 		
 		public function mapMediator(view:Object=null) : void

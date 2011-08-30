@@ -113,11 +113,32 @@ package org.syncon.Customizer.vo
 		private var _data : Object = new Object();
 		public var vertStartAlignment: String = 'center' ;
 		public var horizStartAlignment: String='center';
+		
+		public static const ALIGNMENT_CENTER : String = 'center' 
+		/**
+		 * will not auto center, will be placed relative to base image XY
+		 * */
+		public static const ALIGNMENT_NONE : String = ''; 
+		/**
+		 * will be placed directly on the stage
+		 * */
+		public static const ALIGNMENT_FREEFORM : String = ''; 
 		/**
 		 * Store this here so we can unselect obojects on the stage 
 		 * */
 		public var model:SimpleDataModel;
 		public var repositionedOnce:Boolean=false;
+		
+		/**
+		 * ONly to be used with no alignment, 
+		 * this is the inisialy xy set on the layer
+		 * */
+		public var importX:Number;
+		public var importY:Number;
+		/**
+		 * turns of alignment options after first time ...
+		 * */
+		//public var movedOnce:Boolean;
 		
 		public function get width():Number
 		{

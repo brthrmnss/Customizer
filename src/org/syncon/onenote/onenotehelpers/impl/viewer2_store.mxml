@@ -168,7 +168,7 @@
 	-->
 	
 	<!-- layer replicates existing stage -->
-	<s:Group id="maskLayer" blendMode="erase"
+	<s:Group id="maskLayer_" blendMode="erase"
 			 mouseEnabled="false" mouseChildren="false"
 			 mouseEnabledWhereTransparent="false" alpha="1"   width="100%" height="100%">
 		<s:Rect left="0" right="0" top="0" bottom="0">
@@ -179,7 +179,7 @@
 				<s:SolidColor color="#FF0000"  id="maskBg" alpha="0.1"/>
 			</s:fill>
 		</s:Rect>
-		<s:Image id="img"    mouseEnabled="false" mouseChildren="false"
+		<s:Image id="img_"    mouseEnabled="false" mouseChildren="false"
 				 />
 	</s:Group>
 	

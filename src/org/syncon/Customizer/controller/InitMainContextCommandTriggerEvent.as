@@ -12,8 +12,7 @@ package   org.syncon.Customizer.controller
 		public static const INIT:String = 'InitMainContextCommand.init..';
 		public static const INIT2:String = 'InitMainContextCommand.init.2.';
 		public static const INIT3_MAKEUP_FLEX_DATA:String = 'INIT3_MAKEUP_FLEX_DATA.init.2.';
-		public static const SET_MULTIPLER:String = 'SET_MULTIPLER.init.2.';
-		//public static const SET_AD:String = 'SET_MULTIPLER.init.2.';		
+		public static const CREATE_CLIP_ART_LIBRARY:String = 'CREATE_CLIP_ART_LIBRARY.init.2.';
 		public static const EXIT_APP:String = 'EXIT_APP.init.2.';
 		
 		/*public var fxResult : Function;
@@ -42,7 +41,7 @@ package   org.syncon.Customizer.controller
 				InitMainContextCommandTriggerEvent.INIT, 
 				InitMainContextCommandTriggerEvent.INIT2,
 				InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA,
-				InitMainContextCommandTriggerEvent.SET_MULTIPLER,			
+				InitMainContextCommandTriggerEvent.CREATE_CLIP_ART_LIBRARY,			
 				InitMainContextCommandTriggerEvent.EXIT_APP
 			]
 			for each ( var commandTriggerEventString : String in types ) 

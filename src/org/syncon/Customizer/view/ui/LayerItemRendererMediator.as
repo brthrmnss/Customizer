@@ -20,6 +20,7 @@ package org.syncon.Customizer.view.ui
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
+	import org.syncon.Customizer.vo.ColorLayerVO;
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.Customizer.vo.TextLayerVO;
@@ -44,7 +45,7 @@ package org.syncon.Customizer.view.ui
 		/**
 		 * do not log undo events ...
 		 * */
-		private var silent:Boolean=true;
+		private var createUndos:Boolean=true;
 		/**
 		 * when repositing make suer to update handle width adn ehgiht 
 		 * */
@@ -155,7 +156,7 @@ package org.syncon.Customizer.view.ui
 				case "x":
 					this.ui.x = event.newValue as Number;
 					this.layer.x = this.ui.x
-					if ( silent == false )
+					if ( createUndos == false )
 						this.dispatch( new EditProductCommandTriggerEvent ( 
 							EditProductCommandTriggerEvent.MOVE_LAYER, this.ui.x, this.ui.y
 						) ) 
@@ -163,7 +164,7 @@ package org.syncon.Customizer.view.ui
 				case "y":
 					this.ui.y = event.newValue as Number; 
 					this.layer.y = this.ui.y
-					if ( silent == false )
+					if ( createUndos == false )
 						this.dispatch( new EditProductCommandTriggerEvent ( 
 							EditProductCommandTriggerEvent.MOVE_LAYER, this.ui.x, this.ui.y
 						) ) 
@@ -181,7 +182,7 @@ package org.syncon.Customizer.view.ui
 					{
 						this.ui.image.img.width = this.ui.width; 
 					}
-					if ( silent == false )
+					if ( createUndos == false )
 						this.dispatch( new EditProductCommandTriggerEvent ( 
 							EditProductCommandTriggerEvent.RESIZE_LAYER, this.ui.width, this.ui.height
 						) ) 					
@@ -193,7 +194,7 @@ package org.syncon.Customizer.view.ui
 					{
 						this.ui.image.img.height = this.ui.height; 
 					}
-					if ( silent == false )
+					if ( createUndos == false )
 						this.dispatch( new EditProductCommandTriggerEvent ( 
 							EditProductCommandTriggerEvent.RESIZE_LAYER, this.ui.width, this.ui.height
 						) ) 					
@@ -226,7 +227,8 @@ package org.syncon.Customizer.view.ui
 			{
 				this.model.waitForBaseLayer.push( [this, event] )
 				this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
-				this.silent = false  //not sure about this one ...
+				//this.silent = false  //not sure about this one ...
+				//silent means no undos ... this is on till reposition is finished ..
 				return; 
 			}
 			if ( this.layer is ImageLayerVO ) 
@@ -257,7 +259,7 @@ package org.syncon.Customizer.view.ui
 				}
 			}	
 			
-			if ( this.layer.vertStartAlignment == 'center' ) 
+			if ( this.layer.vertStartAlignment == LayerBaseVO.ALIGNMENT_CENTER) 
 			{
 				this.layer.vertStartAlignment = null
 				this.ui.layer.y = this.ui.y = this.model.viewer.height/2 - this.ui.height/2
@@ -271,7 +273,7 @@ package org.syncon.Customizer.view.ui
 				
 				//this.ui.layer.y = this.ui.y = this.model.viewer.height/2 - this.ui.height/2
 			} 
-			if ( this.layer.horizStartAlignment == 'center' ) 
+			if ( this.layer.horizStartAlignment ==  LayerBaseVO.ALIGNMENT_CENTER) 
 			{
 				
 				this.ui.layer.x = this.ui.x = this.model.viewer.width/2 - this.ui.width/2
@@ -306,15 +308,15 @@ package org.syncon.Customizer.view.ui
 					//so visible does not work, but alpha does...
 					this.ui.alpha = 0.1
 					var v : viewer2_store = this.model.viewer as viewer2_store
-					v.img.source = this.ui.image.layer.url; 
-					v.img.x = this.ui.x; 
-					v.img.y = this.ui.y; 
+					v.img_.source = this.ui.image.layer.url; 
+					v.img_.x = this.ui.x; 
+					v.img_.y = this.ui.y; 
 					/*
 					this.ui.image.removeElement( this.ui.image.img ) ; 
 					this.model.viewer.mask = this.ui.image.img
 					*/	
 					//v.mask = v.maskLayer;
-					v.workspace.mask = v.maskLayer
+					v.workspace.mask = v.maskLayer_
 					v.workspace.maskType = MaskType.ALPHA
 					//http://franto.com/inverse-masking-disclosed/
 					//searched for inverse mask ...
@@ -326,7 +328,7 @@ package org.syncon.Customizer.view.ui
 				repositioning = false; 
 			}
 			this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
-			this.silent = false 
+			this.createUndos = false 
 			this.layer.repositionedOnce = true
 			if (   this.layer == this.model.baseLayer && this.model.waitForBaseLayer.length > 0  )
 			{
@@ -390,6 +392,7 @@ package org.syncon.Customizer.view.ui
 			this.layer.model = this.flexModel1; 
 			this.model.objectHandles.unregisterComponent( this.ui ) ; 
 			this.ui.visible = this.layer.visible; //masking turns this off ... ... or just turn of mask layer here too
+			this.ui.alpha = 1; 
 			//this.model.objectHandles.unregisterModel( this.model ) ; 
 			//this.registered = false
 			//unlock any layre automatically
@@ -536,6 +539,13 @@ package org.syncon.Customizer.view.ui
 				//also when clicked in layerlist 
 				this.ui.depth = this.ui.parent.numChildren-1
 			}
+			
+			//try to copy back the x's and y's ...
+			if ( layer.repositionedOnce ) 
+			{
+				this.onReturnToPreviousSize(); 
+			}
+			
 			//always resize the mask layers so they switch between faces
 			if ( this.isImage && this.ui.image.layer.mask ) 
 			{
@@ -550,17 +560,40 @@ package org.syncon.Customizer.view.ui
 				/*this.ui.text.height = NaN; //this.layer.height; 
 				this.ui.text.width =NaN;// this.layer.width; 
 				*/
+				this.ui.text.height = NaN; //this.layer.height; 
+				this.ui.text.width =NaN;
 				if ( this.model.fxIsEngraveLayer( this.layer ) ) 
 				{
 					this.ui.text.bg.visible = true; 
 					if ( this.layer.locked ) 
 					{
+						this.ui.text.txt.height = this.layer.height; ; //this.layer.height; 
+						this.ui.text.txt.width =this.layer.width;
 						this.ui.text.bg.height = this.layer.height; 
 						this.ui.text.bg.width = this.layer.width; 
 					}
-					
 				}
 			}
+		}
+		
+		private function onReturnToPreviousSize():void
+		{
+			this.copyLayerToModel(); 
+			if (  this.isImage ) 
+			{
+				this.ui.image.img.width = this.layer.width; 
+				this.ui.image.img.height = this.layer.height; 
+			}
+			if (  this.isColor ) 
+			{
+				this.ui.colorR.img.width = this.layer.width; 
+				this.ui.colorR.img.height = this.layer.height; 
+			}
+			trace('return to place', this.layer.x ) ; 
+			trace('return to place', this.layer.y ) ; 
+			this.layer.update()
+			this.layer.updateVisibility(); 
+			return;
 		}
 		
 		/**
@@ -639,6 +672,11 @@ package org.syncon.Customizer.view.ui
 		private function get isImage() : Boolean
 		{
 			return this.layer.type == ImageLayerVO.Type; 
+		}
+		
+		private function get isColor() : Boolean
+		{
+			return this.layer.type == ColorLayerVO.Type; 
 		}
 		
 		

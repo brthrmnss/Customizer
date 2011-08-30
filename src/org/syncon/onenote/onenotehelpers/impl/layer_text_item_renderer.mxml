@@ -205,11 +205,12 @@
 		<s:SolidColorStroke color="0xe9e9e9"/>
 		</s:stroke> -->
 	</s:Rect>
-	
-	
-	<s:Label id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
-			  horizontalCenter="0" verticalCenter="0"
+	<s:RichText id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
+				horizontalCenter="0" verticalCenter="0"
 			 updateComplete="txt_updateCompleteHandler(event)"/>
+<!--	<s:Label id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
+			  horizontalCenter="0" verticalCenter="0"
+			 updateComplete="txt_updateCompleteHandler(event)"/>-->
 	
 	<s:TextInput id="txtEdit" visible="false" width="{this.txt.width}" height="{this.txt.height}"
 				 change="onChange(event)" click="txt_clickHandler(event)"

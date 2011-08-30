@@ -24,6 +24,9 @@ package  org.virid.component
 		/**
 		 * Hide switch button if only 1 face exists ...
 		 * */
+		/**
+		 * Change product display name to match baseStoreItem ...
+		 * */
 		private function onBaseItemChanged(param0:Object):void
 		{
 			this.ui.btnSwitchSide.visible = true; 
@@ -32,6 +35,10 @@ package  org.virid.component
 				this.ui.btnSwitchSide.visible = false; 
 				return; 
 			}
+			
+			this.ui.txtProductName.text = this.model.baseItem.name;
+			
+
 		}		
 		
 		

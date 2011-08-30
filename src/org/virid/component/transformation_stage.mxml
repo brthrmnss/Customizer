@@ -102,7 +102,7 @@
 				</s:stroke>
 			</s:Line>
 			<s:HGroup id="holderProductTitle" paddingLeft="10" paddingRight="10">
-				<s:Label id="productName" 
+				<s:Label id="txtProductName" 
 					 styleName="grayTxt Arial"
 					 text="Windproof Classic Silver |"
 					 />

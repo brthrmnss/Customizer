@@ -92,6 +92,9 @@ package  org.syncon.Customizer.controller
 							textLayer.minFontSize = 12
 						}
 						
+						textLayer.vertStartAlignment="";
+						textLayer.horizStartAlignment="";
+						
 						textLayer.text = layerImport.Media.source;
 						
 						face.layersToImport.push(textLayer);
@@ -126,6 +129,7 @@ package  org.syncon.Customizer.controller
 						imageLayer.url = layerImport.Media.source;
 						
 						face.layersToImport.push(imageLayer);
+						
 						
 					}
 				}

@@ -19,6 +19,20 @@ package  org.syncon.Customizer.vo
 		public var default_text:String= 'Add Text';
 		public var subType:Object;
 		public var orientation:Object;
+		public function setFontSize () : void
+		{
+			if ( this.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE ) 
+			{
+				var steps :  Number =( this.maxFontSize - this.minFontSize)/this.maxChars; 
+				var charCount : int = this.text.length; 
+				var newFontSize : Number = this.maxFontSize - charCount*steps
+				/*this.dispatch( new EditProductCommandTriggerEvent ( 
+				EditProductCommandTriggerEvent.CHANGE_FONT_SIZE, newFontSize 
+				) )  */
+				fontSize = int( newFontSize ); 
+				update('fontSize'); 
+			}
+		}
 		
 		public override function  get type():String
 		{

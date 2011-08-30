@@ -123,10 +123,10 @@ package org.syncon.Customizer.controller
 							txtLayer = event.data as TextLayerVO
 							txtLayer = txtLayer.clone() as TextLayerVO
 						}
-						
+						/*
 						txtLayer.x = 0; 
 						txtLayer.y = 100; 
-						
+						*/
 						//txtLayer.fontFamily =  event.data2.toString() ; //font ... what should default be? ...
 						this.model.addLayer( txtLayer ); 
 						event.oldData = txtLayer; 
@@ -497,6 +497,10 @@ package org.syncon.Customizer.controller
 					//this.model.layers.removeAll();
 					/*this.model.layers.source = face.layers.source; 
 					this.model.layers.refresh(); */
+					this.model.baseLayer = null; 
+					this.model.layerMask = null; 
+					this.model.layerColor = null; 
+					this.model.waitForBaseLayer = [] 
 					this.model.layers = face.layers; 
 					var dbg : Array = [this.model.layers.length, this.model.layers.toArray() ] 
 					//no need to remove? ... no b/c no is allowed to bind to thise, they bind to layersVisible...
@@ -512,6 +516,17 @@ package org.syncon.Customizer.controller
 								imgLayer = layer as ImageLayerVO
 								if ( imgLayer.mask == true ) 
 									this.model.layerMask = layer; 
+							}
+							if ( layer is ColorLayerVO ) 
+							{
+								colorLayer = layer as ColorLayerVO
+									this.model.layerColor = layer as ColorLayerVO; 
+							}
+							if ( layer is ImageLayerVO ) 
+							{
+								imgLayer = layer as ImageLayerVO
+								if ( imgLayer.name == 'Base Image' ) //this is  not safe ..
+									this.model.baseLayer = imgLayer; 
 							}
 						}	
 						

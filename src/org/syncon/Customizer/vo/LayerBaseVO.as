@@ -71,6 +71,8 @@ package org.syncon.Customizer.vo
 		public var locked : Boolean = false; 
 		public var required : Boolean = false;
 		
+		public var location :  String = '' // = false; 
+		
 		public var _cost :  Number = 0
 		public function get cost():Number
 		{
@@ -115,6 +117,7 @@ package org.syncon.Customizer.vo
 		 * Store this here so we can unselect obojects on the stage 
 		 * */
 		public var model:SimpleDataModel;
+		public var repositionedOnce:Boolean=false;
 		
 		public function get width():Number
 		{
@@ -182,6 +185,10 @@ package org.syncon.Customizer.vo
 		
 		public function set x(value:Number):void
 		{
+			if ( this.type == TextLayerVO.Type  && this.url != 'demo'  ) 
+			{
+				trace('thing'); 
+			}
 			_x = value;
 		}
 		
@@ -190,6 +197,17 @@ package org.syncon.Customizer.vo
 			if ( h < 100 ) 
 			{
 				trace('LayerBaseVO','small ehight set', 'ListVO' ) ; 
+			}
+			if ( h != 237 ) 
+			{
+				trace('LayerBaseVO','not 237' ) ; 
+			}
+			if ( this.type == TextLayerVO.Type ) 
+			{
+				if ( h != 50 ) 
+				{
+				trace('texter layer type'); 
+				}
 			}
 			this._height = h; 
 		}

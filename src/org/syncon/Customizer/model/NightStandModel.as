@@ -99,8 +99,6 @@ package org.syncon.Customizer.model
 			this.dispatch( new NightStandModelEvent(NightStandModelEvent.MULTIPLER_CHANGED ) ) ; 
 		}
 		
-		
-		
 		public function logout():void
 		{
 			this.loggedIn= false; 
@@ -162,7 +160,35 @@ package org.syncon.Customizer.model
 			this.dispatch( new EditProductCommandTriggerEvent(
 				EditProductCommandTriggerEvent.LOAD_PRODUCT, value ) ) ; 
 			
+			this.recreateLocations();
+			
 			this.dispatch( new NightStandModelEvent( NightStandModelEvent.BASE_ITEM_CHANGED, value ) ) 
+		}
+		
+		/**
+		 * Finds all layers with a location set ....should recreate when layers changed, 
+		 * should not be reading from layers to import but whatever...
+		 * */
+		private function recreateLocations():void
+		{
+			var locations : Array = [] ; 
+			//collect all locations, .. should probably be dynamic so after layers change we do through all ... 
+			//in that case put on model this is not an edit command related location anyways ...
+			for each ( var face  : FaceVO in  this.baseItem.faces ) 
+			{
+				/*for each ( var  layer : LayerBaseVO in face.layers ) 
+				{
+					if ( layer.location != '' && layer.location != null ) 
+						locations.push( layer ) ; 
+				}*/
+				for each ( var  layer : LayerBaseVO in face.layersToImport ) 
+				{
+					if ( layer.location != '' && layer.location != null ) 
+						locations.push( layer ) ; 
+				}
+			}
+			
+			this.locations = locations; 
 		}
 		
 		private var _currentFace: FaceVO;
@@ -296,6 +322,8 @@ package org.syncon.Customizer.model
 		 * Virid thing ...
 		 * */
 		public var allowSelectingBgToClearSelection:Boolean=false;
+		public var waitForBaseLayer: Array = [] ; ;
+		public var locations:  Array;
 		
 		public function addLayer(layer : LayerBaseVO ) : void
 		{
@@ -381,7 +409,7 @@ package org.syncon.Customizer.model
 		/**
 		 * Get next visible layer going upward ...
 		 * */
-		public function getNextLayer(startingIndex : int = 0, inListOnly : Boolean = true ) : LayerBaseVO
+		public function getNextLayer(startingIndex : int = 0, inListOnly : Boolean = true, testFunction : Function = null  ) : LayerBaseVO
 		{
 			var foundLayer : LayerBaseVO; 
 			for ( var i : int =startingIndex ; i < this.layers.length ; i++ ) 
@@ -391,6 +419,12 @@ package org.syncon.Customizer.model
 					continue; 
 				if ( inListOnly && layer.showInList == false ) 
 					continue; 
+				
+				if ( testFunction != null ) 
+				{
+					if ( testFunction(layer) == false ) 
+						continue; 
+				}
 				foundLayer = layer; 
 			}
 			
@@ -400,6 +434,22 @@ package org.syncon.Customizer.model
 				return this.getNextLayer()
 			}
 			return foundLayer
+		}
+		
+		/**
+		 * return true if layer is engrave layer ..
+		 * */
+		public function fxIsEngraveLayer( l :  LayerBaseVO ) : Boolean
+		{
+			if ( l.type == TextLayerVO.Type ) 
+			{
+				var tl : TextLayerVO = l as TextLayerVO; 
+				if ( tl.subType == ViridConstants.SUBTYPE_ENGRAVE ) 
+				{
+					return true
+				}
+			}
+			return false
 		}
 		
 		/**

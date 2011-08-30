@@ -4,6 +4,7 @@ package  org.virid.component
 	
 	import flashx.undo.IOperation;
 	
+	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
 	
 	import org.robotlegs.mvcs.Mediator;
@@ -22,7 +23,7 @@ package  org.virid.component
 		
 		override public function onRegister():void
 		{
-			this.ui.addEventListener( engrave_panel.ADD_TEXT,  this.onAddText);	
+			/*this.ui.addEventListener( engrave_panel.ADD_TEXT,  this.onAddText);	
 			this.ui.addEventListener( MainMenuBar.ADD_IMAGE,  this.onAddImage);	
 			this.ui.addEventListener( MainMenuBar.UNDO,  this.onUndo);	
 			this.ui.addEventListener( MainMenuBar.REDO,  this.onRedo);	
@@ -30,8 +31,19 @@ package  org.virid.component
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.UNDOS_CHANGED, 
 				this.checkUndoButtons);	
 			this.checkUndoButtons(); 
+			*/
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.BASE_ITEM_CHANGED, 
+				this.onLoadLocations);	
+			this.onLoadLocations(); 
 		}
 		
+		private function onLoadLocations(e:Event=null):void
+		{
+			this.ui.list.dataProvider = new ArrayCollection( this.model.locations ) ; 
+			
+		}
+		
+	/*	
 		protected function onRedo(event:Event):void
 		{
 			// TODO Auto-generated method stub
@@ -79,6 +91,6 @@ package  org.virid.component
 			this.dispatch( new EditProductCommandTriggerEvent (
 				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, e.url) ) ; 
 		}
-		
+		*/
 	}
 }

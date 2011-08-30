@@ -37,6 +37,7 @@
 				var p : PageVO = new PageVO();
 				var lists : Array = []; 
 				for (var i : int =0; i<5-0+10; i++) {
+					//continue; 
 					//arr.push("Item #" + i);
 					var list :  LayerBaseVO;// = new LayerBaseVO()
 					/* if ( Math.random() > 0.5 ) 
@@ -56,6 +57,7 @@
 						textL.text = 'Yo yo';// =  this.randomPic()
 						textL.fontSize = 6*(Math.ceil(Math.random()*4 ) ) 
 						list = textL; 
+						textL.url = 'demo'
 					}
 					
 					list.x = 100*i

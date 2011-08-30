@@ -51,17 +51,7 @@ package org.virid.component
 				
 	/*		}*/
 			//noiw hwo to automate it? ... not worry about undos, i do it here 
-			if ( this.layer.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE ) 
-			{
-				var steps :  Number =( this.layer.maxFontSize - this.layer.minFontSize)/this.layer.maxChars; 
-				var charCount : int = this.ui.layer.text.length; 
-				var newFontSize : Number = this.layer.maxFontSize - charCount*steps
-				/*this.dispatch( new EditProductCommandTriggerEvent ( 
-					EditProductCommandTriggerEvent.CHANGE_FONT_SIZE, newFontSize 
-				) )  */
-				layer.fontSize = int( newFontSize ); 
-				layer.update('fontSize'); 
-			}
+			this.layer.setFontSize(); 
 		}
 		
 		/**

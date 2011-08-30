@@ -27,10 +27,14 @@
 			
 			protected function button1_rollOverHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				this.currentState = "hovered";
 				
 			}
-
+			protected function button1_rollOutHandler(event:MouseEvent):void
+			{
+				this.currentState = "normal";
+			}
+			
 			
 			public function set icon(imageSource:String):void
 			{
@@ -48,23 +52,24 @@
 				this.labelDisplay.text = this._labelName; 
 			}
 			
-			protected function button1_rollOutHandler(event:MouseEvent):void
-			{
-				// TODO Auto-generated method stub
-				
-			}
-			
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	<s:states> 
+		<s:State name="normal"/> 
+		<s:State name="hovered"/> 
+		<s:State name="disabled"/> 
+		<s:State name="selected"/> 
+	</s:states> 
 
 	<!-- <s:Image id="iconDisplay" horizontalCenter="0"/> -->
-	<s:BitmapImage id="iconDisplay" width="32" height="32" horizontalCenter="0" smooth="true" smoothingQuality="high" />
+	<s:BitmapImage id="iconDisplay" width="32" height="32" horizontalCenter="0" smooth="true" smoothingQuality="high" 
+				   y.hovered="-2"/>
 	<s:Label id="labelDisplay"
-			 textAlign="center" styleName="grayTxt"
+			 textAlign="center" styleName="grayTxt" styleName.hovered="redTxt"
 			 maxDisplayedLines="1"
 			 horizontalCenter="0"   verticalAlign="bottom"
 			 left="10" right="10" top="2" bottom="2">

@@ -76,39 +76,35 @@
 	<s:HGroup gap="-4"
 			  paddingBottom="5" paddingLeft="0" paddingRight="5" paddingTop="5">
 		
-		<smallComponents:MainMenuButton label="undo"   id="btnUndo" 
-										icon="assets/images/undo.png" 
-										click="onUndo(event)"
+		<smallComponents:MainMenuButton label="undo" id="btnUndo" 
+										icon="assets/images/undo.png" width="48" 
+										click="onUndo(event)" 
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton label="redo"   id="btnRedo" 
-										icon="assets/images/redo.png" 
-										click="onRedo(event)"
+		<smallComponents:MainMenuButton label="redo" id="btnRedo" 
+										icon="assets/images/redo.png" width="46"
+										click="onRedo(event)" 
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		
-		<smallComponents:MainMenuButton label="Background" visible="true" includeInLayout="true" 
-										icon="assets/images/background.png"
+		<smallComponents:MainMenuButton label="Background" id="btnBackground" visible="true" includeInLayout="true" 
+										icon="assets/images/background.png" width="88"
 										click="onBackground(event)"
-										 id="btnBackground"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>		
-		<smallComponents:MainMenuButton icon="assets/images/location.png" visible="false" includeInLayout="false"
-										label="Choose a Location"
+		<smallComponents:MainMenuButton label="Choose a Location" visible="false" includeInLayout="false"
+										icon="assets/images/location.png" width="100"
 										click="onBackground(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton icon="assets/images/engrave.png"
-										label="Text"
-										id="btnText"
+		<smallComponents:MainMenuButton label="Text" id="btnText"
+										icon="assets/images/engrave.png" width="45"
 										click="onText(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton icon="assets/images/engrave.png"
-										label="Engrave"
-										 id="btnEngrave"
+		<smallComponents:MainMenuButton label="Engrave" id="btnEngrave"
+										icon="assets/images/engrave.png" width="68"
 										click="onEngrave(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton icon="assets/images/preview.png"
-										label="Preview" 
+		<smallComponents:MainMenuButton label="Preview" 
+										icon="assets/images/preview.png" width="66"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton icon="assets/images/save.png" 
-										label="Save It" 
+		<smallComponents:MainMenuButton label="Save It" 
+										icon="assets/images/save.png" width="56"
 										click="onSave(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 

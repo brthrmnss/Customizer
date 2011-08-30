@@ -101,10 +101,10 @@ package org.syncon.Customizer
 			
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT2 ) ) ; 
-			
+			/*
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) ) ; 
-			return;
+			return;*/
 			this.importAnySpecifiedJSON(); 
 		}
 		

@@ -104,7 +104,7 @@
 			<s:HGroup id="holderProductTitle" paddingLeft="10" paddingRight="10">
 				<s:Label id="txtProductName" 
 					 styleName="grayTxt Arial"
-					 text="Windproof Classic Silver |"
+					 text="Zippo Lighter |"
 					 />
 				<s:Label text="Edit" styleName="redTxt Arial"/>
 			</s:HGroup>
@@ -121,7 +121,7 @@
 				<s:Button id="btnSwitchSide"
 						  click="switchSide_clickHandler(event)"
 						  left="0" bottom="0" toolTip="Switch Sides"
-						  icon="assets/images/flip.jpg" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"
+						  icon="assets/images/flip.png" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"
 						  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 			
 			
@@ -135,7 +135,7 @@
 							<s:SolidColorStroke color="0xc1c1c1"/>
 						</s:stroke>
 					</s:Rect>
-					<s:Label id="zoomLevel" 
+					<s:Label id="zoomLevel" visible="false" includeInLayout="false"
 							 text="100%" styleName="redTxt Arial"/>			
 					
 				</s:HGroup>

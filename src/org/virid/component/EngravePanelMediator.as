@@ -32,16 +32,17 @@ package  org.virid.component
 				this.checkUndoButtons);	
 			this.checkUndoButtons(); 
 			*/
+			/*
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.BASE_ITEM_CHANGED, 
 				this.onLoadLocations);	
-			this.onLoadLocations(); 
+			this.onLoadLocations(); */
 		}
-		
+		/*
 		private function onLoadLocations(e:Event=null):void
 		{
 			this.ui.list.dataProvider = new ArrayCollection( this.model.locations ) ; 
 			
-		}
+		}*/
 		
 	/*	
 		protected function onRedo(event:Event):void

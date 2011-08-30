@@ -38,7 +38,7 @@ package  org.syncon.Customizer.controller
 			var json:Object = JSON.decode(event.str);
 			trace();	
 			var product:StoreItemVO = new StoreItemVO;
-			product.name = json.name;
+			product.name = json.name + "  |";
 			if(json.hasOwnProperty( 'price' )) 
 				product.price = json.price;
 			else
@@ -142,21 +142,22 @@ package  org.syncon.Customizer.controller
 		private function copyBasics(layer:LayerBaseVO, layerImport:Object):void
 		{
 			// TODO Auto Generated method stub
-			layer.name = layerImport.name; 
+			if( layerImport.hasOwnProperty( 'name' )  )
+				layer.name = layerImport.name; 
 			if( layerImport.hasOwnProperty( 'price' )  )
 				layer.cost = layerImport.price; 
 			if ( layerImport.hasOwnProperty( 'required' ) ) 
 				layer.required = layerImport.required
 			if( layerImport.transform.hasOwnProperty( 'width' )  )		
-			layer.width = layerImport.transform.width;
+				layer.width = layerImport.transform.width;
 			if( layerImport.transform.hasOwnProperty( 'height' )  )
-			layer.height = layerImport.transform.height;
+				layer.height = layerImport.transform.height;
 			if( layerImport.transform.hasOwnProperty( 'x' )  )
-			layer.x = layerImport.transform.x;
+				layer.x = layerImport.transform.x;
 			if( layerImport.transform.hasOwnProperty( 'y' )  )
-			layer.y = layerImport.transform.y;
+				layer.y = layerImport.transform.y;
 			if( layerImport.transform.hasOwnProperty( 'required' )  )
-			layer.required = layerImport.required;
+				layer.required = layerImport.required;
 		}
 		
 	}

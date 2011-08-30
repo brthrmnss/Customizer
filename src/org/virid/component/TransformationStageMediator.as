@@ -30,13 +30,14 @@ package  org.virid.component
 		private function onBaseItemChanged(param0:Object):void
 		{
 			this.ui.btnSwitchSide.visible = true; 
+			this.ui.txtProductName.text = this.model.baseItem.name;
 			if ( this.model.baseItem.faces.length == 1 ) 
 			{
 				this.ui.btnSwitchSide.visible = false; 
 				return; 
 			}
 			
-			this.ui.txtProductName.text = this.model.baseItem.name;
+			
 			
 
 		}		

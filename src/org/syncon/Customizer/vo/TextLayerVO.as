@@ -18,7 +18,7 @@ package  org.syncon.Customizer.vo
 		public var maxFontSize: Number = -1 ;
 		public var default_text:String= 'Add Text';
 		public var subType:Object;
-		public var orientation:Object;
+		public var orientation:String ="Horizontal";
 		public function setFontSize () : void
 		{
 			if ( this.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE ) 
@@ -58,6 +58,7 @@ package  org.syncon.Customizer.vo
 			textLayer.minFontSize = this.minFontSize
 			textLayer.maxFontSize = this.maxFontSize
 			textLayer.default_text = this.default_text
+			textLayer.orientation = this.orientation
 			return textLayer; 
 		}
 	}

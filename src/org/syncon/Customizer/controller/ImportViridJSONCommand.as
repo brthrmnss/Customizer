@@ -85,6 +85,7 @@ package  org.syncon.Customizer.controller
 						textLayer.maxChars = layerImport.Media.max
 						textLayer.orientation = layerImport.orientation;
 						textLayer.fontSize = 20//for engraving
+							
 						
 						if(layerImport.type == "engrave"){						
 							textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 

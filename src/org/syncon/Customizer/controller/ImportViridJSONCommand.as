@@ -39,7 +39,10 @@ package  org.syncon.Customizer.controller
 			trace();	
 			var product:StoreItemVO = new StoreItemVO;
 			product.name = json.name;
-			
+			if(json.hasOwnProperty( 'price' )) 
+				product.price = json.price;
+			else
+				product.price = 0;
 			for each( var faceImport:Object in json.Faces  )
 			{
 				var face : FaceVO = new FaceVO()
@@ -51,32 +54,36 @@ package  org.syncon.Customizer.controller
 					
 					if(layerImport.type == "color")
 					{
+						this.copyBasics(textLayer, layerImport );
 						face.color_overlay_layer = layerImport.Media.source;
+						
 					}
 					else if(layerImport.type == "image")
 					{
 						var imageLayer: ImageLayerVO = new ImageLayerVO;
+						
+						textLayer.prompt_layer = true; 
+						textLayer.locked = true;
+						
 						imageLayer.url = layerImport.Media.source;
+						this.copyBasics(textLayer, layerImport );
+						
 						face.layersToImport.push(imageLayer);
+						
+						
 					}
 					else if(layerImport.type == "monogram" || layerImport.type == "engrave")
 					{
 						var textLayer: TextLayerVO = new TextLayerVO;
 						
-						textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE;
+						textLayer.prompt_layer = true; 
 						textLayer.locked = true;
+						textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE;
+						
 						this.copyBasics(textLayer, layerImport );
-						textLayer.text = 'Add Text' 
-						textLayer.name = layerImport.name;
-						textLayer.width = layerImport.transform.width;
-						textLayer.height = layerImport.transform.height;
-						textLayer.x = layerImport.transform.x;
-						textLayer.y = layerImport.transform.y;
-						textLayer.maxChars = layerImport.Media.max;
-						
+						textLayer.text = 'AAA' ;
+						textLayer.maxChars = layerImport.Media.max
 						textLayer.orientation = layerImport.orientation;
-						
-						
 						textLayer.fontSize = 20//for engraving
 						
 						if(layerImport.type == "engrave"){						
@@ -85,24 +92,41 @@ package  org.syncon.Customizer.controller
 							textLayer.minFontSize = 12
 						}
 						
-						textLayer.prompt_layer = true; 
-						textLayer.required = layerImport.required;
-						
 						textLayer.text = layerImport.Media.source;
+						
 						face.layersToImport.push(textLayer);
 						
 					}
 					else if(layerImport.type == "text")
 					{
 						var textLayer: TextLayerVO = new TextLayerVO;
+
+						this.copyBasics(textLayer, layerImport );
+						
+						textLayer.prompt_layer = true; 
+
+						this.copyBasics(textLayer, layerImport );
+						textLayer.text = 'AAA' ;
+						textLayer.maxChars = layerImport.Media.max
+						textLayer.orientation = layerImport.orientation;
+						textLayer.fontSize = 20//for engraving
+							
 						textLayer.text = layerImport.Media.source;
+						
 						face.layersToImport.push(textLayer);
+						
 					}
 					else if(layerImport.type == "clipart")
 					{
 						imageLayer  = new ImageLayerVO;
+						
+						this.copyBasics(textLayer, layerImport );
+						imageLayer.prompt_layer = true; 
+						
 						imageLayer.url = layerImport.Media.source;
+						
 						face.layersToImport.push(imageLayer);
+						
 					}
 				}
 			}
@@ -115,9 +139,20 @@ package  org.syncon.Customizer.controller
 		{
 			// TODO Auto Generated method stub
 			layer.name = layerImport.name; 
-			layer.cost = layerImport.price; 
+			if( layerImport.hasOwnProperty( 'price' )  )
+				layer.cost = layerImport.price; 
 			if ( layerImport.hasOwnProperty( 'required' ) ) 
 				layer.required = layerImport.required
+			if( layerImport.transform.hasOwnProperty( 'width' )  )		
+			layer.width = layerImport.transform.width;
+			if( layerImport.transform.hasOwnProperty( 'height' )  )
+			layer.height = layerImport.transform.height;
+			if( layerImport.transform.hasOwnProperty( 'x' )  )
+			layer.x = layerImport.transform.x;
+			if( layerImport.transform.hasOwnProperty( 'y' )  )
+			layer.y = layerImport.transform.y;
+			if( layerImport.transform.hasOwnProperty( 'required' )  )
+			layer.required = layerImport.required;
 		}
 		
 	}

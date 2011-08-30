@@ -93,7 +93,7 @@
 										click="onBackground(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Text" id="btnText"
-										icon="assets/images/engrave.png" width="45"
+										icon="assets/images/engrave.png" width="50"
 										click="onText(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Engrave" id="btnEngrave"

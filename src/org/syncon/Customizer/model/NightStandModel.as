@@ -358,7 +358,7 @@ package org.syncon.Customizer.model
 			this.layersChanged();
 		}
 		
-		private function recreateDisplayableLayers():void
+		public function recreateDisplayableLayers():void
 		{
 			var newLayersVisible : Array = []; 
 			for each ( var l : LayerBaseVO in this.layers.toArray() ) 

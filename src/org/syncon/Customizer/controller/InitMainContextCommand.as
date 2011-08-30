@@ -42,21 +42,19 @@ package org.syncon.Customizer.controller
 					//airFeatures.goIntoFullscreenMode(); 
 				}
 			}	
-			if ( event.type == InitMainContextCommandTriggerEvent.SET_MULTIPLER ) 
+ 
+			if ( event.type == InitMainContextCommandTriggerEvent.CREATE_CLIP_ART_LIBRARY ) 
 			{
-				if ( this.model.flex == false ) 
-				{
-					this.model.multipler = event.data as Number
-				}
+				this.createClipArtImages(); 
+				
 			}	
-			
 			if ( event.type == InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) 
 			{
-				this.createDefaultProduct() ; 
-				this.createClipArtImages(); 
+				//this.createDefaultProduct() ; 
+		
 				//this.createDetailedDefaultProduct();
-				
 				this.createDetailedDefaultProduct_Engrave()
+				
 				if ( this.model.flex ) 
 				{
 					
@@ -169,8 +167,8 @@ package org.syncon.Customizer.controller
 			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
 			textLayer.maxFontSize = 35
 			*/
-			textLayer.width = 100
-			textLayer.height = 50 
+			textLayer.width = 20
+			textLayer.height = 140 
 			textLayer.x = 60
 			textLayer.y =60; 
 			textLayer.locked = true; 

@@ -98,24 +98,33 @@ package org.syncon.onenote.onenotehelpers.base
 				this.createChildren()
 			}			
 			//this.measureDp()
+			
 			this.measure.measuringTool = this.listsMeasure
-			this.measure.measureLists( this._page.lists.toArray(), this.onMeasuredStuff ) 
+				//if page needs to be measured, meausre it , if not .. .don't
+			if ( isNaN(this.page.width ) || isNaN( this.page.height ) )
+			{
+				this.measure.measureLists( this._page.lists.toArray(), this.onMeasuredStuff )
+			}
+			else
+			{
+				this.onMeasuredStuff(null); 
+			}
 		}
 		
-/*		
+		/*		
 		private var _dp : ArrayCollection ; 
 		public function set dp( d :  ArrayCollection ) : void
 		{
-			_dp = d; 	
-			this.targetXs = -1
-			this.targetYs = -1 ; 
-			if ( this._childrenCreated == false ) 
-			{
-				this.createChildren()
-			}			
-			//this.measureDp()
-			this.measure.measuringTool = this.listsMeasure
-			this.measure.measureLists( this._page.lists.toArray(), this.onMeasuredStuff ) 
+		_dp = d; 	
+		this.targetXs = -1
+		this.targetYs = -1 ; 
+		if ( this._childrenCreated == false ) 
+		{
+		this.createChildren()
+		}			
+		//this.measureDp()
+		this.measure.measuringTool = this.listsMeasure
+		this.measure.measureLists( this._page.lists.toArray(), this.onMeasuredStuff ) 
 		}*/
 		
 		
@@ -123,7 +132,7 @@ package org.syncon.onenote.onenotehelpers.base
 		{
 			//if ( this._page == null ) 
 			//return _dp.toArray()
-				return _page.lists.toArray()
+			return _page.lists.toArray()
 		}
 		
 		

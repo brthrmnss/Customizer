@@ -29,6 +29,7 @@ global
 	src: url("images/BEBAS___.TTF");
 	embedAsCFF: true;
 }
+
 .redTxt{
 	color:#f60e1c;
 }

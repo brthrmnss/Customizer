@@ -22,12 +22,15 @@ package org.syncon.Customizer
 			
 			mediatorMap.mapView( text_panel, TextPanelMediator ) 	
 			mediatorMap.mapView( design_panel, DesignPanelMediator ) 	
-			//mediatorMap.mapView( engrave_panel, EngravePanelMediator ) 	
+			mediatorMap.mapView( engrave_panel, EngravePanelMediator ) 
+				
 			mediatorMap.mapView( Deliverable, DeliverablesMediator ) 	
 			mediatorMap.mapView( LayerTextInspector, LayerTextInspectorMediator ) 	
 				
 			mediatorMap.mapView( transformation_stage, TransformationStageMediator ) 	
 			
+				
+				
 			//mediatorMap.mapView( LayerImageInspector,LayerImageInspectorMediator ) 	
 			//mediatorMap.mapView( LayerColorInspector, LayerColorInspectorMediator ) 	
 				

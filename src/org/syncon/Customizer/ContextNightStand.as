@@ -104,7 +104,7 @@ package org.syncon.Customizer
 			
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) ) ; 
-			
+			return;
 			this.importAnySpecifiedJSON(); 
 		}
 		

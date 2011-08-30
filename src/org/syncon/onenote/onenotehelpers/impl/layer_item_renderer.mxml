@@ -78,7 +78,10 @@
 				this.lister.layout.measure()
 				
 			}
-			
+			override public function set y(value:Number):void
+			{
+				super.y = value; 
+			}
 			private function pat2() : void
 			{
 				//this.list.invalidateSize()

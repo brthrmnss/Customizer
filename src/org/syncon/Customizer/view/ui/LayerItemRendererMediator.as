@@ -64,7 +64,7 @@ package org.syncon.Customizer.view.ui
 			this.ui.addEventListener( layer_item_renderer.RESIZED_MANIALY, 
 				this.onResizedManually ) ; 
 			this.initHandles()
-				
+			
 			this.ui.addEventListener( layer_item_renderer.REPOSITION, 
 				this.onReposition ) ; 
 			
@@ -113,7 +113,7 @@ package org.syncon.Customizer.view.ui
 				sZ.maxWidth = this.model.viewer.width; 
 				sZ.minHeight = 20
 				sZ.minWidth = 30
-					
+				
 				this.model.objectHandles.enableMultiSelect = false; 
 				this.model.objectHandles.disableHandleSelection = true; 
 				//this.model.objectHandles.addDefaultConstraint( sZ )
@@ -145,6 +145,10 @@ package org.syncon.Customizer.view.ui
 			{
 				return;
 			}
+			if ( this.layer.locked && ['x', 'y', ].indexOf(event.property ) != -1 ) 
+			{
+				return;
+			}
 			switch( event.property )
 			{
 				
@@ -171,8 +175,8 @@ package org.syncon.Customizer.view.ui
 				case "width": 
 					this.ui.width = event.newValue as Number;
 					this.layer.width = this.ui.width
-				/*	var ddbg : Array = [ this.ui.width, this.ui.image.width, this.ui.image.visible, this.ui.image.alpha, 
-						this.ui.x, this.ui.image.x, this.ui.image.img.x] */
+					/*	var ddbg : Array = [ this.ui.width, this.ui.image.width, this.ui.image.visible, this.ui.image.alpha, 
+					this.ui.x, this.ui.image.x, this.ui.image.img.x] */
 					if ( this.isImage ) 
 					{
 						this.ui.image.img.width = this.ui.width; 
@@ -207,12 +211,24 @@ package org.syncon.Customizer.view.ui
 			) ) ; 
 		}
 		
-		protected function onResize(event:ResizeEvent):void
+		public function onResize(event:ResizeEvent):void
 		{
 			if ( this.layer == null ) //why is this necessary? 
 				return; 
 			if ( this.ui.resetting ) 
 				return; 
+			/**
+			 * if this is not the base layer and one exists, ... 
+			 * go wait for later
+			 * */
+			if ( this.model.baseLayer != null &&
+				this.model.baseLayer.repositionedOnce == false && this.layer != this.model.baseLayer )
+			{
+				this.model.waitForBaseLayer.push( [this, event] )
+				this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
+				this.silent = false  //not sure about this one ...
+				return; 
+			}
 			if ( this.layer is ImageLayerVO ) 
 			{
 				/*if ( this.ui.image == null ) 
@@ -239,17 +255,39 @@ package org.syncon.Customizer.view.ui
 						this.ui.image.img.height = this.flexModel1.height; 						
 					}
 				}
-			}			
+			}	
+			
 			if ( this.layer.vertStartAlignment == 'center' ) 
 			{
 				this.layer.vertStartAlignment = null
 				this.ui.layer.y = this.ui.y = this.model.viewer.height/2 - this.ui.height/2
 			}
+			else if  ( this.layer.vertStartAlignment == '' ) 
+			{
+				this.layer.vertStartAlignment = ''
+				this.ui.y   = this.model.baseLayer.y + this.ui.layer.y; 
+				this.layer.y   = this.model.baseLayer.y + this.ui.layer.y; 
+				//this.ui.layer.x = this.model.baseLayer.x + this.ui.layer.x; 
+				
+				//this.ui.layer.y = this.ui.y = this.model.viewer.height/2 - this.ui.height/2
+			} 
 			if ( this.layer.horizStartAlignment == 'center' ) 
 			{
 				
 				this.ui.layer.x = this.ui.x = this.model.viewer.width/2 - this.ui.width/2
 				this.layer.horizStartAlignment = null 
+			}
+			else if  ( this.layer.horizStartAlignment == '' ) 
+			{
+				this.layer.horizStartAlignment = ''
+				//this.ui.layer.y = this.model.baseLayer.y + this.ui.layer.y; 
+				this.ui.x  = this.model.baseLayer.x + this.ui.layer.x; 
+				this.layer.x  = this.model.baseLayer.x + this.ui.layer.x; 
+				//this.ui.layer.y = this.ui.y = this.model.viewer.height/2 - this.ui.height/2
+			}
+			if ( this.isText ) 
+			{
+				trace('asd'); 
 			}
 			//if image maintain aspect ration
 			if ( this.isImage ) 
@@ -289,6 +327,17 @@ package org.syncon.Customizer.view.ui
 			}
 			this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
 			this.silent = false 
+			this.layer.repositionedOnce = true
+			if (   this.layer == this.model.baseLayer && this.model.waitForBaseLayer.length > 0  )
+			{
+				
+				for each ( var params : Array in this.model.waitForBaseLayer ) 
+				{
+					params[0].onResize(params[1]);//.push( [this, event] )
+				}
+				this.model.waitForBaseLayer = []; 
+				return; 
+			}
 		}
 		
 		private function unregister():void
@@ -383,6 +432,7 @@ package org.syncon.Customizer.view.ui
 				
 				if ( this.isText ) 
 				{
+					this.ui.text.layer.setFontSize(); 
 					var handleDesc : Array = [];///this.model.objectHandles.defaultHandles.concat(); 
 					handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 50), new Point(0, 0)));
 					
@@ -394,7 +444,7 @@ package org.syncon.Customizer.view.ui
 					handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(100, 100), new Point(0, 0)));
 					
 					// We need a zero point a lot, so lets not re-create it all the time.
-					 var zero:Point = new Point(0,0);
+					var zero:Point = new Point(0,0);
 					
 					handleDesc.push( new HandleDescription( HandleRoles.ROTATE,
 						new Point(100,50) , 
@@ -445,30 +495,30 @@ package org.syncon.Customizer.view.ui
 					
 					//handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 50), new Point(0, 0)));
 					handleDesc = null
-						
-					  handleDesc   = this.model.objectHandles.defaultHandles.concat(); 
-					  handleDesc.pop(); 
-					  handleDesc.pop(); 
-					  handleDesc.pop(); 
-					  handleDesc = []
-						  
-					  handleDesc.push( new HandleDescription( HandleRoles.ROTATE,
-						  new Point(100,50) , 
-						  new Point(20,0) ) ); 
-					  //why must one add with no role? 
-					  //handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(50, 50), new Point(0, 0)));
-					  
-					 /* handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(0, 0), new Point(0, 0)));
-					  handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(100, 0), new Point(0, 0)));
-					  
-					  handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(0, 100), new Point(0, 0)));
-					  
-					  handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(100, 100), new Point(0, 0)));*/
-					  
-					  handleDesc.push( new HandleDescription( HandleRoles.NO_ROLE,
-						  new Point(0,50) , 
-						  new Point(-10,0) ) ); 
-					  
+					
+					handleDesc   = this.model.objectHandles.defaultHandles.concat(); 
+					handleDesc.pop(); 
+					handleDesc.pop(); 
+					handleDesc.pop(); 
+					handleDesc = []
+					
+					handleDesc.push( new HandleDescription( HandleRoles.ROTATE,
+						new Point(100,50) , 
+						new Point(20,0) ) ); 
+					//why must one add with no role? 
+					//handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(50, 50), new Point(0, 0)));
+					
+					/* handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(0, 0), new Point(0, 0)));
+					handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(100, 0), new Point(0, 0)));
+					
+					handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(0, 100), new Point(0, 0)));
+					
+					handleDesc.push(new HandleDescription(HandleRoles.NO_ROLE, new Point(100, 100), new Point(0, 0)));*/
+					
+					handleDesc.push( new HandleDescription( HandleRoles.NO_ROLE,
+						new Point(0,50) , 
+						new Point(-10,0) ) ); 
+					
 				}
 				this.model.objectHandles.registerComponent( flexModel1, this.ui ,handleDesc, true, constraints);
 				if ( this.layer.visible) //dont' select invisible layers
@@ -486,9 +536,30 @@ package org.syncon.Customizer.view.ui
 				//also when clicked in layerlist 
 				this.ui.depth = this.ui.parent.numChildren-1
 			}
+			//always resize the mask layers so they switch between faces
 			if ( this.isImage && this.ui.image.layer.mask ) 
 			{
 				this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
+			}
+			//if ingrave layer turn on the background
+			if ( this.isText ) 
+			{
+				this.ui.text.bg.visible = false; 
+				this.ui.text.bg.height = 0; this.layer.height; 
+				this.ui.text.bg.width =0;// this.layer.width; 
+				/*this.ui.text.height = NaN; //this.layer.height; 
+				this.ui.text.width =NaN;// this.layer.width; 
+				*/
+				if ( this.model.fxIsEngraveLayer( this.layer ) ) 
+				{
+					this.ui.text.bg.visible = true; 
+					if ( this.layer.locked ) 
+					{
+						this.ui.text.bg.height = this.layer.height; 
+						this.ui.text.bg.width = this.layer.width; 
+					}
+					
+				}
 			}
 		}
 		
@@ -553,10 +624,10 @@ package org.syncon.Customizer.view.ui
 			return;*/ 
 			if ( this.layer.locked ) 
 				return
-				
+			
 			if ( this.disableClickSelection ) 
-			return; 
-				
+				return; 
+			
 			this.model.currentLayer = this.ui.listData as LayerBaseVO; 
 		}		
 		

@@ -6,8 +6,9 @@
 		 width="100%" height="63" xmlns:smallComponents="org.virid.smallComponents.*">
 	<fx:Script>
 		<![CDATA[
-			import org.syncon.Customizer.model.CustomEvent;
 			import mx.events.FlexEvent;
+			
+			import org.syncon.Customizer.model.CustomEvent;
 			
 			import spark.skins.spark.ButtonSkin;
 			public static var ADD_TEXT:String='ADD_TEXT';
@@ -15,16 +16,20 @@
 			public static var REDO:String='REDO';
 			public static var UNDO:String='UNDO';
 			public static var EXPORTJSON:String='EXPORTJSON';
+			public static var GO_TO_BACKGROUND_PANEL:String='GO_TO_BACKGROUND_PANEL';
+			public static var GO_TO_ENGRAVE_PANEL : String  = 'GO_TO_ENGRAVE_PANEL'; 
+			
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
 				// TODO Auto-generated method stub
 		
 			}
 			
-			protected function swithModes_clickHandler(event:MouseEvent):void
+			protected function onBackground(event:MouseEvent):void
 			{
 				//this.parentDocument.currentState = (this.parentDocument.currentState == "engrave" )?"normal" : "engrave";
-				this.parentDocument.currentState = (this.parentDocument.currentState == "Text" )?"normal" : "Text";
+				//this.parentDocument.currentState = (this.parentDocument.currentState == "Text" )?"normal" : "Text";
+				this.dispatchEvent( new CustomEvent( GO_TO_BACKGROUND_PANEL ))
 			}
 			
 			protected function onUndo(event:MouseEvent):void
@@ -45,6 +50,11 @@
 			protected function onText(event:MouseEvent):void
 			{
 				this.dispatchEvent( new Event(ADD_TEXT) );
+			}
+			
+			protected function onEngrave(event:MouseEvent):void
+			{
+				this.dispatchEvent( new Event(GO_TO_ENGRAVE_PANEL) );
 			}
 			
 		]]>
@@ -77,17 +87,22 @@
 		
 		<smallComponents:MainMenuButton label="Background" visible="true" includeInLayout="true" 
 										icon="assets/images/background.png"
-										click="swithModes_clickHandler(event)"
+										click="onBackground(event)"
+										 id="btnBackground"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>		
 		<smallComponents:MainMenuButton icon="assets/images/location.png" visible="false" includeInLayout="false"
 										label="Choose a Location"
-										click="swithModes_clickHandler(event)"
+										click="onBackground(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		
 		<smallComponents:MainMenuButton icon="assets/images/engrave.png"
 										label="Text"
-										 id="btnText"
+										id="btnText"
 										click="onText(event)"
+										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+		<smallComponents:MainMenuButton icon="assets/images/engrave.png"
+										label="Engrave"
+										 id="btnEngrave"
+										click="onEngrave(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton icon="assets/images/preview.png"
 										label="Preview" 

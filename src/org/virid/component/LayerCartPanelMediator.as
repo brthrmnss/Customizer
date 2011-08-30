@@ -39,7 +39,7 @@ package org.virid.component
 			this.ui.list.selectedItem = this.model.currentLayer;
 			var i : int = this.ui.list.dataProvider.getItemIndex( this.model.currentLayer ); 
 			/*if ( i == -1 ) 
-				throw 'how this happen?, why did you select this? if not in list?';*/
+			throw 'how this happen?, why did you select this? if not in list?';*/
 			this.ui.list.selectedIndex = i ; 
 			this.calculateCost(); 
 			trace('clear layer' ) ;
@@ -113,7 +113,10 @@ package org.virid.component
 					var event : Event = new NightStandModelEvent(NightStandModelEvent.SHOW_EMPTY_LAYER, img ) 
 					this.dispatch(event ) ;
 					if ( event.isDefaultPrevented() ) 
+					{
+						this.ui.list.selectedItem = null; 	
 						return; 
+					}
 				}
 			}
 			
@@ -128,12 +131,12 @@ package org.virid.component
 		private function calculateCost():void
 		{
 			var total : Number = 0
-				total += this.model.baseItem.price; 
+			total += this.model.baseItem.price; 
 			for each ( var l : LayerBaseVO in this.model.layersVisible.toArray() )  
 			{
 				if ( l.visible ) 
 				{
-						total += l.cost; 
+					total += l.cost; 
 				}
 			}
 			

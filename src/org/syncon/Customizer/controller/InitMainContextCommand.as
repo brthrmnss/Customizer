@@ -54,7 +54,9 @@ package org.syncon.Customizer.controller
 			{
 				this.createDefaultProduct() ; 
 				this.createClipArtImages(); 
-				this.createDetailedDefaultProduct();
+				//this.createDetailedDefaultProduct();
+				
+				this.createDetailedDefaultProduct_Engrave()
 				if ( this.model.flex ) 
 				{
 					
@@ -74,7 +76,7 @@ package org.syncon.Customizer.controller
 		private function createClipArtImages():void
 		{
 			var names : Array = [] ; 
-			for  (var i : int = 0 ; i < 150; i++ )
+			for (var i : int = 0 ; i < 150; i++ )
 			{
 				names.push( 'Title ' + i.toString() ) ; 
 			}
@@ -96,23 +98,157 @@ package org.syncon.Customizer.controller
 			base.faces.addItem( face ) 
 			this.model.baseItem = base; 
 			
-			/*var l :  Array = [] ; 
+			/*var l : Array = [] ; 
 			l = MakeVOs.makeObjs(['L1', 'L2'], LessonVO, 'name' )
 			var lp : LessonGroupVO = new LessonGroupVO(); 
 			lp.lessons = new ArrayList( l ) ; 
 			//this.model.loadLessons( l ); 
 			
 			var firstLesson : LessonVO = lp.lessons.getItemAt( 0 ) as LessonVO
-			l =  MakeVOs.makeObjs(['Ls1', 'Ls2', 'Ls3'], LessonSetVO, 'name' )
+			l = MakeVOs.makeObjs(['Ls1', 'Ls2', 'Ls3'], LessonSetVO, 'name' )
 			firstLesson.sets = new ArrayList( l ) ; 
 			
 			var set : LessonSetVO = firstLesson.sets.getItemAt( 0 ) as LessonSetVO
-			l =  MakeVOs.makeObjs(['dog', '2', '3','4'], LessonItemVO, 'name' )
+			l = MakeVOs.makeObjs(['dog', '2', '3','4'], LessonItemVO, 'name' )
 			set.items = new ArrayList( l ) ; 					
 			
-			this.model.currentLessonPlan =  lp ; */
+			this.model.currentLessonPlan = lp ; */
 		}		
-		
+		private function createDetailedDefaultProduct_Engrave():void
+		{
+			var base : StoreItemVO = new StoreItemVO(); 
+			base.name = 'Zippo'
+			base.price = 65
+			var face : FaceVO = new FaceVO()
+			face.name = 'Front Face'; 
+			face.base_image_url = 'assets/images/imgbase.png'
+			base.faces.addItem( face ) 
+			
+			face.image_mask = 'assets/images/imgbase.png'
+			
+			var colorLayer : ColorLayerVO; 
+			var imageLayer: ImageLayerVO
+			
+			colorLayer = new ColorLayerVO;
+			colorLayer.name = 'Color Layer'
+			colorLayer.url ='assets/images/imgbase.png'
+			//colorLayer.mask = true
+			colorLayer.showInList = true;
+			colorLayer.prompt_layer = true;
+			colorLayer.color = 0x166571;
+			colorLayer.locked = true; //all masks should be locked by default 
+			face.layersToImport.push(colorLayer);
+			
+			var textLayer: TextLayerVO = new TextLayerVO;
+			textLayer.text = 'Add' 
+			textLayer.name = 'Text'
+			textLayer.maxChars = 3
+			textLayer.location = 'front small'; 
+			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			textLayer.maxFontSize = 35
+			*/
+			textLayer.width = 50
+			textLayer.height =30 
+			textLayer.x = 60
+			textLayer.y = 120; 
+			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			textLayer.horizStartAlignment = ''
+			textLayer.locked = true; 
+			//textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			//textLayer.horizStartAlignment = ''
+			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
+			//textLayer.minFontSize = 6
+			textLayer.prompt_layer = true; 
+			face.layersToImport.push(textLayer);
+			
+			
+			textLayer = new TextLayerVO;
+			textLayer.text = 'Add' 
+			textLayer.name = 'Text'
+			textLayer.maxChars = 3
+			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			textLayer.maxFontSize = 35
+			*/
+			textLayer.width = 100
+			textLayer.height = 50 
+			textLayer.x = 60
+			textLayer.y =60; 
+			textLayer.locked = true; 
+			textLayer.fontSize = 35
+			textLayer.location = 'front Large'; 
+			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			textLayer.horizStartAlignment = ''
+			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
+			//textLayer.minFontSize = 6
+			textLayer.prompt_layer = true; 
+			face.layersToImport.push(textLayer);
+			
+			
+			
+			
+			
+			face = new FaceVO()
+			face.name = 'Back Face'; 
+			face.base_image_url = 'assets/images/imgbase.png'
+			base.faces.addItem( face ) 
+			
+			face.image_mask = 'assets/images/imgbase.png'
+			
+			colorLayer = new ColorLayerVO;
+			colorLayer.name = 'Color Layer'
+			colorLayer.url ='assets/images/imgbase.png'
+			//colorLayer.mask = true
+			colorLayer.showInList = true;
+			colorLayer.prompt_layer = true;
+			colorLayer.color = 0x166571;
+			colorLayer.locked = true; //all masks should be locked by default 
+			face.layersToImport.push(colorLayer);
+			
+			textLayer = new TextLayerVO;
+			textLayer.text = 'bac' 
+			textLayer.name = 'Text'
+			textLayer.maxChars = 3
+			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			textLayer.maxFontSize = 35
+			*/
+			textLayer.width = 50
+			textLayer.height =30 
+			textLayer.x = 60
+			textLayer.y = 120; 
+			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			textLayer.horizStartAlignment = ''
+			textLayer.locked = true; 
+			//textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			//textLayer.horizStartAlignment = ''
+			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
+			//textLayer.minFontSize = 6
+			textLayer.prompt_layer = true; 
+			face.layersToImport.push(textLayer);
+			
+			
+			textLayer = new TextLayerVO;
+			textLayer.text = 'Add' 
+			textLayer.name = 'Text'
+			textLayer.maxChars = 3
+			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			textLayer.maxFontSize = 35
+			*/
+			textLayer.width = 100
+			textLayer.height = 50 
+			textLayer.x = 60
+			textLayer.y =60; 
+			textLayer.locked = true; 
+			textLayer.fontSize = 35
+			textLayer.location = 'Back Large'; 
+			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			textLayer.horizStartAlignment = ''
+			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
+			//textLayer.minFontSize = 6
+			textLayer.prompt_layer = true; 
+			face.layersToImport.push(textLayer);
+			
+			this.model.baseItem = base; 
+		}
 		
 		private function createDetailedDefaultProduct():void
 		{
@@ -125,7 +261,7 @@ package org.syncon.Customizer.controller
 			base.faces.addItem( face ) 
 			/*
 			imgLayer = new ImageLayerVO(); 
-			imgLayer.name = 'Mask  Image';
+			imgLayer.name = 'Mask Image';
 			imgLayer.url = face.base_image_url; 
 			//imgLayer.url = 'assets/images/img.jpg'
 			imgLayer.locked = true; 
@@ -148,9 +284,9 @@ package org.syncon.Customizer.controller
 			colorLayer = new ColorLayerVO;
 			colorLayer.name = 'Mask2'
 			colorLayer.url ='assets/images/imgbase.png'
-			//colorLayer.mask  = true
+			//colorLayer.mask = true
 			//imageLayer.showInList = false
-			colorLayer.locked = true;  //all masks should be locked by default 
+			colorLayer.locked = true; //all masks should be locked by default 
 			face.layersToImport.push(colorLayer);
 			*/
 			var colorLayer : ColorLayerVO; 
@@ -158,11 +294,11 @@ package org.syncon.Customizer.controller
 			colorLayer = new ColorLayerVO;
 			colorLayer.name = 'Color Layer'
 			colorLayer.url ='assets/images/imgbase.png'
-			//colorLayer.mask  = true
+			//colorLayer.mask = true
 			colorLayer.showInList = true;
 			colorLayer.prompt_layer = true;
 			colorLayer.color = 0x166571;
-			colorLayer.locked = true;  //all masks should be locked by default 
+			colorLayer.locked = true; //all masks should be locked by default 
 			face.layersToImport.push(colorLayer);
 			
 			var textLayer: TextLayerVO = new TextLayerVO;
@@ -214,21 +350,21 @@ package org.syncon.Customizer.controller
 			imageLayer.visible = false; 
 			face.layersToImport.push(imageLayer);
 			
-			/*var l :  Array = [] ; 
+			/*var l : Array = [] ; 
 			l = MakeVOs.makeObjs(['L1', 'L2'], LessonVO, 'name' )
 			var lp : LessonGroupVO = new LessonGroupVO(); 
 			lp.lessons = new ArrayList( l ) ; 
 			//this.model.loadLessons( l ); 
 			
 			var firstLesson : LessonVO = lp.lessons.getItemAt( 0 ) as LessonVO
-			l =  MakeVOs.makeObjs(['Ls1', 'Ls2', 'Ls3'], LessonSetVO, 'name' )
+			l = MakeVOs.makeObjs(['Ls1', 'Ls2', 'Ls3'], LessonSetVO, 'name' )
 			firstLesson.sets = new ArrayList( l ) ; 
 			
 			var set : LessonSetVO = firstLesson.sets.getItemAt( 0 ) as LessonSetVO
-			l =  MakeVOs.makeObjs(['dog', '2', '3','4'], LessonItemVO, 'name' )
+			l = MakeVOs.makeObjs(['dog', '2', '3','4'], LessonItemVO, 'name' )
 			set.items = new ArrayList( l ) ; 					
 			
-			this.model.currentLessonPlan =  lp ; */
+			this.model.currentLessonPlan = lp ; */
 			this.createBackFace(base); 
 			this.model.baseItem = base; 
 		}		
@@ -243,7 +379,7 @@ package org.syncon.Customizer.controller
 			base.faces.addItem( face ) 
 			/*
 			imgLayer = new ImageLayerVO(); 
-			imgLayer.name = 'Mask  Image';
+			imgLayer.name = 'Mask Image';
 			imgLayer.url = face.base_image_url; 
 			//imgLayer.url = 'assets/images/img.jpg'
 			imgLayer.locked = true; 
@@ -267,9 +403,9 @@ package org.syncon.Customizer.controller
 			colorLayer = new ColorLayerVO;
 			colorLayer.name = 'Mask2'
 			colorLayer.url ='assets/images/imgbase.png'
-			//colorLayer.mask  = true
+			//colorLayer.mask = true
 			//imageLayer.showInList = false
-			colorLayer.locked = true;  //all masks should be locked by default 
+			colorLayer.locked = true; //all masks should be locked by default 
 			face.layersToImport.push(colorLayer);
 			*/
 			var colorLayer : ColorLayerVO; 
@@ -277,10 +413,10 @@ package org.syncon.Customizer.controller
 			colorLayer = new ColorLayerVO;
 			colorLayer.name = 'Color Layer'
 			colorLayer.url ='assets/images/lighter_back_workarea.png'
-			//colorLayer.mask  = true
+			//colorLayer.mask = true
 			colorLayer.showInList = false
 			colorLayer.color = 0x166571;
-			colorLayer.locked = true;  //all masks should be locked by default 
+			colorLayer.locked = true; //all masks should be locked by default 
 			face.layersToImport.push(colorLayer);
 			
 			var textLayer: TextLayerVO = new TextLayerVO;
@@ -333,21 +469,21 @@ package org.syncon.Customizer.controller
 			imageLayer.visible = false; 
 			face.layersToImport.push(imageLayer);
 			
-			/*var l :  Array = [] ; 
+			/*var l : Array = [] ; 
 			l = MakeVOs.makeObjs(['L1', 'L2'], LessonVO, 'name' )
 			var lp : LessonGroupVO = new LessonGroupVO(); 
 			lp.lessons = new ArrayList( l ) ; 
 			//this.model.loadLessons( l ); 
 			
 			var firstLesson : LessonVO = lp.lessons.getItemAt( 0 ) as LessonVO
-			l =  MakeVOs.makeObjs(['Ls1', 'Ls2', 'Ls3'], LessonSetVO, 'name' )
+			l = MakeVOs.makeObjs(['Ls1', 'Ls2', 'Ls3'], LessonSetVO, 'name' )
 			firstLesson.sets = new ArrayList( l ) ; 
 			
 			var set : LessonSetVO = firstLesson.sets.getItemAt( 0 ) as LessonSetVO
-			l =  MakeVOs.makeObjs(['dog', '2', '3','4'], LessonItemVO, 'name' )
+			l = MakeVOs.makeObjs(['dog', '2', '3','4'], LessonItemVO, 'name' )
 			set.items = new ArrayList( l ) ; 					
 			
-			this.model.currentLessonPlan =  lp ; */
+			this.model.currentLessonPlan = lp ; */
 			//this.createBackFace(base); 
 			//this.model.baseItem = base; 
 		}		

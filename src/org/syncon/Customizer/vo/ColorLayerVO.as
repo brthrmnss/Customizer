@@ -17,7 +17,7 @@ package  org.syncon.Customizer.vo
 		
 		override public function get displayName():String
 		{
-			return [this.name , '(', this.text, ')' ].join(' ');
+			return this.name;// [this.name , '(', this.text, ')' ].join(' ');
 		}
 		
 		

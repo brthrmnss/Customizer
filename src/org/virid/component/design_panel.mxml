@@ -46,7 +46,15 @@
 				this.thirdRow.alpha = 1
 				this.secondRow.enabled = true; 
 				this.thirdRow.enabled = true;
-				if ( this.layer == null ) return; 
+				if ( this.layer == null )
+				{
+					this.secondRow.alpha = 0.2
+					this.secondRow.enabled = false; 
+					
+					this.thirdRow.alpha = 0.2
+					this.thirdRow.enabled = false; 
+					return; 
+				}
 				//b/c of oddity in how viriid has proompt layers ..
 				//we don' remove them, so when they are invisible 
 				//they should be removed from ui

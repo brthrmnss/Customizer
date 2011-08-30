@@ -37,6 +37,10 @@
 				this.txt.text = ''; 
 				this.txtEdit.text = ''; 
 				this.resetNext = true; 
+			
+				this.bg.visible = false; 
+				this.bg.height = 0;  
+				this.bg.width =0;// this.layer.width; 
 				
 				layer = value as TextLayerVO
 				s.listenForObj( layer, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; 	
@@ -46,7 +50,7 @@
 					this.txtEdit.text = ''; 
 					return; 
 				}
-
+				
 				this.onUpdatedLayer(); 
 			}
 			
@@ -90,11 +94,15 @@
 				if ( this.layer == null ) 
 					return; 
 				//return;
-				this.width = this.txt.width; 
-				this.height = this.txt.height; 
 				
-				this.layer.nonChromeWidth = this.width; 
-				this.layer.nonChromeHeight = this.height; 
+				if ( this.layer.locked == false ) 
+				{
+					this.width = this.txt.width; 
+					this.height = this.txt.height; 
+					
+					this.layer.nonChromeWidth = this.width; 
+					this.layer.nonChromeHeight = this.height;
+				}
 				//this is detrimetnal 
 				/* this.layer.width = this.width; 
 				this.layer.height = this.height; 
@@ -140,8 +148,18 @@
 				{
 					this.parentDocument.resetting= false; 
 					resetNext = false; 
-					this.height = this.txt.height; 
-					this.width = this.txt.width; 
+					if ( this.layer.locked == false ) 
+					{	 
+						this.height = this.txt.height; 
+						this.width = this.txt.width; 
+					}
+					else
+					{
+						this.height =this.layer.height; 
+						this.width = this.layer.width; 
+						this.parentDocument.height =this.layer.height; 
+						this.parentDocument.width = this.layer.width; 
+					}
 					trace('3', this.layer.text, this.txt.width, this.txt.height ) ; 
 					this.notifyOfResize()
 				}
@@ -178,12 +196,24 @@
 		<s:State name="normal"/>
 		<s:State name="edit"/>
 	</s:states>
+	<!--   top="0" left="0" right="0" bottom="0"  -->
+	<s:Rect  id="bg" visible="false" alpha="0.8">
+		<s:fill >
+			<s:SolidColor color="0xcdcdcd" />
+		</s:fill>
+	<!--	 <s:stroke>
+		<s:SolidColorStroke color="0xe9e9e9"/>
+		</s:stroke> -->
+	</s:Rect>
+	
 	
 	<s:Label id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
+			  horizontalCenter="0" verticalCenter="0"
 			 updateComplete="txt_updateCompleteHandler(event)"/>
 	
 	<s:TextInput id="txtEdit" visible="false" width="{this.txt.width}" height="{this.txt.height}"
 				 change="onChange(event)" click="txt_clickHandler(event)"
 				 creationComplete="this.setupTxtEdit()"
+				 horizontalCenter="0" verticalCenter="0"
 				 visible.edit="true"/>
 </s:Group>

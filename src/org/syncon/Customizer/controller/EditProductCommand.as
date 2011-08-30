@@ -517,6 +517,17 @@ package org.syncon.Customizer.controller
 								if ( imgLayer.mask == true ) 
 									this.model.layerMask = layer; 
 							}
+							if ( layer is ColorLayerVO ) 
+							{
+								colorLayer = layer as ColorLayerVO
+									this.model.layerColor = layer as ColorLayerVO; 
+							}
+							if ( layer is ImageLayerVO ) 
+							{
+								imgLayer = layer as ImageLayerVO
+								if ( imgLayer.name == 'Base Image' ) //this is  not safe ..
+									this.model.baseLayer = imgLayer; 
+							}
 						}	
 						
 						

@@ -150,6 +150,16 @@
 //				this.dispatchEvent( new CustomEvent( CHANGE_LIST,  
 //					this.list.dataProvider.getItemAt(event.newIndex)  ) ) 
 //			}
+			
+			protected function dropDown_FontSelect_changeHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				if ( event.newIndex == -1 ) 
+					return; 
+				var item:Object = event.currentTarget.selectedItem;
+				this.dispatchEvent( new CustomEvent( CHANGE_FONT_FAMILY, item   ) ) 
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -218,7 +228,9 @@
 					<s:Label text="45 charectors max"  id="txtMaxChars" styleName="Arial grayTxt"/>
 					
 				</s:HGroup>
-				<s:DropDownList id="fontSelect" width="100%" />			
+				<s:DropDownList id="dropDown_FontSelect"
+								 change="dropDown_FontSelect_changeHandler(event)"
+								width="100%" />			
 			</s:VGroup>
 			
 			

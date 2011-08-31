@@ -7,6 +7,7 @@ package org.syncon.Customizer.controller
 	import org.syncon.Customizer.model.ViridConstants;
 	import org.syncon.Customizer.vo.ColorLayerVO;
 	import org.syncon.Customizer.vo.FaceVO;
+	import org.syncon.Customizer.vo.FontVO;
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.ImageVO;
 	import org.syncon.Customizer.vo.StoreItemVO;
@@ -42,7 +43,7 @@ package org.syncon.Customizer.controller
 					//airFeatures.goIntoFullscreenMode(); 
 				}
 			}	
- 
+			
 			if ( event.type == InitMainContextCommandTriggerEvent.CREATE_CLIP_ART_LIBRARY ) 
 			{
 				this.createClipArtImages(); 
@@ -51,7 +52,7 @@ package org.syncon.Customizer.controller
 			if ( event.type == InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) 
 			{
 				//this.createDefaultProduct() ; 
-		
+				
 				//this.createDetailedDefaultProduct();
 				this.createDetailedDefaultProduct_Engrave()
 				
@@ -159,11 +160,25 @@ package org.syncon.Customizer.controller
 			textLayer.prompt_layer = true; 
 			face.layersToImport.push(textLayer);
 			
+			var fonts : Array = []; 
+			var font : FontVO = new FontVO()
+			font.name = 'Helvetica' 
+			fonts.push(font); 
+			font = new FontVO()
+			font.name = 'Arial' 
+			fonts.push(font); 
+			font = new FontVO()
+			font.name = 'Times New Roman' 
+			font.swf_name = 'TimesFont' 
+			fonts.push(font); 
+			textLayer.fonts = fonts; 
 			
 			textLayer = new TextLayerVO;
 			textLayer.text = 'Add' 
 			textLayer.name = 'Text'
 			textLayer.maxChars = 3
+			textLayer.fonts = fonts; 
+			//textLayer.fontFamily = 'Arial'
 			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
 			textLayer.maxFontSize = 35
 			*/

@@ -84,6 +84,8 @@ package org.syncon.Customizer.vo
 			_cost = value;
 		}
 		
+		public var  fonts : Array = []; 
+		
 		/**
 		 * This layer cannot be deleted
 		 * */

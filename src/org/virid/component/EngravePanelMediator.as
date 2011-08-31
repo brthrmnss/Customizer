@@ -13,7 +13,11 @@ package  org.virid.component
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
 	import org.syncon.Customizer.view.ui.Toolbar;
+	import org.syncon.Customizer.vo.FontVO;
 	import org.syncon.Customizer.vo.ImageVO;
+	import org.syncon.Customizer.vo.ItemRendererHelpers;
+	import org.syncon.Customizer.vo.LayerBaseVO;
+	import org.syncon.Customizer.vo.TextLayerVO;
 	import org.syncon.popups.controller.ShowPopupEvent;
 	
 	public class  EngravePanelMediator extends Mediator 
@@ -36,6 +40,75 @@ package  org.virid.component
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.BASE_ITEM_CHANGED, 
 				this.onLoadLocations);	
 			this.onLoadLocations(); */
+			
+			this.ui.addEventListener( LayerTextInspector.DATA_CHANGED, 
+				this.onDataChanged );	
+			onDataChanged(null)
+			
+			
+			this.ui.addEventListener( LayerTextInspector.CHANGE_FONT_FAMILY, 
+				this.onFontChanged );	
+			//onFontChanged(null)
+		}
+		public var layer : TextLayerVO = new TextLayerVO(); 
+		private function onFontChanged(event: CustomEvent):void
+		{
+			var font : FontVO= event.data as FontVO
+			var fontName : String = font.name; 
+			if ( font.swf_name != null && font.swf_name != '' ) 
+				fontName = font.swf_name; 
+			
+			this.dispatch( new EditProductCommandTriggerEvent ( 
+				EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY, fontName 
+			) )  
+		}
+		public var s : ItemRendererHelpers = new ItemRendererHelpers(null)
+		protected function onDataChanged(event:Event):void
+		{
+			layer = this.ui.layer as TextLayerVO
+			s.listenForObj( layer, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; //we have to 
+			//do this so we can catch it the first time ...  it if was not set initially 
+			this.updateFontList(); 
+		}
+		
+		private function onUpdatedLayer(e:Event=null):void
+		{
+			if ( layer == null ) 
+				return; 
+ 
+				if ( this.layer.propChanged == 'fontFamily' )
+				{
+					this.updateFontList(); 
+				}
+		}
+		
+		private function updateFontList():void
+		{
+			var fonts : Array = this.ui.layer.fonts; 
+			//y do this 
+			//this.ui.dropDown_FontSelect.labelFunction = this.labelForDropDown; 
+			this.ui.dropDown_FontSelect.labelField = 'name' ; 
+			this.ui.dropDown_FontSelect.dataProvider = new ArrayList( fonts ) ; 
+			var foundFound : FontVO; 
+			for each ( var f : FontVO in fonts ) 
+			{
+				if ( f.name ==  this.ui.layer.fontFamily )
+				{
+					foundFound = f; 	
+				}
+				if ( f.swf_name != null && f.swf_name ==  this.ui.layer.fontFamily )
+				{
+					foundFound = f; 	
+				}
+				
+			}
+			this.ui.dropDown_FontSelect.selectedItem = foundFound; //this.ui.layer.fontFamily; 
+			
+		}
+		
+		public function labelForDropDown( f : FontVO ) :  String
+		{
+			return f.name; 
 		}
 		/*
 		private function onLoadLocations(e:Event=null):void

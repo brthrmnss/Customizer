@@ -6,7 +6,7 @@ package  org.syncon.Customizer.vo
 		
 		public static var Type:String= 'TEX';
 		public var fontSize:int = 12;
-		public var fontFamily : String = ''; 
+		public var fontFamily : String;// = ''; 
 		public var color:*;
 		public var sizingSettings: String;
 		/**

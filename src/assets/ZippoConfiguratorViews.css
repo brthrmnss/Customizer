@@ -9,6 +9,21 @@ global
 	color:#151517;
 	typographicCase:uppercase;
 }
+@font-face {
+	src: url("styles/fonts/Helvetica.ttf");	
+	fontFamily: Helvetica;
+	embedAsCFF: true;
+}
+@font-face {
+	src: url("styles/fonts/monof55.ttf");	
+	fontFamily: Arial;
+	embedAsCFF: true;
+}
+@font-face {
+	src: url("styles/fonts/TRANA___.TtF");	
+	fontFamily: TimesFont;
+	embedAsCFF: true;
+}
 
 @font-face
 {

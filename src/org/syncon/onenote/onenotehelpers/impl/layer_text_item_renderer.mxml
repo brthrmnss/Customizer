@@ -64,6 +64,13 @@
 				{
 					//this.visible = this.layer.visible; 
 					this.txt.setStyle('fontSize', layer.fontSize ) ;
+					if ( this.layer.fontFamily != null ) 
+						this.txt.setStyle('fontFamily', layer.fontFamily ) ;
+					else
+					{
+						this.layer.fontFamily = this.txt.getStyle('fontFamily'); 
+						this.layer.update( 'fontFamily' ) ; 
+					}
 				}
 				else
 				{
@@ -83,6 +90,7 @@
 				}
 				this.lastLayer =  this.layer
 				//this.txt.setStyle('fontFamily', asdf ) ; 
+
 				this.txt.text  = layer.text; 
 				
 			}
@@ -206,7 +214,7 @@
 		</s:stroke> -->
 	</s:Rect>
 	<s:RichText id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
-				horizontalCenter="0" verticalCenter="0"
+				horizontalCenter="0" verticalCenter="0" fontFamily="Helvetica"
 			 updateComplete="txt_updateCompleteHandler(event)"/>
 <!--	<s:Label id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
 			  horizontalCenter="0" verticalCenter="0"

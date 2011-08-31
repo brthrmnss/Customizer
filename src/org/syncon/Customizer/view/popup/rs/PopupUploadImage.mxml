@@ -14,6 +14,8 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import org.virid.skins.Heading;
+			
 			import spark.events.IndexChangeEvent;
 			
 			import sss.Shelpers.Shelpers.ui.PopupCode;
@@ -30,13 +32,15 @@
 			public function onInit() : void 
 			{
 				this.creationComplete = true; 
-				this.popupCode.center()
+				this.popupCode.center();
+				
 			}
 			
 			public  function create(app:Object)  : IPopup
 			{
 				var popup :  PopupUploadImage = new PopupUploadImage()
 				popup.popupCode =  PopupCode.Create( popup ,app ) 
+				
 				return popup			
 			} 
 			
@@ -97,6 +101,12 @@
 				
 			}
 			
+			protected function h1_clickHandler(event:MouseEvent):void
+			{
+				this.setStyle("skinClass",Heading);
+				
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -110,8 +120,8 @@
 	
 
 	<s:VGroup paddingBottom="32" paddingLeft="32" paddingRight="32" paddingTop="32">
-		<s:BitmapImage />
-		<s:Label text="Upload Images"/>
+		
+		<s:Label id="h1" text="Upload Images Yo" click="h1_clickHandler(event)" />
 		<s:List id="list" width="420" height="130" borderVisible="false"
 				change="list_changeHandler(event)" contentBackgroundAlpha="0"
 				itemRenderer="org.syncon.Customizer.view.popup.rs.PickImageRenderer">

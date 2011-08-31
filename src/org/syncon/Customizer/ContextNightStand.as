@@ -104,11 +104,12 @@ package org.syncon.Customizer
 			
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.CREATE_CLIP_ART_LIBRARY ) ) ; 
-			
+			this.importAnySpecifiedJSON(); 
+			return;
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) ) ; 
 			return;
-			this.importAnySpecifiedJSON(); 
+			
 		}
 		
 		/**

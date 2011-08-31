@@ -324,6 +324,7 @@ package org.syncon.Customizer.model
 		public var allowSelectingBgToClearSelection:Boolean=false;
 		public var waitForBaseLayer: Array = [] ; ;
 		public var locations:  Array;
+		public var tempsku:String;//TODO:REMOVE THIS
 		
 		public function addLayer(layer : LayerBaseVO ) : void
 		{

@@ -39,6 +39,7 @@ package  org.syncon.Customizer.controller
 			trace();	
 			var product:StoreItemVO = new StoreItemVO;
 			product.name = json.name + "  |";
+			this.model.tempsku = json.sku; 
 			if(json.hasOwnProperty( 'price' )) 
 				product.price = json.price;
 			else
@@ -81,16 +82,16 @@ package  org.syncon.Customizer.controller
 						textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE;
 						
 						this.copyBasics(textLayer, layerImport );
-						textLayer.text = 'AAA' ;
+						textLayer.text = layerImport.Media.source;
 						textLayer.maxChars = layerImport.Media.max
 						textLayer.orientation = layerImport.orientation;
-						textLayer.fontSize = 20//for engraving
+						textLayer.fontSize = layerImport.Fonts[0].size;//for engraving
 							
 						
 						if(layerImport.type == "engrave"){						
 							textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
 							textLayer.maxFontSize = 35
-							textLayer.minFontSize = 12
+							textLayer.minFontSize = 8
 						}
 						
 						textLayer.vertStartAlignment="";

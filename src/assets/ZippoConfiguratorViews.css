@@ -76,3 +76,7 @@ global
 s|Button{fontSize:12px;}
 .removeBtn{backgroundImage:url("");
 }
+
+mx|Alert{
+	fontFamily:Verdana;
+}

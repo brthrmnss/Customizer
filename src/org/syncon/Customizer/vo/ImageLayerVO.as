@@ -28,11 +28,19 @@ package  org.syncon.Customizer.vo
 		 * dispatched when layer is resized ...
 		 * ignored by itemrenderer to prevent updating loops
 		 * */
+		
+		/**
+		 * used as a collary to the url ... 
+		 * for uploading images, they are stored here
+		 * */
+		public var source:Object;
+		
 		public static var RESIZE_COMPLETE:String= 'resizecom';
 		/**
 		 * ignore the adove resize_complete, dispatches when souce explicity changed
 		 * */
 		public static var SOURCE_CHANGED:String= 'SOURCE_CHANGED';
+
 		public override function get type():String 	{ return Type; }
 		
 /*		override public function clone() : LayerBaseVO
@@ -49,7 +57,8 @@ package  org.syncon.Customizer.vo
 			this.copyPropsTo(img)  
 			img.image_source = this.image_source
 			img.mask = this.mask; 
-			img.default_url = this.default_url; 
+			img.default_url = this.default_url;
+			img.source = img.source; 
 			return img; 
 		}
 		

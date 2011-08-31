@@ -114,6 +114,10 @@ package org.syncon.Customizer
 		
 		/**
 		 * Attempts to import json....
+		 * First checks if importJsonStrVirid is set, if so, import and exit 
+		 * then check importJsonStr, if defined, import and exit
+		 * if niether set, import from the TestViridImportCommand, which contains 
+		 * json strings to be imported
 		 * */
 		public function importAnySpecifiedJSON() : void
 		{

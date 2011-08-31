@@ -161,8 +161,17 @@ package org.syncon.Customizer.controller
 				{
 					imgLayer = this.model.currentLayer as ImageLayerVO; 
 					
-					event.oldData = imgLayer.url; 
+					event.oldData = imgLayer.url;
+					//upload sends bitmapdata bytes, otherwise we have strings
+					if ( event.data  != null  ) 
+					{
 					imgLayer.url  =   event.data.toString()
+					}
+					if ( event.data2 != null ) 
+					{
+						imgLayer.url  = ''
+						imgLayer.source = event.data2; 
+					}
 					imgLayer.update(ImageLayerVO.SOURCE_CHANGED)//'fontSize'); 
 					imgLayer.horizStartAlignment  = 'center'  
 					imgLayer.vertStartAlignment  = 'center'  //need better way to refresh this 

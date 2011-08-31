@@ -1,6 +1,7 @@
 package  org.virid.component
 {
 	import flash.events.Event;
+	import flash.utils.ByteArray;
 	
 	import flashx.undo.IOperation;
 	
@@ -85,7 +86,7 @@ package  org.virid.component
 		/**
 		 * for teh virid player we will have to resuse existing layers if they are definied 
 		 * */
-		private function onUploadedImage( e : ImageVO ) : void
+		private function onUploadedImage(  bytes : ByteArray  ) : void
 		{
 			if ( this.loadIntoAndSelectImageLayer  != null ) 
 			{
@@ -108,14 +109,16 @@ package  org.virid.component
 					this.model.currentLayer = imgLayer; 
 				}
 			}
+			//upload to me,  if i am current layer 
 			if (  this.ui.layer == this.model.currentLayer ) 
 			{
 				this.dispatch( new EditProductCommandTriggerEvent (
-					EditProductCommandTriggerEvent.CHANGE_IMAGE_URL, e.url) ) ; 
+					EditProductCommandTriggerEvent.CHANGE_IMAGE_URL,  null, bytes  ) ) ; 
 				return; 
 			}
+			//add to new layer 
 			this.dispatch( new EditProductCommandTriggerEvent (
-				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, e.url) ) ; 
+				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, null, bytes ) ) ; 
 		}
 		private function onAddText(e:  CustomEvent): void
 		{

@@ -11,7 +11,7 @@ package  org.syncon.Customizer.vo
 	public class StoreItemVO  //implements  IPageVO
 	{
 		public var name :  String = '';
-		
+		public var desc :  String = '';
 		public var faces : ArrayCollection = new ArrayCollection()
 		
 		/*

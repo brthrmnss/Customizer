@@ -53,9 +53,9 @@ package org.syncon.Customizer.controller
 			{
 				//this.createDefaultProduct() ; 
 				
-				this.createDetailedDefaultProduct();
+				//this.createDetailedDefaultProduct();
 				//this.createDetailedDefaultProduct_Engrave()
-				
+				this.createDetailedDefaultProduct_Engrave2()
 				if ( this.model.flex ) 
 				{
 					
@@ -221,6 +221,163 @@ package org.syncon.Customizer.controller
 			
 			
 			face = new FaceVO()
+			face.name = 'Back Face'; 
+			face.base_image_url = 'assets/images/imgbase.png'
+			base.faces.addItem( face ) 
+			
+			face.image_mask = 'assets/images/imgbase.png'
+			
+			colorLayer = new ColorLayerVO;
+			colorLayer.name = 'Color Layer'
+			colorLayer.url ='assets/images/imgbase.png'
+			//colorLayer.mask = true
+			colorLayer.showInList = true;
+			colorLayer.prompt_layer = true;
+			colorLayer.color = 0x166571;
+			colorLayer.locked = true; //all masks should be locked by default 
+			face.layersToImport.push(colorLayer);
+			
+			textLayer = new TextLayerVO;
+			textLayer.text = 'bac' 
+			textLayer.name = 'Text'
+			textLayer.maxChars = 3
+			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			textLayer.maxFontSize = 35
+			*/
+			textLayer.width = 50
+			textLayer.height =30 
+			textLayer.x = 60
+			textLayer.y = 120; 
+			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			textLayer.horizStartAlignment = ''
+			textLayer.locked = true; 
+			//textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			//textLayer.horizStartAlignment = ''
+			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
+			//textLayer.minFontSize = 6
+			textLayer.prompt_layer = true; 
+			face.layersToImport.push(textLayer);
+			
+			
+			textLayer = new TextLayerVO;
+			textLayer.text = 'Add' 
+			textLayer.name = 'Text'
+			textLayer.maxChars = 3
+			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			textLayer.maxFontSize = 35
+			*/
+			textLayer.width = 100
+			textLayer.height = 50 
+			textLayer.x = 60
+			textLayer.y =60; 
+			textLayer.locked = true; 
+			textLayer.fontSize = 35
+			textLayer.location = 'Back Large'; 
+			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			textLayer.horizStartAlignment = ''
+			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
+			//textLayer.minFontSize = 6
+			textLayer.prompt_layer = true; 
+			face.layersToImport.push(textLayer);
+			
+			this.model.baseItem = base; 
+		}
+		
+		
+		private function createDetailedDefaultProduct_Engrave2():void
+		{
+			var base : StoreItemVO = new StoreItemVO(); 
+			base.name = '1941 Replica &#8482;'
+				base.desc = '<br>&#8226;Brushed Brass<br>&#8226;Case has flat planes with sharper, less rounded edges where the front and back surfaces meet the sides<br>&#8226;Lid and the bottom are joined with a four-barrel hinge<br>&#8226;Inside unit are flatter, with squared edges where they meet the front and back sur'
+			base.price = 65
+				base.sku = '1023763'; 
+			var face : FaceVO = new FaceVO()
+			face.layersToImport = []; 
+			face.name = 'Front'; 
+			face.base_image_url = 'assets/products/1941B-000003-Z_Configure.jpg'
+
+			base.faces.addItem( face ) 
+			
+			//face.image_mask = 'assets/images/imgbase.png'
+			
+			var colorLayer : ColorLayerVO; 
+			var imageLayer: ImageLayerVO
+			
+			/*
+			colorLayer = new ColorLayerVO;
+			colorLayer.name = 'Color Layer'
+			colorLayer.url ='assets/images/imgbase.png'
+			//colorLayer.mask = true
+			colorLayer.showInList = true;
+			colorLayer.prompt_layer = true;
+			colorLayer.color = 0x166571;
+			colorLayer.locked = true; //all masks should be locked by default 
+			face.layersToImport.push(colorLayer);
+			*/
+			var textLayer: TextLayerVO = new TextLayerVO;
+			textLayer.text = '' 
+			textLayer.name = 'Top Front'
+			textLayer.maxChars = 3
+			textLayer.location = 'front small'; 
+			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			textLayer.maxFontSize = 35
+			*/
+			textLayer.width = 130
+			textLayer.height =40 
+			textLayer.x = 45
+			textLayer.y = 75; 
+			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			textLayer.horizStartAlignment = ''
+			textLayer.locked = true; 
+			//textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			//textLayer.horizStartAlignment = ''
+			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
+			//textLayer.minFontSize = 6
+			textLayer.prompt_layer = true; 
+			face.layersToImport.push(textLayer);
+			
+			var fonts : Array = []; 
+			var font : FontVO = new FontVO()
+			font.name = 'Helvetica' 
+			fonts.push(font); 
+			font = new FontVO()
+			font.name = 'Arial' 
+			fonts.push(font); 
+			font = new FontVO()
+			font.name = 'Times New Roman' 
+			font.swf_name = 'TimesFont' 
+			fonts.push(font); 
+			textLayer.fonts = fonts; 
+			
+			textLayer = new TextLayerVO;
+			textLayer.text = 'Add' 
+			textLayer.name = 'Text'
+			textLayer.maxChars = 3
+			textLayer.fonts = fonts; 
+			//textLayer.fontFamily = 'Arial'
+			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			textLayer.maxFontSize = 35
+			*/
+			textLayer.width = 20
+			textLayer.height = 140 
+			textLayer.x = 60
+			textLayer.y =60; 
+			textLayer.locked = true; 
+			textLayer.fontSize = 35
+			textLayer.location = 'front Large'; 
+			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			textLayer.horizStartAlignment = ''
+			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
+			//textLayer.minFontSize = 6
+			textLayer.prompt_layer = true; 
+			face.layersToImport.push(textLayer);
+			
+			
+			
+			
+			
+			  face  = new FaceVO()
+			face.layersToImport = []; 
 			face.name = 'Back Face'; 
 			face.base_image_url = 'assets/images/imgbase.png'
 			base.faces.addItem( face ) 

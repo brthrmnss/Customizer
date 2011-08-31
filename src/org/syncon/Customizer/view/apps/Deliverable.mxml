@@ -33,7 +33,7 @@
 				
 				//this.currentState = 'Text'
 				this.currentState = 'normal'
-
+				
 				
 			}
 			
@@ -46,25 +46,25 @@
 			{
 				//return
 				//this.currentState = 'normal'
-  				this._layer = str; 
+				this._layer = str; 
 				/* 
 				this.size.layer = this.layer; 
 				if ( this.layer is ImageLayerVO ) 
 				{
-					this.currentState  = 'Image'; 
-					image.layer =layer  as ImageLayerVO
+				this.currentState  = 'Image'; 
+				image.layer =layer  as ImageLayerVO
 				}				
 				if ( layer is TextLayerVO ) 
 				{
-					this.currentState = 'Text'; 
-					text.layer = layer as TextLayerVO
+				this.currentState = 'Text'; 
+				text.layer = layer as TextLayerVO
 				}
 				if ( layer is ColorLayerVO ) 
 				{
-					this.currentState = 'Color'; 
-					colorR.layer = layer as ColorLayerVO
+				this.currentState = 'Color'; 
+				colorR.layer = layer as ColorLayerVO
 				}	  		
-				 */
+				*/
 				if ( layer is TextLayerVO ) 
 				{
 					var txtLayer : TextLayerVO = layer as TextLayerVO; 
@@ -78,7 +78,7 @@
 						this.currentState = 'Text'; 
 						text.layer = layer as TextLayerVO
 					}
-
+					
 				}
 				if ( layer is ImageLayerVO ) 
 				{
@@ -115,6 +115,18 @@
 		<s:State  name="engrave"/>
 		<s:State name="Text"/>
 	</s:states>
+	
+	<s:transitions>
+		<s:Transition toState="*" autoReverse="true">
+			<s:Parallel>
+				<!--<s:Resize target="{this}" duration="300"  />-->
+				<s:Fade targets="{[this.engravePanel, this.designPanel, this.text]}" duration="300" />
+			</s:Parallel>
+			
+		</s:Transition>
+	</s:transitions>	
+	
+	
 	<s:Group width="884" height="350">
 		
 		<s:Group width="100%">
@@ -124,14 +136,20 @@
 					<component:MainMenuBar height="67"/>
 					<s:Spacer height="-1"/>
 					<!--<component:engrave_panel includeIn="engrave" width="350" height="260"/>-->
-					 <s:SkinnableContainer creationPolicy="all"> 
+					<s:SkinnableContainer creationPolicy="all"> 
 						
-					<component:engrave_panel id="engravePanel"   includeIn="engrave"  width="350" height="260" />
-					<!--<component:text_panel  includeIn="engrave" width="350" height="260" />-->
-					<!-- need this to be here to be mediated first for the show_EMPTY_LAYER event -->
-					<component:design_panel id="designPanel"   visible="false" visible.normal="true" width="350" height="260" />
-					 <component:LayerTextInspector id="text"  includeIn="Text" width="350" height="260"/> 
-					 </s:SkinnableContainer> 
+						<component:engrave_panel id="engravePanel" 
+												 alpha="0" alpha.engrave="1"
+												 includeIn="engrave"  width="350" height="260" />
+						<!--<component:text_panel  includeIn="engrave" width="350" height="260" />-->
+						<!-- need this to be here to be mediated first for the show_EMPTY_LAYER event -->
+						<component:design_panel id="designPanel"  
+												alpha="0" alpha.normal="1"
+												visible="false" visible.normal="true" width="350" height="260" />
+						<component:LayerTextInspector id="text" 
+													  alpha="0" alpha.Text="1"
+													  includeIn="Text" width="350" height="260"/> 
+					</s:SkinnableContainer> 
 					<!--<component:design_panel includeIn="normal" width="350" height="260"/>
 					-->
 				</s:VGroup>	

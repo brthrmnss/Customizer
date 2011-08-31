@@ -73,7 +73,8 @@
 		</s:stroke>
 	</s:Rect>
 	
-	<s:HGroup gap="-4"
+	<s:HGroup gap="-4" id="holderMainMenuBar"
+			   horizontalAlign="center" width="100%"
 			  paddingBottom="5" paddingLeft="0" paddingRight="5" paddingTop="5">
 		
 		<smallComponents:MainMenuButton label="undo" id="btnUndo" 

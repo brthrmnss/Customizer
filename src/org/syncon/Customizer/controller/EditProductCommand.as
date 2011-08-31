@@ -9,6 +9,7 @@ package org.syncon.Customizer.controller
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.Customizer.vo.StoreItemVO;
 	import org.syncon.Customizer.vo.TextLayerVO;
+	import org.syncon.onenote.onenotehelpers.impl.viewer2_store;
 	
 	public class EditProductCommand extends Command 
 	{
@@ -504,6 +505,13 @@ package org.syncon.Customizer.controller
 					this.model.layers = face.layers; 
 					var dbg : Array = [this.model.layers.length, this.model.layers.toArray() ] 
 					//no need to remove? ... no b/c no is allowed to bind to thise, they bind to layersVisible...
+					//reset masking ...					
+					var v : viewer2_store = this.model.viewer as viewer2_store
+					if ( v != null ) //the first time it might not have been set yet
+					{	
+						v.workspace.mask = null;//v.maskLayer_
+						v.maskBg.alpha = this.model.currentFace.image_mask_alpha; 
+					}
 					if ( face.imported ) 
 					{
 						//no need to import again
@@ -520,7 +528,7 @@ package org.syncon.Customizer.controller
 							if ( layer is ColorLayerVO ) 
 							{
 								colorLayer = layer as ColorLayerVO
-									this.model.layerColor = layer as ColorLayerVO; 
+								this.model.layerColor = layer as ColorLayerVO; 
 							}
 							if ( layer is ImageLayerVO ) 
 							{
@@ -547,14 +555,14 @@ package org.syncon.Customizer.controller
 							this.model.addLayer( imgLayer ) ;
 							/*if ( event.firstTime ) 
 							{
-								imgLayer.x = 0; 
-								imgLayer.y = 100; 
+							imgLayer.x = 0; 
+							imgLayer.y = 100; 
 							}*/
 							//this.model.currentLayer = imgLayer; 
 							this.model.baseLayer = imgLayer; 
 						}	
 						//if layers are not predefied, add default, for testing purposes 
-						if ( face.layersToImport  == null || face.layersToImport.length == 0  )
+						if ( face.layersToImport  == null )// || face.layersToImport.length == 0  )
 						{
 							var colorLayer : ColorLayerVO = new ColorLayerVO(); 
 							colorLayer.name = 'Color Base Image';
@@ -564,8 +572,8 @@ package org.syncon.Customizer.controller
 							this.model.addLayer( colorLayer ) ;
 							/*if ( event.firstTime ) 
 							{
-								colorLayer.x = 0; 
-								colorLayer.y = 100; 
+							colorLayer.x = 0; 
+							colorLayer.y = 100; 
 							}*/
 							this.model.layerColor = colorLayer; 
 							
@@ -580,8 +588,8 @@ package org.syncon.Customizer.controller
 							this.model.addLayer( imgLayer ) ;
 							/*if ( event.firstTime ) 
 							{
-								imgLayer.x = 0; 
-								imgLayer.y = 100; 
+							imgLayer.x = 0; 
+							imgLayer.y = 100; 
 							}*/
 							//	this.model.currentLayer = imgLayer; 
 							this.model.layerMask = imgLayer; 
@@ -603,8 +611,8 @@ package org.syncon.Customizer.controller
 								this.model.addLayer( colorLayer ) ;
 								/*if ( event.firstTime ) 
 								{
-									colorLayer.x = 0; 
-									colorLayer.y = 100; 
+								colorLayer.x = 0; 
+								colorLayer.y = 100; 
 								}*/
 								this.model.layerColor = colorLayer; 
 							}		
@@ -657,6 +665,7 @@ package org.syncon.Customizer.controller
 					dbg  = [this.model.layers.length, this.model.layers.toArray() ] 
 					this.model.undo.clearAll(); 
 					this.model.recreateDisplayableLayers(); 
+					this.model.currentLayer = this.model.getNextLayer()
 					//this.model.layersChanged(); 
 				}
 				else
@@ -870,7 +879,7 @@ package org.syncon.Customizer.controller
 				layer.importY = layer.y;
 				layer.horizStartAlignment = ''; 
 			}
-				
+			
 		}		
 		
 	}

@@ -89,7 +89,7 @@ package  org.syncon.Customizer.vo
 		/**
 		 * Stores layers that were loade via json 
 		 * */
-		public var layersToImport: Array = [] ; ;
+		public var layersToImport: Array ;//= null//[] ; ;
 		
 		/**
 		 * Can the user remove the prompt layers included here? 

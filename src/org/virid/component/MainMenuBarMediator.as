@@ -5,6 +5,7 @@ package  org.virid.component
 	import flashx.undo.IOperation;
 	
 	import mx.collections.ArrayList;
+	import mx.core.UIComponent;
 	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
@@ -124,7 +125,26 @@ package  org.virid.component
 				}
 
 			}
+			/**/
+			var measureWdith : Number = 0 ; 
+			var numVisibleElements : int = 0 ; 
+			for ( var i : int = 0 ; i < this.ui.holderMainMenuBar.numElements ; i ++ ) 
+			{
+				var uic : UIComponent = this.ui.holderMainMenuBar.getChildAt( i ) as UIComponent; 
+				if ( uic.includeInLayout ) 
+				{
+					measureWdith+=uic.width
+					numVisibleElements++
+				}
+			}
+			trace('width of buttons', measureWdith ) ; 
 			
+			var diff : Number = this.ui.holderMainMenuBar.width -measureWdith; 
+			var newGap : Number = diff/numVisibleElements; 
+			//newGap += 4+5+4
+			newGap -= 5
+			this.ui.holderMainMenuBar.gap = newGap; 
+			/**/
 		}
 		
 		protected function onJSONEXPORT(event:Event):void
@@ -168,7 +188,7 @@ package  org.virid.component
 		{
 			//blocked by default 
 			var txtLayer  : TextLayerVO = this.model.getEmptyTextLayer();
-			
+			txtLayer = this.model.getATextLayer(); 
 			//seems wrong to do this here , make intention ... 
 			if(txtLayer != null){//m:added check to avoid nullrefrence
 				txtLayer.visible = true

@@ -37,6 +37,7 @@ package  	org.syncon.Customizer.view.popup.rs
 		
 		private function onCancel(e:Event) : void
 		{
+			this.model.reselectCurrentLayer();//
 			this.ui.hide();
 		}				
 		

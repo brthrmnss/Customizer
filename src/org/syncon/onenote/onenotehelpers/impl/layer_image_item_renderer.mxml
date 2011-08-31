@@ -73,6 +73,14 @@
 				}
 				this.img.source  = layer.url; 
 				this.resizedOnce = false; 
+				
+				//hardcore
+				if ( this.layer.url == '' || this.layer.url == null ) 
+				{
+					this.img.height = 1
+						this.img.width = 1; 
+						this.img_resizeHandler(null); 
+				}
 			}
 			
 			protected function img_resizeHandler(event:ResizeEvent):void
@@ -151,5 +159,5 @@
 	</fx:Script>
 	
 	
-	<s:Image id="img" complete="onComplete(event)" resize="img_resizeHandler(event)"/>
+	<s:Image id="img" smooth="true" smoothingQuality="high" complete="onComplete(event)" resize="img_resizeHandler(event)"/>
 </s:Group>

@@ -15,6 +15,8 @@ package  org.syncon.Customizer.vo
 		
 		static public var UPDATED : String = 'updatedImaveVO'; 
 		public var swf_name:String;
+		public var weight:String;
+		public var defaultSize:Number;
 		
 		
 	}

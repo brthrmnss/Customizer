@@ -563,8 +563,10 @@ package org.syncon.Customizer.view.ui
 				*/
 				this.ui.text.height = NaN; //this.layer.height; 
 				this.ui.text.width =NaN;
+				this.ui.text.txt.filters = []
 				if ( this.model.fxIsEngraveLayer( this.layer ) ) 
 				{
+					this.ui.text.txt.filters = this.ui.text.dropFilters; 
 					this.ui.text.bg.visible = true; 
 					if ( this.layer.locked ) 
 					{

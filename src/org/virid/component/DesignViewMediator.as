@@ -58,7 +58,7 @@ package  org.virid.component
 		{
 			this.ui.viewer22.controller.dataProvider  = this.model.currentFace; 
 			//this.ui.list.dataProvider = this.model.layers; 
-			this.ui.viewer22.maskBg.alpha = this.model.currentFace.image_mask_alpha; 
+			
 		}
 		
 		

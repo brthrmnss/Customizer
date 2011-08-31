@@ -7,6 +7,7 @@ package org.virid.component
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
+	import org.syncon.Customizer.model.ViridConstants;
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	
@@ -110,12 +111,30 @@ package org.virid.component
 				var img : ImageLayerVO = layer as ImageLayerVO; 
 				if ( img.url == '' || img.url == null ) 
 				{
-					var event : Event = new NightStandModelEvent(NightStandModelEvent.SHOW_EMPTY_LAYER, img ) 
+					if ( img.image_source == ViridConstants.IMAGE_SOURCE_CLIPART )
+					{
+					var event : Event = new NightStandModelEvent(
+						NightStandModelEvent.SHOW_EMPTY_LAYER, img ) 
 					this.dispatch(event ) ;
 					if ( event.isDefaultPrevented() ) 
 					{
-						this.ui.list.selectedItem = null; 	
+						this.ui.list.selectedItem = null; 	//why set it to null?
+						this.onCurrentLayerChanged(null); //reset to current layer for time being ...
+						//preferablly switch to layer you're going too ... then switch back?
 						return; 
+					}
+					}
+					else if ( img.image_source == ViridConstants.IMAGE_SOURCE_UPLOAD )
+					{
+						var event : Event = new NightStandModelEvent(
+							NightStandModelEvent.SHOW_EMPTY_LAYER, img ) 
+						this.dispatch(event ) ;
+						if ( event.isDefaultPrevented() ) 
+						{
+							this.ui.list.selectedItem = null; 	
+							this.onCurrentLayerChanged(null); 
+							return; 
+						}
 					}
 				}
 			}

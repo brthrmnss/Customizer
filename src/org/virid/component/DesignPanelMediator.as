@@ -87,6 +87,13 @@ package  org.virid.component
 		 * */
 		private function onUploadedImage( e : ImageVO ) : void
 		{
+			if ( this.loadIntoAndSelectImageLayer  != null ) 
+			{
+				this.model.showLayer( loadIntoAndSelectImageLayer  ); 
+				this.model.currentLayer =   this.loadIntoAndSelectImageLayer ;// != null ) ; 
+				this.loadIntoAndSelectImageLayer = null; 
+			}
+			
 			var currentLayer :  LayerBaseVO = this.model.currentLayer; 
 			if ( inViridMode ) 
 			{
@@ -184,8 +191,15 @@ package  org.virid.component
 			e.preventDefault(); 
 			
 			this.loadIntoAndSelectImageLayer = imgLayer; 
+			if ( imgLayer.image_source == ViridConstants.IMAGE_SOURCE_CLIPART )
+			{
+				this.onAddClipArtImage(null)
+			}
+			else if ( imgLayer.image_source == ViridConstants.IMAGE_SOURCE_UPLOAD )
+			{
+				this.onAddUploadImage(null)
+			}
 			
-			this.onAddClipArtImage(null)
 		}
 	}
 }

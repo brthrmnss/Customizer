@@ -200,12 +200,22 @@
 			}
 		]]>
 	</fx:Script>
+	
+	<fx:Declarations>
+		<fx:Array  id="dropFilters">
+			<!--<s:GlowFilter id="filterGlow"  strength="8" alpha="1"
+						  color="0xd2d2d2" blurX="2" blurY="2" />
+			<s:GlowFilter alpha="0.6" color="0xd2d2d2" blurX="4" blurY="4" />-->
+			<!--<s:BlurFilter id="filterBlur"  blurX="2" blurY="2" />-->
+		</fx:Array>
+
+	</fx:Declarations>
 	<s:states>
 		<s:State name="normal"/>
 		<s:State name="edit"/>
 	</s:states>
 	<!--   top="0" left="0" right="0" bottom="0"  -->
-	<s:Rect  id="bg" visible="false" alpha="0.8">
+	<s:Rect  id="bg" visible="false" alpha="1">
 		<s:fill >
 			<s:SolidColor color="0xcdcdcd" />
 		</s:fill>
@@ -215,7 +225,11 @@
 	</s:Rect>
 	<s:RichText id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
 				horizontalCenter="0" verticalCenter="0" fontFamily="Helvetica"
-			 updateComplete="txt_updateCompleteHandler(event)"/>
+			 updateComplete="txt_updateCompleteHandler(event)" >
+		<s:filters>
+			
+		</s:filters>
+	</s:RichText>
 <!--	<s:Label id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
 			  horizontalCenter="0" verticalCenter="0"
 			 updateComplete="txt_updateCompleteHandler(event)"/>-->

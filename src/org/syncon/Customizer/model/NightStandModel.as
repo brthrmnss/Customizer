@@ -178,8 +178,8 @@ package org.syncon.Customizer.model
 			{
 				/*for each ( var  layer : LayerBaseVO in face.layers ) 
 				{
-					if ( layer.location != '' && layer.location != null ) 
-						locations.push( layer ) ; 
+				if ( layer.location != '' && layer.location != null ) 
+				locations.push( layer ) ; 
 				}*/
 				for each ( var  layer : LayerBaseVO in face.layersToImport ) 
 				{
@@ -226,6 +226,15 @@ package org.syncon.Customizer.model
 			this.dispatch( new NightStandModelEvent( NightStandModelEvent.CURRENT_LAYER_CHANGED, value ) ) 
 		}
 		
+		/**
+		 * When popups are closed, ensure the proper layer is corrected
+		 * fix applies to LayerCardPanel only 
+		 * */
+		public function reselectCurrentLayer()  : void
+		{
+			this.dispatch( new NightStandModelEvent(
+				NightStandModelEvent.CURRENT_LAYER_CHANGED, this.currentLayer ) ) 
+		}
 		/*	
 		
 		public function setOdbs(e:Array, append : Boolean=false) : void
@@ -266,7 +275,7 @@ package org.syncon.Customizer.model
 		{ 
 			
 		}
- 
+		
 		private var _voiceList : ArrayCollection = new ArrayCollection( ) ; 
 		private var _mute:Boolean=false;
 		private var fxCallAfterSoundCompletePlaying:Function;
@@ -469,7 +478,8 @@ package org.syncon.Customizer.model
 					foundLayer = layer; 
 				if ( layer.visible == false ) // == layer.default_text || layer.text == '' ) 
 					foundLayer = layer; 
-				return foundLayer; 
+				if ( foundLayer != null ) 
+					return foundLayer; 
 			}
 			
 			//return first text layer ...
@@ -487,7 +497,28 @@ package org.syncon.Customizer.model
 			return foundLayer
 		}
 		
-		
+		/**
+		 * can't you use find bytype then?
+		 * */
+		public function getATextLayer() : TextLayerVO
+		{
+			var foundLayer : TextLayerVO; 
+			for ( var i : int = 0 ; i < this.layers.length ; i++ ) 
+			{
+				var layer_ : LayerBaseVO = this.layers.getItemAt( i ) as LayerBaseVO
+				if ( layer_.type != TextLayerVO.Type ) 
+					continue; 
+				var layer : TextLayerVO = layer_ as TextLayerVO; 
+				/*if ( layer.text == layer.default_text || layer.text == '' ) 
+				foundLayer = layer; 
+				if ( layer.visible == false ) // == layer.default_text || layer.text == '' ) 
+				foundLayer = layer; */
+				if ( layer != null ) 				
+					return layer; 
+			}
+			
+			return null; 
+		}
 		
 		/**
 		 * prefer one with no text or default text, then will show any available one

@@ -230,16 +230,16 @@
 				</s:HGroup>
 				<s:DropDownList id="dropDown_FontSelect"
 								 change="dropDown_FontSelect_changeHandler(event)"
-								width="100%" />			
+								width="100%" height="30" />			
 			</s:VGroup>
 			
 			
 			<s:VGroup width="50%">
-				<s:HGroup><s:CheckBox label="Right to Left"  
+				<s:HGroup><s:CheckBox label="Right to Left"  visible="false" includeInLayout="false"
 									  id="chkBoxAlign"
 									  change="chkBoxAlign_changeHandler(event)"
 									  styleName="Arial grayTxt"/></s:HGroup>
-				<s:HGroup><s:CheckBox label="Monogram" styleName="Arial grayTxt"/></s:HGroup>
+				<s:HGroup><s:CheckBox label="Monogram" styleName="Arial grayTxt" visible="false" includeInLayout="false"/></s:HGroup>
 				
 			</s:VGroup>
 		</s:HGroup>

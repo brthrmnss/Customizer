@@ -101,11 +101,11 @@
 				
 			}
 			
-			protected function h1_clickHandler(event:MouseEvent):void
+			/*protected function h1_clickHandler(event:MouseEvent):void
 			{
 				this.setStyle("skinClass",Heading);
 				
-			}
+			}*/
 			
 		]]>
 	</fx:Script>
@@ -119,27 +119,21 @@
 	<popup2:PopupBg alpha="1"/>
 	
 
-	<s:VGroup paddingBottom="32" paddingLeft="32" paddingRight="32" paddingTop="32">
+	<s:VGroup id="VGroup" paddingBottom="12" paddingLeft="12" paddingRight="12" paddingTop="12">
 		
-		<s:Label id="h1" text="Upload Images Yo" click="h1_clickHandler(event)" />
-		<s:List id="list" width="420" height="130" borderVisible="false"
-				change="list_changeHandler(event)" contentBackgroundAlpha="0"
-				itemRenderer="org.syncon.Customizer.view.popup.rs.PickImageRenderer">
-			<s:layout>
-				<s:TileLayout id="layoutT" columnWidth="90" horizontalAlign="center"
-							  horizontalGap="0" paddingBottom="10" paddingLeft="10"
-							  paddingRight="10" paddingTop="10" rowHeight="90" verticalGap="0"/>
-				<!--
-				columnWidth="{this.width*.9/2}" rowHeight="{this.width*.9/2}"
-				-->
-			</s:layout>
-		</s:List>
+		<s:Group id="header" width="690" clipAndEnableScrolling="true">
+			<s:BitmapImage source="@Embed('assets/images/sprite_headers.png')" smooth="true" height="100%" width="100%" />
+			<s:Label id="h1" text="Upload Images" x="10" fontSize="20" verticalCenter="6" color="0xffffff"/>
+		</s:Group>
 		
-		<s:HGroup width="100%" horizontalAlign="center">
-			<s:Button label="Cancel" click="onCancel()"/>
-		</s:HGroup>
+		
+
+		
+
 	</s:VGroup>
-	
+	<s:HGroup horizontalCenter="0"  bottom="12">
+		<s:Button label="Cancel" click="onCancel()"/>
+	</s:HGroup>
 	
 	
 	

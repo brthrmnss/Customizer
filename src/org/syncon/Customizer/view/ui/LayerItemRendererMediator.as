@@ -172,6 +172,7 @@ package org.syncon.Customizer.view.ui
 				case "rotation":
 					this.ui.rotation = event.newValue as Number;
 					//this.layer.x = this.ui.x
+					this.layer.rotation = this.ui.rotation
 					break;
 				case "width": 
 					this.ui.width = event.newValue as Number;

@@ -100,7 +100,7 @@
 										icon="assets/images/engrave.png" width="68"
 										click="onEngrave(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton label="Preview" 
+		<smallComponents:MainMenuButton label="Preview" visible="false" includeInLayout="false"
 										icon="assets/images/preview.png" width="66"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Save It" 

@@ -53,8 +53,8 @@ package org.syncon.Customizer.controller
 			{
 				//this.createDefaultProduct() ; 
 				
-				//this.createDetailedDefaultProduct();
-				this.createDetailedDefaultProduct_Engrave()
+				this.createDetailedDefaultProduct();
+				//this.createDetailedDefaultProduct_Engrave()
 				
 				if ( this.model.flex ) 
 				{
@@ -74,7 +74,7 @@ package org.syncon.Customizer.controller
 		
 		private function createClipArtImages():void
 		{
-			var names : Array = [] ; 
+			/*var names : Array = [] ; 
 			for (var i : int = 0 ; i < 150; i++ )
 			{
 				names.push( 'Title ' + i.toString() ) ; 
@@ -83,7 +83,25 @@ package org.syncon.Customizer.controller
 			for each ( var img : ImageVO in imgs ) 
 			{
 				img.url = 'assets/images/img.jpg'; 
+			}*/
+			var importImages : Array = [
+				['Title 1', 'assets/images/img.jpg'],
+				['Title 2', 'assets/images/img.jpg'],
+				['Title 3', 'assets/images/img.jpg']
+			]
+			var i : int = 0 ; 
+			var imgs : Array = []; 
+			for ( i  = 0 ; i < importImages.length; i++ )
+			{
+				var imageNameAndSourceArray : Array = importImages[i] as Array
+				var img  : ImageVO= new ImageVO()
+				img.name = imageNameAndSourceArray[0]
+				img.url = imageNameAndSourceArray[1];
+				//names.push( 'Title ' + i.toString() ) ; 
+				imgs.push( img ); 
 			}
+			
+			
 			this.model.loadImages( imgs ) ; 
 		}
 		

@@ -67,6 +67,8 @@ package org.syncon.Customizer.vo
 			_url = value;
 		}
 		
+		public var rotation:Number = 0;
+		public var subType:Object;
 		public var visible : Boolean = true; 
 		public var locked : Boolean = false; 
 		public var required : Boolean = false;
@@ -84,7 +86,7 @@ package org.syncon.Customizer.vo
 			_cost = value;
 		}
 		
-		public var  fonts : Array = []; 
+
 		
 		/**
 		 * This layer cannot be deleted

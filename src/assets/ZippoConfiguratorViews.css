@@ -45,6 +45,14 @@ global
 	embedAsCFF: true;
 }
 
+@font-face
+{
+	fontFamily: "ArialMX";
+	src: url("images/BEBAS___.TTF");
+	embedAsCFF: false;
+}
+
+
 .redTxt{
 	color:#f60e1c;
 }
@@ -94,4 +102,13 @@ s|Button{fontSize:12px;}
 
 mx|Alert{
 	fontFamily:Verdana;
+}
+ 
+mx|ToolTip {
+	backgroundAlpha: 1.0;
+	backgroundColor: black;
+	color: white;
+	cornerRadius: 0;
+	fontSize: 12;
+	fontFamily: ArialMX; 
 }

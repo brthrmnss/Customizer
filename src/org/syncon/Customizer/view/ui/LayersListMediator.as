@@ -56,7 +56,7 @@ package org.syncon.Customizer.view.ui
 		{
 			this.model.currentLayer = e.data as LayerBaseVO;
 			this.ui.list.selectedItem = this.model.currentLayer
-			this.model.objectHandles.selectionManager.setSelected( this.model.currentLayer.model ) ; 
+			//this.model.objectHandles.selectionManager.setSelected( this.model.currentLayer.model ) ; 
 		}
 		
 	}

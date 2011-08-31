@@ -39,7 +39,7 @@ package  org.syncon.Customizer.controller
 			trace();	
 			var product:StoreItemVO = new StoreItemVO;
 			product.name = json.name + "  |";
-			this.model.tempsku = json.sku; 
+			product.sku = json.sku; 
 			if(json.hasOwnProperty( 'price' )) 
 				product.price = json.price;
 			else
@@ -125,7 +125,7 @@ package  org.syncon.Customizer.controller
 					{
 						imageLayer  = new ImageLayerVO;
 						
-						this.copyBasics(textLayer, layerImport );
+						this.copyBasics(imageLayer, layerImport );
 						imageLayer.prompt_layer = true; 
 						
 						imageLayer.url = layerImport.Media.source;

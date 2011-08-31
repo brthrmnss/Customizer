@@ -56,7 +56,7 @@
 		]]>
 	</fx:Script>
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:Elastic id="elasticEasing"/>
 	</fx:Declarations>
 	<s:states> 
 		<s:State name="normal"/> 
@@ -64,10 +64,25 @@
 		<s:State name="disabled"/> 
 		<s:State name="selected"/> 
 	</s:states> 
+	
+	<s:transitions>
+		<mx:Transition toState="*" autoReverse="true">
+			<s:Parallel>
+				<s:Move targets="{[iconDisplay]}" duration="200" />
+				<!--<s:AnimateColor target="{this.labelDisplay}" duration="200"  />-->
+				<!--<s:Animate target="{iconDisplay}"  duration="400" easer="{elasticEasing}" />-->
+			</s:Parallel>
+			
+		</mx:Transition>
+	</s:transitions>	
 
 	<!-- <s:Image id="iconDisplay" horizontalCenter="0"/> -->
 	<s:BitmapImage id="iconDisplay" width="32" height="32" horizontalCenter="0" smooth="true" smoothingQuality="high" 
-				   y.hovered="-2"/>
+				   y.hovered="-2">
+		<!--<s:filters>
+			<s:DropShadowFilter alpha="0.1" blurX="2" blurY="2" distance="3" angle="45"/>
+		</s:filters>-->
+	</s:BitmapImage>
 	<s:Label id="labelDisplay"
 			 textAlign="center" styleName="grayTxt" styleName.hovered="redTxt"
 			 maxDisplayedLines="1"

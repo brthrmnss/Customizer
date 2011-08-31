@@ -3,13 +3,17 @@ package  org.syncon.Customizer.controller
 	import com.adobe.serialization.json.JSON;
 	
 	import mx.controls.Alert;
+	import mx.controls.Image;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
 	
 	import org.robotlegs.mvcs.Command;
 	import org.syncon.Customizer.model.NightStandModel;
+	import org.syncon.Customizer.model.ViridConstants;
+	import org.syncon.Customizer.vo.ColorLayerVO;
 	import org.syncon.Customizer.vo.FaceVO;
+	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.Customizer.vo.TextLayerVO;
 	
@@ -35,7 +39,7 @@ package  org.syncon.Customizer.controller
 				
 				product.name = this.model.baseItem.name;
 				this.model.baseItem.faces;
-				product.sku = this.model.tempsku;
+				product.sku = this.model.baseItem.sku;
 				
 				
 				//just dealign with one face at the moment
@@ -60,17 +64,50 @@ package  org.syncon.Customizer.controller
 						jsonLayer.price = layer.cost;
 						
 						jsonMedia.source = layer.url;
-						
 						jsonMedia.type = layer.type;
 						
 						jsonTransform.x = layer.x;
 						jsonTransform.y = layer.y;
 						jsonTransform.width = layer.width;
 						jsonTransform.height = layer.height;
-						jsonTransform.rotation = 0;
-						
+						jsonTransform.rotation = layer.rotation.toFixed(2);
 						jsonLayer.orientation = "default";
 						
+						if(layer.type == TextLayerVO.Type)
+						{
+							var textLayer :  TextLayerVO = layer as TextLayerVO; 
+							if(layer.subType == ViridConstants.SUBTYPE_ENGRAVE)
+							{
+								//engrave layer
+								textLayer.fontFamily; 
+								textLayer.fontSize
+							}
+							else
+							{
+								//design text layer	
+							
+							}
+						}
+						if(layer.type == ImageLayerVO.Type)
+						{
+							var imgLayer : ImageLayerVO = layer as ImageLayerVO;
+							if(imgLayer.mask == true)
+								continue;
+							if(imgLayer.image_source == ViridConstants.IMAGE_SOURCE_CLIPART)
+							{
+								//engrave layer
+								
+							}
+							else if(imgLayer.image_source == ViridConstants.IMAGE_SOURCE_UPLOAD)
+							{
+								//design text layer	
+								
+							}
+						}
+						if(layer.type == ColorLayerVO.Type)
+						{
+							
+						}
 						jsonLayer.Media = jsonMedia;
 						jsonLayer.Fonts = jsonFonts;
 						jsonLayer.transform = jsonTransform;
@@ -116,8 +153,11 @@ package  org.syncon.Customizer.controller
 				
 				//var exportThis:Object = JSON.encode(exportObj);
 				//finalJSON = exportThis;
-				//trace(exportThis);//product.layer);
-				
+				trace(exportObj.toString());//product.layer);
+				for ( var prop: Object in exportObj ) 
+				{
+					trace( prop, exportObj[prop]  )
+				}
 				service = new HTTPService();
 				service.url = "../save.aspx";
 				service.method = "POST";

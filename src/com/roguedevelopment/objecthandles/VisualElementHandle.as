@@ -61,12 +61,15 @@ package com.roguedevelopment.objecthandles
 			}
 			else
 			{
-				graphics.lineStyle(1,0);
-				graphics.beginFill(0xaaaaaa,1);
+				graphics.lineStyle(1,0)//0xa4a4a4)// 0xc7c7c7 );
+				graphics.beginFill(0xdfdfdf,1);
 			}
 			
-			graphics.drawRect(-5,-5,10,10);
+			graphics.drawRect(-3,-3,6,6);
 			graphics.endFill();
+			
+			
+			
 			
 		}
 	}

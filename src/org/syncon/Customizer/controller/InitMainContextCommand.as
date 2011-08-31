@@ -85,9 +85,11 @@ package org.syncon.Customizer.controller
 				img.url = 'assets/images/img.jpg'; 
 			}*/
 			var importImages : Array = [
-				['Title 1', 'assets/images/img.jpg'],
-				['Title 2', 'assets/images/img.jpg'],
-				['Title 3', 'assets/images/img.jpg']
+				['Four Pointed Star', 'assets/images/zippoLibrary/clipart/4ptstar-01.png'],
+				['Airplane', 'assets/images/zippoLibrary/clipart/airplane.png'],
+				['US Flag', 'assets/images/zippoLibrary/clipart/americanflag-01.png'],
+				['Angel', 'assets/images/zippoLibrary/clipart/angel.png'],
+				['Apple', 'assets/images/zippoLibrary/clipart/apple.png']
 			]
 			var i : int = 0 ; 
 			var imgs : Array = []; 

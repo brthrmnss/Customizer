@@ -151,7 +151,6 @@ package  org.syncon.Customizer.controller
 						textLayer.text = 'AAA' ;
 						this.copyBasics(textLayer, layerImport );
 						
-						textLayer.maxChars = layerImport.Media.max
 						textLayer.orientation = layerImport.orientation;
 						textLayer.maxChars = layerImport.Media.max
 						textLayer.fontSize = 20

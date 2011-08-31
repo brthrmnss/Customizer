@@ -3,6 +3,7 @@ package  	org.syncon.Customizer.view.popup.rs
 	import flash.events.Event;
 	
 	import org.robotlegs.mvcs.Mediator;
+	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.vo.LazyEventHandler;
 	
@@ -23,9 +24,19 @@ package  	org.syncon.Customizer.view.popup.rs
 		{
 			ev.init( this.ui ) ; 
 			this.ev.addEv(PopupUploadImage.CANCEL, this.onCancel )
+			this.ev.addEv(PopupUploadImage.OK, this.onSelectImage )
 			this.ev.addEv(PopupUploadImage.SETUP, this.onSetup ) ; 
 		}
 		
+		private function onSelectImage( e:Event):void
+		{
+			// TODO Auto Generated method stub
+			this.ui.hide()
+				if ( this.ui.fxDone != null ) 
+				{
+					this.ui.fxDone(this.ui.imageUploadedPic.source ) 
+				}
+		}		
 		
 		
 		protected function onSetup(event:Event):void

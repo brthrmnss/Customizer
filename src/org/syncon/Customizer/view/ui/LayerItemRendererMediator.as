@@ -54,6 +54,7 @@ package org.syncon.Customizer.view.ui
 		 * if true, clicking a layer will not select it
 		 * */
 		private var disableClickSelection:Boolean=true;
+		private var blockUpdatingModel:Boolean;
 		override public function onRegister():void
 		{
 			this.ui.addEventListener( layer_item_renderer.ON_CLICK, 
@@ -142,6 +143,8 @@ package org.syncon.Customizer.view.ui
 		 * */
 		protected function onModelChange( event:PropertyChangeEvent):void
 		{
+			if ( blockUpdatingModel ) 
+				return;
 			if ( this.isText && ['width', 'height', ].indexOf(event.property ) != -1 ) 
 			{
 				return;
@@ -250,12 +253,22 @@ package org.syncon.Customizer.view.ui
 				{
 					if ( this.ui.width > this.model.baseLayer.width ) 
 					{
+						this.blockUpdatingModel = true 
 						var wH : Number = this.ui.image.img.height/this.ui.image.img.width
 						this.flexModel1.width = this.model.baseLayer.width - 40; 
 						
 						this.ui.image.img.width = this.flexModel1.width; 
 						this.flexModel1.height =this.ui.image.img.width *wH
-						this.ui.image.img.height = this.flexModel1.height; 						
+						this.ui.image.img.height = this.flexModel1.height; 				
+						
+						//have to copy it back to ensure it is not change back to layer 
+						this.layer.width = this.flexModel1.width; 
+						this.layer.height = this.flexModel1.height;
+						//ui is used to set the height ... setting it explclity, will this allow it to be rezies later? 
+						this.ui.width = this.flexModel1.width; 
+						this.ui.height = this.flexModel1.height; 	
+						//but handles are not propelry placed? ...
+						this.blockUpdatingModel = false 
 					}
 				}
 			}	

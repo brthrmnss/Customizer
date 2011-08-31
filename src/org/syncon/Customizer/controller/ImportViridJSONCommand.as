@@ -51,7 +51,10 @@ package  org.syncon.Customizer.controller
 			{
 				var face : FaceVO = new FaceVO()
 				face.name = faceImport.name;
+				/*if ( faceImport.image.indexOf( '/customize/' ) == 0 ) 
+					faceImport.image = faceImport.image.replace('/customize/', ''  ) ;*/
 				face.base_image_url = faceImport.image;
+ 
 				face.image_mask_alpha = .4;
 				///face.base_image_url = 'assets/images/imgbase.png'
 				if(faceImport.mask == null || faceImport.mask == "null")
@@ -64,12 +67,12 @@ package  org.syncon.Customizer.controller
 				for each(var layerImport:Object in faceImport.Layers)
 				{
 					
-					
+					//continue; 
 					if(layerImport.type == "color")
 					{
 						//this.copyBasics(face.color_overlay_layer, layerImport );
 						face.color_overlay_layer = layerImport.Media.source;
-						var colorLayer = new ColorLayerVO;
+						var colorLayer  : ColorLayerVO = new ColorLayerVO;
 						colorLayer.name = 'Color Layer'
 						colorLayer.url = faceImport.mask;
 						colorLayer.showInList = true;

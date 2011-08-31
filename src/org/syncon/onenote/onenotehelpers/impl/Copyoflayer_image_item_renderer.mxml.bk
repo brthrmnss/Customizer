@@ -100,16 +100,17 @@
 					this.img.height = 1
 					this.img.width = 1; 
 					this.img_resizeHandler(null); 
+					
 				}
 			}
 			
-			protected function img_resizeHandler(event:ResizeEvent, wait : Boolean = true ):void
+			protected function img_resizeHandler(event:Event, wait : Boolean = true ):void
 			{
-				if ( wait ) 
+				/* if ( wait ) 
 				{
 					this.callLater( this.img_resizeHandler, [event, false] )
 					return; 
-				}
+				} */
 				if ( this.tesntin )
 					return; 
 				if ( this.active == false ) 
@@ -191,8 +192,7 @@
 				//this.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
 				trace('loading complete', this.layer.url, this.img.sourceHeight, this.img.sourceWidth, this.parentDocument.resetting ) ;
 				trace('loading complete', this.layer.url, this.img.height, this.img.width, this.parentDocument.resetting ) ;
-				/* this.img.height = this.img.sourceHeight
-				this.img.width = this.img.sourceWidth;  */
+				
 				this.tesntin = true; 
 				/* 
 				this.img.width = this.img.sourceWidth
@@ -201,11 +201,91 @@
 				this.tesntin = false; 
 			}
 			
-			
+			/**
+			 * Use on complete event ...
+			 * */
+			protected function img_resizeHandler2(event:Event, wait : Boolean = true ):void
+			{
+				/* if ( wait ) 
+				{
+				this.callLater( this.img_resizeHandler, [event, false] )
+				return; 
+				} */
+				if ( this.tesntin )
+					return; 
+				if ( this.active == false ) 
+					return; 
+				if ( this.layer == null ) 
+					return; 
+				if ( this.parentDocument == null ) 
+					return; 
+				if ( isNaN(this.img.height ) ) 
+					return;
+			/* 	if ( this.img.height == 0 ) 
+					return; */
+				//this.img.sourceWidth
+				this.img.height = this.img.sourceHeight
+				this.img.width = this.img.sourceWidth; 
+				
+				trace( 'ratios', (this.img.sourceWidth/this.img.sourceHeight).toFixed(2), 
+					(this.img.loaderInfo.content.width/this.img.loaderInfo.content.height).toFixed(2), 
+					(this.img.width/this.img.height).toFixed(2) )
+				/* 
+				this.img.height = this.img.sourceHeight
+				this.img.width = this.img.sourceWidth; 
+				*/
+				if ( this.img != null ) 
+				{
+					/* try{
+					this.img.validateNow()
+					this.img.validateProperties()
+					}
+					catch(e:Error) {} */
+					this.img.loaderInfo.content.width; 
+					this.img.loaderInfo.content.height; 
+					//this.img.validateProperties()
+				}
+				if ( this.layer == null ) 
+					return;
+				this.height = this.img.height; 
+				this.width = this.img.width; 
+				
+				/* this.layer.height = this.img.height; 
+				this.layer.width = this.img.width;  */
+				this.layer.nonChromeWidth = this.width; 
+				this.layer.nonChromeHeight = this.height; 
+				this.layer.height = this.img.height; 
+				this.layer.width = this.img.width;
+				this.layer.update(ImageLayerVO.RESIZE_COMPLETE); 
+				
+				
+				
+				if ( this.parentDocument.resetting== true ) 
+				{
+					//we have to set the parentDocument height, or else 
+					//viewer3 will resize the layer to it's old size 
+					this.parentDocument.height = this.img.height; 
+					this.parentDocument.width = this.img.width; 
+					this.parentDocument.resetting=  false;
+					this.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
+					
+				}
+				
+				
+				//this.parentDocument.parentDocument.height = this.img.height; 
+				//this.parentDocument.parentDocument.width = this.img.width; 
+				//this.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
+				//this.parentDocument.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
+				/* if ( this.resizedOnce == true && ! isNaN( this.img.height ) )//wasn't invalidatte 
+				this.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ;
+				this.resizedOnce = true;  */
+			}	
 			
 		]]>
 	</fx:Script>
 	
-	
+	<!--
 	<s:Image id="img" smooth="true" smoothingQuality="high" complete="onComplete(event)" resize="img_resizeHandler(event)"/>
+	-->
+	<s:Image id="img" smooth="true" smoothingQuality="high" complete="img_resizeHandler2(event)"  />
 </s:Group>

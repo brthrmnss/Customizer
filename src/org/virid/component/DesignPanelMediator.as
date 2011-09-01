@@ -110,6 +110,7 @@ package  org.virid.component
 				}
 			}
 			
+			//reset the resizing parameters so the image is resized to fit the product in the center again ....
 			this.model.currentLayer.repositionedOnce = false
 			this.model.currentLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
 			this.model.currentLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
@@ -172,6 +173,14 @@ package  org.virid.component
 					this.model.currentLayer = imgLayer; 
 				}
 			}
+			
+			
+			//reset the resizing parameters so the image is resized to fit the product in the center again ....
+			this.model.currentLayer.repositionedOnce = false
+			this.model.currentLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
+			this.model.currentLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
+				
+			
 			//if a prompt layer, change the source, do not add a new one 
 			//08-29-11 ,even if it ws not a prompt layer you would still not add a new one ..
 			// reuse what ever is loaded if it is valid

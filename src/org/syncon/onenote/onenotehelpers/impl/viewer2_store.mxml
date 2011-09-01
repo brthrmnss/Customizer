@@ -203,7 +203,7 @@
 				<s:SolidColorStroke color="0x000000" weight="1"/>
 			</s:stroke>
 			<s:fill>
-				<s:SolidColor color="#FF0000"  id="maskBg" alpha="0.5"/>
+				<s:SolidColor color="#FF0000"  id="maskBg" alpha="0.1"/>
 			</s:fill>
 		</s:Rect>
 		<s:Image id="img_"    mouseEnabled="false" mouseChildren="false"  

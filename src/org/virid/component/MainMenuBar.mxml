@@ -24,7 +24,7 @@
 			
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
-				var arrayBtn:Array = [this.btnBackground, this.btnEngrave ]
+				var arrayBtn:Array = [this.btnBackground, this.btnEngrave, this.btnText, this.btnPreview ]
 					for each(var item:UIComponent in arrayBtn ){
 						
 						item.addEventListener(MouseEvent.CLICK,onSelectBtn);
@@ -68,6 +68,8 @@
 			private function onSelectBtn(e:MouseEvent):void
 			{
 				var btn:MainMenuButton = e.currentTarget as MainMenuButton; //this will be my component
+				if( this.lastBtnSelected == btn)
+					return;
 				if(this.lastBtnSelected != null){
 					this.lastBtnSelected.selected = false;
 				}
@@ -92,7 +94,7 @@
 		</s:stroke>
 	</s:Rect>
 	
-	<s:HGroup gap="-4" id="holderMainMenuBar"
+	<s:HGroup gap="-6" id="holderMainMenuBar"
 			   horizontalAlign="center" width="100%"
 			  paddingBottom="5" paddingLeft="0" paddingRight="5" paddingTop="5">
 		
@@ -113,14 +115,14 @@
 										click="onBackground(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Text" id="btnText"
-										icon="assets/images/engrave.png" width="50"
+										icon="assets/images/engrave.png" width="46"
 										click="onText(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Engrave" id="btnEngrave"
 										icon="assets/images/engrave.png" width="68"
 										click="onEngrave(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-		<smallComponents:MainMenuButton label="Preview" 
+		<smallComponents:MainMenuButton label="Preview" id="btnPreview"
 										icon="assets/images/preview.png" width="66"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Save It" 

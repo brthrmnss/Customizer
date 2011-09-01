@@ -79,6 +79,9 @@ package  org.syncon.Customizer.controller
 						colorLayer.prompt_layer = true;
 						colorLayer.color = 0x166571;
 						colorLayer.locked = true; //all masks should be locked by default 
+						if ( layerImport.hasOwnProperty( 'required' ) ) 
+							colorLayer.required = layerImport.required;
+						
 						face.layersToImport.push(colorLayer);
 						
 					}

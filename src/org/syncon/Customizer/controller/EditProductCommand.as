@@ -732,6 +732,8 @@ package org.syncon.Customizer.controller
 					}		
 					/*	if ( layer.x == event.data && layer.y == event.data2 ) 
 					return; */
+					if ( event.data3 != null ) 
+						layer = event.data3 as LayerBaseVO
 					event.oldData = layer.x; 
 					event.oldData2 = layer.y; 
 					this.model.blockUndos=true
@@ -766,6 +768,9 @@ package org.syncon.Customizer.controller
 						/*txtLayer.x = 0; 
 						txtLayer.y = 100; */
 					}		
+					//specific target laery is store on 3
+					if ( event.data3 != null ) 
+						layer = event.data3 as LayerBaseVO
 					event.oldData = layer.width; 
 					event.oldData2 = layer.height; 
 					this.model.blockUndos=true
@@ -788,6 +793,35 @@ package org.syncon.Customizer.controller
 				//this.model.layersChanged(); 
 				this.dispatch( new EditProductCommandTriggerEvent(
 					EditProductCommandTriggerEvent.LAYER_RESIZED, event, null ) ) 
+			}	
+			
+			if ( event.type == EditProductCommandTriggerEvent.ROTATE_LAYER ) 
+			{
+				if ( event.undo == false )
+				{
+					layer = this.model.currentLayer as LayerBaseVO; 
+			 
+					if ( event.data3 != null ) 
+						layer = event.data3 as LayerBaseVO
+					event.oldData = layer.rotation; 
+					this.model.blockUndos=true
+					layer.rotation = Number( event.data )
+					layer.update(); 
+					event.data3 = layer ; 
+					this.model.blockUndos=false
+					//trace('go', event.data, event.data2 )
+				}
+				else
+				{
+					this.model.blockUndos=true
+					layer = event.data3 as LayerBaseVO; 
+					layer.rotation = Number( event.oldData )
+					layer.update(); 
+					//trace('redo', event.data, event.data2 )
+					this.model.blockUndos=false
+				}		
+				this.dispatch( new EditProductCommandTriggerEvent(
+					EditProductCommandTriggerEvent.LAYER_ROTATED, event, null ) ) 
 			}	
 			
 			

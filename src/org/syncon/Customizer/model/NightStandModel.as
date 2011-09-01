@@ -127,7 +127,7 @@ package org.syncon.Customizer.model
 		{
 			this.addAllTo( this.layers, value )
 			this.recreateDisplayableLayers(); 
-			this.layersChanged() ; 
+			//this.layersChanged() ; 
 		}
 		
 		
@@ -339,7 +339,7 @@ package org.syncon.Customizer.model
 		{
 			this.layers.addItem( layer ) ; 
 			this.recreateDisplayableLayers()
-			this.layersChanged();
+			//this.layersChanged();
 		}
 		public function showLayer(layer : LayerBaseVO ) : void
 		{
@@ -365,10 +365,10 @@ package org.syncon.Customizer.model
 			var index : int = this.layers.getItemIndex( layer ) ;
 			this.layers.removeItemAt( index ) ; 
 			this.recreateDisplayableLayers()
-			this.layersChanged();
+			//this.layersChanged();
 		}
 		
-		public function recreateDisplayableLayers():void
+		public function recreateDisplayableLayers(silent:Boolean=false):void
 		{
 			var newLayersVisible : Array = []; 
 			for each ( var l : LayerBaseVO in this.layers.toArray() ) 
@@ -377,10 +377,15 @@ package org.syncon.Customizer.model
 					continue; 
 				newLayersVisible.push( l ) 
 			}
+			//y not let it do it, as user asked, this wll fail if the numbers are the same ... 
+			//wrong ...
+			/*
 			if ( newLayersVisible.length == this.layersVisible.length ) 
 				return; 
-			
+			*/
 			this.addAllTo( this.layersVisible, newLayersVisible )
+				
+			this.layersChanged();
 		}
 		
 		

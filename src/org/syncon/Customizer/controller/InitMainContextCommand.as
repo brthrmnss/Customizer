@@ -54,7 +54,7 @@ package org.syncon.Customizer.controller
 				//this.createDefaultProduct() ; 
 				
 				//this.createDetailedDefaultProduct();
-				//this.createDetailedDefaultProduct_Engrave()
+				this.createDetailedDefaultProduct_Engrave()
 				this.createDetailedDefaultProduct_Engrave2()
 				if ( this.model.flex ) 
 				{
@@ -77,12 +77,12 @@ package org.syncon.Customizer.controller
 			/*var names : Array = [] ; 
 			for (var i : int = 0 ; i < 150; i++ )
 			{
-				names.push( 'Title ' + i.toString() ) ; 
+			names.push( 'Title ' + i.toString() ) ; 
 			}
 			var imgs : Array = MakeVOs.makeObjs( names, ImageVO, 'name' )
 			for each ( var img : ImageVO in imgs ) 
 			{
-				img.url = 'assets/images/img.jpg'; 
+			img.url = 'assets/images/img.jpg'; 
 			}*/
 			var importImages : Array = [
 				['Four Pointed Star', 'assets/images/zippoLibrary/clipart/4ptstar-01.png'],
@@ -142,8 +142,8 @@ package org.syncon.Customizer.controller
 			face.name = 'Front Face'; 
 			face.base_image_url = 'assets/images/imgbase.png'
 			base.faces.addItem( face ) 
-			
 			face.image_mask = 'assets/images/imgbase.png'
+			face.layersToImport = [];
 			
 			var colorLayer : ColorLayerVO; 
 			var imageLayer: ImageLayerVO
@@ -224,7 +224,7 @@ package org.syncon.Customizer.controller
 			face.name = 'Back Face'; 
 			face.base_image_url = 'assets/images/imgbase.png'
 			base.faces.addItem( face ) 
-			
+			face.layersToImport = [];
 			face.image_mask = 'assets/images/imgbase.png'
 			
 			colorLayer = new ColorLayerVO;
@@ -288,14 +288,14 @@ package org.syncon.Customizer.controller
 		{
 			var base : StoreItemVO = new StoreItemVO(); 
 			base.name = '1941 Replica &#8482;'
-				base.desc = '<br>&#8226;Brushed Brass<br>&#8226;Case has flat planes with sharper, less rounded edges where the front and back surfaces meet the sides<br>&#8226;Lid and the bottom are joined with a four-barrel hinge<br>&#8226;Inside unit are flatter, with squared edges where they meet the front and back sur'
+			base.desc = '<br>&#8226;Brushed Brass<br>&#8226;Case has flat planes with sharper, less rounded edges where the front and back surfaces meet the sides<br>&#8226;Lid and the bottom are joined with a four-barrel hinge<br>&#8226;Inside unit are flatter, with squared edges where they meet the front and back sur'
 			base.price = 65
-				base.sku = '1023763'; 
+			base.sku = '1023763'; 
 			var face : FaceVO = new FaceVO()
 			face.layersToImport = []; 
 			face.name = 'Front'; 
 			face.base_image_url = 'assets/products/1941B-000003-Z_Configure.jpg'
-
+			
 			base.faces.addItem( face ) 
 			
 			//face.image_mask = 'assets/images/imgbase.png'
@@ -350,7 +350,7 @@ package org.syncon.Customizer.controller
 			textLayer.fonts = fonts; 
 			
 			textLayer = new TextLayerVO;
-			textLayer.text = 'Add' 
+			textLayer.text = '' 
 			textLayer.name = 'Text'
 			textLayer.maxChars = 3
 			textLayer.fonts = fonts; 
@@ -376,7 +376,7 @@ package org.syncon.Customizer.controller
 			
 			
 			
-			  face  = new FaceVO()
+			face  = new FaceVO()
 			face.layersToImport = []; 
 			face.name = 'Back Face'; 
 			face.base_image_url = 'assets/images/imgbase.png'
@@ -446,6 +446,7 @@ package org.syncon.Customizer.controller
 			base.name = 'Zippo'
 			base.price = 65
 			var face : FaceVO = new FaceVO()
+			face.layersToImport = [] ; 
 			face.name = 'Front Face'; 
 			face.base_image_url = 'assets/images/imgbase.png'
 			base.faces.addItem( face ) 
@@ -584,7 +585,7 @@ package org.syncon.Customizer.controller
 			//	this.model.currentLayer = imgLayer; 
 			this.model.layerMask = imgLayer; 
 			*/
-			
+			face.layersToImport = [] ; 
 			face.image_mask = 'assets/images/lighter_back_workarea.png'
 			face.image_mask_alpha = 0.4
 			//just have to get it to the mask layer on the model some how ... if you roll your own 

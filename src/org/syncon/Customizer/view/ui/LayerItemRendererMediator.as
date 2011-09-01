@@ -9,6 +9,7 @@ package org.syncon.Customizer.view.ui
 	import com.roguedevelopment.objecthandles.constraints.MovementConstraint;
 	import com.roguedevelopment.objecthandles.constraints.SizeConstraint;
 	
+	import flash.display.BlendMode;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -27,6 +28,7 @@ package org.syncon.Customizer.view.ui
 	import org.syncon.onenote.onenotehelpers.impl.layer_item_renderer;
 	import org.syncon.onenote.onenotehelpers.impl.viewer2_store;
 	
+	import spark.components.Group;
 	import spark.core.MaskType;
 	
 	/**
@@ -158,50 +160,77 @@ package org.syncon.Customizer.view.ui
 				
 				case "x":
 					this.ui.x = event.newValue as Number;
-					this.layer.x = this.ui.x
+					
 					if ( createUndos == false )
+					{
+						this.layer.x = this.ui.x
+					}
+					else
+					{
 						this.dispatch( new EditProductCommandTriggerEvent ( 
-							EditProductCommandTriggerEvent.MOVE_LAYER, this.ui.x, this.ui.y
-						) ) 
+							EditProductCommandTriggerEvent.MOVE_LAYER, this.ui.x, this.ui.y, this.ui.layer) ) 
+					}
 					break;
 				case "y":
 					this.ui.y = event.newValue as Number; 
-					this.layer.y = this.ui.y
+					
 					if ( createUndos == false )
+					{
+						this.layer.y = this.ui.y
+					}
+					else
+					{
 						this.dispatch( new EditProductCommandTriggerEvent ( 
-							EditProductCommandTriggerEvent.MOVE_LAYER, this.ui.x, this.ui.y
-						) ) 
+							EditProductCommandTriggerEvent.MOVE_LAYER, this.ui.x, this.ui.y, this.ui.layer) ) 
+					}
 					break;
 				case "rotation":
 					this.ui.rotation = event.newValue as Number;
-					//this.layer.x = this.ui.x
-					this.layer.rotation = this.ui.rotation
+					
+					if ( createUndos == false )
+					{
+						this.layer.rotation = this.ui.rotation
+					}
+					else
+					{
+						this.dispatch( new EditProductCommandTriggerEvent ( 
+							EditProductCommandTriggerEvent.ROTATE_LAYER, this.ui.rotation, this.ui.layer		) ) 
+					}				
 					break;
 				case "width": 
 					this.ui.width = event.newValue as Number;
-					this.layer.width = this.ui.width
-					/*	var ddbg : Array = [ this.ui.width, this.ui.image.width, this.ui.image.visible, this.ui.image.alpha, 
-					this.ui.x, this.ui.image.x, this.ui.image.img.x] */
-					if ( this.isImage ) 
-					{
-						this.ui.image.img.width = this.ui.width; 
-					}
+					
 					if ( createUndos == false )
+					{
+						this.layer.width = this.ui.width
+						if ( this.isImage ) 
+						{
+							this.ui.image.img.width = this.ui.width; 
+						}
+					}
+					else
+					{
 						this.dispatch( new EditProductCommandTriggerEvent ( 
-							EditProductCommandTriggerEvent.RESIZE_LAYER, this.ui.width, this.ui.height
-						) ) 					
+							EditProductCommandTriggerEvent.RESIZE_LAYER, this.ui.width, this.ui.height , this.layer 	) ) 	
+					}
 					break;
 				case "height": 
 					this.ui.height = event.newValue as Number;
-					this.layer.height = this.ui.height
-					if ( this.isImage ) 
-					{
-						this.ui.image.img.height = this.ui.height; 
-					}
+					
 					if ( createUndos == false )
+					{
+						this.layer.height = this.ui.height
+						if ( this.isImage ) 
+						{
+							this.ui.image.img.height = this.ui.height; 
+						}
+					}
+					else
+					{
 						this.dispatch( new EditProductCommandTriggerEvent ( 
-							EditProductCommandTriggerEvent.RESIZE_LAYER, this.ui.width, this.ui.height
-						) ) 					
+							EditProductCommandTriggerEvent.RESIZE_LAYER, this.ui.width, this.ui.height , this.layer ) ) 	
+					}
+					
 					break;
 				default: return;
 			}
@@ -231,7 +260,7 @@ package org.syncon.Customizer.view.ui
 			{
 				this.model.waitForBaseLayer.push( [this, event] )
 				this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
-				//this.silent = false  //not sure about this one ...
+				//this.silent = false //not sure about this one ...
 				//silent means no undos ... this is on till reposition is finished ..
 				return; 
 			}
@@ -278,28 +307,38 @@ package org.syncon.Customizer.view.ui
 				this.layer.vertStartAlignment = null
 				this.ui.layer.y = this.ui.y = this.model.viewer.height/2 - this.ui.height/2
 			}
-			else if  ( this.layer.vertStartAlignment == '' ) 
+			else if ( this.layer.vertStartAlignment == '' ) 
 			{
 				this.layer.vertStartAlignment = ''
-				this.ui.y   = this.model.baseLayer.y + this.ui.layer.y; 
-				this.layer.y   = this.model.baseLayer.y + this.ui.layer.y; 
+				this.ui.y = this.model.baseLayer.y + this.ui.layer.y; 
+				this.layer.y = this.model.baseLayer.y + this.ui.layer.y; 
 				//this.ui.layer.x = this.model.baseLayer.x + this.ui.layer.x; 
 				
 				//this.ui.layer.y = this.ui.y = this.model.viewer.height/2 - this.ui.height/2
 			} 
-			if ( this.layer.horizStartAlignment ==  LayerBaseVO.ALIGNMENT_CENTER) 
+			if ( this.layer.horizStartAlignment == LayerBaseVO.ALIGNMENT_CENTER) 
 			{
 				
 				this.ui.layer.x = this.ui.x = this.model.viewer.width/2 - this.ui.width/2
 				this.layer.horizStartAlignment = null 
 			}
-			else if  ( this.layer.horizStartAlignment == '' ) 
+			else if ( this.layer.horizStartAlignment == '' ) 
 			{
+				//the problem is here, we are setting things relative to the base layer ... 
+				//this is liekly permanent ... so store it on the ui ... not here ...
+				/*	if ( this.layer.locked ) 
+				{
+				this.ui.x = this.model.baseLayer.x + this.ui.layer.x; 
+				this.layer.x = this.model.baseLayer.x + this.ui.layer.x; 
+				}
+				else
+				{*/
 				this.layer.horizStartAlignment = ''
 				//this.ui.layer.y = this.model.baseLayer.y + this.ui.layer.y; 
-				this.ui.x  = this.model.baseLayer.x + this.ui.layer.x; 
-				this.layer.x  = this.model.baseLayer.x + this.ui.layer.x; 
+				this.ui.x = this.model.baseLayer.x + this.ui.layer.x; 
+				this.layer.x = this.model.baseLayer.x + this.ui.layer.x; 
 				//this.ui.layer.y = this.ui.y = this.model.viewer.height/2 - this.ui.height/2
+				/*}*/
 			}
 			if ( this.isText ) 
 			{
@@ -318,25 +357,13 @@ package org.syncon.Customizer.view.ui
 				//we are copying the url and sizing to the mask layer that is already laid down 
 				if ( this.ui.image.layer.mask )
 				{
-					this.ui.visible = false;
-					//so visible does not work, but alpha does...
-					this.ui.alpha = 0.1
-					var v : viewer2_store = this.model.viewer as viewer2_store
-					v.img_.source = this.ui.image.layer.url; 
-					v.img_.x = this.ui.x; 
-					v.img_.y = this.ui.y; 
-					/*
-					this.ui.image.removeElement( this.ui.image.img ) ; 
-					this.model.viewer.mask = this.ui.image.img
-					*/	
-					//v.mask = v.maskLayer;
-					v.workspace.mask = v.maskLayer_
-					v.workspace.maskType = MaskType.ALPHA
-					//http://franto.com/inverse-masking-disclosed/
-					//searched for inverse mask ...
+					this.adjustMaskToMatchLayer()
+					
 				}
 			}
+			this.createUndos = false
 			this.copyLayerToModel();
+			this.createUndos = true; // what about when uploading an image? no, sam ething do not resize
 			if ( this.repositioning ) 
 			{
 				repositioning = false; 
@@ -344,9 +371,8 @@ package org.syncon.Customizer.view.ui
 			this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
 			this.createUndos = false 
 			this.layer.repositionedOnce = true
-			if (   this.layer == this.model.baseLayer && this.model.waitForBaseLayer.length > 0  )
+			if ( this.layer == this.model.baseLayer && this.model.waitForBaseLayer.length > 0 )
 			{
-				
 				for each ( var params : Array in this.model.waitForBaseLayer ) 
 				{
 					params[0].onResize(params[1]);//.push( [this, event] )
@@ -354,6 +380,79 @@ package org.syncon.Customizer.view.ui
 				this.model.waitForBaseLayer = []; 
 				return; 
 			}
+		}
+		
+		/**
+		 * Hide the ui compoent, and moves mask on top of it ...
+		 * */
+		private function adjustMaskToMatchLayer(wait:Boolean=true):void
+		{
+			
+			this.ui.visible = false;
+			//so visible does not work, but alpha does...
+			this.ui.alpha = 0.1
+			//show mask 
+			/*
+				//show the mask image ...
+			this.ui.visible = true;
+			//so visible does not work, but alpha does...
+			this.ui.alpha = 0.8
+			*/
+			var v : viewer2_store = this.model.viewer as viewer2_store
+			v.img_.source = this.ui.image.layer.url; 
+			/*
+			//it would be ui.image.img.width ..
+			v.img_.x = this.ui.x; 
+			v.img_.y = this.ui.y; 
+			v.img_.width = this.ui.image.width; 
+			v.img_.height = this.ui.image.height; 		
+			*/
+			/*var g : Group = v.maskLayer_.parent as Group
+			try {
+			if ( g != null )
+			g.removeElement( v.maskLayer_ ) ;
+			}
+			catch(e:Error) {}*/
+			v.img_.x = this.layer.x; 
+			v.img_.y = this.layer.y; 
+			v.img_.width = this.layer.width; 
+			v.img_.height = this.layer.height 	
+			//v.img_.height  -= Math.random()*10
+			/*
+			this.ui.image.removeElement( this.ui.image.img ) ; 
+			this.model.viewer.mask = this.ui.image.img
+			*/	
+			//v.mask = v.maskLayer;
+			//v.maskLayer_.visible = false
+			/*v.workspace.mask = v.maskLayer_
+			v.maskLayer_.blendMode = BlendMode.NORMAL; */
+			v.maskLayer_.blendMode = BlendMode.NORMAL;
+			//to see the mask uncommend the lower lin ..
+			//v.workspace.mask = null
+			/*
+			v.workspace.mask = null
+			if ( v.workspace.mask == v.maskLayer_  )
+			v.mask = v.maskLayer_
+			else
+			v.workspace.mask = v.maskLayer_
+			//v.workspace.mask = v.maskLayer_
+			*/
+			
+			v.workspace.mask = v.maskLayer_
+			v.workspace.maskType = MaskType.CLIP
+			v.workspace.maskType = MaskType.ALPHA
+			v.maskLayer_.blendMode = BlendMode.NORMAL; 
+			v.maskLayer_.blendMode = BlendMode.ERASE; 
+			
+			//can't believe this fixed it 
+			if ( wait ) 
+			{
+			this.ui.callLater( this.adjustMaskToMatchLayer, [false] );
+			}
+			trace('mask widths and height',  v.maskLayer_.width, v.maskLayer_.height , v.maskLayer_.parent); 
+			trace('mask widths and height',   this.ui.width, this.ui.height , this.ui.layer.width, this.ui.layer.height) ; 
+			//http://franto.com/inverse-masking-disclosed/
+			//searched for inverse mask ...
 		}
 		
 		private function unregister():void
@@ -371,9 +470,10 @@ package org.syncon.Customizer.view.ui
 			this.flexModel1.x = this.layer.x ; 
 			this.flexModel1.y = this.layer.y ; 
 			this.flexModel1.width = this.layer.width; 
-			if ( this.layer.height == 16 ) 
-				trace('setting to 16'); 
+			/*	if ( this.layer.height == 16 ) 
+			trace('setting to 16');*/ 
 			this.flexModel1.height = this.layer.height; 
+			trace('copyLayerToModel', this.layer.aaa ) 
 		}
 		
 		/**
@@ -386,6 +486,19 @@ package org.syncon.Customizer.view.ui
 			if ( ui.layer == null ) 
 			{
 				this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
+				if ( this.layer != null ) 
+				{
+					if ( this.layer.model == this.flexModel1 ) 
+						this.layer.model = null; 
+					else if ( this.layer.model != null )
+					{
+						//strange the ui's' layer is being cleared, , we have a dirty one 
+						//but the layer has been loaded elsewhere and is still active 
+						//before we hav ehad a chance to remove it here ... 
+						//8-31-11, iwas curious what could cause this ...
+						trace('LayerItemRendererMediator', 'onDataChanged', 'data model is set but not to this' )
+					}
+				}
 				this.layer = null 
 				return; 
 			}
@@ -513,7 +626,7 @@ package org.syncon.Customizer.view.ui
 					//handleDesc.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 50), new Point(0, 0)));
 					handleDesc = null
 					
-					handleDesc   = this.model.objectHandles.defaultHandles.concat(); 
+					handleDesc = this.model.objectHandles.defaultHandles.concat(); 
 					handleDesc.pop(); 
 					handleDesc.pop(); 
 					handleDesc.pop(); 
@@ -546,25 +659,30 @@ package org.syncon.Customizer.view.ui
 			this.flexModel1.isLocked = this.layer.locked; 
 			//this.copyLayerToModel();
 			
-			if ( this.layer.vertStartAlignment != null || this.layer.horizStartAlignment != null ) 
-			{
-				this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
-				//if this is a new layer ... bring it to the front .... 
-				//also when clicked in layerlist 
-				this.ui.depth = this.ui.parent.numChildren-1
-			}
+			
 			
 			//try to copy back the x's and y's ...
 			if ( layer.repositionedOnce ) 
 			{
-				this.onReturnToPreviousSize(); 
+				this.onReturnToPreviousSize();
+			}
+			else
+			{
+				if ( this.layer.vertStartAlignment != null || this.layer.horizStartAlignment != null ) 
+				{
+					this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
+					//if this is a new layer ... bring it to the front .... 
+					//also when clicked in layerlist 
+					this.ui.depth = this.ui.parent.numChildren-1
+				}
+				//always resize the mask layers so they switch between faces
+				if ( this.isImage && this.ui.image.layer.mask ) 
+				{
+					this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
+				}
 			}
 			
-			//always resize the mask layers so they switch between faces
-			if ( this.isImage && this.ui.image.layer.mask ) 
-			{
-				this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
-			}
+			
 			//if ingrave layer turn on the background
 			if ( this.isText ) 
 			{
@@ -594,26 +712,43 @@ package org.syncon.Customizer.view.ui
 		
 		private function onReturnToPreviousSize():void
 		{
+			this.createUndos = false
 			this.copyLayerToModel(); 
-			if (  this.isImage ) 
+			if ( this.isImage ) 
 			{
 				this.ui.image.img.width = this.layer.width; 
 				this.ui.image.img.height = this.layer.height; 
 			}
-			if (  this.isColor ) 
+			if ( this.isColor ) 
 			{
 				this.ui.colorR.img.width = this.layer.width; 
 				this.ui.colorR.img.height = this.layer.height; 
+				//update the layer as well ... not sure why it doesn't stretch to 100% ...
+				this.ui.colorR.colorLayer.width = this.layer.width; 
+				this.ui.colorR.colorLayer.height = this.layer.height; 
 			}
-			trace('return to place', this.layer.x ) ; 
-			trace('return to place', this.layer.y ) ; 
+			//have to do this afterward or position will be off ...
+			if ( this.isImage )
+			{
+				//make this a new type ....
+				//we are copying the url and sizing to the mask layer that is already laid down 
+				if ( this.ui.image.layer.mask )
+				{
+					this.adjustMaskToMatchLayer()
+					
+				}
+			}
+			
+			/*trace('return to place', this.layer.x ) ; 
+			trace('return to place', this.layer.y ) ; */
 			this.layer.update()
 			this.layer.updateVisibility(); 
+			this.createUndos = true
 			return;
 		}
 		
 		/**
-		 * will setup the repositioing listener again  again ...
+		 * will setup the repositioing listener again again ...
 		 * */
 		private function onReposition(e:Event):void
 		{

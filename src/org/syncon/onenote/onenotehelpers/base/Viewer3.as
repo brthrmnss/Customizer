@@ -99,8 +99,9 @@ package org.syncon.onenote.onenotehelpers.base
 			}			
 			//this.measureDp()
 			
+			this.clearListers(); 
 			this.measure.measuringTool = this.listsMeasure
-				//if page needs to be measured, meausre it , if not .. .don't
+			//if page needs to be measured, meausre it , if not .. .don't
 			if ( isNaN(this.page.width ) || isNaN( this.page.height ) )
 			{
 				this.measure.measureLists( this._page.lists.toArray(), this.onMeasuredStuff )
@@ -109,6 +110,30 @@ package org.syncon.onenote.onenotehelpers.base
 			{
 				this.onMeasuredStuff(null); 
 			}
+		}
+		
+		private function clearListers():void
+		{
+			for each ( var lister : IListable in this.listers ) 
+			{
+				//clear data ...
+				lister.visible = false; 
+				lister.goHidden(); 
+				lister.data = null 
+				var o : Object = lister 
+				if ( o.parent == null ) 
+					throw 'lister was removed from stage'
+				//this.addEventListener(Event.REMOVED, this.onRemoved ), but too many events
+			}
+				
+			//clear this so ti refreshes?... why doe sthis matter ... i afraid it is not updating ... 
+			//but are you updating manually/ 
+			for each ( var list : IListVO in this.listVOs() ) 
+			{
+				  list.loadedIntoLister = null
+			} 
+			
+			//this.hideListers(); 
 		}
 		
 		/*		
@@ -625,6 +650,7 @@ package org.syncon.onenote.onenotehelpers.base
 		{
 			for each ( var lister : IListable in this.listers ) 
 			{
+				//clear data ...
 				lister.visible = false; 
 				lister.goHidden(); 
 				var o : Object = lister 

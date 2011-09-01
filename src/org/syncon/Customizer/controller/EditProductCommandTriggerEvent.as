@@ -46,6 +46,9 @@ package org.syncon.Customizer.controller
 		public static const RESIZE_LAYER:String = 'RESIZE_LAYER.w';
 		public static const LAYER_RESIZED:String = 'LAYER_RESIZED.w';			
 		
+		public static const ROTATE_LAYER:String = 'ROTATE_LAYER.w';
+		public static const LAYER_ROTATED:String = 'LAYER_ROTATED.w';		
+		
 		public static const HIDE_LAYER:String = 'HIDE_LAYER.w';
 		public static const LAYER_HID:String = 'LAYER_HIDE.w';		
 		
@@ -135,6 +138,7 @@ package org.syncon.Customizer.controller
 				
 				MOVE_LAYER,
 				RESIZE_LAYER,
+				ROTATE_LAYER,
 				REMOVE_LAYER,
 				
 				//LAYER_MOVED,

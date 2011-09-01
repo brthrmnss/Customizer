@@ -93,7 +93,8 @@ package org.syncon.onenote.onenotehelpers.base
 		{
 			//var dbg : Array = [ this.currentIndex, this._measuringTool.lister.dataGroup.contentHeight, 
 			//	this.listsToMeasure[this.currentIndex] ] 
-			trace('MeasureLists', 'failed to measure', this.currentIndex   )
+			var dbg : Array = [ this.currentList, this._measuringTool]
+			trace('MeasureLists', 'failed to measure', this.currentIndex +1, this.currentList.name   )
 			//	this.measureDp()
 		}
 		

@@ -106,7 +106,6 @@
 			
 			protected function img_resizeHandler(event:ResizeEvent):void
 			{
-				return;
 				if ( this.loadingToken != null ) 
 					return; 
 				if ( this.active == false ) 
@@ -190,44 +189,8 @@
 				
 				this.img.width = this.img.sourceWidth
 				this.img.height = this.img.sourceHeight
-				this.notifyWhenSizeKnown(null); 
 			}
 			
-			protected function notifyWhenSizeKnown(event:ResizeEvent, wait : Boolean = true ):void
-			{
-				if ( this.loadingToken != null ) 
-					return; 
-				if ( this.active == false ) 
-					return; 
-				if ( this.layer == null ) 
-					return; 
-				if ( this.parentDocument == null ) 
-					return; 
-				if ( this.layer == null ) 
-					return;
-				
-				this.height = this.img.height; 
-				this.width = this.img.width; 
-				
-				/* this.layer.height = this.img.height; 
-				this.layer.width = this.img.width;  */
-				this.layer.nonChromeWidth = this.width; 
-				this.layer.nonChromeHeight = this.height; 
-				this.layer.height = this.img.height; 
-				this.layer.width = this.img.width;
-				//this.layer.update(ImageLayerVO.RESIZE_COMPLETE); 
-				
-				if ( this.parentDocument.resetting== true ) 
-				{
-					//we have to set the parentDocument height, or else 
-					//viewer3 will resize the layer to it's old size 
-					this.parentDocument.height = this.img.height; 
-					this.parentDocument.width = this.img.width; 
-					this.parentDocument.resetting=  false;
-					this.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
-					
-				}
-			}
 			
 			
 			protected function img_securityErrorHandler(event:SecurityErrorEvent):void

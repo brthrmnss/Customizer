@@ -39,7 +39,7 @@ package org.syncon.Customizer.vo
 		{
 			this.dispatchEvent( new Event( LAYER_SELEECTED  ) ) ; 
 		}
-				
+		
 		
 		/**
 		 * .
@@ -53,7 +53,10 @@ package org.syncon.Customizer.vo
 		{
 			return this.name;
 		}
-		
+		public function get aaa():String
+		{
+			return [this.name, this.x, this.y, this.width, this.height,this.rotation].join(', ' ) 
+		}
 		//public var name : String = ''; // : Boolean = true; 
 		private var _url : String = ''; 
 		
@@ -86,7 +89,7 @@ package org.syncon.Customizer.vo
 			_cost = value;
 		}
 		
-
+		
 		
 		/**
 		 * This layer cannot be deleted
@@ -151,6 +154,12 @@ package org.syncon.Customizer.vo
 		
 		public function set width(value:Number):void
 		{
+			if ( this._width == value ) 
+				return; 
+			if ( value < 100 ) 
+			{
+				trace('LayerBaseVO','value', 'ListVO' ) ; 
+			}
 			_width = value;
 		}
 		
@@ -210,31 +219,35 @@ package org.syncon.Customizer.vo
 		
 		public function set x(value:Number):void
 		{
-			if ( this.type == TextLayerVO.Type  && this.url != 'demo'  ) 
+			if ( _x == value )
+				return; 
+			/*if ( this.type == TextLayerVO.Type  && this.url != 'demo'  ) 
 			{
 				trace('thing'); 
-			}
+			}*/
 			_x = value;
 		}
 		
-		public function set height ( h : Number ) : void
+		public function set height ( value : Number ) : void
 		{
-			if ( h < 100 ) 
+			if ( this._height == value ) 
+				return; 
+			if ( value < 100 ) 
 			{
 				trace('LayerBaseVO','small ehight set', 'ListVO' ) ; 
 			}
-			if ( h != 237 ) 
+			/*if ( h != 237 ) 
 			{
-				trace('LayerBaseVO','not 237' ) ; 
+			trace('LayerBaseVO','not 237' ) ; 
 			}
 			if ( this.type == TextLayerVO.Type ) 
 			{
-				if ( h != 50 ) 
-				{
-				trace('texter layer type'); 
-				}
+			if ( h != 50 ) 
+			{
+			trace('texter layer type'); 
 			}
-			this._height = h; 
+			}*/
+			this._height = value; 
 		}
 		public function get height () : Number 
 		{
@@ -306,9 +319,9 @@ package org.syncon.Customizer.vo
 		import flash.utils.getQualifiedClassName;
 		public function copyPropsTo(clone :  LayerBaseVO): void
 		{
-		/*	for   ( var prop  : String in this ) 
+			/*	for   ( var prop  : String in this ) 
 			{
-				clone[prop] = this[prop]
+			clone[prop] = this[prop]
 			}*/
 			copyData(this, clone ); 
 		}

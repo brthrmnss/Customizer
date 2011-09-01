@@ -161,7 +161,8 @@
 			<component:layer_cart_panel right="0" width="170"/>
 		</s:Group>
 		
+		<!--<component:LayerList id="list" />-->
 	</s:Group>
-	
+
 	
 </s:Group>

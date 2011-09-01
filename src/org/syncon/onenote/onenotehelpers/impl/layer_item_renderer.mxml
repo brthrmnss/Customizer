@@ -2,12 +2,12 @@
 <!-- http://blog.flexexamples.com/2009/04/29/using-virtual-layout-on-a-spark-list-control-in-flex-gumbo/ -->
 <!-- http://www.jeffryhouser.com/index.cfm/2011/1/25/How-do-you-force-rendereres-to-refresh-in-a-spark-list -->
 <s:Group name="Spark_List_layout_useVirtualLayout_test"
-					xmlns:fx="http://ns.adobe.com/mxml/2009" implements="org.syncon.onenote.onenotehelpers.base.IListable"
-					xmlns:s="library://ns.adobe.com/flex/spark"
-					buttonMode="true" useHandCursor="true"
-
-					xmlns:mx="library://ns.adobe.com/flex/halo" creationComplete="onInit(event)"
-					initialize="init();" xmlns:others="org.syncon.onenote.onenotehelpers.base.others.*" xmlns:impl="org.syncon.onenote.onenotehelpers.impl.*">
+		 xmlns:fx="http://ns.adobe.com/mxml/2009" implements="org.syncon.onenote.onenotehelpers.base.IListable"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 buttonMode="true" useHandCursor="true"
+		 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" creationComplete="onInit(event)"
+		 initialize="init();" xmlns:others="org.syncon.onenote.onenotehelpers.base.others.*" xmlns:impl="org.syncon.onenote.onenotehelpers.impl.*">
 	<!--<others:SuperPanel3	-->
 	<fx:Script>
 		<![CDATA[
@@ -156,7 +156,7 @@
 					this.dispatchEvent( new CustomEvent(DATA_CHANGED) ) 
 					return; 
 				}
-					
+				
 				this.visible = this.layer.visible; 
 				if ( this.layer.visible == false ) 
 				{
@@ -220,14 +220,18 @@
 			}
 			override public function set visible(value:Boolean):void
 			{
-				if ( value && this.layer.visible == false ) 
+				if ( this.layer != null )
 				{
-					//8-28-11 bug ...
-					trace('set visible', 'false')
-					//Viewer3 is forcing it to be visible ... possibly change children ... 
-					value = this.layer.visible; 
+					if ( value && this.layer.visible == false ) 
+					{
+						//8-28-11 bug ...
+						trace('set visible', 'false')
+						//Viewer3 is forcing it to be visible ... possibly change children ... 
+						value = this.layer.visible; 
+					}
+					//we clear them all when loading in new 'IPageVO's
+					value = this.layer.visible;
 				}
-				value = this.layer.visible; 
 				super.visible = value; 
 			}
 			[Bindable] public var dp  :   ArrayCollection = new ArrayCollection()//.getInstance(); 

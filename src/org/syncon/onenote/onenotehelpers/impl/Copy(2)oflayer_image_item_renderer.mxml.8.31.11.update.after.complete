@@ -91,8 +91,7 @@
 					this.img.source = null; 
 					return; 
 				}
-				if ( this.layer.url != '' ) 
-					this.img.source  = layer.url; 
+				this.img.source  = layer.url; 
 				if ( this.layer.source != null ) 
 				{
 					this.img.source = layer.source; 
@@ -110,14 +109,12 @@
 					this.img.height = 1
 					this.img.width = 1; 
 					this.loadingToken = null; 
-					this.notifyWhenSizeKnown(null);
-					//this.img_resizeHandler(null); 
+					this.img_resizeHandler(null); 
 				}
 			}
 			
 			protected function img_resizeHandler(event:ResizeEvent, wait : Boolean = true ):void
 			{
-				return;
 				/* if ( wait ) 
 				{
 					this.callLater( this.img_resizeHandler, [event, false] )
@@ -216,52 +213,9 @@
 				this.img.height = this.img.sourceHeight
 				*/
 				this.tesntin = false; 
-				
-				if ( this.layer.repositionedOnce  )
-					return; 
-				this.img.width = this.img.sourceWidth
-				this.img.height = this.img.sourceHeight
-				
-				this.notifyWhenSizeKnown(null); 
 			}
 			
-			protected function notifyWhenSizeKnown(event:ResizeEvent, wait : Boolean = true ):void
-			{
-				if ( this.loadingToken != null ) 
-					return; 
-				if ( this.tesntin )
-					return; 
-				if ( this.active == false ) 
-					return; 
-				if ( this.layer == null ) 
-					return; 
-				if ( this.parentDocument == null ) 
-					return; 
-				if ( this.layer == null ) 
-					return;
-				
-				this.height = this.img.height; 
-				this.width = this.img.width; 
-				
-				/* this.layer.height = this.img.height; 
-				this.layer.width = this.img.width;  */
-				this.layer.nonChromeWidth = this.width; 
-				this.layer.nonChromeHeight = this.height; 
-				this.layer.height = this.img.height; 
-				this.layer.width = this.img.width;
-				this.layer.update(ImageLayerVO.RESIZE_COMPLETE); 
-				
-				if ( this.parentDocument.resetting== true ) 
-				{
-					//we have to set the parentDocument height, or else 
-					//viewer3 will resize the layer to it's old size 
-					this.parentDocument.height = this.img.height; 
-					this.parentDocument.width = this.img.width; 
-					this.parentDocument.resetting=  false;
-					this.parentDocument.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
-					
-				}
-			}
+			
 			
 			protected function img_securityErrorHandler(event:SecurityErrorEvent):void
 			{
@@ -272,18 +226,11 @@
 			
 			protected function img_ioErrorHandler(event:IOErrorEvent):void
 			{
-
 				// TODO Auto-generated method stub
 				Alert.show('Could not load the image ' + this.layer.url+ '  '  +
 					'for layer named ' + this.layer.name, 'IO Error' ) ; 
 			}
 			
-			public function get blankImageSource ()  : Boolean
-			{
-				if ( ( this.layer.url == '' || this.layer.url == null  ) && ( this.layer.source == null ) )
-					return true 
-				return false; 
-			}
 		]]>
 	</fx:Script>
 	

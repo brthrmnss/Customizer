@@ -28,8 +28,9 @@ package org.syncon.Customizer
 			mediatorMap.mapView( LayerTextInspector, LayerTextInspectorMediator ) 	
 				
 			mediatorMap.mapView( transformation_stage, TransformationStageMediator ) 	
-			
+			mediatorMap.mapView( LayerList, LayerListMediator ) 	
 				
+			
 				
 			//mediatorMap.mapView( LayerImageInspector,LayerImageInspectorMediator ) 	
 			//mediatorMap.mapView( LayerColorInspector, LayerColorInspectorMediator ) 	

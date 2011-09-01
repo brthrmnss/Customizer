@@ -32,6 +32,8 @@ package  org.virid.component
 			//face changed is distapched before the view has loadeded it 
 			eventMap.mapListener(eventDispatcher,EditProductCommandTriggerEvent.FACE_LOADED, 
 				this.onFaceLoaded);	
+			this.onFaceLoaded( null ) 
+				
 			this.model.viewer = this.ui.viewer22
 			this.ui.viewer22.groupBg.visible = false; 
 			this.ui.viewer22.bgBorder.alpha = 0; // = false; 
@@ -64,13 +66,17 @@ package  org.virid.component
 		*/
 		private function onFaceChanged(param0:Object):void
 		{
-			this.ui.viewer22.controller.dataProvider  = this.model.currentFace; 
+			//this.ui.viewer22.controller.dataProvider  = this.model.currentFace; 
 			//this.ui.list.dataProvider = this.model.layers; 
 		}
 		
+		/**
+		 * wait until face is completely loaded, to ensure base layers are set ...
+		 * */
 		private function onFaceLoaded(e:Event):void
 		{
 			this.onPreviewModeChanged(); 
+			this.ui.viewer22.controller.dataProvider  = this.model.currentFace; 
 		}
 		
 		private var oldSelections :  Array = []

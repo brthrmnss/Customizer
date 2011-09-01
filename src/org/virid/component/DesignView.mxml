@@ -20,6 +20,6 @@
 	<fx:Declarations>
 	</fx:Declarations>
 	 
-	<impl:viewer2_store id="viewer22" width="100%" height="100%" clipAndEnableScrolling="true"/> 
+	<impl:viewer2_store id="viewer22" width="100%" height="100%" loadDefault="false" clipAndEnableScrolling="true"/> 
  
 </s:Group>

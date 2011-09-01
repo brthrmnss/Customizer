@@ -380,7 +380,12 @@ package org.syncon.Customizer.view.ui
 					params[0].onResize(params[1]);//.push( [this, event] )
 				}
 				this.model.waitForBaseLayer = []; 
-				return; 
+
+				//return; 
+			}
+			if ( this.layer == this.model.baseLayer ) 
+			{
+				repositionBaseLayerBg()
 			}
 		}
 		
@@ -494,8 +499,8 @@ package org.syncon.Customizer.view.ui
 						this.layer.model = null; 
 					else if ( this.layer.model != null )
 					{
-						//strange the ui's' layer is being cleared, , we have a dirty one 
-						//but the layer has been loaded elsewhere and is still active 
+						//strange the ui's' layer iared, , we have a dirty one 
+						//but the layer has been loaded elss being cleewhere and is still active 
 						//before we hav ehad a chance to remove it here ... 
 						//8-31-11, iwas curious what could cause this ...
 						trace('LayerItemRendererMediator', 'onDataChanged', 'data model is set but not to this' )
@@ -743,12 +748,40 @@ package org.syncon.Customizer.view.ui
 				}
 			}
 			
+			if ( this.layer == this.model.baseLayer ) 
+			{
+				this.repositionBaseLayerBg(); 
+			}
+			
 			/*trace('return to place', this.layer.x ) ; 
 			trace('return to place', this.layer.y ) ; */
 			this.layer.update()
 			this.layer.updateVisibility(); 
 			this.createUndos = true
 			return;
+		}
+		
+		/**
+		 * stores image on bottom mask
+		 * */
+		private function repositionBaseLayerBg():void
+		{
+			if ( this.layer != this.model.baseLayer ) 
+			{
+				trace('Warning', 'repositionBaseLayerBg', 'not base layer')
+				return; 
+			}
+			//hide top part?
+			//this.ui.visible = false;
+			
+			var v : viewer2_store = this.model.viewer as viewer2_store
+			v.imgBg.source = this.layer.url; 
+			
+			v.imgBg.x = this.layer.x; 
+			v.imgBg.y = this.layer.y; 
+			v.imgBg.width = this.layer.width; 
+			v.imgBg.height = this.layer.height; 
+			
 		}
 		
 		/**

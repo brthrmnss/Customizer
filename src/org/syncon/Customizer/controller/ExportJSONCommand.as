@@ -47,12 +47,14 @@ package  org.syncon.Customizer.controller
 				for each(var Surface:FaceVO in this.model.baseItem.faces){
 					
 					Face = new Object;
+					layers = new Array();
 					Face.name = Surface.name;
 					Face.image = Surface.base_image_url;
 					Face.mask = Surface.image_mask;
 					
-					for each( var layer: LayerBaseVO in this.model. layersVisible){
-						
+					for each( var layer: LayerBaseVO in Surface.layers){
+						if(layer.name == "Base Image")
+							continue;
 						var jsonLayer:Object = {};
 						var jsonMedia:Object = {};
 						var jsonTransform:Object = {};
@@ -61,8 +63,6 @@ package  org.syncon.Customizer.controller
 						
 						jsonLayer.name = layer.name;
 						jsonLayer.type = layer.type;
-						if(layer.name == "color")
-							jsonLayer.type = "color";
 						jsonLayer.price = layer.cost;
 						
 						jsonMedia.source = layer.url;
@@ -98,7 +98,7 @@ package  org.syncon.Customizer.controller
 								continue;
 							if(imgLayer.image_source == ViridConstants.IMAGE_SOURCE_CLIPART)
 							{
-								//engrave layer
+								//clipart layer
 								
 							}
 							else if(imgLayer.image_source == ViridConstants.IMAGE_SOURCE_UPLOAD)
@@ -109,7 +109,9 @@ package  org.syncon.Customizer.controller
 						}
 						if(layer.type == ColorLayerVO.Type)
 						{
-							
+					
+							jsonLayer.type = "color";
+
 						}
 						jsonLayer.Media = jsonMedia;
 						jsonLayer.Fonts = jsonFonts;
@@ -127,9 +129,9 @@ package  org.syncon.Customizer.controller
 					}
 					Face.Layers = layers;
 					Faces.push(Face);
-					product.Faces = Faces;
+					
 				}
-				
+				product.Faces = Faces;
 				
 				
 				var exportObj:Object = new Object;
@@ -137,7 +139,9 @@ package  org.syncon.Customizer.controller
 				if(product.type == "engrave"){
 					exportObj['ACTION'] = "engrave";
 					exportObj['PRODUCTID'] = this.model.baseItem.sku;
-					exportObj['FONT'] = this.model.currentLayer;
+					try{
+					exportObj['FONT'] = product.Faces[0].Layers[0].fontFamily;
+					}catch(e:Error){};
 					try{
 					exportObj['TEXT1'] = product.Faces[0].Layers[0].text;
 					}catch(e:Error){};
@@ -145,15 +149,18 @@ package  org.syncon.Customizer.controller
 					exportObj['TEXT2'] = product.Faces[0].Layers[1].text;
 					}catch(e:Error){};
 					try{
-						exportObj['TEXT3'] = product.Faces[1].layer[0].text;
+						exportObj['TEXT3'] = product.Faces[1].Layers[0].text;
 					}catch(e:Error){};
 					try{
-						exportObj['TEXT4'] = product.Faces[1].layer[1].text;
+						exportObj['TEXT4'] = product.Faces[1].Layers[1].text;
 					}catch(e:Error){};
 					
-					
-	
-					
+				}
+				else
+				{
+					exportObj['ACTION'] = "engrave";
+					exportObj['PRODUCTID'] = this.model.baseItem.sku;
+					exportObj['LAYERS'] = JSON.decode(product.Faces); 
 				}
 				
 				//var exportThis:Object = JSON.encode(exportObj);
@@ -174,6 +181,9 @@ package  org.syncon.Customizer.controller
 			}				
 			
 		}
+		
+		
+		
 		
 		protected function httpResult(event:ResultEvent):void
 		{

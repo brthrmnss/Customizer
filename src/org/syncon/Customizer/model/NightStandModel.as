@@ -67,6 +67,20 @@ package org.syncon.Customizer.model
 			this.dispatch( new NightStandModelEvent( NightStandModelEvent.AUTOMATING_CHANGED ) ) 
 		}
 		
+		private var _previewMode : Boolean = false; 
+		public function get previewMode(): Boolean
+		{
+			return _previewMode;
+		}
+		
+		public function set previewMode(value:Boolean):void
+		{
+			_previewMode = value;
+			this.dispatch( new NightStandModelEvent( NightStandModelEvent.PRESENTATION_MODE_CHANGED, value ) ) 
+		}
+		
+		
+		
 		public function layersChanged() : void
 		{
 			this.dispatch( new NightStandModelEvent( NightStandModelEvent.LAYERS_CHANGED ) ) 
@@ -309,7 +323,7 @@ package org.syncon.Customizer.model
 		/**
 		 * When undoing moving and resizing ... do not allow adding further undos 
 		 * */
-		public function get blockUndos():Boolean
+		public function get blockUndoExecution():Boolean
 		{
 			return _blockUndos;
 		}
@@ -317,7 +331,7 @@ package org.syncon.Customizer.model
 		/**
 		 * @private
 		 */
-		public function set blockUndos(value:Boolean):void
+		public function set blockUndoExecution(value:Boolean):void
 		{
 			_blockUndos = value;
 		}

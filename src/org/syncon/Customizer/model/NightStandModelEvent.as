@@ -67,7 +67,8 @@ package  org.syncon.Customizer.model
 			
 		public static const UNDOS_CHANGED : String = ' UNDOS_CHANGED'			
 		
-			
+		public static const PRESENTATION_MODE_CHANGED : String = 'PRESENTATION_MODE_CHANGED'; 
+		
 		public static const LOADING_CHANGED : String = 'loadingChanged'
 		/**
 		 * Where was this supposed to be hooked up? on the notebooks? for ALL NOTEBOOKS?

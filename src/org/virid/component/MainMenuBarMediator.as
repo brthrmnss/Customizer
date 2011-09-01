@@ -34,8 +34,8 @@ package  org.virid.component
 			this.ui.addEventListener( MainMenuBar.REDO,  this.onRedo);	
 			this.ui.addEventListener( MainMenuBar.EXPORTJSON, this.onJSONEXPORT);
 			this.ui.addEventListener( MainMenuBar.GO_TO_BACKGROUND_PANEL, this.onGoToBackgroundPanel );
-			this.ui.addEventListener( MainMenuBar.GO_TO_ENGRAVE_PANEL, this.onGoToEngravePanel );
 			
+			this.ui.addEventListener( MainMenuBar.ON_PREVIEW, this.onPreview );
 			
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.UNDOS_CHANGED, 
 				this.checkUndoButtons);	
@@ -48,13 +48,43 @@ package  org.virid.component
 				this.onLayersChanged);	
 			this.onLayersChanged(); 			
 		}
+		
+		public function onPreview(e:Event):void
+		{
+			this.model.previewMode = ! this.model.previewMode; 
+			if ( this.model.previewMode ) 
+			{
+				this.ui.btnPreview.toolTip = "Leave Preview Mode"
+				for ( var i : int = 0 ; i < this.ui.holderMainMenuBar.numElements ; i ++ ) 
+				{
+					var uic : UIComponent = this.ui.holderMainMenuBar.getChildAt( i ) as UIComponent; 
+					if ( uic != this.ui.btnPreview ) 
+					{
+						uic.alpha = 0.6
+						uic.enabled = false
+					}
+				}
+			}
+			else
+			{
+				this.ui.btnPreview.toolTip = "Preview Design"
+				for (   i  = 0 ; i < this.ui.holderMainMenuBar.numElements ; i ++ ) 
+				{
+					var uic : UIComponent = this.ui.holderMainMenuBar.getChildAt( i ) as UIComponent; 
+					uic.alpha = 1
+					uic.enabled = true
+				}
+			}
+			
+		}
+		
 		/**
 		 * if specific layer added ... do the thing ...
 		 * */
 		private function onLayersChanged(e:Event=null):void
 		{
 			this.rebuildMainMenuBar()
-
+			
 		}
 		
 		protected function onGoToBackgroundPanel(event:Event):void
@@ -80,7 +110,7 @@ package  org.virid.component
 		 * */
 		private function onFaceChanged(e:Object=null):void
 		{
-	 
+			
 			this.rebuildMainMenuBar()
 		}
 		
@@ -91,7 +121,7 @@ package  org.virid.component
 			this.ui.btnBackground.includeInLayout = false; 
 			this.ui.btnEngrave.includeInLayout = false;
 			this.ui.btnText.visible = false; 
-		
+			
 			this.ui.btnBackground.visible = false; 
 			this.ui.btnEngrave.visible = false; 			
 			//return
@@ -123,7 +153,7 @@ package  org.virid.component
 					this.ui.btnBackground.visible = true; 
 					continue; 
 				}
-
+				
 			}
 			/**/
 			var measureWdith : Number = 0 ; 

@@ -6,7 +6,7 @@
 				depth="0" depth.hovered="1"
 				width="10" height="10"
 				creationComplete="itemrenderer1_creationCompleteHandler(event)"
-				click="itemrenderer1_clickHandler(event)">
+				click="itemrenderer1_clickHandler(event)"> 
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;

@@ -7,13 +7,23 @@
 	<fx:Script>
 		<![CDATA[
 			import org.syncon.Customizer.model.CustomEvent;
+			
+			import spark.events.TextOperationEvent;
 			public static var ADD_TEXT:String='ADD_TEXT';
+			public static const CHANGED_TEXT:String='CHANGED_TEXT';
 			
 			protected function onAddText(event:MouseEvent):void
 			{
 				// TODO Auto-generated method stub
 				this.dispatchEvent( new CustomEvent( ADD_TEXT, this.txt.text  ) ) ;
 			}
+			
+			protected function txt_changeHandler(event:TextOperationEvent):void
+			{
+				this.dispatchEvent( new CustomEvent( CHANGED_TEXT   ) );
+				
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -96,7 +106,7 @@
 
 		
 			<s:HGroup width="100%">
-				<s:TextInput text="Text" id="txt" width="100%"/>
+				<s:TextInput text="Text" id="txt" width="100%" change="txt_changeHandler(event)"/>
 				<s:Button label="ADD MY TEXT"  click="onAddText(event)"
 						  skinClass="org.virid.skins.simpleBlackBtn"
 						  height="20"/>

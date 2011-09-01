@@ -67,6 +67,7 @@ package  org.syncon.Customizer.vo
 		*/
 		public var price:Number=0;
 		public var sku:String;
+		public var grand_total:Number;
 		
 		public function export() : void
 		{

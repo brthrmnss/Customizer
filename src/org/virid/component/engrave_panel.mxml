@@ -221,21 +221,24 @@
 		
 		
 		<s:HGroup width="100%" height="60">
-			<s:VGroup width="194">
-				<s:HGroup width="50%">
+			
+			<s:VGroup width="100%">
+				<s:HGroup width="100%">
 					<s:Label text="Choose A Font"
 							 styleName="subHeading"/>
 					<s:Label text="45 charectors max"  id="txtMaxChars" styleName="Arial grayTxt"/>
 					
 				</s:HGroup>
-				<s:DropDownList id="dropDown_FontSelect"
-								 change="dropDown_FontSelect_changeHandler(event)"
-								width="100%" height="30" />			
+				
+				<s:DropDownList id="dropDown_FontSelect" skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
+								change="dropDown_FontSelect_changeHandler(event)"
+								cornerRadius="8" borderColor="0xe9e9e9" dropShadowVisible="false"
+								width="100%" height="28" />			
 			</s:VGroup>
 			
 			
-			<s:VGroup width="50%">
-				<s:HGroup><s:CheckBox label="Right to Left"  visible="false" includeInLayout="false"
+			<s:VGroup width="50%" visible="false" includeInLayout="false">
+				<s:HGroup><s:CheckBox label="Right to Left"  
 									  id="chkBoxAlign"
 									  change="chkBoxAlign_changeHandler(event)"
 									  styleName="Arial grayTxt"/></s:HGroup>
@@ -255,12 +258,18 @@
 			
 			
 			<s:HGroup width="100%">
-				<s:TextInput  id="txt" text="Text" change="txt_changeHandler(event)"  width="100%" paddingTop="10"/>
-				<s:Button label="ADD  MY  TEXT"  click="onAddText(event)"
-						  skinClass="org.virid.skins.simpleBlackBtn"
-						  height="20"/>
-				
-			</s:HGroup>			
+				<s:TextInput  id="txt" 
+							  text="Text" change="txt_changeHandler(event)"
+							  width="100%" height="28" paddingTop="10" focusAlpha="0"
+							  skinClass="org.virid.skins.LightGrayRoundedFormField" borderColor="0xe9e9e9"/>
+
+			</s:HGroup>						
+			
+			<s:Button label="ADD  MY  TEXT"  visible="false" includeInLayout="false"
+					  click="onAddText(event)" height="20"
+					  skinClass="org.virid.skins.simpleBlackBtn"
+					  />
+					
 			
 			<!--		<s:DropDownList id="dropDownFont" />
 			<s:DropDownList id="dropDownSize" dataProvider="{new ArrayList([8,10,12,16,24,36,48,72])}" />-->

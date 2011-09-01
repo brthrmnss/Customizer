@@ -315,7 +315,8 @@ package org.syncon.Customizer.controller
 			face.layersToImport.push(colorLayer);
 			*/
 			var textLayer: TextLayerVO = new TextLayerVO;
-			textLayer.text = '' 
+			textLayer.text = '';
+			textLayer.cost = 4.95;
 			textLayer.name = 'Top Front'
 			textLayer.maxChars = 3
 			textLayer.location = 'front small'; 
@@ -351,6 +352,7 @@ package org.syncon.Customizer.controller
 			
 			textLayer = new TextLayerVO;
 			textLayer.text = '' 
+			textLayer.cost = 4.95;
 			textLayer.name = 'Text'
 			textLayer.maxChars = 3
 			textLayer.fonts = fonts; 
@@ -396,6 +398,7 @@ package org.syncon.Customizer.controller
 			
 			textLayer = new TextLayerVO;
 			textLayer.text = 'bac' 
+			textLayer.cost = 20.95;
 			textLayer.name = 'Text'
 			textLayer.maxChars = 3
 			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
@@ -418,6 +421,7 @@ package org.syncon.Customizer.controller
 			
 			textLayer = new TextLayerVO;
 			textLayer.text = 'Add' 
+			textLayer.cost = 10.95;
 			textLayer.name = 'Text'
 			textLayer.maxChars = 3
 			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 

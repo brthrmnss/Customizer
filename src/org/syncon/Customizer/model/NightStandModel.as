@@ -579,6 +579,43 @@ package org.syncon.Customizer.model
 		}
 		
 		
+		public function calculateProductPrice():void
+		{
+			var subTotal : Number = 0;
+			var grandTotal : Number = 0;
+			grandTotal += this.baseItem.price;
+			for each ( var face : FaceVO in this.baseItem.faces.toArray() )  
+			{
+				subTotal = 0;
+				for each ( var l : LayerBaseVO in face.layers.toArray() )  
+				{
+					if ( l.visible  ) 
+					{
+						//see if this layer is empty
+						if(l.type == TextLayerVO.Type )
+						{
+							var textLayer:TextLayerVO = l as TextLayerVO;
+							if(textLayer.text == null || textLayer.text == "")
+								continue;
+						}
+						if(l.type == ImageLayerVO.Type )
+						{
+							var imgLayer:ImageLayerVO = l as ImageLayerVO;
+							if(imgLayer.source == null || imgLayer.source == "")
+								continue;
+						}
+						subTotal += l.cost; 
+					}
+				}
+				face.price = subTotal;
+				grandTotal += face.price;
+			}
+			
+			this.baseItem.grand_total = grandTotal;
+			this.dispatch(new NightStandModelEvent(NightStandModelEvent.PRICE_CANGED,grandTotal));
+			
+		}
+		
 		public function isDescendent( e : Object , againsts : Object ) : Boolean 
 		{
 			var par : Object = e; 

@@ -2,14 +2,18 @@ package org.virid.component
 {
 	import flash.events.Event;
 	
+	import mx.controls.Text;
+	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
 	import org.syncon.Customizer.model.ViridConstants;
+	import org.syncon.Customizer.vo.FaceVO;
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
+	import org.syncon.Customizer.vo.TextLayerVO;
 	
 	public class LayerCartPanelMediator extends Mediator 
 	{
@@ -30,8 +34,14 @@ package org.virid.component
 			this.calculateCost(); 
 			
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.CURRENT_LAYER_CHANGED, 
-				this.onCurrentLayerChanged);	
-			this.onCurrentLayerChanged( null ) 
+				this.onCurrentLayerChanged);
+			this.onCurrentLayerChanged( null );
+			
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.PRICE_CANGED, 
+				this.onPriceChanged );
+			this.onPriceChanged( null );
+			
+			
 			
 		}
 		
@@ -149,18 +159,13 @@ package org.virid.component
 		
 		private function calculateCost():void
 		{
-			var total : Number = 0
-			total += this.model.baseItem.price; 
-			for each ( var l : LayerBaseVO in this.model.layersVisible.toArray() )  
-			{
-				if ( l.visible ) 
-				{
-					total += l.cost; 
-				}
-			}
-			
-			this.ui.txtCost.text = '$'+total.toFixed(2); 
-			//this.model.currentFace.configured_price = total; 
+			this.model.calculateProductPrice();
+		}
+		
+		private function onPriceChanged(e:NightStandModelEvent):void{
+						this.ui.subCost.text = '$'+this.model.currentFace.price.toFixed(2);
+			this.ui.txtTotal.text = '$'+this.model.baseItem.grand_total.toFixed(2);
+		
 		}
 		
 	}

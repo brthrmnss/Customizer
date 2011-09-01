@@ -23,8 +23,15 @@ package  org.virid.component
 		override public function onRegister():void
 		{
 			this.ui.addEventListener( text_panel.ADD_TEXT,  this.onAddText);	
+			this.ui.addEventListener( text_panel.CHANGED_TEXT, this.onTextChanged);
 		}
-		 
+		
+		protected function onTextChanged(event:Event):void
+		{
+			this.model.calculateProductPrice();
+			
+		}
+		
 		private function onAddText(e:  CustomEvent): void
 		{
 			var obj : Object = e.data

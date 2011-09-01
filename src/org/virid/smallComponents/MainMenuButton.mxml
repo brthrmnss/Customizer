@@ -15,6 +15,19 @@
 			private var creationCompleteCalled:Boolean = false;
 			private var _iconSource:String = '';
 			private var _labelName:String = '';
+			public var _selected:Boolean;
+			
+			public function set selected(yo:Boolean):void{
+				
+				_selected = yo;
+				if(_selected){
+					this.currentState="selected";
+				}
+				else{
+					this.currentState="normal";	
+				
+				}
+			}
 			
 			protected function button1_initializeHandler(event:FlexEvent):void
 			{
@@ -28,12 +41,25 @@
 			protected function button1_rollOverHandler(event:MouseEvent):void
 			{
 				this.currentState = "hovered";
-				//this.transform.colorTransform = new ColorTransform("0xf60e1c");
+				
+				//change main icon color
+				var newColor:ColorTransform =  new ColorTransform();
+				newColor.color = 0xf6171c;
+				this.iconDisplay.transform.colorTransform = newColor;
 				
 			}
 			protected function button1_rollOutHandler(event:MouseEvent):void
 			{
+				if(_selected)
+					return;
 				this.currentState = "normal";
+				
+				
+				
+				//change main icon color
+				var newColor:ColorTransform =  new ColorTransform();
+				newColor.color = 0x8e8e8e;
+				this.iconDisplay.transform.colorTransform = newColor;
 			}
 			
 			
@@ -57,7 +83,7 @@
 		]]>
 	</fx:Script>
 	<fx:Declarations>
-		<s:Elastic id="elasticEasing"/>
+		<s:Linear id="easing"/>
 	</fx:Declarations>
 	<s:states> 
 		<s:State name="normal"/> 
@@ -67,19 +93,37 @@
 	</s:states> 
 	
 	<s:transitions>
-		<mx:Transition toState="*" autoReverse="true">
+		<mx:Transition toState="hovered" >
 			<s:Parallel>
 				<s:Move targets="{[iconDisplay]}" duration="200" />
-				<!--<s:AnimateColor target="{this.labelDisplay}" duration="200"  />-->
-				<!--<s:Animate target="{iconDisplay}"  duration="400" easer="{elasticEasing}" />-->
+				<!--<s:AnimateColor target="{this.iconDisplay}" duration="200"  />-->
+				<s:Animate target="{iconDisplay}"  duration="400" easer="{easing}" />
+			</s:Parallel>
+			
+		</mx:Transition>
+		<mx:Transition fromState="current" toState="hovered" >
+			<s:Parallel>
+				<s:Move targets="{[iconDisplay]}" duration="200" />
+				<!--<s:AnimateColor target="{this.iconDisplay}" duration="200"  />-->
+				<s:Animate target="{iconDisplay}"  duration="400" easer="{easing}" />
+			</s:Parallel>
+			
+		</mx:Transition>
+		<mx:Transition toState="normal" >
+			<s:Parallel>
+				<s:Move targets="{[iconDisplay]}" duration="200" />
+				<!--<s:AnimateColor target="{this.iconDisplay}" duration="200"  />-->
+				<s:Animate target="{iconDisplay}"  duration="200" easer="{easing}" />
 			</s:Parallel>
 			
 		</mx:Transition>
 	</s:transitions>	
 
 	<!-- <s:Image id="iconDisplay" horizontalCenter="0"/> -->
-	<s:BitmapImage id="iconDisplay" width="32" height="32" horizontalCenter="0" smooth="true" smoothingQuality="high" 
-				   y.hovered="-2">
+	<s:BitmapImage id="iconDisplay" 
+				   width="32" height="32" y.normal="0" y.hovered="-2" horizontalCenter="0" 
+				   smooth="true" smoothingQuality="high" 
+				   >
 		<!--<s:filters>
 			<s:DropShadowFilter alpha="0.1" blurX="2" blurY="2" distance="3" angle="45"/>
 		</s:filters>-->

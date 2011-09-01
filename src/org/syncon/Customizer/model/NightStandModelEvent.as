@@ -95,6 +95,7 @@ package  org.syncon.Customizer.model
 		
 		public static const AUTOMATING_COMPLETE : String = 'AUTOMATING_COMPLETE'; 
 		public static const AUTOMATE_CLEAR : String = 'AUTOMATE_CLEAR'; 
+		public static const PRICE_CANGED:String = 'PRICE_CHANGED';
 		
 		public function NightStandModelEvent(type:String, _data:Object = null)
 		{

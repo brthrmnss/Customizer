@@ -46,6 +46,7 @@
 				{
 					this.alpha = 0.4
 				}
+				this.btnDelete.visible = !this.layer.required;
 			}
 			
 			protected function group1_initializeHandler(event:FlexEvent):void

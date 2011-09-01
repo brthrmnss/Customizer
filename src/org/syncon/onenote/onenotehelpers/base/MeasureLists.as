@@ -60,8 +60,10 @@ package org.syncon.onenote.onenotehelpers.base
 		 * 
 		 * */
 		public var timer_CompletionFault : Timer = new Timer(10000,1); 
+		private var debug:Boolean=true;
 		public function measureLists( a : Array, fxDone : Function ) : void
 		{
+			trace('MeasureLists', 'start measure'); 
 			var measure : Boolean = false; 
 			for each ( var list :  IListVO in a ) 
 			{
@@ -93,7 +95,8 @@ package org.syncon.onenote.onenotehelpers.base
 		{
 			//var dbg : Array = [ this.currentIndex, this._measuringTool.lister.dataGroup.contentHeight, 
 			//	this.listsToMeasure[this.currentIndex] ] 
-			var dbg : Array = [ this.currentList, this._measuringTool]
+			var dbg : Array = [ this.currentList, this._measuringTool,
+			this.listsToMeasure, this.listsToMeasure.length]
 			trace('MeasureLists', 'failed to measure', this.currentIndex +1, this.currentList.name   )
 			//	this.measureDp()
 		}
@@ -111,7 +114,7 @@ package org.syncon.onenote.onenotehelpers.base
 		public function allDone() : void
 		{
 			this.timer_CompletionFault.stop(); 
-			trace('all done'); 
+			trace('MeasureLists', 'all done'); 
 			//this is so important, otherwise it will bind of loaded data ...
 			//cause all sorts of issues 
 			this._measuringTool.data = null; 
@@ -120,6 +123,7 @@ package org.syncon.onenote.onenotehelpers.base
 		}
 		public function nextMeasure(e:  Event=null) :   void
 		{
+			trace('MeasureLists', 'nextMeasure', this.currentIndex); 
 			//if result 
 			if ( e  != null && this.currentList != null  ) 
 			{
@@ -137,9 +141,15 @@ package org.syncon.onenote.onenotehelpers.base
 				this.currentList.height =this._measuringTool.height; 
 				this.currentList.width = this._measuringTool.width; 
 			}			
+			
+			if ( debug ) 
+			trace('MeasureLists', 'nextMeasure','compare',
+				this.currentIndex == this.listsToMeasure.length,
+				this.currentIndex , this.listsToMeasure.length); 
 			//last one
-			if ( this.currentIndex == this.listsToMeasure.length  ) 
+			if ( this.currentIndex == this.listsToMeasure.length -1 ) 
 			{
+				trace('MeasureLists', 'finsihed measuring'); 
 				_measuringTool.removeEventListener( ResizeEvent.RESIZE, this.nextMeasure);
 				this._measuringTool.data = null
 				this.allDone()

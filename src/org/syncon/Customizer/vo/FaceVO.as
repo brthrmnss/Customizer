@@ -101,6 +101,7 @@ package  org.syncon.Customizer.vo
 		 * had item been loaded before? 
 		 * */
 		public var imported:Boolean;
+		public var price:Number;
 		[Transient]
 		public function get lists():ArrayCollection
 		{

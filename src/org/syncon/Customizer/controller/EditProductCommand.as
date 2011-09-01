@@ -674,7 +674,8 @@ package org.syncon.Customizer.controller
 					dbg  = [this.model.layers.length, this.model.layers.toArray() ] 
 					this.model.undo.clearAll(); 
 					this.model.recreateDisplayableLayers(); 
-					this.model.currentLayer = this.model.getNextLayer()
+					this.model.currentLayer = this.model.getNextLayer();
+					this.model.calculateProductPrice();
 					//this.model.layersChanged(); 
 				}
 				else

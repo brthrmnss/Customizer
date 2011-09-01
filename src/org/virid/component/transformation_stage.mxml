@@ -118,12 +118,12 @@
 		
 		<s:Group 
 			height="15" bottom="0" horizontalCenter="0" width="100%">
-				<s:Button id="btnSwitchSide"
+				<s:Image id="btnSwitchSide" 
+						 source="assets/images/flip.png"
 						  click="switchSide_clickHandler(event)"
-						  left="0" bottom="0" toolTip="Switch Sides"
-						  icon="assets/images/flip.png" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"
+						  left="3" bottom="3" toolTip="Switch Sides"
 						  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-			
+			<!--icon="assets/images/flip.png" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"-->
 			
 				<s:HGroup paddingLeft="5" paddingRight="5" horizontalCenter="0">
 

@@ -40,6 +40,9 @@ package  org.virid.component
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.BASE_ITEM_CHANGED, 
 				this.onLoadLocations);	
 			this.onLoadLocations(); */
+
+			this.ui.addEventListener( engrave_panel.CHANGED_TEXT, 
+				this.onTextChanged );	
 			
 			this.ui.addEventListener( LayerTextInspector.DATA_CHANGED, 
 				this.onDataChanged );	
@@ -49,6 +52,12 @@ package  org.virid.component
 			this.ui.addEventListener( LayerTextInspector.CHANGE_FONT_FAMILY, 
 				this.onFontChanged );	
 			//onFontChanged(null)
+		}
+		
+		protected function onTextChanged(event:Event):void
+		{
+			this.model.calculateProductPrice();
+			
 		}
 		public var layer : TextLayerVO = new TextLayerVO(); 
 		private function onFontChanged(event: CustomEvent):void

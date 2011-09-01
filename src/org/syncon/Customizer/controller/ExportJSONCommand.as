@@ -78,19 +78,26 @@ package  org.syncon.Customizer.controller
 						if(layer.type == TextLayerVO.Type)
 						{
 							var textLayer :  TextLayerVO = layer as TextLayerVO; 
-							jsonLayer.fontFamily = textLayer.fontFamily;
-							if(layer.subType == ViridConstants.SUBTYPE_ENGRAVE)
-							{
-								//engrave layer
+							jsonLayer.fontFamily = textLayer.fontFamily;								//engrave layer
 								textLayer.fontFamily; 
 								textLayer.fontSize
+							if(layer.subType == ViridConstants.SUBTYPE_ENGRAVE)
+							{
+								product.type = "engrave";
 							}
 							else
 							{
 								//design text layer	
 							
-							}
-						}
+							}							
+							var nlayer:TextLayerVO = layer as TextLayerVO;
+							jsonLayer.text = nlayer.text;
+						}						
+						//grab content or specific information off of this layer
+						/*if(layer.subType == ViridConstants.SUBTYPE_ENGRAVE){//TODO: Check subtype for engrave|monogram
+							product.type = "engrave";
+
+						}*/
 						if(layer.type == ImageLayerVO.Type)
 						{
 							var imgLayer : ImageLayerVO = layer as ImageLayerVO;
@@ -118,12 +125,7 @@ package  org.syncon.Customizer.controller
 						
 						jsonLayer.transform = jsonTransform;
 						
-						//grab content or specific information off of this layer
-						if(layer.type == "TEX"){//TODO: Check subtype for engrave|monogram
-							product.type = "engrave";
-							var nlayer:TextLayerVO = layer as TextLayerVO;
-							jsonLayer.text = nlayer.text;
-						}
+
 						layers.push(jsonLayer);
 						
 					}
@@ -155,28 +157,37 @@ package  org.syncon.Customizer.controller
 						exportObj['TEXT4'] = product.Faces[1].Layers[1].text;
 					}catch(e:Error){};
 					
+					trace( exportObj['TEXT1'] );//product.layer);
+					for ( var prop: Object in exportObj ) 
+					{
+						trace( prop, exportObj[prop]  )
+					}
+					service = new HTTPService();
+					service.url = "../save.aspx";
+					service.method = "POST";
+					service.resultFormat = "text";
+					service.addEventListener(ResultEvent.RESULT,httpResult);
+					service.addEventListener(FaultEvent.FAULT, httpFault);
+					service.send(exportObj);
+					
 				}
 				else
 				{
-					exportObj['ACTION'] = "engrave";
+					var exportThis:Object = JSON.encode(product);
+					/*exportObj['ACTION'] = "engrave";
 					exportObj['PRODUCTID'] = this.model.baseItem.sku;
-					exportObj['LAYERS'] = JSON.decode(product.Faces); 
+					exportObj['LAYERS'] = JSON.decode(product.Faces); */
+					
+					service = new HTTPService();
+					service.url = "../save.aspx";
+					service.method = "POST";
+					service.contentType="application/json";
+					service.resultFormat = HTTPService.RESULT_FORMAT_TEXT;
+					service.addEventListener(ResultEvent.RESULT,httpResult);
+					service.addEventListener(FaultEvent.FAULT, httpFault);
+					service.send(exportThis);
 				}
-				
-				//var exportThis:Object = JSON.encode(exportObj);
-				//finalJSON = exportThis;
-				trace( exportObj['TEXT1'] );//product.layer);
-				for ( var prop: Object in exportObj ) 
-				{
-					trace( prop, exportObj[prop]  )
-				}
-				service = new HTTPService();
-				service.url = "../save.aspx";
-				service.method = "POST";
-				service.resultFormat = "text";
-				service.addEventListener(ResultEvent.RESULT,httpResult);
-				service.addEventListener(FaultEvent.FAULT, httpFault);
-				service.send(exportObj);
+
 				
 			}				
 			
@@ -193,7 +204,7 @@ package  org.syncon.Customizer.controller
 		
 		protected function httpFault(event:FaultEvent):void
 		{
-			Alert.show(event.fault.faultString);
+			Alert.show(event.fault.faultString );
 			
 		}
 		/*		

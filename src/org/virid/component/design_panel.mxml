@@ -247,10 +247,11 @@
 			</s:VGroup>
 			
 			<s:Image id="openImageUpload" verticalCenter="0" 
-					 right="0" width="55" height="30"
+					 right="0" width="60" height="30"
 					 click="openImageUpload_clickHandler(event)"
 					 buttonMode="true" useHandCursor="true" mouseChildren="false"
-					 source="assets/images/none.jpg"/>
+					 source="assets/images/upload.jpg"
+					 smooth="true"/>
 			
 		</s:Group>
 		
@@ -270,15 +271,15 @@
 				<s:HGroup width="200" paddingTop="10">
 					<s:Label text="Browse zippo image library" fontSize="16"  />
 					<s:Label text="$9.95/Image"
-							 styleName="price" paddingTop="1"/>
+							 styleName="price" paddingTop="1" paddingLeft="-4"/>
 				</s:HGroup>
 				<s:Label bottom="0" left="0" fontSize="12" text="A variety of borders, backgrounds and themes" styleName="note" />
 			</s:VGroup>
 			
-			<s:Image id="openClipart" 
-					 right="0" width="55" height="30" click="openClipart_clickHandler(event)"
+			<s:Image id="openClipart" smooth="true"
+					 right="0" width="60" height="30" click="openClipart_clickHandler(event)"
 					 buttonMode="true" useHandCursor="true" mouseChildren="false"
-					 source="assets/images/none.jpg" verticalCenter="0"/>
+					 source="assets/images/browse.jpg" verticalCenter="0"/>
 			
 		</s:Group>
 		

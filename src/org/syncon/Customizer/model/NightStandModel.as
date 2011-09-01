@@ -10,6 +10,7 @@ package org.syncon.Customizer.model
 	
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
+	import mx.rpc.mxml.Concurrency;
 	
 	import org.robotlegs.mvcs.Actor;
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
@@ -601,7 +602,11 @@ package org.syncon.Customizer.model
 						if(l.type == ImageLayerVO.Type )
 						{
 							var imgLayer:ImageLayerVO = l as ImageLayerVO;
-							if(imgLayer.source == null || imgLayer.source == "")
+							if(imgLayer.source == null && imgLayer.url == null)
+								continue;
+							if( imgLayer.source == "")
+								continue;
+							if( imgLayer.url == "" )
 								continue;
 						}
 						subTotal += l.cost; 

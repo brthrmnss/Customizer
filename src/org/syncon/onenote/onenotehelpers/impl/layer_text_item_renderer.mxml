@@ -46,6 +46,7 @@
 				s.listenForObj( layer, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; 	
 				if ( layer == null ) 
 				{
+					lastLayer = null
 					this.txt.text = ''; 
 					this.txtEdit.text = ''; 
 					return; 
@@ -59,7 +60,10 @@
 				if ( this.active == false ) 
 					return; 
 				if ( layer == null ) 
-					return; 
+				{
+					lastLayer = null
+					return;
+				}
 				if ( this.lastLayer != this.layer ) 
 				{
 					//this.visible = this.layer.visible; 

@@ -20,7 +20,7 @@ package org.syncon.Customizer.controller
 		
 		override public function execute():void
 		{
-			if ( this.model.blockUndos )
+			if ( this.model.blockUndoExecution )
 			{
 				trace('block undo'); 
 				return;
@@ -165,7 +165,7 @@ package org.syncon.Customizer.controller
 					//upload sends bitmapdata bytes, otherwise we have strings
 					if ( event.data  != null  ) 
 					{
-					imgLayer.url  =   event.data.toString()
+						imgLayer.url  =   event.data.toString()
 					}
 					if ( event.data2 != null ) 
 					{
@@ -224,6 +224,8 @@ package org.syncon.Customizer.controller
 				if ( event.undo == false )
 				{
 					txtLayer = this.model.currentLayer as TextLayerVO; 
+					if ( event.data2 != null ) //the layer to target
+						txtLayer = event.data2 as TextLayerVO; 
 					if ( event.firstTime ) 
 					{
 						/*txtLayer.x = 0; 
@@ -232,7 +234,8 @@ package org.syncon.Customizer.controller
 					event.oldData = txtLayer.fontFamily; 
 					txtLayer.fontFamily = event.data.toString() 
 					txtLayer.update('fontFamily'); 
-					this.model.currentLayer = txtLayer; 
+					if ( event.data2 == null ) 
+						this.model.currentLayer = txtLayer; 
 					event.data2 = txtLayer ; //don't like this feel like storing old layer should be automatic ...
 				}
 				else
@@ -244,8 +247,73 @@ package org.syncon.Customizer.controller
 				//this.model.currentPage.updated();
 				//this.model.layersChanged(); 
 				this.dispatch( new EditProductCommandTriggerEvent(
-					EditProductCommandTriggerEvent.FONT_SIZE_CHANGED, event, null ) ) 
+					EditProductCommandTriggerEvent.FONT_FAMILY_CHANGED, event, null ) ) 
 			}
+			
+			if ( event.type == EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY_PRODUCT ) 
+			{
+				this.model.blockUndoAdding = true
+				if ( event.undo == false )
+				{
+					
+					var fontName : String = event.data.toString() 
+					//go through everything on the stage ... 
+					//if text / engrave change font family 
+					//save as bulk 
+					for each ( var face : FaceVO in this.model.baseItem.faces.toArray() )  
+					{
+						if ( face.imported )
+						{
+							for each (   layer in face.layers.toArray() )  
+							{
+								//see if this layer is empty
+								if(layer.type == TextLayerVO.Type )
+								{
+									var bulkEvent :EditProductCommandTriggerEvent = new EditProductCommandTriggerEvent ( 
+										EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY, fontName , layer 	) 
+									this.dispatch( bulkEvent )
+								}
+								if ( event.firstTime )
+								{
+									//some how need to collect the events 
+									event.subEvents.push(bulkEvent )
+								}
+							}
+						}
+						else
+						{
+							//non importaed layers are not visible so we must target theri template form 
+							for each (   layer in face.layersToImport)   
+							{
+								//see if this layer is empty
+								if(layer.type == TextLayerVO.Type )
+								{
+									txtLayer = layer as TextLayerVO; 
+									txtLayer.fontFamily = fontName 
+								}
+								/*if ( event.firstTime )
+								{
+								//some how need to collect the events 
+								event.subEvents.push(bulkEvent )
+								}*/
+							}
+						}
+					}
+				}
+				else
+				{
+					for each ( bulkEvent in  event.subEvents )  
+					{
+						bulkEvent.performUndo() //how ot perforom redo?/ or the original undo or something ... 
+					}
+				}		
+				this.model.blockUndoAdding = false
+				//this.model.currentPage.updated();
+				//this.model.layersChanged(); 
+				this.dispatch( new EditProductCommandTriggerEvent(
+					EditProductCommandTriggerEvent.FONT_FAMILY_PRODUCT_CHANGED, event, null ) ) 
+			}
+			
 			if ( event.type == EditProductCommandTriggerEvent.CHANGE_COLOR 
 				&& this.model.currentLayer is ColorLayerVO ) 
 			{
@@ -737,21 +805,21 @@ package org.syncon.Customizer.controller
 						layer = event.data3 as LayerBaseVO
 					event.oldData = layer.x; 
 					event.oldData2 = layer.y; 
-					this.model.blockUndos=true
+					this.model.blockUndoExecution=true
 					layer.setXY( event.data, event.data2 ) ; 
 					layer.update(); 
 					event.data3 = layer ; 
-					this.model.blockUndos=false
+					this.model.blockUndoExecution=false
 					if ( debugUndos )   trace('go', event.data, event.data2 )
 				}
 				else
 				{
-					this.model.blockUndos=true
+					this.model.blockUndoExecution=true
 					layer = event.data3 as LayerBaseVO; 
 					layer.setXY( event.oldData, event.oldData2 ) ; 
 					layer.update(); 
 					if ( debugUndos )  trace('redo', event.data, event.data2 )
-					this.model.blockUndos=false
+					this.model.blockUndoExecution=false
 				}		
 				//this.model.currentPage.updated();
 				//this.model.layersChanged(); 
@@ -774,21 +842,21 @@ package org.syncon.Customizer.controller
 						layer = event.data3 as LayerBaseVO
 					event.oldData = layer.width; 
 					event.oldData2 = layer.height; 
-					this.model.blockUndos=true
+					this.model.blockUndoExecution=true
 					layer.setWH( event.data, event.data2 ) ; 
 					layer.update(); 
 					event.data3 = layer ; 
-					this.model.blockUndos=false
+					this.model.blockUndoExecution=false
 					//trace('go', event.data, event.data2 )
 				}
 				else
 				{
-					this.model.blockUndos=true
+					this.model.blockUndoExecution=true
 					layer = event.data3 as LayerBaseVO; 
 					layer.setWH( event.oldData, event.oldData2 ) ; 
 					layer.update(); 
 					//trace('redo', event.data, event.data2 )
-					this.model.blockUndos=false
+					this.model.blockUndoExecution=false
 				}		
 				//this.model.currentPage.updated();
 				//this.model.layersChanged(); 
@@ -801,25 +869,25 @@ package org.syncon.Customizer.controller
 				if ( event.undo == false )
 				{
 					layer = this.model.currentLayer as LayerBaseVO; 
-			 
+					
 					if ( event.data3 != null ) 
 						layer = event.data3 as LayerBaseVO
 					event.oldData = layer.rotation; 
-					this.model.blockUndos=true
+					this.model.blockUndoExecution=true
 					layer.rotation = Number( event.data )
 					layer.update(); 
 					event.data3 = layer ; 
-					this.model.blockUndos=false
+					this.model.blockUndoExecution=false
 					//trace('go', event.data, event.data2 )
 				}
 				else
 				{
-					this.model.blockUndos=true
+					this.model.blockUndoExecution=true
 					layer = event.data3 as LayerBaseVO; 
 					layer.rotation = Number( event.oldData )
 					layer.update(); 
 					//trace('redo', event.data, event.data2 )
-					this.model.blockUndos=false
+					this.model.blockUndoExecution=false
 				}		
 				this.dispatch( new EditProductCommandTriggerEvent(
 					EditProductCommandTriggerEvent.LAYER_ROTATED, event, null ) ) 

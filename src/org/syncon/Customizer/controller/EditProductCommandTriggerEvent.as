@@ -25,8 +25,11 @@ package org.syncon.Customizer.controller
 		public static const CHANGE_IMAGE_URL:String = 'CHANGE_IMAGE_URL.w';
 		public static const IMAGE_URL_CHANGED:String = 'IMAGE_URL_CHANGED.w';		
 		
-		public static const CHANGE_FONT_FAMILY:String = 'FONT_FAMILY_CHANGED.w';
+		public static const CHANGE_FONT_FAMILY:String = 'CHANGE_FONT_FAMILY.w';
 		public static const FONT_FAMILY_CHANGED:String = 'FONT_FAMILY_CHANGED.w';			
+		
+		public static const CHANGE_FONT_FAMILY_PRODUCT:String = 'CHANGE_FONT_FAMILY_PRODUCT.w';
+		public static const FONT_FAMILY_PRODUCT_CHANGED:String = 'FONT_FAMILY_PRODUCT_CHANGED.w';	
 		
 		public static const CHANGE_COLOR:String = 'CHANGE_COLOR.w';
 		public static const COLOR_CHANGED:String = 'COLOR_CHANGED.w';			
@@ -68,6 +71,10 @@ package org.syncon.Customizer.controller
 			 * first time so we don' destroy something on redo ... ? 
 			 * */
 		public var firstTime:Boolean=true;
+		/**
+		 * if is bulk evetnt ... save these thins ..
+		 * */
+		public var subEvents: Array=[];
 		
 		public function EditProductCommandTriggerEvent(type:String , data :  Object = null , data2 : Object = null , 
 													   data3 : Object = null ) 
@@ -129,6 +136,8 @@ package org.syncon.Customizer.controller
 				CHANGE_TEXT_ALIGN,
 				CHANGE_COLOR,
 				CHANGE_LAYER_COLOR,
+				
+				CHANGE_FONT_FAMILY_PRODUCT,
 				
 				CHANGE_IMAGE_URL,
 				

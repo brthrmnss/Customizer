@@ -21,6 +21,7 @@ package org.syncon.Customizer.view.ui
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
+	import org.syncon.Customizer.model.NightStandModelEvent;
 	import org.syncon.Customizer.vo.ColorLayerVO;
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
@@ -71,7 +72,8 @@ package org.syncon.Customizer.view.ui
 			
 			this.ui.addEventListener( layer_item_renderer.REPOSITION, 
 				this.onReposition ) ; 
-			
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.PRESENTATION_MODE_CHANGED, 
+				this.onPreviewModeChanged);	
 			/*
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.CURRENT_LAYER_CHANGED, 
 			this.onLayerChanged);	
@@ -654,6 +656,8 @@ package org.syncon.Customizer.view.ui
 				if ( this.layer.visible) //dont' select invisible layers
 					this.model.objectHandles.selectionManager.setSelected( this.flexModel1 ) ; 
 				/*		}*/
+				
+				this.onPreviewModeChanged(null);
 			}
 			
 			this.flexModel1.isLocked = this.layer.locked; 
@@ -814,6 +818,33 @@ package org.syncon.Customizer.view.ui
 			
 			this.model.currentLayer = this.ui.listData as LayerBaseVO; 
 		}		
+		
+		/**
+		 * When IN preview mode ...
+		 * */
+		private function onPreviewModeChanged(e:Event):void
+		{
+			if ( this.layer == null ) 
+				return; 
+			// TODO Auto Generated method stub
+			//unselect all 
+			//remove background on engraves
+			//mask opacity 100%
+			if ( this.model.previewMode ) 
+			{
+				if ( this.model.fxIsEngraveLayer( this.layer ) ) 
+				{
+					this.ui.text.bg.visible = false; 
+				}
+			}
+			else
+			{
+				if ( this.model.fxIsEngraveLayer( this.layer ) ) 
+				{
+					this.ui.text.bg.visible = true; 
+				}
+			}
+		}
 		
 		private function get isText() : Boolean
 		{

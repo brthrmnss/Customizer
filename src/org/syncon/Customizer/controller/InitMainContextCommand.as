@@ -53,9 +53,9 @@ package org.syncon.Customizer.controller
 			{
 				//this.createDefaultProduct() ; 
 				
-				//this.createDetailedDefaultProduct();
-				this.createDetailedDefaultProduct_Engrave()
-				this.createDetailedDefaultProduct_Engrave2()
+				this.createDetailedDefaultProduct();
+				//this.createDetailedDefaultProduct_Engrave()
+				//this.createDetailedDefaultProduct_Engrave2()
 				if ( this.model.flex ) 
 				{
 					
@@ -257,7 +257,7 @@ package org.syncon.Customizer.controller
 			//textLayer.minFontSize = 6
 			textLayer.prompt_layer = true; 
 			face.layersToImport.push(textLayer);
-			
+			textLayer.fonts = fonts; 
 			
 			textLayer = new TextLayerVO;
 			textLayer.text = 'Add' 
@@ -315,8 +315,7 @@ package org.syncon.Customizer.controller
 			face.layersToImport.push(colorLayer);
 			*/
 			var textLayer: TextLayerVO = new TextLayerVO;
-			textLayer.text = '';
-			textLayer.cost = 4.95;
+			textLayer.text = '' 
 			textLayer.name = 'Top Front'
 			textLayer.maxChars = 3
 			textLayer.location = 'front small'; 
@@ -352,7 +351,6 @@ package org.syncon.Customizer.controller
 			
 			textLayer = new TextLayerVO;
 			textLayer.text = '' 
-			textLayer.cost = 4.95;
 			textLayer.name = 'Text'
 			textLayer.maxChars = 3
 			textLayer.fonts = fonts; 
@@ -398,7 +396,6 @@ package org.syncon.Customizer.controller
 			
 			textLayer = new TextLayerVO;
 			textLayer.text = 'bac' 
-			textLayer.cost = 20.95;
 			textLayer.name = 'Text'
 			textLayer.maxChars = 3
 			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
@@ -417,11 +414,10 @@ package org.syncon.Customizer.controller
 			//textLayer.minFontSize = 6
 			textLayer.prompt_layer = true; 
 			face.layersToImport.push(textLayer);
-			
+			textLayer.fonts = fonts; 
 			
 			textLayer = new TextLayerVO;
 			textLayer.text = 'Add' 
-			textLayer.cost = 10.95;
 			textLayer.name = 'Text'
 			textLayer.maxChars = 3
 			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
@@ -439,6 +435,7 @@ package org.syncon.Customizer.controller
 			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
 			//textLayer.minFontSize = 6
 			textLayer.prompt_layer = true; 
+			textLayer.fonts = fonts; 
 			face.layersToImport.push(textLayer);
 			
 			this.model.baseItem = base; 

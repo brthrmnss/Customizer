@@ -1,5 +1,7 @@
 package  org.virid.component
 {
+	import flash.events.Event;
+	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
@@ -20,10 +22,38 @@ package  org.virid.component
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.CURRENT_LAYER_CHANGED, 
 				this.onLayersChanged);	
 			this.onLayersChanged( null ) 
+				
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.PRESENTATION_MODE_CHANGED, 
+				this.onPresentationModeChanged);	
+				
+		}
+		
+		private function onPresentationModeChanged(e:Event):void
+		{
+			if ( this.model.previewMode ) 
+			{
+				
+				this.ui.designPanel.enabled = false; 
+				this.ui.designPanel.alpha = 0.3
+				//this.ui.transformationStage
+				this.ui.layerList.enabled = false; 
+				this.ui.layerList.alpha = 0.3
+			}
+			else
+			{
+				this.ui.designPanel.enabled = true; 
+				this.ui.designPanel.alpha = 1
+				//this.ui.transformationStage
+				this.ui.layerList.enabled = true; 
+				this.ui.layerList.alpha = 1
+
+			}
 		}
 		
 		private function onLayersChanged(param0:Object):void
 		{
+			if ( this.model.previewMode )
+				return;
 			if ( this.model.currentLayer == null ) 
 			{
 				this.ui.currentState = 'normal' 

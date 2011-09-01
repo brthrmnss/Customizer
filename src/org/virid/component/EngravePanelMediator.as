@@ -66,9 +66,13 @@ package  org.virid.component
 			var fontName : String = font.name; 
 			if ( font.swf_name != null && font.swf_name != '' ) 
 				fontName = font.swf_name; 
-			
+			/*
 			this.dispatch( new EditProductCommandTriggerEvent ( 
 				EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY, fontName 
+			) )  
+				*/
+			this.dispatch( new EditProductCommandTriggerEvent ( 
+				EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY_PRODUCT, fontName 
 			) )  
 		}
 		public var s : ItemRendererHelpers = new ItemRendererHelpers(null)

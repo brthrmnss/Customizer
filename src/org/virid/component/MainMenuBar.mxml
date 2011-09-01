@@ -14,6 +14,7 @@
 			
 			import spark.skins.spark.ButtonSkin;
 			public static var ADD_TEXT:String='ADD_TEXT';
+			public static var ON_PREVIEW:String='ON_PREVIEW';
 			public static var ADD_IMAGE:String='ADD_IMAGE';
 			public static var REDO:String='REDO';
 			public static var UNDO:String='UNDO';
@@ -78,6 +79,12 @@
 				
 			}
 			
+			protected function onPreivew(event:MouseEvent):void
+			{
+				this.dispatchEvent( new Event(ON_PREVIEW) );
+				
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -124,6 +131,7 @@
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Preview" id="btnPreview"
 										icon="assets/images/preview.png" width="66"
+										 click="onPreivew(event)"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Save It" 
 										icon="assets/images/save.png" width="56"

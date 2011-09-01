@@ -1,5 +1,6 @@
 package   org.syncon.Customizer.view.ui
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import org.robotlegs.mvcs.Mediator;
@@ -18,11 +19,9 @@ package   org.syncon.Customizer.view.ui
 				this.onFaceChanged);	
 			this.onFaceChanged( null ) 
 			
-			this.ui.addEventListener( DesignView.UPDATE_JSON, 
-				this.onUpdateJSON);	
-			
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.LAYERS_CHANGED, 
 				this.onLayersChanged);				
+	 
 			
 			this.model.viewer = this.ui.viewer22
 			this.ui.viewer22.groupBg.visible = false; 
@@ -37,33 +36,21 @@ package   org.syncon.Customizer.view.ui
 			if ( event.target != this.ui.viewer22.workspace ) 
 				return; 
 			this.model.objectHandles.selectionManager.clearSelection()
-				//desleect from list ...
-				this.model.currentLayer = null; 
+			//desleect from list ...
+			this.model.currentLayer = null; 
 		}
 		
 		private function onLayersChanged(e:Object):void
 		{
-			// TODO Auto Generated method stub
-			//this.onBaseItemChanged(null); 
 			this.ui.viewer22.controller.displayDp(); 
 		}
 		
-/*		private function onBaseItemChanged(param0:Object):void
-		{
-			this.ui.viewer22.controller.dataProvider  = this.model.baseItem; 
-			//this.ui.list.dataProvider = this.model.layers; 
-		}*/
 		private function onFaceChanged(param0:Object):void
 		{
 			this.ui.viewer22.controller.dataProvider  = this.model.currentFace; 
 			//this.ui.list.dataProvider = this.model.layers; 
 		}
-		private function onUpdateJSON(e:  CustomEvent): void
-		{
-			var obj : Object = e.data
-			
-		}		
-		
+
 		
 		
 	}

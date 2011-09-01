@@ -433,7 +433,7 @@ package org.syncon.Customizer.view.ui
 			//v.maskLayer_.visible = false
 			/*v.workspace.mask = v.maskLayer_
 			v.maskLayer_.blendMode = BlendMode.NORMAL; */
-			v.maskLayer_.blendMode = BlendMode.NORMAL;
+			//v.maskLayer_.blendMode = BlendMode.NORMAL;
 			//to see the mask uncommend the lower lin ..
 			//v.workspace.mask = null
 			/*
@@ -446,15 +446,15 @@ package org.syncon.Customizer.view.ui
 			*/
 			
 			v.workspace.mask = v.maskLayer_
-			v.workspace.maskType = MaskType.CLIP
+			//v.workspace.maskType = MaskType.CLIP
 			v.workspace.maskType = MaskType.ALPHA
-			v.maskLayer_.blendMode = BlendMode.NORMAL; 
+			//v.maskLayer_.blendMode = BlendMode.NORMAL; 
 			v.maskLayer_.blendMode = BlendMode.ERASE; 
-			
+			v.maskBg.alpha
 			//can't believe this fixed it 
 			if ( wait ) 
 			{
-			this.ui.callLater( this.adjustMaskToMatchLayer, [false] );
+			//this.ui.callLater( this.adjustMaskToMatchLayer, [false] );
 			}
 			trace('mask widths and height',  v.maskLayer_.width, v.maskLayer_.height , v.maskLayer_.parent); 
 			trace('mask widths and height',   this.ui.width, this.ui.height , this.ui.layer.width, this.ui.layer.height) ; 

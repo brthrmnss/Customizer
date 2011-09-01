@@ -587,6 +587,7 @@ package org.syncon.Customizer.controller
 					if ( v != null ) //the first time it might not have been set yet
 					{	
 						v.workspace.mask = null;//v.maskLayer_
+						//v.maskBg.alpha
 						v.maskBg.alpha = this.model.currentFace.image_mask_alpha; 
 					}
 					if ( face.imported ) 

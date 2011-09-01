@@ -103,6 +103,7 @@ package  org.virid.component
 				{
 					this.model.objectHandles.selectionManager.setSelected( o )
 				}
+				if ( ! isNaN( this.oldMaskAlpha ) ) 
 				this.ui.viewer22.maskBg.alpha = this.oldMaskAlpha 
 			}
 		}

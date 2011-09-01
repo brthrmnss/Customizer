@@ -70,7 +70,7 @@ package  org.virid.component
 			var colorLayer : ColorLayerVO = this.model.getLayerByName( colorLayerName ) as ColorLayerVO
 			if(colorLayer == null)return;
 			this.ui.selectedColorSwatch.color = colorLayer.color
-
+			
 		}
 		
 		protected function onAddUploadImage(e:CustomEvent):void
@@ -109,6 +109,11 @@ package  org.virid.component
 					this.model.currentLayer = imgLayer; 
 				}
 			}
+			
+			this.model.currentLayer.repositionedOnce = false
+			this.model.currentLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
+			this.model.currentLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
+				
 			//upload to me,  if i am current layer 
 			if (  this.ui.layer == this.model.currentLayer ) 
 			{
@@ -152,7 +157,7 @@ package  org.virid.component
 			
 			var currentLayer :  LayerBaseVO = this.model.currentLayer; 
 			
-
+			
 			
 			if ( inViridMode ) 
 			{
@@ -180,7 +185,7 @@ package  org.virid.component
 			}
 			this.dispatch( new EditProductCommandTriggerEvent (
 				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, e.url) ) ;
-				this.model.calculateProductPrice()
+			this.model.calculateProductPrice()
 		}
 		
 		

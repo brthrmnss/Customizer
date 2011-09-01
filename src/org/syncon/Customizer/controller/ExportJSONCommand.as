@@ -34,7 +34,7 @@ package  org.syncon.Customizer.controller
 				//trace('bigbing');
 				var product:Object = new Object;
 				var Faces:Array = new Array;
-				var Face:Object = new Object;
+				var Face:Object;
 				var layers:Array = new Array;
 				
 				product.name = this.model.baseItem.name;
@@ -45,11 +45,13 @@ package  org.syncon.Customizer.controller
 				//just dealign with one face at the moment
 
 				for each(var Surface:FaceVO in this.model.baseItem.faces){
+					
+					Face = new Object;
 					Face.name = Surface.name;
 					Face.image = Surface.base_image_url;
 					Face.mask = Surface.image_mask;
 					
-					for each( var layer: LayerBaseVO in this.model.layersVisible){
+					for each( var layer: LayerBaseVO in this.model. layersVisible){
 						
 						var jsonLayer:Object = {};
 						var jsonMedia:Object = {};
@@ -76,6 +78,7 @@ package  org.syncon.Customizer.controller
 						if(layer.type == TextLayerVO.Type)
 						{
 							var textLayer :  TextLayerVO = layer as TextLayerVO; 
+							jsonLayer.fontFamily = textLayer.fontFamily;
 							if(layer.subType == ViridConstants.SUBTYPE_ENGRAVE)
 							{
 								//engrave layer
@@ -110,6 +113,7 @@ package  org.syncon.Customizer.controller
 						}
 						jsonLayer.Media = jsonMedia;
 						jsonLayer.Fonts = jsonFonts;
+						
 						jsonLayer.transform = jsonTransform;
 						
 						//grab content or specific information off of this layer
@@ -123,16 +127,17 @@ package  org.syncon.Customizer.controller
 					}
 					Face.Layers = layers;
 					Faces.push(Face);
+					product.Faces = Faces;
 				}
 				
-				product.Faces = Faces;
+				
 				
 				var exportObj:Object = new Object;
 				
 				if(product.type == "engrave"){
 					exportObj['ACTION'] = "engrave";
-					exportObj['PRODUCTID'] = this.model.tempsku;
-					exportObj['FONT'] = "default";
+					exportObj['PRODUCTID'] = this.model.baseItem.sku;
+					exportObj['FONT'] = this.model.currentLayer;
 					try{
 					exportObj['TEXT1'] = product.Faces[0].Layers[0].text;
 					}catch(e:Error){};
@@ -153,7 +158,7 @@ package  org.syncon.Customizer.controller
 				
 				//var exportThis:Object = JSON.encode(exportObj);
 				//finalJSON = exportThis;
-				trace(exportObj.toString());//product.layer);
+				trace( exportObj['TEXT1'] );//product.layer);
 				for ( var prop: Object in exportObj ) 
 				{
 					trace( prop, exportObj[prop]  )

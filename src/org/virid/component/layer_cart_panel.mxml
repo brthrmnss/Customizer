@@ -116,7 +116,7 @@
 			</s:Group>
 			<s:Group width="100%">
 				<s:Label   text="Total"/>
-				<s:Label id="txtTotal" textAlign="right" right="18" styleName="price" text="$--.00"/>
+				<s:Label id="txtTotal" textAlign="right" right="18" styleName="price" text="$0.00"/>
 			</s:Group>
 		</s:VGroup>
 

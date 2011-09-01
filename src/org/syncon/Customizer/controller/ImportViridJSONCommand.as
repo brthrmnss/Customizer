@@ -55,7 +55,7 @@ package  org.syncon.Customizer.controller
 					faceImport.image = faceImport.image.replace('/customize/', ''  ) ;*/
 				face.base_image_url = faceImport.image;
  
-				face.image_mask_alpha = .4;
+				face.image_mask_alpha = .9;
 				///face.base_image_url = 'assets/images/imgbase.png'
 				if(faceImport.mask == null || faceImport.mask == "null")
 					face.image_mask ="";

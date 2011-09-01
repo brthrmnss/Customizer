@@ -33,16 +33,16 @@ package  org.virid.component
 			if ( this.model.previewMode ) 
 			{
 				
-				this.ui.designPanel.enabled = false; 
-				this.ui.designPanel.alpha = 0.3
+				this.ui.panels.enabled = false; 
+				this.ui.panels.alpha = 0.3
 				//this.ui.transformationStage
 				this.ui.layerList.enabled = false; 
 				this.ui.layerList.alpha = 0.3
 			}
 			else
 			{
-				this.ui.designPanel.enabled = true; 
-				this.ui.designPanel.alpha = 1
+				this.ui.panels.enabled = true; 
+				this.ui.panels.alpha = 1
 				//this.ui.transformationStage
 				this.ui.layerList.enabled = true; 
 				this.ui.layerList.alpha = 1

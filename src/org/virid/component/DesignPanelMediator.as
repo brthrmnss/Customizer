@@ -114,11 +114,13 @@ package  org.virid.component
 			{
 				this.dispatch( new EditProductCommandTriggerEvent (
 					EditProductCommandTriggerEvent.CHANGE_IMAGE_URL,  null, bytes  ) ) ; 
+				this.model.calculateProductPrice();
 				return; 
 			}
 			//add to new layer 
 			this.dispatch( new EditProductCommandTriggerEvent (
-				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, null, bytes ) ) ; 
+				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, null, bytes ) ) ;
+			this.model.calculateProductPrice();
 		}
 		private function onAddText(e:  CustomEvent): void
 		{
@@ -173,10 +175,12 @@ package  org.virid.component
 			{
 				this.dispatch( new EditProductCommandTriggerEvent (
 					EditProductCommandTriggerEvent.CHANGE_IMAGE_URL, e.url) ) ; 
+				this.model.calculateProductPrice()
 				return; 
 			}
 			this.dispatch( new EditProductCommandTriggerEvent (
-				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, e.url) ) ; 
+				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, e.url) ) ;
+				this.model.calculateProductPrice()
 		}
 		
 		

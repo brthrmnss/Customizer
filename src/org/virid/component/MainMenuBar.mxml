@@ -21,7 +21,8 @@
 			public static var EXPORTJSON:String='EXPORTJSON';
 			public static var GO_TO_BACKGROUND_PANEL:String='GO_TO_BACKGROUND_PANEL';
 			public static var GO_TO_ENGRAVE_PANEL : String  = 'GO_TO_ENGRAVE_PANEL'; 
-			private var lastBtnSelected:MainMenuButton;
+			
+			public var lastBtnSelected:MainMenuButton;
 			
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{

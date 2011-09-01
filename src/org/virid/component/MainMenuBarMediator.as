@@ -13,6 +13,7 @@ package  org.virid.component
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
+	import org.syncon.Customizer.model.ViridConstants;
 	import org.syncon.Customizer.view.ui.Toolbar;
 	import org.syncon.Customizer.vo.ColorLayerVO;
 	import org.syncon.Customizer.vo.ImageLayerVO;
@@ -46,8 +47,15 @@ package  org.virid.component
 			this.onFaceChanged(); 
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.LAYERS_CHANGED, 
 				this.onLayersChanged);	
-			this.onLayersChanged(); 			
+			this.onLayersChanged(); 		
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.PRESENTATION_MODE_CHANGED, 
+				this.onPresentationModeChanged);	
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.CURRENT_LAYER_CHANGED, 
+				this.onCurrentLayerChanged);	
+			this.onLayersChanged( null ) 
 		}
+		
+
 		
 		public function onPreview(e:Event):void
 		{
@@ -77,6 +85,42 @@ package  org.virid.component
 			}
 			
 		}
+		/**
+		 * if currentLayer changed highlight the correct mainMenuButton
+		 * */
+		private function onCurrentLayerChanged(e:Event):void
+		{
+			if(this.ui.lastBtnSelected != null){
+				this.ui.lastBtnSelected.selected = false;
+			}
+			var layer:LayerBaseVO = this.model.currentLayer; 
+			if ( layer is TextLayerVO ) 
+			{
+				var txtLayer : TextLayerVO = layer as TextLayerVO; 
+				if ( txtLayer.subType == ViridConstants.SUBTYPE_ENGRAVE ) 
+				{
+					this.ui.btnEngrave.selected = true;
+					this.ui.lastBtnSelected = this.ui.btnEngrave;
+				}
+				else
+				{
+					this.ui.btnText.selected = true;
+					this.ui.lastBtnSelected = this.ui.btnText;
+				}
+			}	
+			if ( layer is ImageLayerVO )
+			{
+				this.ui.btnBackground.selected = true;
+				this.ui.lastBtnSelected = this.ui.btnBackground;
+			}
+			if ( layer is ColorLayerVO ) 
+			{
+				this.ui.btnBackground.selected = true;
+				this.ui.lastBtnSelected = this.ui.btnBackground;	
+			}
+			
+			
+		}
 		
 		/**
 		 * if specific layer added ... do the thing ...
@@ -104,6 +148,19 @@ package  org.virid.component
 			//this.ui.parentDocument.currentState = "normal" ;
 		}
 		
+		private function onPresentationModeChanged(e:Event):void
+		{
+			if ( this.model.previewMode ) 
+			{
+				
+
+			}
+			else
+			{
+				this.ui.btnPreview.selected = false;
+				
+			}
+		}
 		
 		/**
 		 * regieerate menu bar

@@ -604,7 +604,7 @@ package org.syncon.Customizer.model
 				subTotal = 0;
 				for each ( var l : LayerBaseVO in face.layers.toArray() )  
 				{
-					if ( l.visible  ) 
+					if ( l.visible || l.type == ColorLayerVO.Type  ) 
 					{
 						//see if this layer is empty
 						if(l.type == TextLayerVO.Type )
@@ -618,10 +618,11 @@ package org.syncon.Customizer.model
 							var imgLayer:ImageLayerVO = l as ImageLayerVO;
 							if(imgLayer.source == null && imgLayer.url == null)
 								continue;
-							if( imgLayer.source == "")
+							if( imgLayer.source == "" && imgLayer.url == ""  )
 								continue;
-							if( imgLayer.url == "" )
+							else if( imgLayer.source == null && imgLayer.url == ""  )
 								continue;
+					
 						}
 						subTotal += l.cost; 
 					}

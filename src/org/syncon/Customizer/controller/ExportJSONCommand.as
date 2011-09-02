@@ -135,7 +135,7 @@ package  org.syncon.Customizer.controller
 							}
 							else if(imgLayer.image_source == ViridConstants.IMAGE_SOURCE_UPLOAD)
 							{
-								jsonMedia.type ='image';								
+								jsonMedia.type ='photo';								
 							}
 						}
 						if(layer.type == ColorLayerVO.Type)
@@ -269,7 +269,7 @@ package  org.syncon.Customizer.controller
 		
 		protected function result(event:HTTPStatusEvent):void
 		{
-			Alert.show( event.status.toString() );
+			//Alert.show( event.status.toString() );
 			//Alert.show( event..toString() );
 		}
 		
@@ -278,7 +278,7 @@ package  org.syncon.Customizer.controller
 			var loader:URLLoader = URLLoader(event.target);
 			var resp:Object = JSON.decode(loader.data);
 			//Alert.show(loader.data);
-			Alert.show(resp.toString() );
+			//Alert.show(resp.toString() );
 			//Alert.show('test')
 			if(resp.hasOwnProperty('SUCCESS') ){
 				if(resp.SUCCESS == "true" && resp.hasOwnProperty('imageurl'))
@@ -290,7 +290,7 @@ package  org.syncon.Customizer.controller
 		
 		protected function saveResult(event:ResultEvent):void
 		{
-			Alert.show( event.result.toString() + finalJSON);
+			//Alert.show( event.result.toString() + finalJSON);
 			
 		}
 		

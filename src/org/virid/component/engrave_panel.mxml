@@ -99,8 +99,6 @@
 			
 			protected function txt_changeHandler(event:TextOperationEvent):void
 			{
-				this.layer.text = this.txt.text; 
-				this.layer.update(); 
 				this.dispatchEvent( new CustomEvent( CHANGED_TEXT   ) ) //is not hooked up ... changes through layer .....
 					//not undoable ...
 			}

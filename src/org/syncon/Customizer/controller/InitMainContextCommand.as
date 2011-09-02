@@ -55,7 +55,7 @@ package org.syncon.Customizer.controller
 				
 				this.createDetailedDefaultProduct();
 				//this.createDetailedDefaultProduct_Engrave()
-				//this.createDetailedDefaultProduct_Engrave2()
+				this.createDetailedDefaultProduct_Engrave2()
 				if ( this.model.flex ) 
 				{
 					
@@ -373,8 +373,60 @@ package org.syncon.Customizer.controller
 			face.layersToImport.push(textLayer);
 			
 			
+			textLayer = new TextLayerVO;
+			textLayer.text = '' 
+			textLayer.name = 'Text'
+			textLayer.maxChars = 3
+			textLayer.fonts = fonts; 
+			//textLayer.fontFamily = 'Arial'
+			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			textLayer.maxFontSize = 35
+			*/
+			textLayer.width = 20
+			textLayer.height = 140 
+			textLayer.x = 60
+			textLayer.y =60; 
+			textLayer.locked = true; 
+			textLayer.fontSize = 35
+			textLayer.location = 'front Large'; 
+			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			textLayer.horizStartAlignment = ''
+			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
+			//textLayer.minFontSize = 6
+			textLayer.prompt_layer = true; 
+			face.layersToImport.push(textLayer);
 			
 			
+			textLayer = new TextLayerVO;
+			textLayer.text = 'd' 
+			textLayer.name = 'Text 3'
+			//textLayer.maxChars = 3
+			textLayer.fonts = fonts; 
+			//textLayer.fontFamily = 'Arial'
+			
+			textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			textLayer.maxFontSize = 35
+			textLayer.minFontSize = 12
+			textLayer.maxChars = 6
+			
+				textLayer.verticalText = true
+				
+			textLayer.width = 20
+			textLayer.height = 140 
+			textLayer.x = 60
+			textLayer.y =200; 
+			textLayer.locked = true; 
+			textLayer.fontSize = 35
+			textLayer.location = 'front Large2'; 
+			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer
+			textLayer.horizStartAlignment = ''
+			textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE
+			//textLayer.minFontSize = 6
+			textLayer.fonts = fonts; 
+			textLayer.prompt_layer = true; 
+			face.layersToImport.push(textLayer);
+			
+			face.layersToImport.push(textLayer);
 			
 			face  = new FaceVO()
 			face.layersToImport = []; 

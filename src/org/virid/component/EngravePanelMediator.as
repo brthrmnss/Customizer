@@ -56,8 +56,16 @@ package  org.virid.component
 		
 		protected function onTextChanged(event:Event):void
 		{
+			this.layer.text = this.ui.txt.text; 
+
+			//update price
+			//adjust font size if necessary 
+			//transform display text if necessary 
+			this.layer.setFontSize(); 
+			this.layer.adjustDisplayText()
 			this.model.calculateProductPrice();
 			
+			this.layer.update(); 
 		}
 		public var layer : TextLayerVO = new TextLayerVO(); 
 		private function onFontChanged(event: CustomEvent):void

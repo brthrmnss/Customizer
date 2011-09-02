@@ -50,8 +50,14 @@ package org.virid.component
 			{*/
 				
 	/*		}*/
+			this.layer.text = this.ui.txt.text; 
+			
 			//noiw hwo to automate it? ... not worry about undos, i do it here 
 			this.layer.setFontSize(); 
+			this.model.calculateProductPrice();
+			this.layer.adjustDisplayText()
+				
+			this.layer.update(); 
 		}
 		
 		/**

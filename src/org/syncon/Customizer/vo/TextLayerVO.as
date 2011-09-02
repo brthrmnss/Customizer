@@ -2,6 +2,9 @@ package  org.syncon.Customizer.vo
 {
 	public class TextLayerVO  extends  LayerBaseVO
 	{
+		
+		static public const PROP_TEXT_ALIGN : String = 'PROP_TEXT_ALIGN' ; 
+		static public const PROP_VERTICAL_TEXT_ALIGN : String = 'PROP_VERTICAL_TEXT_ALIGN'; 
 		public var text : String = ''; 
 		
 		public static var Type:String= 'TEX';
@@ -20,20 +23,62 @@ package  org.syncon.Customizer.vo
 		public var orientation:String ="Horizontal";
 		[Transient] public var  fonts : Array = []; 
 		
+		/**
+		 * Adjusts the font size based on autosizing options
+		 * */
 		public function setFontSize () : void
 		{
 			if ( this.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE ) 
 			{
+				if ( this.maxChars <= 0 ) 
+					throw 'Max Chars for layer ' + this.name + ' is too small: ' + this.maxChars
 				var steps :  Number =( this.maxFontSize - this.minFontSize)/this.maxChars; 
+				var dbg : Array = [this.maxFontSize - this.minFontSize, this.maxFontSize, this.minFontSize]
 				var charCount : int = this.text.length; 
 				var newFontSize : Number = this.maxFontSize - charCount*steps
 				/*this.dispatch( new EditProductCommandTriggerEvent ( 
 				EditProductCommandTriggerEvent.CHANGE_FONT_SIZE, newFontSize 
 				) )  */
-				fontSize = int( newFontSize ); 
+				var newFontSize2 : int = int( newFontSize ); 
+				if ( fontSize ==  newFontSize2   )
+					return; 
+				fontSize =newFontSize2
 				update('fontSize'); 
 			}
 		}
+		public var horizontalTextAlignment : String = 'center'; 
+		public var verticalTextAlignment : String = 'middle'; 
+		
+		public var verticalText : Boolean = false; 
+		/**
+		 * Thsi is the setting that the textinput uses to show text ... 
+		 * */
+		public var displayText : String = ''; 
+		
+		public function adjustDisplayText () : void
+		{
+			if ( this.verticalText )
+			{
+				var newText: String = ''; 
+				for ( var i : int= 0; i < this.text.length ; i++ )
+				{
+					var char :  String = this.text.charAt( i ) 
+					newText += char 
+					if ( i != this.text.length -1 )
+					{
+						newText += '\n'
+					}
+				}
+				this.displayText =  newText
+				//
+			}
+			else
+			{
+				this.displayText = this.text; 
+			}
+			
+		}
+		
 		
 		public override function  get type():String
 		{
@@ -60,7 +105,10 @@ package  org.syncon.Customizer.vo
 			textLayer.maxFontSize = this.maxFontSize
 			textLayer.default_text = this.default_text
 			textLayer.orientation = this.orientation
-			
+			textLayer.verticalText = this.verticalText; 
+			textLayer.verticalTextAlignment = verticalTextAlignment; 
+			textLayer.horizontalTextAlignment = horizontalTextAlignment; 
+			textLayer.displayText = this.displayText
 			textLayer.fonts = this.fonts
 			return textLayer; 
 		}

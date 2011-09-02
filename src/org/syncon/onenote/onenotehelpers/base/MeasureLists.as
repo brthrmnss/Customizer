@@ -44,6 +44,20 @@ package org.syncon.onenote.onenotehelpers.base
 		public var defaultWidth: Number = 350;
 		
 		
+		/**
+		 * Sometimes measuring will fail, this will auto restart it 
+		 * 
+		 * */
+		public var timer_CompletionFault : Timer = new Timer(10000,1); 
+		private var debug:Boolean=true;
+		/**
+		 * Next Measure will wait before sending in next requests
+		 * This will prevent memory errors when loading many fixed width and height 
+		 * items. 
+		 * */
+		private var breakUpMeasureRequests:Boolean=true;
+		
+		
 		public function MeasureLists() 
 		{
 			timer_CompletionFault.addEventListener(TimerEvent.TIMER, this.onFault ) ; 
@@ -54,13 +68,7 @@ package org.syncon.onenote.onenotehelpers.base
 			this._measuringTool = s; 
 			_measuringTool.addEventListener(ResizeEvent.RESIZE, this.nextMeasure ) ; 
 		}
-		
-		/**
-		 * Sometimes measuring will fail, this will auto restart it 
-		 * 
-		 * */
-		public var timer_CompletionFault : Timer = new Timer(10000,1); 
-		private var debug:Boolean=true;
+
 		public function measureLists( a : Array, fxDone : Function ) : void
 		{
 			trace('MeasureLists', 'start measure'); 
@@ -96,7 +104,7 @@ package org.syncon.onenote.onenotehelpers.base
 			//var dbg : Array = [ this.currentIndex, this._measuringTool.lister.dataGroup.contentHeight, 
 			//	this.listsToMeasure[this.currentIndex] ] 
 			var dbg : Array = [ this.currentList, this._measuringTool,
-			this.listsToMeasure, this.listsToMeasure.length]
+				this.listsToMeasure, this.listsToMeasure.length]
 			trace('MeasureLists', 'failed to measure', this.currentIndex +1, this.currentList.name   )
 			//	this.measureDp()
 		}
@@ -121,19 +129,25 @@ package org.syncon.onenote.onenotehelpers.base
 			//data integrity check ...
 			this.onDone();
 		}
-		public function nextMeasure(e:  Event=null) :   void
+		public function nextMeasure(e:  Event=null, wait : Boolean = true) :   void
 		{
+			//stacks can get deep, at which point items fall from memory
+			if ( wait && breakUpMeasureRequests ) 
+			{
+				this._measuringTool['callLater'](this.nextMeasure, [e, false] )
+				return;
+			}
 			trace('MeasureLists', 'nextMeasure', this.currentIndex); 
 			//if result 
 			if ( e  != null && this.currentList != null  ) 
 			{
 				/*if (e.source == e.target && e.property == "contentHeight")
 				{
-					//ok
+				//ok
 				}
 				else
 				{
-					return; 
+				return; 
 				}		*/
 				//check for current target? 
 				if ( this._measuringTool.resetting ) 
@@ -143,9 +157,9 @@ package org.syncon.onenote.onenotehelpers.base
 			}			
 			
 			if ( debug ) 
-			trace('MeasureLists', 'nextMeasure','compare',
-				this.currentIndex == this.listsToMeasure.length,
-				this.currentIndex , this.listsToMeasure.length); 
+				trace('MeasureLists', 'nextMeasure','compare',
+					this.currentIndex == this.listsToMeasure.length,
+					this.currentIndex , this.listsToMeasure.length); 
 			//last one
 			if ( this.currentIndex == this.listsToMeasure.length -1 ) 
 			{

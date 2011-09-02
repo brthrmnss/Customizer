@@ -28,12 +28,12 @@
 			}
 			
 			private var _layer : TextLayerVO = new TextLayerVO(); 
-			
+
 			public function get layer():TextLayerVO
 			{
 				return _layer;
 			}
-			
+
 			public function set layer(value:TextLayerVO):void
 			{
 				if ( value == null ) 
@@ -42,7 +42,7 @@
 				}
 				_layer = value;
 			}
-			
+
 			private var resetNext:Boolean;
 			public var active:Boolean=true;
 			private var lastLayer:TextLayerVO;
@@ -52,7 +52,7 @@
 				this.txt.text = ''; 
 				this.txtEdit.text = ''; 
 				this.resetNext = true; 
-				
+			
 				this.bg.visible = false; 
 				this.bg.height = 0;  
 				this.bg.width =0;// this.layer.width; 
@@ -79,24 +79,10 @@
 					lastLayer = null
 					return;
 				}
-				
-				
-				newLayerSetAllProps = false 
 				if ( this.lastLayer != this.layer ) 
 				{
-					//this.layer.prepareForDispaly(); //this should update all properties 
-					//just in case forget
-					this.layer.adjustDisplayText(); 
-					this.layer.setFontSize(); 
-					var newLayerSetAllProps :  Boolean = true; 
-				}
-				
-				if ( this.layer.propChanged == 'fontSize' || newLayerSetAllProps  )
-				{
+					//this.visible = this.layer.visible; 
 					this.txt.setStyle('fontSize', layer.fontSize ) ;
-				}
-				if ( this.layer.propChanged == 'fontFamily'  || newLayerSetAllProps )
-				{
 					if ( this.layer.fontFamily != null ) 
 						this.txt.setStyle('fontFamily', layer.fontFamily ) ;
 					else
@@ -104,37 +90,36 @@
 						this.layer.fontFamily = this.txt.getStyle('fontFamily'); 
 						this.layer.update( 'fontFamily' ) ; 
 					}
-					//this.txt.setStyle('fontFamily', layer.fontFamily ) ;
+					
+					//handle any situations where this component might not resize 
+					if ( this.layer.locked  ) 
+					{
+						
+						txt_updateCompleteHandler(null);
+					}
+					
+					
 				}
-				if ( this.layer.propChanged == 'color'   || newLayerSetAllProps )
+				else
 				{
-					this.txt.setStyle('color', layer.color ) ;
-				}		
-				if ( this.layer.propChanged ==TextLayerVO.PROP_TEXT_ALIGN  || newLayerSetAllProps )
-				{
-					this.txt.setStyle('textAlign', layer.horizontalTextAlignment  ) ;
-				}		
-				if ( this.layer.propChanged ==TextLayerVO.PROP_VERTICAL_TEXT_ALIGN  || newLayerSetAllProps )
-				{
-					this.txt.setStyle('verticalAlign', layer.verticalTextAlignment  ) ;
-				}		
-				
-				
-				this.layer.propChanged = null
-				
-				
+					if ( this.layer.propChanged == 'fontSize' )
+					{
+						this.txt.setStyle('fontSize', layer.fontSize ) ;
+					}
+					if ( this.layer.propChanged == 'fontFamily' )
+					{
+						this.txt.setStyle('fontFamily', layer.fontFamily ) ;
+					}
+					if ( this.layer.propChanged == 'color' )
+					{
+						this.txt.setStyle('color', layer.color ) ;
+					}					
+					this.layer.propChanged = null
+				}
 				this.lastLayer =  this.layer
 				//this.txt.setStyle('fontFamily', asdf ) ; 
-				
-				//this.txt.text  = layer.text; 
-				this.txt.text = layer.displayText; 
-				
-				//handle any situations where this component might not resize 
-				if ( newLayerSetAllProps && this.layer.locked  ) 
-				{
-					txt_updateCompleteHandler(null);
-					return;
-				}
+
+				this.txt.text  = layer.text; 
 				
 			}
 			
@@ -247,11 +232,11 @@
 	<fx:Declarations>
 		<fx:Array  id="dropFilters">
 			<!--<s:GlowFilter id="filterGlow"  strength="8" alpha="1"
-			color="0xd2d2d2" blurX="2" blurY="2" />
+						  color="0xd2d2d2" blurX="2" blurY="2" />
 			<s:GlowFilter alpha="0.6" color="0xd2d2d2" blurX="4" blurY="4" />-->
 			<!--<s:BlurFilter id="filterBlur"  blurX="2" blurY="2" />-->
 		</fx:Array>
-		
+
 	</fx:Declarations>
 	<s:states>
 		<s:State name="normal"/>
@@ -262,21 +247,20 @@
 		<s:fill >
 			<s:SolidColor color="0xcdcdcd" />
 		</s:fill>
-		<!--	 <s:stroke>
+	<!--	 <s:stroke>
 		<s:SolidColorStroke color="0xe9e9e9"/>
 		</s:stroke> -->
 	</s:Rect>
 	<s:RichText id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
 				horizontalCenter="0" verticalCenter="0" fontFamily="Helvetica"
-	
-				updateComplete="txt_updateCompleteHandler(event)" >
+			 updateComplete="txt_updateCompleteHandler(event)" >
 		<s:filters>
 			
 		</s:filters>
 	</s:RichText>
-	<!--	<s:Label id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
-	horizontalCenter="0" verticalCenter="0"
-	updateComplete="txt_updateCompleteHandler(event)"/>-->
+<!--	<s:Label id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
+			  horizontalCenter="0" verticalCenter="0"
+			 updateComplete="txt_updateCompleteHandler(event)"/>-->
 	
 	<s:TextInput id="txtEdit" visible="false" width="{this.txt.width}" height="{this.txt.height}"
 				 change="onChange(event)" click="txt_clickHandler(event)"

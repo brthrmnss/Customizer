@@ -73,7 +73,9 @@ package  org.syncon.Customizer.controller
 						//this.copyBasics(face.color_overlay_layer, layerImport );
 						face.color_overlay_layer = layerImport.Media.source;
 						var colorLayer  : ColorLayerVO = new ColorLayerVO;
-						colorLayer.name = 'Color Layer'
+						colorLayer.name = layerImport.name;
+						colorLayer.name = 'Color Layer';
+						colorLayer.cost = layerImport.price;
 						colorLayer.url = faceImport.mask;
 						colorLayer.showInList = true;
 						colorLayer.prompt_layer = true;

@@ -183,19 +183,22 @@
 		</s:HGroup>-->
 		
 		
-		<s:HGroup width="100%" height="60">
-			<s:VGroup width="194">
+		<s:HGroup width="100%" height="60" paddingTop="12">
+			<s:VGroup width="100%">
 				<s:HGroup width="50%">
-					<s:Label text="Choose A Font"
+					<s:Label text="Choose A Font" fontSize="18" 
 							 styleName="subHeading"/>
 					<s:Label text="45 charectors max"  id="txtMaxChars" styleName="Arial grayTxt"/>
 					
 				</s:HGroup>
-				<s:DropDownList id="fontSelect" width="100%" />			
+				<s:DropDownList id="fontSelect" width="100%" height="38"
+								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
+								cornerRadius="8" borderColor="0xe9e9e9" dropShadowVisible="false"
+								/>			
 			</s:VGroup>
 			
 			
-			<s:VGroup width="50%">
+			<s:VGroup width="50%" visible="false" includeInLayout="false">
 				<s:HGroup><s:CheckBox label="Right to Left"  
 									  id="chkBoxAlign"
 									  change="chkBoxAlign_changeHandler(event)"
@@ -208,17 +211,18 @@
 		
 		
 		
-		<s:VGroup width="100%">
+		<s:VGroup width="100%" paddingTop="20">
 			<s:HGroup width="100%" horizontalAlign="left">
 				<s:Label text="EDIT Text" 
-						 styleName="subHeading" textAlign="left"/>
+						 styleName="subHeading" textAlign="left" fontSize="18"/>
 			</s:HGroup>
 			
 			
 			<s:HGroup width="100%">
-				<s:TextInput  id="txt" text="Text" change="txt_changeHandler(event)"  width="100%" paddingTop="10"/>
+				<s:TextInput  id="txt" text="Text" change="txt_changeHandler(event)"  width="100%" height="38" paddingTop="10" focusAlpha="0"
+							  skinClass="org.virid.skins.LightGrayRoundedFormField" borderColor="0xe9e9e9"/>
 				<s:Button label="ADD  MY  TEXT"  click="onAddText(event)"
-						  skinClass="org.virid.skins.simpleBlackBtn"
+						  skinClass="org.virid.skins.simpleBlackBtn" verticalCenter="0"
 						  height="20"/>
 				
 			</s:HGroup>			

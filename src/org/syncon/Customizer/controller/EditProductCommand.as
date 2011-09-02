@@ -1,5 +1,7 @@
 package org.syncon.Customizer.controller
 {
+	import flash.events.Event;
+	
 	import org.robotlegs.mvcs.Command;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
@@ -169,8 +171,11 @@ package org.syncon.Customizer.controller
 					}
 					if ( event.data2 != null ) 
 					{
+						//we have uploaded an image
 						imgLayer.url  = ''
 						imgLayer.source = event.data2; 
+						var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE, '');
+						this.dispatch(trgevent);
 					}
 					imgLayer.update(ImageLayerVO.SOURCE_CHANGED)//'fontSize'); 
 					imgLayer.horizStartAlignment  = 'center'  

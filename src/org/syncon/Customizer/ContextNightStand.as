@@ -29,6 +29,7 @@ package org.syncon.Customizer
 			this.commandMap.mapEvent( CreateDefaultDataTriggerEvent.CREATE, CreateDefaultDataCommand );
 			
 			this.commandMap.mapEvent( ExportJSONCommandTriggerEvent.EXPORT_JSON, ExportJSONCommand );
+			this.commandMap.mapEvent( ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE, ExportJSONCommand );
 			this.commandMap.mapEvent( ImportJSONCommandTriggerEvent.IMPORT_JSON, ImportJSONCommand );
 			
 			this.commandMap.mapEvent( ImportViridJSONCommandTriggerEvent.IMPORT_JSON, ImportViridJSONCommand );

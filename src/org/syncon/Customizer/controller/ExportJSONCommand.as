@@ -2,6 +2,12 @@ package  org.syncon.Customizer.controller
 {
 	import com.adobe.serialization.json.JSON;
 	
+	import flash.events.Event;
+	import flash.events.HTTPStatusEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
+	
 	import mx.controls.Alert;
 	import mx.controls.Image;
 	import mx.rpc.events.FaultEvent;
@@ -16,6 +22,8 @@ package  org.syncon.Customizer.controller
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.Customizer.vo.TextLayerVO;
+	
+	import spark.effects.interpolation.RGBInterpolator;
 	
 	
 	
@@ -76,8 +84,18 @@ package  org.syncon.Customizer.controller
 						jsonLayer.orientation = "default";
 						
 						if(layer.type == TextLayerVO.Type)
-						{
-							var textLayer :  TextLayerVO = layer as TextLayerVO; 
+						{							
+							//convert to text layer
+							var textLayer:TextLayerVO = layer as TextLayerVO;
+							jsonLayer.text = textLayer.text;
+							
+							//only if we have content
+							if( textLayer.text == "" )
+								continue;
+ 							jsonMedia.source = textLayer.text;
+							jsonMedia.font = textLayer.fontFamily;
+							jsonMedia.fontsize = textLayer.fontSize;
+							
 							jsonLayer.fontFamily = textLayer.fontFamily;								//engrave layer
 								textLayer.fontFamily; 
 								textLayer.fontSize
@@ -90,8 +108,7 @@ package  org.syncon.Customizer.controller
 								//design text layer	
 							
 							}							
-							var nlayer:TextLayerVO = layer as TextLayerVO;
-							jsonLayer.text = nlayer.text;
+
 						}						
 						//grab content or specific information off of this layer
 						/*if(layer.subType == ViridConstants.SUBTYPE_ENGRAVE){//TODO: Check subtype for engrave|monogram
@@ -103,6 +120,15 @@ package  org.syncon.Customizer.controller
 							var imgLayer : ImageLayerVO = layer as ImageLayerVO;
 							if(imgLayer.mask == true)
 								continue;
+							//possible way to get image url or source
+							/* from layer_image_item_renderer
+							if ( this.layer.url != '' ) 
+								this.img.source  = layer.url; 
+							if ( this.layer.source != null ) 
+							{
+								this.img.source = layer.source; 
+							}*/
+							
 							if(imgLayer.image_source == ViridConstants.IMAGE_SOURCE_CLIPART)
 							{
 								//clipart layer
@@ -116,12 +142,14 @@ package  org.syncon.Customizer.controller
 						}
 						if(layer.type == ColorLayerVO.Type)
 						{
-					
+							var colorLayer : ColorLayerVO = layer as ColorLayerVO;
 							jsonLayer.type = "color";
+							//jsonMedia.color = (colorLayer.color,'000000');
+							jsonMedia.color = String(colorLayer.color.toString(16));
 
 						}
 						jsonLayer.Media = jsonMedia;
-						jsonLayer.Fonts = jsonFonts;
+						//jsonLayer.Fonts = jsonFonts;
 						
 						jsonLayer.transform = jsonTransform;
 						
@@ -166,7 +194,7 @@ package  org.syncon.Customizer.controller
 					service.url = "../save.aspx";
 					service.method = "POST";
 					service.resultFormat = "text";
-					service.addEventListener(ResultEvent.RESULT,httpResult);
+					service.addEventListener(ResultEvent.RESULT,saveResult);
 					service.addEventListener(FaultEvent.FAULT, httpFault);
 					service.send(exportObj);
 					
@@ -183,20 +211,45 @@ package  org.syncon.Customizer.controller
 					service.method = "POST";
 					service.contentType="application/json";
 					service.resultFormat = HTTPService.RESULT_FORMAT_TEXT;
-					service.addEventListener(ResultEvent.RESULT,httpResult);
+					service.addEventListener(ResultEvent.RESULT,saveResult);
 					service.addEventListener(FaultEvent.FAULT, httpFault);
 					service.send(exportThis);
 				}
 
 				
-			}				
+			}	
+			
+			
+			if ( event.type == ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE ) 
+			{
+				
+				imgLayer = this.model.currentLayer as ImageLayerVO; 
+				//trace('layer_image_item_renderer', 'source', imgLayer.source ) ;
+				imgLayer.source;
+				var req:URLRequest = new URLRequest();
+				req.method = URLRequestMethod.POST;
+				req.data = imgLayer.source;
+				req.contentType='application/octet-stream';
+				req.url = "../save_image.aspx";
+				var loader:URLLoader = new URLLoader;
+				//loader.addEventListener(Event.COMPLETE,imageUploadResult);
+				loader.addEventListener(FaultEvent.FAULT,httpFault);
+				loader.addEventListener(HTTPStatusEvent.HTTP_STATUS,imageUploadResult);
+				loader.load(req);
+				
+			}
 			
 		}
 		
+		protected function imageUploadResult(event:HTTPStatusEvent):void
+		{
+			
+			Alert.show( event.status.toString() );
+		}		
 		
 		
 		
-		protected function httpResult(event:ResultEvent):void
+		protected function saveResult(event:ResultEvent):void
 		{
 			Alert.show( event.result.toString() + finalJSON);
 			

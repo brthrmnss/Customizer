@@ -87,7 +87,7 @@ package  org.syncon.Customizer.controller
 						{							
 							//convert to text layer
 							var textLayer:TextLayerVO = layer as TextLayerVO;
-							jsonLayer.text = textLayer.text;
+							jsonLayer.text = textLayer.text;///remove
 							
 							//only if we have content
 							if( textLayer.text == "" )
@@ -97,8 +97,8 @@ package  org.syncon.Customizer.controller
 							jsonMedia.fontsize = textLayer.fontSize;
 							
 							jsonLayer.fontFamily = textLayer.fontFamily;								//engrave layer
-								textLayer.fontFamily; 
-								textLayer.fontSize
+								textLayer.fontFamily; //remove
+								textLayer.fontSize //remove
 							if(layer.subType == ViridConstants.SUBTYPE_ENGRAVE)
 							{
 								product.type = "engrave";
@@ -207,7 +207,7 @@ package  org.syncon.Customizer.controller
 					exportObj['LAYERS'] = JSON.decode(product.Faces); */
 					
 					service = new HTTPService();
-					service.url = "../save.aspx";
+					service.url = "../save_image.aspx";
 					service.method = "POST";
 					service.contentType="application/json";
 					service.resultFormat = HTTPService.RESULT_FORMAT_TEXT;

@@ -4,9 +4,12 @@ package  org.syncon.Customizer.controller
 	
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;
+	import flash.events.ProgressEvent;
 	import flash.net.URLLoader;
+	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	
 	import mx.controls.Alert;
 	import mx.controls.Image;
@@ -83,15 +86,18 @@ package  org.syncon.Customizer.controller
 						jsonTransform.rotation = layer.rotation.toFixed(2);
 						jsonLayer.orientation = "default";
 						
+						if(layer.name == 'Base Layer')
+							continue;
 						if(layer.type == TextLayerVO.Type)
-						{							
+						{		
+					
 							//convert to text layer
 							var textLayer:TextLayerVO = layer as TextLayerVO;
 							jsonLayer.text = textLayer.text;///remove
-							
-							//only if we have content
 							if( textLayer.text == "" )
-								continue;
+								continue;		
+							//only if we have content
+
  							jsonMedia.source = textLayer.text;
 							jsonMedia.font = textLayer.fontFamily;
 							jsonMedia.fontsize = textLayer.fontSize;
@@ -110,34 +116,25 @@ package  org.syncon.Customizer.controller
 							}							
 
 						}						
-						//grab content or specific information off of this layer
-						/*if(layer.subType == ViridConstants.SUBTYPE_ENGRAVE){//TODO: Check subtype for engrave|monogram
-							product.type = "engrave";
-
-						}*/
 						if(layer.type == ImageLayerVO.Type)
 						{
 							var imgLayer : ImageLayerVO = layer as ImageLayerVO;
 							if(imgLayer.mask == true)
 								continue;
-							//possible way to get image url or source
-							/* from layer_image_item_renderer
-							if ( this.layer.url != '' ) 
-								this.img.source  = layer.url; 
-							if ( this.layer.source != null ) 
-							{
-								this.img.source = layer.source; 
-							}*/
+							if(imgLayer.name == 'Base Layer')
+								continue;
+							if(imgLayer.url == "")
+								continue;
 							
+							jsonMedia.source = imgLayer.url;
 							if(imgLayer.image_source == ViridConstants.IMAGE_SOURCE_CLIPART)
 							{
-								//clipart layer
+								jsonMedia.type ='clipart';
 								
 							}
 							else if(imgLayer.image_source == ViridConstants.IMAGE_SOURCE_UPLOAD)
 							{
-								//design text layer	
-								
+								jsonMedia.type ='image';								
 							}
 						}
 						if(layer.type == ColorLayerVO.Type)
@@ -145,7 +142,14 @@ package  org.syncon.Customizer.controller
 							var colorLayer : ColorLayerVO = layer as ColorLayerVO;
 							jsonLayer.type = "color";
 							//jsonMedia.color = (colorLayer.color,'000000');
-							jsonMedia.color = String(colorLayer.color.toString(16));
+							jsonMedia.source = String(colorLayer.color.toString(16));
+							while( jsonMedia.source.length < 6 )
+							{
+								jsonMedia.source = '0' + jsonMedia.source;
+							}
+							if( jsonMedia.source == "" )
+								jsonMedia.source = 'ffffff';
+							jsonLayer.color = jsonMedia.source; //because the backed was built to listen to jsonLayer.color - would love to remove this
 
 						}
 						jsonLayer.Media = jsonMedia;
@@ -207,7 +211,7 @@ package  org.syncon.Customizer.controller
 					exportObj['LAYERS'] = JSON.decode(product.Faces); */
 					
 					service = new HTTPService();
-					service.url = "../save_image.aspx";
+					service.url = "../save.aspx";
 					service.method = "POST";
 					service.contentType="application/json";
 					service.resultFormat = HTTPService.RESULT_FORMAT_TEXT;
@@ -223,28 +227,62 @@ package  org.syncon.Customizer.controller
 			if ( event.type == ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE ) 
 			{
 				
+
+			
+				
 				imgLayer = this.model.currentLayer as ImageLayerVO; 
 				//trace('layer_image_item_renderer', 'source', imgLayer.source ) ;
 				imgLayer.source;
+				
+				
 				var req:URLRequest = new URLRequest();
 				req.method = URLRequestMethod.POST;
 				req.data = imgLayer.source;
 				req.contentType='application/octet-stream';
-				req.url = "../save_image.aspx";
+				req.url = "/customize/save_image.aspx";
+				
 				var loader:URLLoader = new URLLoader;
-				//loader.addEventListener(Event.COMPLETE,imageUploadResult);
+				loader.dataFormat = URLLoaderDataFormat.TEXT;
+				
 				loader.addEventListener(FaultEvent.FAULT,httpFault);
-				loader.addEventListener(HTTPStatusEvent.HTTP_STATUS,imageUploadResult);
-				loader.load(req);
+				loader.addEventListener(Event.COMPLETE,imageUploadResult);
+				loader.addEventListener(HTTPStatusEvent.HTTP_STATUS,result);
+				loader.load(req);				
+				
+				/*
+				var req:HTTPService = new HTTPService();
+				req.method = URLRequestMethod.POST;
+				req.contentType='application/octet-stream';
+				req.url = "/customize/save_image.aspx";				
+				req.resultFormat = HTTPService.RESULT_FORMAT_TEXT;
+				req.addEventListener(ResultEvent.RESULT,saveResult);
+				req.addEventListener(FaultEvent.FAULT, httpFault);
+				req.send(imgLayer.source);
+				*/
 				
 			}
 			
 		}
 		
-		protected function imageUploadResult(event:HTTPStatusEvent):void
+
+		
+		protected function result(event:HTTPStatusEvent):void
 		{
-			
 			Alert.show( event.status.toString() );
+			//Alert.show( event..toString() );
+		}
+		
+		protected function imageUploadResult(event:Event):void
+		{
+			var loader:URLLoader = URLLoader(event.target);
+			var resp:Object = JSON.decode(loader.data);
+			//Alert.show(loader.data);
+			Alert.show(resp.toString() );
+			//Alert.show('test')
+			if(resp.hasOwnProperty('SUCCESS') ){
+				if(resp.SUCCESS == "true" && resp.hasOwnProperty('imageurl'))
+					this.model.currentLayer.url = resp.imageurl;
+			}
 		}		
 		
 		
@@ -257,7 +295,7 @@ package  org.syncon.Customizer.controller
 		
 		protected function httpFault(event:FaultEvent):void
 		{
-			Alert.show(event.fault.faultString );
+			Alert.show(event.fault.faultString);
 			
 		}
 		/*		

@@ -83,6 +83,8 @@ package org.syncon.Customizer.view.ui
 		
 		private function onLayerSelected(param0:Object):void
 		{
+			if ( this.model.previewMode ) //do not auto select in preview mode 
+				return; 
 			this.model.objectHandles.selectionManager.setSelected( this.model.currentLayer.model ) ; 
 		}
 		
@@ -658,7 +660,7 @@ package org.syncon.Customizer.view.ui
 					
 				}
 				this.model.objectHandles.registerComponent( flexModel1, this.ui ,handleDesc, true, constraints);
-				if ( this.layer.visible) //dont' select invisible layers
+				if ( this.layer.visible && this.model.previewMode == false ) //dont' select invisible layers
 					this.model.objectHandles.selectionManager.setSelected( this.flexModel1 ) ; 
 				/*		}*/
 				

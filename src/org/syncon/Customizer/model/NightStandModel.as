@@ -31,7 +31,7 @@ package org.syncon.Customizer.model
 		}		
 		
 		public var undo : UndoManager = new UndoManager(); 
-		
+		public var undoList  : ArrayCollection = new ArrayCollection(); 
 		
 		
 		private var timerRefreshToken : Timer = new Timer(1501,1 ); 
@@ -349,6 +349,7 @@ package org.syncon.Customizer.model
 		public var waitForBaseLayer: Array = [] ; ;
 		public var locations:  Array;
 		public var tempsku:String;//TODO:REMOVE THIS
+		public var lastUndoAddDate:Date;
 		
 		public function addLayer(layer : LayerBaseVO ) : void
 		{

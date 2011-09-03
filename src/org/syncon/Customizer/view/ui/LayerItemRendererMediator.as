@@ -159,11 +159,16 @@ package org.syncon.Customizer.view.ui
 			{
 				return;
 			}
+			
+			//unfortunately, NUmber( event.newValue ) always rounds it off after 2 digits, 
+			//causing multie delays 
+			var value : Number = event.newValue as Number; 
+			var value2 : Number = Number(event.newValue ); 
 			switch( event.property )
 			{
 				
 				case "x":
-					this.ui.x = event.newValue as Number;
+					this.ui.x = value
 					
 					if ( createUndos == false )
 					{
@@ -171,12 +176,13 @@ package org.syncon.Customizer.view.ui
 					}
 					else
 					{
+						//use flex model b/c we do not want to call ' setXY and change the model 
 						this.dispatch( new EditProductCommandTriggerEvent ( 
-							EditProductCommandTriggerEvent.MOVE_LAYER, this.ui.x, this.ui.y, this.ui.layer) ) 
+							EditProductCommandTriggerEvent.MOVE_LAYER, value, this.flexModel1.y/* this.ui.y*/, this.ui.layer) ) 
 					}
 					break;
 				case "y":
-					this.ui.y = event.newValue as Number; 
+					this.ui.y = value
 					
 					if ( createUndos == false )
 					{
@@ -184,12 +190,13 @@ package org.syncon.Customizer.view.ui
 					}
 					else
 					{
+						
 						this.dispatch( new EditProductCommandTriggerEvent ( 
-							EditProductCommandTriggerEvent.MOVE_LAYER, this.ui.x, this.ui.y, this.ui.layer) ) 
+							EditProductCommandTriggerEvent.MOVE_LAYER,this.flexModel1.x  /*this.ui.x*/, value, this.ui.layer) ) 
 					}
 					break;
 				case "rotation":
-					this.ui.rotation = event.newValue as Number;
+					this.ui.rotation = value
 					
 					if ( createUndos == false )
 					{
@@ -198,11 +205,11 @@ package org.syncon.Customizer.view.ui
 					else
 					{
 						this.dispatch( new EditProductCommandTriggerEvent ( 
-							EditProductCommandTriggerEvent.ROTATE_LAYER, this.ui.rotation, this.ui.layer		) ) 
+							EditProductCommandTriggerEvent.ROTATE_LAYER, value, this.ui.layer		) ) 
 					}				
 					break;
 				case "width": 
-					this.ui.width = event.newValue as Number;
+					this.ui.width = value
 					
 					if ( createUndos == false )
 					{
@@ -215,11 +222,11 @@ package org.syncon.Customizer.view.ui
 					else
 					{
 						this.dispatch( new EditProductCommandTriggerEvent ( 
-							EditProductCommandTriggerEvent.RESIZE_LAYER, this.ui.width, this.ui.height , this.layer 	) ) 	
+							EditProductCommandTriggerEvent.RESIZE_LAYER, value, this.flexModel1.height , this.layer 	) ) 	
 					}
 					break;
 				case "height": 
-					this.ui.height = event.newValue as Number;
+					this.ui.height = value
 					
 					if ( createUndos == false )
 					{
@@ -232,7 +239,7 @@ package org.syncon.Customizer.view.ui
 					else
 					{
 						this.dispatch( new EditProductCommandTriggerEvent ( 
-							EditProductCommandTriggerEvent.RESIZE_LAYER, this.ui.width, this.ui.height , this.layer ) ) 	
+							EditProductCommandTriggerEvent.RESIZE_LAYER, this.flexModel1.width,value , this.layer ) ) 	
 					}
 					
 					break;
@@ -382,7 +389,7 @@ package org.syncon.Customizer.view.ui
 					params[0].onResize(params[1]);//.push( [this, event] )
 				}
 				this.model.waitForBaseLayer = []; 
-
+				
 				//return; 
 			}
 			if ( this.layer == this.model.baseLayer ) 
@@ -402,7 +409,7 @@ package org.syncon.Customizer.view.ui
 			this.ui.alpha = 0.1
 			//show mask 
 			/*
-				//show the mask image ...
+			//show the mask image ...
 			this.ui.visible = true;
 			//so visible does not work, but alpha does...
 			this.ui.alpha = 0.8
@@ -456,7 +463,7 @@ package org.syncon.Customizer.view.ui
 			//can't believe this fixed it 
 			if ( wait ) 
 			{
-			//this.ui.callLater( this.adjustMaskToMatchLayer, [false] );
+				//this.ui.callLater( this.adjustMaskToMatchLayer, [false] );
 			}
 			trace('mask widths and height',  v.maskLayer_.width, v.maskLayer_.height , v.maskLayer_.parent); 
 			trace('mask widths and height',   this.ui.width, this.ui.height , this.ui.layer.width, this.ui.layer.height) ; 

@@ -223,7 +223,7 @@ package org.syncon.Customizer.vo
 				return; 
 			/*if ( this.type == TextLayerVO.Type  && this.url != 'demo'  ) 
 			{
-				trace('thing'); 
+			trace('thing'); 
 			}*/
 			_x = value;
 		}
@@ -288,22 +288,25 @@ package org.syncon.Customizer.vo
 		
 		public function setXY(oldData:Object, oldData2:Object):void
 		{
-			var xx : Number = oldData as Number
-			var yy : Number = oldData2 as Number
+		
+			var xx : Number = Number(oldData )
+			var yy : Number = Number(oldData2 )
 			this.x = xx
 			this.y = yy; 
 			if ( this.model != null ) 
 			{
-				this.model.x = xx
-				this.model.y = yy; 
+				if ( this.model.x != xx ) //for ritation ...y not use setters?
+					this.model.x = xx
+				if ( this.model.y != yy ) 
+					this.model.y = yy; 
 			}
 			
 		}
 		
 		public function setWH(oldData:Object, oldData2:Object):void
 		{
-			var ww : Number = oldData as Number
-			var hh : Number = oldData2 as Number
+			var ww : Number = Number( oldData )
+			var hh : Number =Number( oldData2)
 			this.width = ww
 			this.height = hh; 
 			if ( this.model != null ) 

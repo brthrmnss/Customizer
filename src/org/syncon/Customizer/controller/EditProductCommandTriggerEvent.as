@@ -56,17 +56,25 @@ package org.syncon.Customizer.controller
 		public static const LAYER_HID:String = 'LAYER_HIDE.w';		
 		
 		static public var fxAnimate : Function;  
-		
+		/*
 		public var data : Object; 		
 		public var data2 : Object;
 		public var data3 : Object;
+		*/
+		[Bindable] public var data : Object='';	
+		[Bindable] public var data2 : Object='';
+		[Bindable] public var data3 : Object='';
 		
 		public var undo:Boolean;
 		public var redo : Boolean;
-		
+		/*
 		public var oldData:Object;
 		public var oldData2:Object;
 		public var oldData3:Object;
+		*/
+		[Bindable] public var oldData:Object='';
+		[Bindable] public var oldData2:Object='';
+		[Bindable] public var oldData3:Object='';	
 			/**
 			 * first time so we don' destroy something on redo ... ? 
 			 * */

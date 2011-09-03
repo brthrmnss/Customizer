@@ -30,7 +30,8 @@ package org.syncon.Customizer
 			mediatorMap.mapView( transformation_stage, TransformationStageMediator ) 	
 			mediatorMap.mapView( LayerList, LayerListMediator ) 	
 				
-			
+			mediatorMap.mapView( UndoList, UndoListMediator ) 	
+				
 				
 			//mediatorMap.mapView( LayerImageInspector,LayerImageInspectorMediator ) 	
 			//mediatorMap.mapView( LayerColorInspector, LayerColorInspectorMediator ) 	

@@ -22,6 +22,25 @@ package org.syncon.Customizer.controller
 		
 		override public function execute():void
 		{
+			/**
+			 * Can block  adding if it is a repeat
+			 * */
+			var addUndo : Boolean = true; 
+			//allows us to reset non merginc timer 
+			var resetTimer : Boolean = true; 
+			lastUndo = this.model.lastUndo; 
+			
+			//clone event to undoList  (Debugging)
+			if ( event.undo ) 
+			{
+				this.model.undoList.removeItemAt(  this.model.undoList.toArray().length-1 ); 
+			}
+			if ( event.redo ) 
+			{
+				this.model.undoList.addItem( event ) //(  this.model.undoList.toArray().length-1 ); 
+			}
+			
+			//usuallly when doing bulk operations, 
 			if ( this.model.blockUndoExecution )
 			{
 				trace('block undo'); 
@@ -747,6 +766,7 @@ package org.syncon.Customizer.controller
 					}
 					dbg  = [this.model.layers.length, this.model.layers.toArray() ] 
 					this.model.undo.clearAll(); 
+					this.model.undoList.removeAll(); 
 					this.model.recreateDisplayableLayers(); 
 					this.model.currentLayer = this.model.getNextLayer();
 					this.model.calculateProductPrice();
@@ -800,13 +820,16 @@ package org.syncon.Customizer.controller
 				if ( event.undo == false )
 				{
 					var layer : LayerBaseVO = this.model.currentLayer as LayerBaseVO; 
-					if ( event.firstTime ) 
-					{
-						/*txtLayer.x = 0; 
-						txtLayer.y = 100; */
-					}		
+					
 					/*	if ( layer.x == event.data && layer.y == event.data2 ) 
 					return; */
+					//inhibit redundancy
+					if ( layer.x == event.data && layer.y == event.data2 ) 
+						return;
+					//lastUndo
+					
+					
+					//override curnet layer 
 					if ( event.data3 != null ) 
 						layer = event.data3 as LayerBaseVO
 					event.oldData = layer.x; 
@@ -816,7 +839,16 @@ package org.syncon.Customizer.controller
 					layer.update(); 
 					event.data3 = layer ; 
 					this.model.blockUndoExecution=false
-					if ( debugUndos )   trace('go', event.data, event.data2 )
+					
+					if (  this.lastUndoSameType() && lastUndo.data3 == layer ) 
+					{
+						if ( debugUndos ) trace('merging', event, event.type); 
+						this.model.lastUndo.data = event.data; 
+						this.model.lastUndo.data2 = event.data2
+						addUndo = false; 
+					}
+					
+					//if ( debugUndos )   trace('go', event.data, event.data2 )
 				}
 				else
 				{
@@ -885,6 +917,12 @@ package org.syncon.Customizer.controller
 					event.data3 = layer ; 
 					this.model.blockUndoExecution=false
 					//trace('go', event.data, event.data2 )
+					
+					if (  this.lastUndoSameType() && lastUndo.data3 == layer ) 
+					{
+						//update old rotation? no? 
+						addUndo = false; 
+					}
 				}
 				else
 				{
@@ -956,15 +994,15 @@ package org.syncon.Customizer.controller
 				var lastUndo : EditProductCommandTriggerEvent = this.model.lastUndo
 				if ( lastUndo != null && lastUndo.type == event.type ) 
 				{
-					if ( event.type == EditProductCommandTriggerEvent.MOVE_LAYER
-						&& event.data3 == lastUndo.data3) //check for time
+					/*if ( event.type == EditProductCommandTriggerEvent.MOVE_LAYER
+					&& event.data3 == lastUndo.data3) //check for time
 					{
-						if ( debugUndos ) trace('merging', event, event.type); 
-						this.model.lastUndo.data = event.data; 
-						this.model.lastUndo.data2 = event.data2
-						//this.model.lastUndo.time = new Date()
-						return; 
-					}
+					if ( debugUndos ) trace('merging', event, event.type); 
+					this.model.lastUndo.data = event.data; 
+					this.model.lastUndo.data2 = event.data2
+					//this.model.lastUndo.time = new Date()
+					return; 
+					}*/
 					if ( event.type == EditProductCommandTriggerEvent.RESIZE_LAYER
 						&& event.data3 == lastUndo.data3) //check for time
 					{
@@ -975,10 +1013,19 @@ package org.syncon.Customizer.controller
 						return; 
 					}
 				}
-				if ( debugUndos )   trace('addeded one', event.type)
-				this.model.lastUndo = event; 
-				this.model.undo.pushUndo( event ) ;
-				this.dispatch( new NightStandModelEvent(NightStandModelEvent.UNDOS_CHANGED) ) 
+				
+				if ( addUndo ) 
+				{
+					if ( debugUndos )   trace('addeded one', event.type)
+					this.model.lastUndo = event; 
+					this.model.undo.pushUndo( event ) ;
+					this.model.undoList.addItem(event);
+					this.dispatch( new NightStandModelEvent(NightStandModelEvent.UNDOS_CHANGED) )
+				}
+				if ( resetTimer ) 
+				{
+					this.model.lastUndoAddDate = new Date(); 
+				}
 			}
 		}
 		
@@ -1000,5 +1047,32 @@ package org.syncon.Customizer.controller
 			
 		}		
 		
+		/**
+		 * shorten some of code above ..
+		 * */
+		private function lastUndoSameType(timePast:Number=3) : Boolean
+		{
+			if ( this.model.lastUndo != null && this.model.lastUndo.type == event.type )
+			{
+				if ( timePast <= 0 ) 
+				{
+					return true 	
+				}
+				else
+				{
+					var currentTime : Date = new Date(); 
+					var diff : Number =currentTime.getTime() -  this.model.lastUndoAddDate.getTime()
+					diff = diff / 1000
+					//if last time has past, return same 
+					if ( diff < timePast ) 
+						return true
+					else
+						return false; 
+				}
+			}
+			
+			
+			return false; 
+		}
 	}
 }

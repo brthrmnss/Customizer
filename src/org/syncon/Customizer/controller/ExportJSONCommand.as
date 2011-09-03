@@ -102,9 +102,13 @@ package  org.syncon.Customizer.controller
  							jsonMedia.source = textLayer.text;
 							jsonMedia.font = textLayer.fontFamily;
 							jsonMedia.fontsize = textLayer.fontSize;
-							jsonMedia.color = String(textLayer.color.toString(16));
-							while( jsonMedia.color.length < 6 )
-								jsonMedia.color = '0' + jsonMedia.color;
+							if(textLayer.color != null )
+							{
+								jsonMedia.color = String(textLayer.color.toString(16));
+								while( jsonMedia.color.length < 6 )
+									jsonMedia.color = '0' + jsonMedia.color;
+							}
+							
 							
 							
 							jsonLayer.fontFamily = textLayer.fontFamily;								//engrave layer

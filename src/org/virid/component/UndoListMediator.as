@@ -38,7 +38,7 @@ package org.virid.component
 		
 		private function onUndosChanged(e:Event):void
 		{
-			this.ui.list.ensureIndexIsVisible( this.model.undoList.length ) ; 
+			this.ui.list.ensureIndexIsVisible( this.model.undoList.length-1 ) ; 
 		}		
 		 
 		private function onLayersChanged(e:NightStandModelEvent):void

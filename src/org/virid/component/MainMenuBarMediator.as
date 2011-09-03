@@ -55,7 +55,7 @@ package  org.virid.component
 			this.onLayersChanged( null ) 
 		}
 		
-
+		
 		
 		public function onPreview(e:Event):void
 		{
@@ -78,7 +78,7 @@ package  org.virid.component
 				this.ui.btnPreview.toolTip = "Preview Design"
 				for (   i  = 0 ; i < this.ui.holderMainMenuBar.numElements ; i ++ ) 
 				{
-					var uic : UIComponent = this.ui.holderMainMenuBar.getChildAt( i ) as UIComponent; 
+					uic   = this.ui.holderMainMenuBar.getChildAt( i ) as UIComponent; 
 					uic.alpha = 1
 					uic.enabled = true
 				}
@@ -153,7 +153,7 @@ package  org.virid.component
 			if ( this.model.previewMode ) 
 			{
 				
-
+				
 			}
 			else
 			{
@@ -215,7 +215,7 @@ package  org.virid.component
 			/**/
 			var measureWdith : Number = 0 ; 
 			var numVisibleElements : int = 0 ; 
-			for ( var i : int = 0 ; i < this.ui.holderMainMenuBar.numElements ; i ++ ) 
+			for (   i  = 0 ; i < this.ui.holderMainMenuBar.numElements ; i ++ ) 
 			{
 				var uic : UIComponent = this.ui.holderMainMenuBar.getChildAt( i ) as UIComponent; 
 				if ( uic.includeInLayout ) 
@@ -237,7 +237,8 @@ package  org.virid.component
 		protected function onJSONEXPORT(event:Event):void
 		{
 			// TODO Auto-generated method stub
-			var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(ExportJSONCommandTriggerEvent.EXPORT_JSON, '');
+			var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(
+				ExportJSONCommandTriggerEvent.EXPORT_JSON, '');
 			this.dispatch(trgevent);
 			
 		}
@@ -261,14 +262,17 @@ package  org.virid.component
 			var op : IOperation = this.model.undo.popUndo()
 			op.performUndo()
 			this.model.undo.pushRedo( op ) ; 
+			var x : Object = this.model.undo.peekUndo()
 			this.checkUndoButtons()
 		}
 		
 		private function checkUndoButtons(e:Event=null):void
 		{
 			var dbg : Array = [this.model.undo.canUndo()] 
-			//this.ui.btnRedo.enabled = this.model.undo.canRedo() 
+			var x : Object = this.model.undo.peekUndo()
+			this.ui.btnRedo.enabled = this.model.undo.canRedo() 
 			this.ui.btnUndo.enabled = this.model.undo.canUndo() 
+			return;
 		}
 		
 		private function onAddText(e:  Event): void
@@ -283,9 +287,9 @@ package  org.virid.component
 				
 				this.model.currentLayer = txtLayer; 
 				return; 
-				var obj : Object = e.data
+				/*var obj : Object = e.data
 				this.dispatch( new EditProductCommandTriggerEvent (
-					EditProductCommandTriggerEvent.ADD_TEXT_LAYER, e) ) ; 
+					EditProductCommandTriggerEvent.ADD_TEXT_LAYER, e) ) ; */
 			}
 		}		
 		

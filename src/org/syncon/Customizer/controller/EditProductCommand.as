@@ -30,16 +30,19 @@ package org.syncon.Customizer.controller
 			var resetTimer : Boolean = true; 
 			lastUndo = this.model.lastUndo; 
 			
-			//clone event to undoList  (Debugging)
-			if ( event.undo ) 
+			if ( this.model.blockUndoAdding == false ) //implies neitiher list changes 
 			{
-				this.model.undoList.removeItemAt(  this.model.undoList.toArray().length-1 ); 
+				//clone event to undoList  (Debugging)
+				if ( event.undo ) 
+				{
+					if ( this.model.undoList.length != 0 ) 
+						this.model.undoList.removeItemAt(  this.model.undoList.toArray().length-1 ); 
+				}
+				if ( event.redo ) 
+				{
+					this.model.undoList.addItem( event ) //(  this.model.undoList.toArray().length-1 ); 
+				}
 			}
-			if ( event.redo ) 
-			{
-				this.model.undoList.addItem( event ) //(  this.model.undoList.toArray().length-1 ); 
-			}
-			
 			//usuallly when doing bulk operations, 
 			if ( this.model.blockUndoExecution )
 			{
@@ -193,7 +196,8 @@ package org.syncon.Customizer.controller
 						//we have uploaded an image
 						imgLayer.url  = ''
 						imgLayer.source = event.data2; 
-						var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE, '');
+						var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(
+							ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE, '');
 						this.dispatch(trgevent);
 					}
 					imgLayer.update(ImageLayerVO.SOURCE_CHANGED)//'fontSize'); 
@@ -444,7 +448,7 @@ package org.syncon.Customizer.controller
 				{
 					//event.oldData = this.model.cur
 					var product : StoreItemVO = event.data as StoreItemVO; 
-					var face : FaceVO = event.data2 as FaceVO //use data2 to load a specific face
+					face = event.data2 as FaceVO //use data2 to load a specific face
 					if ( face == null ) 
 						face = product.faces.getItemAt( 0 ) as FaceVO
 					if ( face == null ) 
@@ -575,6 +579,7 @@ package org.syncon.Customizer.controller
 					//oldName = event.oldData.toString(); 
 					//this.model.currentPage.name = oldName
 				}		
+				addUndo = false; 
 				//this.model.currentPage.updated();
 				this.model.layersChanged(); 
 				this.dispatch( new EditProductCommandTriggerEvent(
@@ -839,7 +844,7 @@ package org.syncon.Customizer.controller
 					layer.update(); 
 					event.data3 = layer ; 
 					this.model.blockUndoExecution=false
-					
+					//this has the added benefit of surpressing x's and y only updates ... it merges them
 					if (  this.lastUndoSameType() && lastUndo.data3 == layer ) 
 					{
 						if ( debugUndos ) trace('merging', event, event.type); 
@@ -913,15 +918,48 @@ package org.syncon.Customizer.controller
 					event.oldData = layer.rotation; 
 					this.model.blockUndoExecution=true
 					layer.rotation = Number( event.data )
+					if ( layer.model != null ) 
+						layer.model.rotation = layer.rotation 
 					layer.update(); 
 					event.data3 = layer ; 
 					this.model.blockUndoExecution=false
 					//trace('go', event.data, event.data2 )
-					
-					if (  this.lastUndoSameType() && lastUndo.data3 == layer ) 
+					//this.popLstUndo()
+					if ( event.firstTime ) //this automerging is only relevant the first time //??
 					{
-						//update old rotation? no? 
-						addUndo = false; 
+						//to keep ceterpoint consistent, objecthandles moves xy then sets rotation 
+						//we must remove that event ... there is no time for a user to act inbetween, so 
+						//we can safetly remove it 
+						if ( lastUndo.type == EditProductCommandTriggerEvent.MOVE_LAYER &&  lastUndo.data3 == layer ) 
+						{
+							var popuppedEvent : EditProductCommandTriggerEvent = 
+								this.model.undo.popUndo()	as EditProductCommandTriggerEvent
+							event.autoSubEvents.push( popuppedEvent ) ; 
+							this.model.undoList.removeItemAt(  this.model.undoList.toArray().length-1 ); 
+							//step 2:  try to test if the event on top of stack is a similiar type
+							lastUndo = this.model.undo.popUndo()  as EditProductCommandTriggerEvent //pop so we can examine it 
+							this.model.lastUndo = lastUndo; //we have to do this b/c lastUndoSameType  looks at the model
+							if ( lastUndo != null ) //watch out b/c first time .. it is null
+								this.model.undo.pushUndo( lastUndo ) ; //put it back 
+						}
+						if (  this.lastUndoSameType() && lastUndo.data3 == layer ) 
+						{
+							if ( debugUndos ) trace('merging', event, event.type); 
+							this.model.lastUndo.data = event.data; 
+							//this.model.lastUndo.data2 = event.data2
+							addUndo = false; 
+							/**
+							 * remove subevent and update first one ... sothere is only 1 
+							 * */
+							//lastUndo.autoSubEvents.pop()//( popuppedEvent ) ; 
+							var firstSubEvent :  EditProductCommandTriggerEvent = 
+								lastUndo.autoSubEvents[0] as EditProductCommandTriggerEvent
+							firstSubEvent.data = popuppedEvent.data; 
+							firstSubEvent.data2 = popuppedEvent.data2
+							
+							//update old rotation? no? 
+							addUndo = false; 
+						}
 					}
 				}
 				else
@@ -929,6 +967,10 @@ package org.syncon.Customizer.controller
 					this.model.blockUndoExecution=true
 					layer = event.data3 as LayerBaseVO; 
 					layer.rotation = Number( event.oldData )
+					//layer should do this auto but i will here for quick test , 
+					//move this later
+					if ( layer.model != null ) 
+						layer.model.rotation = layer.rotation 
 					layer.update(); 
 					//trace('redo', event.data, event.data2 )
 					this.model.blockUndoExecution=false
@@ -1027,6 +1069,27 @@ package org.syncon.Customizer.controller
 					this.model.lastUndoAddDate = new Date(); 
 				}
 			}
+			
+			//trace('undo', this.model.undo
+			
+			//handle auto events
+			if ( event.undo || event.redo ) 
+			{
+				var oldBlockSetting : Boolean = this.model.blockUndoAdding
+				this.model.blockUndoAdding = true; 
+				for each ( var autoEvent : EditProductCommandTriggerEvent in this.event.autoSubEvents ) 
+				{
+					if ( event.undo ) 
+						autoEvent.performUndo()
+					else
+						autoEvent.performRedo(); 
+				}
+				
+				this.model.blockUndoAdding = oldBlockSetting
+			}
+			
+			//reset timer in wrong place?
+			
 		}
 		
 		/***
@@ -1050,7 +1113,7 @@ package org.syncon.Customizer.controller
 		/**
 		 * shorten some of code above ..
 		 * */
-		private function lastUndoSameType(timePast:Number=3) : Boolean
+		private function lastUndoSameType(timePast:Number=2) : Boolean
 		{
 			if ( this.model.lastUndo != null && this.model.lastUndo.type == event.type )
 			{

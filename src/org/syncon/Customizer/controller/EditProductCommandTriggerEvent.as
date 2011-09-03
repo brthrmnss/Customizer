@@ -83,6 +83,10 @@ package org.syncon.Customizer.controller
 		 * if is bulk evetnt ... save these thins ..
 		 * */
 		public var subEvents: Array=[];
+		/**
+		 * Like subevents but when undoing adn redoing they are auto undo and redone
+		 * */
+		public var autoSubEvents: Array=[];
 		
 		public function EditProductCommandTriggerEvent(type:String , data :  Object = null , data2 : Object = null , 
 													   data3 : Object = null ) 
@@ -102,6 +106,9 @@ package org.syncon.Customizer.controller
 			e.firstTime = this.firstTime; 
 			e.undo = this.undo 
 			e.redo = this.redo; 
+			
+			e.autoSubEvents = this.autoSubEvents; 
+			e.subEvents = this.subEvents; 
 			return e
 		}
 		public function performUndo() : void

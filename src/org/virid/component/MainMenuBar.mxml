@@ -109,34 +109,42 @@
 		<smallComponents:MainMenuButton label="undo" id="btnUndo" 
 										icon="assets/images/undo.png" width="48" 
 										click="onUndo(event)" 
+										 toolTip="Undo Last Action"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="redo" id="btnRedo" 
 										icon="assets/images/redo.png" width="46"
 										click="onRedo(event)" 
+										toolTip="Redo Action"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Background" id="btnBackground" visible="true" includeInLayout="true" 
 										icon="assets/images/background.png" width="88"
 										click="onBackground(event)"
+										toolTip="Go to Image Panel"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>		
 		<smallComponents:MainMenuButton label="Choose a Location" visible="false" includeInLayout="false"
 										icon="assets/images/location.png" width="100"
 										click="onBackground(event)"
+										toolTip="Go to Location Selection Menu"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Text" id="btnText"
 										icon="assets/images/engrave.png" width="46"
 										click="onText(event)"
+										toolTip="Go to Text Panel"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Engrave" id="btnEngrave"
 										icon="assets/images/engrave.png" width="68"
 										click="onEngrave(event)"
+										toolTip="Go to Preview Panel"										
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Preview" id="btnPreview"
 										icon="assets/images/preview.png" width="66"
 										 click="onPreivew(event)"
+										 toolTip="See Preview of Design"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Save It" 
 										icon="assets/images/save.png" width="56"
 										click="onSave(event)"
+										toolTip="Save Design"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 
 	</s:HGroup>

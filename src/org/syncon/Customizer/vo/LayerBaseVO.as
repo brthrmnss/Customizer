@@ -72,7 +72,18 @@ package org.syncon.Customizer.vo
 		
 		public var rotation:Number = 0;
 		public var subType:Object;
-		public var visible : Boolean = true; 
+		private var _visible : Boolean = true; 
+
+		public function get visible():Boolean
+		{
+			return _visible;
+		}
+
+		public function set visible(value:Boolean):void
+		{
+			_visible = value;
+		}
+
 		public var locked : Boolean = false; 
 		public var required : Boolean = false;
 		
@@ -118,8 +129,8 @@ package org.syncon.Customizer.vo
 		
 		private var _loadedIntoLister : Object; 
 		private var _data : Object = new Object();
-		public var vertStartAlignment: String = 'center' ;
-		public var horizStartAlignment: String='center';
+		public var vertStartAlignment: String = ALIGNMENT_CENTER ;
+		public var horizStartAlignment: String = ALIGNMENT_CENTER;
 		
 		public static const ALIGNMENT_CENTER : String = 'center' 
 		/**

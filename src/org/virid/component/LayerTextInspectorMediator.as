@@ -50,15 +50,29 @@ package org.virid.component
 			{*/
 				
 	/*		}*/
-			this.layer.text = this.ui.txt.text; 
+
 			
-			//noiw hwo to automate it? ... not worry about undos, i do it here 
+			var e : EditProductCommandTriggerEvent = new EditProductCommandTriggerEvent(
+				EditProductCommandTriggerEvent.CHANGE_TEXT, this.ui.txt.text, 
+				this.layer ) 
+			e.fxPost = this.updateLayer;
+			this.dispatch( e )
+				; 
+		}
+		
+		
+		public function updateLayer() : void
+		{
+			//update price
+			//adjust font size if necessary 
+			//transform display text if necessary 
 			this.layer.setFontSize(); 
-			this.model.calculateProductPrice();
 			this.layer.adjustDisplayText()
-				
+			this.model.calculateProductPrice();
+			
 			this.layer.update(); 
 		}
+		
 		
 		/**
 		 * if check box selected, go to the left

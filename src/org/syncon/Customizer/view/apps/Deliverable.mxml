@@ -162,7 +162,7 @@
 		</s:Group>
 		
 		<!--<component:LayerList id="list" />-->
-	 <component:UndoList id="list" y="100" /> 
+	 <component:UndoList id="list" y="100" right="0" /> 
 	</s:Group>
 
 	

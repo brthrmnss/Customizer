@@ -72,7 +72,7 @@
 				{
 					if (  this.layer.propChanged == ImageLayerVO.RESIZE_COMPLETE ) 
 						return;					
-					trace('returned'); 
+					trace('layer_image_item_renderer' ,'onUpdatedLayer', 'returned'); 
 					if ( this.layer.propChanged != ImageLayerVO.SOURCE_CHANGED ) 
 						return; 
 					this.dispatchEvent( new CustomEvent(layer_item_renderer.REPOSITION) ) 

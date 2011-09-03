@@ -95,8 +95,9 @@ package org.syncon.Customizer.view.ui
 		 * */
 		protected function onResizedManually(event:Event):void
 		{
-			this.flexModel1.x = this.layer.x ; 
-			this.flexModel1.y = this.layer.y ; 
+			//resize implies size, not position
+			/*this.flexModel1.x = this.layer.x ; 
+			this.flexModel1.y = this.layer.y ; */
 			this.layer.width; 
 			this.flexModel1.width = this.layer.nonChromeWidth;//this.ui.width; 
 			this.flexModel1.height = this.layer.nonChromeHeight;//this.ui.height; 
@@ -210,14 +211,15 @@ package org.syncon.Customizer.view.ui
 					break;
 				case "width": 
 					this.ui.width = value
-					
+					if ( this.isImage ) 
+					{
+						this.ui.image.img.width = this.ui.width; 
+						trace('updateModel', 'y', this.ui.image.img.y, this.ui.image.y, this.ui.y, this.layer.y ) ; 
+					}
 					if ( createUndos == false )
 					{
 						this.layer.width = this.ui.width
-						if ( this.isImage ) 
-						{
-							this.ui.image.img.width = this.ui.width; 
-						}
+
 					}
 					else
 					{
@@ -227,14 +229,13 @@ package org.syncon.Customizer.view.ui
 					break;
 				case "height": 
 					this.ui.height = value
-					
+					if ( this.isImage ) 
+					{
+						this.ui.image.img.height = this.ui.height; 
+					}
 					if ( createUndos == false )
 					{
 						this.layer.height = this.ui.height
-						if ( this.isImage ) 
-						{
-							this.ui.image.img.height = this.ui.height; 
-						}
 					}
 					else
 					{
@@ -380,7 +381,7 @@ package org.syncon.Customizer.view.ui
 				repositioning = false; 
 			}
 			this.ui.removeEventListener(ResizeEvent.RESIZE, this.onResize ) 
-			this.createUndos = false 
+			//this.createUndos = false 
 			this.layer.repositionedOnce = true
 			if ( this.layer == this.model.baseLayer && this.model.waitForBaseLayer.length > 0 )
 			{

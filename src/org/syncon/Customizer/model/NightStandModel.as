@@ -360,10 +360,11 @@ package org.syncon.Customizer.model
 		public function showLayer(layer : LayerBaseVO ) : void
 		{
 			//should inhibit redudant requests.
-			layer.visible = true; 
+			/*layer.visible = true; 
 			layer.updateVisibility(); 
-			layer.update(); 
-			
+			layer.update(); */
+			this.dispatch( new EditProductCommandTriggerEvent (
+				EditProductCommandTriggerEvent.CHANGE_LAYER_VISIBLIITY, true, layer) ) ; 
 		}
 		
 		/*		public function removeLayer(layer : LayerBaseVO ) : void

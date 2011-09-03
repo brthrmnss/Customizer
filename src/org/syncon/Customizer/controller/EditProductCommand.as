@@ -23,24 +23,32 @@ package org.syncon.Customizer.controller
 		override public function execute():void
 		{
 			/**
-			 * Can block  adding if it is a repeat
+			 * Can block adding if it is a repeat
 			 * */
 			var addUndo : Boolean = true; 
 			//allows us to reset non merginc timer 
 			var resetTimer : Boolean = true; 
 			lastUndo = this.model.lastUndo; 
+			/**
+			 * if true will select the layer when done 
+			 * */
+			var selectLayerWhenFinished : Boolean = true
+			/**
+			 * can select this lsyer instead
+			 * */
+			var selectThisLayer : LayerBaseVO; 
 			
 			if ( this.model.blockUndoAdding == false ) //implies neitiher list changes 
 			{
-				//clone event to undoList  (Debugging)
+				//clone event to undoList (Debugging)
 				if ( event.undo ) 
 				{
 					if ( this.model.undoList.length != 0 ) 
-						this.model.undoList.removeItemAt(  this.model.undoList.toArray().length-1 ); 
+						this.model.undoList.removeItemAt( this.model.undoList.toArray().length-1 ); 
 				}
 				if ( event.redo ) 
 				{
-					this.model.undoList.addItem( event ) //(  this.model.undoList.toArray().length-1 ); 
+					this.model.undoList.addItem( event ) //( this.model.undoList.toArray().length-1 ); 
 				}
 			}
 			//usuallly when doing bulk operations, 
@@ -64,14 +72,14 @@ package org.syncon.Customizer.controller
 					if ( event.firstTime ) 
 					{
 						//if first param is a string 
-						if ( event.data is String  ) 
+						if ( event.data is String ) 
 						{
 							var imgLayer : ImageLayerVO = new ImageLayerVO(); 
 							imgLayer.name = 'Image ' +( this.model.getLayersByType(ImageLayerVO).length+1) 
 							imgLayer.url = event.data.toString(); 
 						}
 						//if first paramt imagelayerVO, clone it 
-						if ( event.data is ImageLayerVO  ) 
+						if ( event.data is ImageLayerVO ) 
 						{
 							imgLayer = event.data as ImageLayerVO
 							imgLayer = imgLayer.clone() as ImageLayerVO
@@ -89,7 +97,7 @@ package org.syncon.Customizer.controller
 						imgLayer.y = 0; */
 						//imgLayer.y = 100; 
 						
-						if (  imgLayer.visible ) //prompts are not by default visible ...
+						if ( imgLayer.visible ) //prompts are not by default visible ...
 							this.model.currentLayer = imgLayer; 
 						
 						
@@ -131,11 +139,11 @@ package org.syncon.Customizer.controller
 					if ( event.firstTime ) 
 					{
 						//if first param is a string 
-						if ( event.data is String  ) 
+						if ( event.data is String ) 
 						{
 							var txtLayer : TextLayerVO = new TextLayerVO(); 
 							txtLayer.name = 'Text ' + (this.model.getLayersByType(TextLayerVO).length+1); ; 
-							txtLayer.text =  event.data.toString() ; //'Enter Text Here';
+							txtLayer.text = event.data.toString() ; //'Enter Text Here';
 							/*
 							txtLayer.y = 100; 
 							txtLayer.x = 0; 
@@ -143,7 +151,7 @@ package org.syncon.Customizer.controller
 							*/
 						}
 						//if first param TextLayerVO, clone it 
-						if ( event.data is TextLayerVO  ) 
+						if ( event.data is TextLayerVO ) 
 						{
 							txtLayer = event.data as TextLayerVO
 							txtLayer = txtLayer.clone() as TextLayerVO
@@ -152,7 +160,7 @@ package org.syncon.Customizer.controller
 						txtLayer.x = 0; 
 						txtLayer.y = 100; 
 						*/
-						//txtLayer.fontFamily =  event.data2.toString() ; //font ... what should default be? ...
+						//txtLayer.fontFamily = event.data2.toString() ; //font ... what should default be? ...
 						this.model.addLayer( txtLayer ); 
 						event.oldData = txtLayer; 
 						//this.model.currentPage.name = newName 
@@ -178,38 +186,98 @@ package org.syncon.Customizer.controller
 				this.dispatch( new EditProductCommandTriggerEvent(
 					EditProductCommandTriggerEvent.TEXT_LAYER_ADDED, event, null ) ) 
 			}
+			if ( event.type == EditProductCommandTriggerEvent.CHANGE_LAYER_VISIBLIITY ) 
+			{
+				if ( event.undo == false )
+				{
+					layer = this.model.currentLayer as LayerBaseVO; 
+					if ( event.data2 != null ) 
+						layer = event.data2 as LayerBaseVO; 
+					event.oldData = layer.visible;
+					var layerVisibility : Boolean = event.data as Boolean 
+					if ( layer.visible == layerVisibility ) 
+						return; //leaving early 
+					//if same ... 
+					layer.visible = layerVisibility; 
+					layer.updateVisibility();//this is not enough 
+					layer.update(); 
+					event.data2 = layer ; //don't like this feel like storing old layer should be automatic ...
+					
+					if ( this.lastUndoSameType() && lastUndo.data2 == layer ) 
+					{
+						if ( debugUndos ) trace('merging', event, event.type); 
+						this.model.lastUndo.data = event.data;
+						lastUndo = popUndo(); 
+						var lastUndo2nd : EditProductCommandTriggerEvent = this.model.undo.peekUndo() as EditProductCommandTriggerEvent
+						if ( lastUndo2nd.type != this.event.type ) 
+						{
+							return //leaving early: b/c user change visibility 2x, and we have no need to store that 
+						}
+						else
+						{
+							pushUndo(lastUndo) ; 
+							addUndo = false; 
+						}
+						
+					}
+				}
+				else
+				{
+					layer = event.data2 as LayerBaseVO; 
+					layer.visible = event.oldData as Boolean
+					layer.update()
+					//this.model.currentLayer = layer ... this should be auto 
+				}		
+				//this.model.currentPage.updated();
+				//this.model.layersChanged(); 
+				this.dispatch( new EditProductCommandTriggerEvent(
+					EditProductCommandTriggerEvent.LAYER_VISIBLIITY_CHANGED, event, null ) ) 
+			}	
+			
 			
 			if ( event.type == EditProductCommandTriggerEvent.CHANGE_IMAGE_URL ) 
 			{
 				if ( event.undo == false )
 				{
 					imgLayer = this.model.currentLayer as ImageLayerVO; 
-					
+					if ( event.data3 != null ) 
+						imgLayer = event.data3 as ImageLayerVO; 
 					event.oldData = imgLayer.url;
-					//upload sends bitmapdata bytes, otherwise we have strings
-					if ( event.data  != null  ) 
+					//upload sends bitmapdata bytes, otherwise we have string url (event.data)
+					if ( event.data != null ) 
 					{
-						imgLayer.url  =   event.data.toString()
+						imgLayer.url = event.data.toString()
 					}
+					//data2 is a bitmapdata bytes
 					if ( event.data2 != null ) 
 					{
 						//we have uploaded an image
-						imgLayer.url  = ''
+						imgLayer.url = ''
 						imgLayer.source = event.data2; 
+						//09/03/11 wtf ...? why? 
 						var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(
 							ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE, '');
 						this.dispatch(trgevent);
 					}
 					imgLayer.update(ImageLayerVO.SOURCE_CHANGED)//'fontSize'); 
-					imgLayer.horizStartAlignment  = 'center'  
-					imgLayer.vertStartAlignment  = 'center'  //need better way to refresh this 
+					imgLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
+					imgLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER//need better way to refresh this 
 					this.model.currentLayer = imgLayer; 
-					event.data2 = imgLayer ; //don't like this feel like storing old layer should be automatic ...
+					event.data3 = imgLayer ; //don't like this feel like storing old layer should be automatic ...
 				}
 				else
 				{
-					imgLayer = event.data2 as ImageLayerVO; 
-					imgLayer.url = event.oldData.toString() 
+					imgLayer = event.data3 as ImageLayerVO; 
+					if ( event.oldData == null || event.oldData == ''  ) //if there is no old data, they started with an empty string, 
+					{
+						imgLayer.url = ''
+						imgLayer.visible = false 
+					}
+					else
+					{
+						imgLayer.url = event.oldData.toString() 
+					}
+					
 					imgLayer.update()
 				}		
 				//this.model.currentPage.updated();
@@ -288,11 +356,11 @@ package org.syncon.Customizer.controller
 					//go through everything on the stage ... 
 					//if text / engrave change font family 
 					//save as bulk 
-					for each ( var face : FaceVO in this.model.baseItem.faces.toArray() )  
+					for each ( var face : FaceVO in this.model.baseItem.faces.toArray() ) 
 					{
 						if ( face.imported )
 						{
-							for each (   layer in face.layers.toArray() )  
+							for each ( layer in face.layers.toArray() ) 
 							{
 								//see if this layer is empty
 								if(layer.type == TextLayerVO.Type )
@@ -311,7 +379,7 @@ package org.syncon.Customizer.controller
 						else
 						{
 							//non importaed layers are not visible so we must target theri template form 
-							for each (   layer in face.layersToImport)   
+							for each ( layer in face.layersToImport) 
 							{
 								//see if this layer is empty
 								if(layer.type == TextLayerVO.Type )
@@ -330,7 +398,7 @@ package org.syncon.Customizer.controller
 				}
 				else
 				{
-					for each ( bulkEvent in  event.subEvents )  
+					for each ( bulkEvent in event.subEvents ) 
 					{
 						bulkEvent.performUndo() //how ot perforom redo?/ or the original undo or something ... 
 					}
@@ -372,7 +440,7 @@ package org.syncon.Customizer.controller
 			}
 			
 			if ( event.type == EditProductCommandTriggerEvent.CHANGE_COLOR 
-				&& this.model.currentLayer is TextLayerVO )  
+				&& this.model.currentLayer is TextLayerVO ) 
 			{
 				if ( event.undo == false )
 				{
@@ -387,6 +455,7 @@ package org.syncon.Customizer.controller
 					txtLayer.update('color'); 
 					this.model.currentLayer = txtLayer; 
 					event.data2 = txtLayer ; //don't like this feel like storing old layer should be automatic ...
+					
 				}
 				else
 				{
@@ -402,18 +471,19 @@ package org.syncon.Customizer.controller
 			
 			
 			//how to map this? ... use a string for layer association
-			if ( event.type == EditProductCommandTriggerEvent.CHANGE_LAYER_COLOR  	)  
+			if ( event.type == EditProductCommandTriggerEvent.CHANGE_LAYER_COLOR 	) 
 			{
 				if ( event.undo == false )
 				{
 					//if ( event.data2 != null ) 
 					//this.model.getColorLayer(event.data2 )
+					
 					colorLayer = this.model.layerColor; //this.model.currentLayer as ColorLayerVO; 
-					//can specify layer  name as well
-					if ( event.data2 != null && event.data2 != ''  ) 
+					//can specify layer name as well
+					if ( event.data2 != null && event.data2 != '' ) 
 					{
 						var layerName : String = event.data2.toString()
-						colorLayer = this.model.getLayerByName( layerName  ) as ColorLayerVO; 
+						colorLayer = this.model.getLayerByName( layerName ) as ColorLayerVO; 
 					}
 					if ( colorLayer == null ) 
 					{
@@ -422,10 +492,21 @@ package org.syncon.Customizer.controller
 							'cannot set color, color layer not defined'); 
 						return; 
 					}
+					
+					layer = colorLayer
+					
 					event.oldData = colorLayer.color; 
 					colorLayer.color = ( event.data ); 
 					colorLayer.update('color'); 
-					event.data3 = colorLayer ; 
+					event.data3 = colorLayer ;
+					
+					if ( this.lastUndoSameType() && lastUndo.data3 == layer ) 
+					{
+						if ( debugUndos ) trace('merging', event, event.type); 
+						this.model.lastUndo.data = event.data; 
+						this.model.lastUndo.data2 = event.data2
+						addUndo = false; 
+					}
 				}
 				else
 				{
@@ -479,7 +560,7 @@ package org.syncon.Customizer.controller
 					this.model.baseLayer = imgLayer; 
 					
 					//if layers are not predefied, add default, for testing purposes 
-					if ( product.layers  == null )
+					if ( product.layers == null )
 					{
 					var colorLayer : ColorLayerVO = new ColorLayerVO(); 
 					colorLayer.name = 'Color Base Image';
@@ -496,7 +577,7 @@ package org.syncon.Customizer.controller
 					
 					//order doesn't matter as it doesn't appear ...
 					imgLayer = new ImageLayerVO(); 
-					imgLayer.name = 'Mask  Image';
+					imgLayer.name = 'Mask Image';
 					imgLayer.url = product.base_image_url; 
 					//imgLayer.url = 'assets/images/img.jpg'
 					imgLayer.locked = true; 
@@ -518,9 +599,9 @@ package org.syncon.Customizer.controller
 					//disable adding undos 
 					this.model.blockUndoAdding = true; 
 					
-					if ( product.image_color_overlay != null &&  product.image_color_overlay != ''  ) 
+					if ( product.image_color_overlay != null && product.image_color_overlay != '' ) 
 					{
-					colorLayer  = new ColorLayerVO(); 
+					colorLayer = new ColorLayerVO(); 
 					colorLayer.name = 'Color Base Image';
 					colorLayer.url = product.image_color_overlay; 
 					colorLayer.locked = true; 
@@ -551,11 +632,11 @@ package org.syncon.Customizer.controller
 					}								
 					}	
 					
-					if ( product.image_mask !=null && product.image_mask != ''   ) 
+					if ( product.image_mask !=null && product.image_mask != '' ) 
 					{
 					//use mask layer as well ..
 					imgLayer = new ImageLayerVO(); 
-					imgLayer.name = 'Mask  Image';
+					imgLayer.name = 'Mask Image';
 					imgLayer.url = product.image_mask; 
 					//imgLayer.url = 'assets/images/img.jpg'
 					imgLayer.locked = true; 
@@ -590,15 +671,16 @@ package org.syncon.Customizer.controller
 			//try to grab first face and load it 
 			if ( event.type == EditProductCommandTriggerEvent.LOAD_FACE ) 
 			{
+				selectLayerWhenFinished = false; 
 				undoable = false 
 				if ( event.undo == false )
 				{
 					
 					//event.oldData = this.model.cur
-					face  = event.data as FaceVO
+					face = event.data as FaceVO
 					if ( face == null ) 
 						throw 'EditProductCommand', 'LOAD_FACE', 'face is null'// face first' 
-					this.model.currentFace  = face; 
+					this.model.currentFace = face; 
 					//load in product stuff 
 					//maybe save layers on the face?...
 					//this.model.layers.removeAll();
@@ -640,7 +722,7 @@ package org.syncon.Customizer.controller
 							if ( layer is ImageLayerVO ) 
 							{
 								imgLayer = layer as ImageLayerVO
-								if ( imgLayer.name == 'Base Image' ) //this is  not safe ..
+								if ( imgLayer.name == 'Base Image' ) //this is not safe ..
 									this.model.baseLayer = imgLayer; 
 							}
 						}	
@@ -669,7 +751,7 @@ package org.syncon.Customizer.controller
 							this.model.baseLayer = imgLayer; 
 						}	
 						//if layers are not predefied, add default, for testing purposes 
-						if ( face.layersToImport  == null )// || face.layersToImport.length == 0  )
+						if ( face.layersToImport == null )// || face.layersToImport.length == 0 )
 						{
 							var colorLayer : ColorLayerVO = new ColorLayerVO(); 
 							colorLayer.name = 'Color Base Image';
@@ -686,7 +768,7 @@ package org.syncon.Customizer.controller
 							
 							//order doesn't matter as it doesn't appear ...
 							imgLayer = new ImageLayerVO(); 
-							imgLayer.name = 'Mask  Image';
+							imgLayer.name = 'Mask Image';
 							imgLayer.url = face.base_image_url; 
 							//imgLayer.url = 'assets/images/img.jpg'
 							imgLayer.locked = true; 
@@ -708,9 +790,9 @@ package org.syncon.Customizer.controller
 							//disable adding undos 
 							this.model.blockUndoAdding = true; 
 							
-							if ( face.image_color_overlay != null &&  face.image_color_overlay != ''  ) 
+							if ( face.image_color_overlay != null && face.image_color_overlay != '' ) 
 							{
-								colorLayer  = new ColorLayerVO(); 
+								colorLayer = new ColorLayerVO(); 
 								colorLayer.name = 'Color Base Image';
 								colorLayer.url = face.image_color_overlay; 
 								colorLayer.locked = true; 
@@ -725,11 +807,11 @@ package org.syncon.Customizer.controller
 							}		
 							
 							
-							if ( face.image_mask !=null && face.image_mask != ''   ) 
+							if ( face.image_mask !=null && face.image_mask != '' ) 
 							{
 								//use mask layer as well ..
 								imgLayer = new ImageLayerVO(); 
-								imgLayer.name = 'Mask  Image';
+								imgLayer.name = 'Mask Image';
 								imgLayer.url = face.image_mask; 
 								//imgLayer.url = 'assets/images/img.jpg'
 								imgLayer.locked = true; 
@@ -769,7 +851,7 @@ package org.syncon.Customizer.controller
 						}
 						face.imported = true
 					}
-					dbg  = [this.model.layers.length, this.model.layers.toArray() ] 
+					dbg = [this.model.layers.length, this.model.layers.toArray() ] 
 					this.model.undo.clearAll(); 
 					this.model.undoList.removeAll(); 
 					this.model.recreateDisplayableLayers(); 
@@ -845,7 +927,7 @@ package org.syncon.Customizer.controller
 					event.data3 = layer ; 
 					this.model.blockUndoExecution=false
 					//this has the added benefit of surpressing x's and y only updates ... it merges them
-					if (  this.lastUndoSameType() && lastUndo.data3 == layer ) 
+					if ( this.lastUndoSameType() && lastUndo.data3 == layer ) 
 					{
 						if ( debugUndos ) trace('merging', event, event.type); 
 						this.model.lastUndo.data = event.data; 
@@ -853,7 +935,7 @@ package org.syncon.Customizer.controller
 						addUndo = false; 
 					}
 					
-					//if ( debugUndos )   trace('go', event.data, event.data2 )
+					//if ( debugUndos ) trace('go', event.data, event.data2 )
 				}
 				else
 				{
@@ -861,7 +943,7 @@ package org.syncon.Customizer.controller
 					layer = event.data3 as LayerBaseVO; 
 					layer.setXY( event.oldData, event.oldData2 ) ; 
 					layer.update(); 
-					if ( debugUndos )  trace('redo', event.data, event.data2 )
+					if ( debugUndos ) trace('redo', event.data, event.data2 )
 					this.model.blockUndoExecution=false
 				}		
 				//this.model.currentPage.updated();
@@ -870,16 +952,61 @@ package org.syncon.Customizer.controller
 					EditProductCommandTriggerEvent.LAYER_MOVED, event, null ) ) 
 			}	
 			
+			if ( event.type == EditProductCommandTriggerEvent.CHANGE_TEXT ) 
+			{
+				if ( event.undo == false )
+				{
+					
+					txtLayer = this.model.currentLayer as TextLayerVO 
+					if ( event.firstTime ) 
+						selectLayerWhenFinished  = false 
+					//override curnet layer 
+					if ( event.data2 != null ) 
+						txtLayer = event.data2 as TextLayerVO
+					
+					//inhibit redundancy
+					if ( txtLayer.text == event.data ) 
+						return; //leave early							
+					layer =  txtLayer
+					event.oldData = txtLayer.text; 
+					this.model.blockUndoExecution=true
+					txtLayer.text= event.data.toString()
+					layer.update(); 
+					event.data2 = txtLayer ; 
+					this.model.blockUndoExecution=false
+					
+					if ( this.lastUndoSameType() && lastUndo.data2 == layer ) 
+					{
+						if ( debugUndos ) trace('merging', event, event.type); 
+						this.model.lastUndo.data = event.data; 
+						this.model.lastUndo.data2 = event.data2
+						addUndo = false; 
+					}
+					
+					//if ( debugUndos ) trace('go', event.data, event.data2 )
+				}
+				else
+				{
+					this.model.blockUndoExecution=true
+					txtLayer = event.data2 as TextLayerVO; 
+					txtLayer.text = event.oldData.toString()
+					txtLayer.update(); 
+					if ( debugUndos ) trace('redo', event.data, event.data2 )
+					this.model.blockUndoExecution=false
+				}		
+				//this.model.currentPage.updated();
+				//this.model.layersChanged(); 
+				this.dispatch( new EditProductCommandTriggerEvent(
+					EditProductCommandTriggerEvent.TEXT_CHANGED, event, null ) ) 
+			}	
+			
+			
 			if ( event.type == EditProductCommandTriggerEvent.RESIZE_LAYER ) 
 			{
 				if ( event.undo == false )
 				{
 					layer = this.model.currentLayer as LayerBaseVO; 
-					if ( event.firstTime ) 
-					{
-						/*txtLayer.x = 0; 
-						txtLayer.y = 100; */
-					}		
+					
 					//specific target laery is store on 3
 					if ( event.data3 != null ) 
 						layer = event.data3 as LayerBaseVO
@@ -890,7 +1017,50 @@ package org.syncon.Customizer.controller
 					layer.update(); 
 					event.data3 = layer ; 
 					this.model.blockUndoExecution=false
+					
+					/*
+					* two issues:
+					if the last Undo was a move on same layer, and the x,y has obv no
+					* */
 					//trace('go', event.data, event.data2 )
+					
+					if ( event.firstTime ) //this automerging is only relevant the first time //??
+					{
+						//to keep resizing consistent, objecthandles moves xy then sets rotation 
+						//we must remove that event ... there is no time for a user to act inbetween, so 
+						//we can safetly remove it 
+						if ( lastUndo.type == EditProductCommandTriggerEvent.MOVE_LAYER && lastUndo.data3 == layer ) 
+						{
+							popuppedEvent = this.popUndo()
+							event.autoSubEvents.push( popuppedEvent ) ; 
+							//step 2: try to test if the event on top of stack is a similiar type
+							lastUndo = this.popUndo()//pop so we can examine it 
+							this.model.lastUndo = lastUndo; //we have to do this b/c lastUndoSameType looks at the model
+							if ( lastUndo != null ) //watch out b/c first time .. it is null
+								this.pushUndo( lastUndo ) ; //put it back 
+							
+							if ( this.lastUndoSameType() && lastUndo.data3 == layer ) 
+							{
+								if ( debugUndos ) trace('merging', event, event.type); 
+								this.model.lastUndo.data = event.data; 
+								//this.model.lastUndo.data2 = event.data2
+								addUndo = false; 
+								/**
+								 * remove subevent and update first one ... sothere is only 1 
+								 * */
+								//lastUndo.autoSubEvents.pop()//( popuppedEvent ) ; 
+								firstSubEvent = 	lastUndo.autoSubEvents[0] as EditProductCommandTriggerEvent
+								firstSubEvent.data = popuppedEvent.data; 
+								firstSubEvent.data2 = popuppedEvent.data2
+								
+								//update old rotation? no? 
+								addUndo = false; 
+							}
+							
+						}
+					}
+					
+					
 				}
 				else
 				{
@@ -930,19 +1100,17 @@ package org.syncon.Customizer.controller
 						//to keep ceterpoint consistent, objecthandles moves xy then sets rotation 
 						//we must remove that event ... there is no time for a user to act inbetween, so 
 						//we can safetly remove it 
-						if ( lastUndo.type == EditProductCommandTriggerEvent.MOVE_LAYER &&  lastUndo.data3 == layer ) 
+						if ( lastUndo.type == EditProductCommandTriggerEvent.MOVE_LAYER && lastUndo.data3 == layer ) 
 						{
-							var popuppedEvent : EditProductCommandTriggerEvent = 
-								this.model.undo.popUndo()	as EditProductCommandTriggerEvent
+							var popuppedEvent : EditProductCommandTriggerEvent = this.popUndo()
 							event.autoSubEvents.push( popuppedEvent ) ; 
-							this.model.undoList.removeItemAt(  this.model.undoList.toArray().length-1 ); 
-							//step 2:  try to test if the event on top of stack is a similiar type
-							lastUndo = this.model.undo.popUndo()  as EditProductCommandTriggerEvent //pop so we can examine it 
-							this.model.lastUndo = lastUndo; //we have to do this b/c lastUndoSameType  looks at the model
+							//step 2: try to test if the event on top of stack is a similiar type
+							lastUndo = this.popUndo()//pop so we can examine it 
+							this.model.lastUndo = lastUndo; //we have to do this b/c lastUndoSameType looks at the model
 							if ( lastUndo != null ) //watch out b/c first time .. it is null
-								this.model.undo.pushUndo( lastUndo ) ; //put it back 
+								this.pushUndo( lastUndo ) ; //put it back 
 						}
-						if (  this.lastUndoSameType() && lastUndo.data3 == layer ) 
+						if ( this.lastUndoSameType() && lastUndo.data3 == layer ) 
 						{
 							if ( debugUndos ) trace('merging', event, event.type); 
 							this.model.lastUndo.data = event.data; 
@@ -952,7 +1120,7 @@ package org.syncon.Customizer.controller
 							 * remove subevent and update first one ... sothere is only 1 
 							 * */
 							//lastUndo.autoSubEvents.pop()//( popuppedEvent ) ; 
-							var firstSubEvent :  EditProductCommandTriggerEvent = 
+							var firstSubEvent : EditProductCommandTriggerEvent = 
 								lastUndo.autoSubEvents[0] as EditProductCommandTriggerEvent
 							firstSubEvent.data = popuppedEvent.data; 
 							firstSubEvent.data2 = popuppedEvent.data2
@@ -991,7 +1159,9 @@ package org.syncon.Customizer.controller
 					
 					if ( layer.prompt_layer == true && 
 						this.model.currentFace.can_remove_prompt_layers == false ) 
+						
 					{
+						///could forward this to chanve visiblity ...
 						layer.visible = false; 
 						layer.update(); 
 						//return;
@@ -1003,8 +1173,8 @@ package org.syncon.Customizer.controller
 					}
 					//if ( nextLayerIndex >= this.model.layers.length ) 
 					//	nextLayerIndex = 0
-					//var nextLayer : LayerBaseVO = this.model.layers.getItemAt(   nextLayerIndex) as LayerBaseVO;
-					var nextLayer : LayerBaseVO =  this.model.getNextLayer() ;
+					//var nextLayer : LayerBaseVO = this.model.layers.getItemAt( nextLayerIndex) as LayerBaseVO;
+					var nextLayer : LayerBaseVO = this.model.getNextLayer() ;
 					this.model.currentLayer =nextLayer
 				}
 				else
@@ -1058,7 +1228,7 @@ package org.syncon.Customizer.controller
 				
 				if ( addUndo ) 
 				{
-					if ( debugUndos )   trace('addeded one', event.type)
+					if ( debugUndos ) trace('addeded one', event.type)
 					this.model.lastUndo = event; 
 					this.model.undo.pushUndo( event ) ;
 					this.model.undoList.addItem(event);
@@ -1088,8 +1258,25 @@ package org.syncon.Customizer.controller
 				this.model.blockUndoAdding = oldBlockSetting
 			}
 			
+			
 			//reset timer in wrong place?
 			
+			
+			if ( layer != null && selectLayerWhenFinished ) 
+			{
+				if ( selectThisLayer == null ) 
+				{
+					if ( layer != null ) 
+						this.model.currentLayer = layer;
+				}
+				else
+				{
+					this.model.currentLayer = selectThisLayer;
+				}
+			}
+			
+			if ( event.fxPost != null ) 
+				event.fxPost(); 
 		}
 		
 		/***
@@ -1097,12 +1284,12 @@ package org.syncon.Customizer.controller
 		 * */
 		private function importLayer(layer:LayerBaseVO):void
 		{
-			if ( !  isNaN( layer.x ) )
+			if ( ! isNaN( layer.x ) )
 			{
 				layer.importX = layer.x;
 				layer.horizStartAlignment = ''; 
 			}
-			if ( !  isNaN( layer.y ) )
+			if ( ! isNaN( layer.y ) )
 			{
 				layer.importY = layer.y;
 				layer.horizStartAlignment = ''; 
@@ -1124,7 +1311,7 @@ package org.syncon.Customizer.controller
 				else
 				{
 					var currentTime : Date = new Date(); 
-					var diff : Number =currentTime.getTime() -  this.model.lastUndoAddDate.getTime()
+					var diff : Number =currentTime.getTime() - this.model.lastUndoAddDate.getTime()
 					diff = diff / 1000
 					//if last time has past, return same 
 					if ( diff < timePast ) 
@@ -1137,5 +1324,19 @@ package org.syncon.Customizer.controller
 			
 			return false; 
 		}
+		
+		private function popUndo( ) : EditProductCommandTriggerEvent
+		{
+			var popuppedEvent : EditProductCommandTriggerEvent = 
+				this.model.undo.popUndo()	as EditProductCommandTriggerEvent
+			this.model.undoList.removeItemAt( this.model.undoList.toArray().length-1 ); 
+			return popuppedEvent
+		}
+		private function pushUndo( u: EditProductCommandTriggerEvent ) : void
+		{
+			this.model.undo.pushUndo( u ) ; 
+			this.model.undoList.addItem( event ) 
+		}
+		
 	}
 }

@@ -52,8 +52,11 @@ package org.syncon.Customizer.controller
 		public static const ROTATE_LAYER:String = 'ROTATE_LAYER.w';
 		public static const LAYER_ROTATED:String = 'LAYER_ROTATED.w';		
 		
-		public static const HIDE_LAYER:String = 'HIDE_LAYER.w';
-		public static const LAYER_HID:String = 'LAYER_HIDE.w';		
+		public static const CHANGE_TEXT:String = 'CHANGE_TEXT.w';
+		public static const TEXT_CHANGED:String = 'TEXT_CHANGED.w';		
+		
+		public static const CHANGE_LAYER_VISIBLIITY:String = 'CHANGE_LAYER_VISIBLIITY.w';
+		public static const LAYER_VISIBLIITY_CHANGED:String = 'LAYER_VISIBLIITY_CHANGED.w';		
 		
 		static public var fxAnimate : Function;  
 		/*
@@ -87,6 +90,7 @@ package org.syncon.Customizer.controller
 		 * Like subevents but when undoing adn redoing they are auto undo and redone
 		 * */
 		public var autoSubEvents: Array=[];
+		public var fxPost:Function;
 		
 		public function EditProductCommandTriggerEvent(type:String , data :  Object = null , data2 : Object = null , 
 													   data3 : Object = null ) 
@@ -109,6 +113,8 @@ package org.syncon.Customizer.controller
 			
 			e.autoSubEvents = this.autoSubEvents; 
 			e.subEvents = this.subEvents; 
+			
+			e.fxPost = this.fxPost; 
 			return e
 		}
 		public function performUndo() : void
@@ -156,9 +162,9 @@ package org.syncon.Customizer.controller
 				
 				CHANGE_IMAGE_URL,
 				
+				CHANGE_TEXT,
 				
-				
-				HIDE_LAYER, 
+				CHANGE_LAYER_VISIBLIITY, 
 				
 				MOVE_LAYER,
 				RESIZE_LAYER,

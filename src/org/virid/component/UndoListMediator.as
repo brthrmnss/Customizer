@@ -38,7 +38,8 @@ package org.virid.component
 		
 		private function onUndosChanged(e:Event):void
 		{
-			this.ui.list.ensureIndexIsVisible( this.model.undoList.length-1 ) ; 
+			//this.ui.list.ensureIndexIsVisible( this.model.undoList.length-1 ) ;
+			this.ui.list.scroller.verticalScrollBar.value = this.ui.list.dataGroup.contentHeight - this.ui.list.dataGroup.height;
 		}		
 		 
 		private function onLayersChanged(e:NightStandModelEvent):void

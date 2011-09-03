@@ -35,9 +35,14 @@
 			public function updateItemRenderer(e:Event=null)  : void
 			{
 				txtLbl.text = /* this.layer.displayName +  */ this.event.type
-				
-				txtData.text = [this.event.data, this.event.data2, this.event.data3].join(', '); 
-				
+				if ( event.type != EditProductCommandTriggerEvent.CHANGE_IMAGE_URL ) 
+				{
+					txtData.text = [this.event.data, this.event.data2, this.event.data3].join(', '); 
+				}
+				else
+				{
+					txtData.text = [this.event.data, null, this.event.data3].join(', '); 
+				}
 				this.txtOldData.text =  [this.event.oldData, this.event.oldData2, this.event.oldData3].join(', '); 
 				//this.lblCount.text = this.layer.type; 
 				if (this.selected == false && this.currentState == 'selected' )

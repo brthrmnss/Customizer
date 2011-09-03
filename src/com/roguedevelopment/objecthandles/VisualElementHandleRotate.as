@@ -48,7 +48,9 @@ package com.roguedevelopment.objecthandles
 			// img  = new Image()
 			img.source = 'assets/images/14_rotate.png'
 			this.addChild( img ) 
-				
+			this.useHandCursor = true
+			this.buttonMode = true;
+			
 			img.width = 22
 			img.height = 22; 
 			img.x = -img.width/2
@@ -86,16 +88,16 @@ package com.roguedevelopment.objecthandles
 			}
 			return
 			
-				graphics.clear();
+			graphics.clear();
 			if( isOver )
 			{
-			graphics.lineStyle(1,0x3dff40);
-			graphics.beginFill(0xc5ffc0	,1);				
+				graphics.lineStyle(1,0x3dff40);
+				graphics.beginFill(0xc5ffc0	,1);				
 			}
 			else
 			{
-			graphics.lineStyle(1,0)//0xa4a4a4)// 0xc7c7c7 );
-			graphics.beginFill(0xdfdfdf,1);
+				graphics.lineStyle(1,0)//0xa4a4a4)// 0xc7c7c7 );
+				graphics.beginFill(0xdfdfdf,1);
 			}
 			
 			graphics.drawRect(-3,-3,6,6);

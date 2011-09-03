@@ -74,7 +74,7 @@
 	</s:Rect>
 	
 	<!-- transform stage-->
-	<component:DesignView  width="240" height="290"
+	<component:DesignView  width="100%" height="100%"
 						   
 						    horizontalCenter="0" verticalCenter="0"/>
 	

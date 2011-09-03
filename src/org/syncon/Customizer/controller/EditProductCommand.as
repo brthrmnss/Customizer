@@ -259,9 +259,12 @@ package org.syncon.Customizer.controller
 							ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE, '');
 						this.dispatch(trgevent);
 					}
-					imgLayer.update(ImageLayerVO.SOURCE_CHANGED)//'fontSize'); 
-					imgLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
-					imgLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER//need better way to refresh this 
+					if ( event.firstTime ) 
+					{
+						imgLayer.update(ImageLayerVO.SOURCE_CHANGED)//'fontSize'); 
+						imgLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
+						imgLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER//need better way to refresh this
+					}
 					this.model.currentLayer = imgLayer; 
 					event.data3 = imgLayer ; //don't like this feel like storing old layer should be automatic ...
 				}
@@ -1327,10 +1330,11 @@ package org.syncon.Customizer.controller
 		
 		private function popUndo( ) : EditProductCommandTriggerEvent
 		{
-			var popuppedEvent : EditProductCommandTriggerEvent = 
+			var popedEvent : EditProductCommandTriggerEvent = 
 				this.model.undo.popUndo()	as EditProductCommandTriggerEvent
-			this.model.undoList.removeItemAt( this.model.undoList.toArray().length-1 ); 
-			return popuppedEvent
+			if ( popedEvent != null ) 
+				this.model.undoList.removeItemAt( this.model.undoList.toArray().length-1 ); 
+			return popedEvent
 		}
 		private function pushUndo( u: EditProductCommandTriggerEvent ) : void
 		{

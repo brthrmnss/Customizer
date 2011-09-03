@@ -147,7 +147,7 @@
 				<s:SolidColorStroke  id="bgBorder" color="0x000000" weight="1"/>
 			</s:stroke>
 			<s:fill>
-				<s:SolidColor color="#FFFFFF"/>
+				<s:SolidColor color="#FFFFFF"  alpha="0"/>
 			</s:fill>
 		</s:Rect>
 	</s:Group>

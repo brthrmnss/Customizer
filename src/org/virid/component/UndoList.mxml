@@ -109,13 +109,6 @@
 			</s:layout>
 		</s:List>
 		
-		<s:Group width="100%">
-			<s:Label   text="SubTotal"/>
-			<s:Label id="txtCost" textAlign="right" right="18" styleName="price" text="$32.00"/>
-		</s:Group>
-		
-		
-		
 		
 	</s:VGroup>
 </s:Group>

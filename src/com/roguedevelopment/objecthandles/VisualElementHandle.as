@@ -38,6 +38,8 @@ package com.roguedevelopment.objecthandles
 			addEventListener( MouseEvent.ROLL_OUT, onRollOut );
 			addEventListener( MouseEvent.ROLL_OVER, onRollOver );
 			//redraw();
+			this.useHandCursor = true
+			this.buttonMode = true; 
 		}
 		
 		protected function onRollOut( event : MouseEvent ) : void

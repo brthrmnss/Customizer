@@ -1,15 +1,26 @@
 package  org.virid.component
 {
+	import flash.events.Event;
+	import flash.utils.setTimeout;
+	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
-	import org.syncon.Customizer.vo.FaceVO;
+	import org.syncon.Customizer.vo.FaceVO;  
 	
 	public class TransformationStageMediator extends Mediator 
 	{
 		[Inject] public var ui : transformation_stage;
 		[Inject] public var model : NightStandModel;
+		/**
+		 * Flag, if true, will play transitions between faces
+		 * */
+		private var transitionActive:Boolean = true;
+		/**
+		 * Flag blocks switching faces while transition active
+		 * */
+		private var active:Boolean=true;
 		
 		override public function onRegister():void
 		{
@@ -19,6 +30,26 @@ package  org.virid.component
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.BASE_ITEM_CHANGED,
 				this.onBaseItemChanged);	
 			this.onBaseItemChanged( null ) 
+			
+			
+			eventMap.mapListener(eventDispatcher, EditProductCommandTriggerEvent.FACE_LOADED,
+				this.onFaceLoaded );	
+		}
+		
+		private function onFaceLoaded(e:Event):void
+		{
+			if ( this.transitionActive ) 
+			{
+				this.ui.fxFade.alphaTo = 0 
+				this.ui.fxFade.play(); 
+				this.active = true; 
+				setTimeout( this.hideCover, this.ui.fxFade.duration ) ; 
+				
+			}
+		}
+		public function hideCover() : void
+		{
+			this.ui.cover.visible = false; 
 		}
 		
 		/**
@@ -36,23 +67,38 @@ package  org.virid.component
 				this.ui.btnSwitchSide.visible = false; 
 				return; 
 			}
-			
-			
-			
-
 		}		
-		
 		
 		private function onSwitchFaces(e:Object):void
 		{
-			var currentFace : FaceVO = this.model.currentFace
-			var index : int = this.model.baseItem.faces.getItemIndex( currentFace ) ; 
+			
+			if ( this.active == false ) 
+				return; 
 			
 			if ( this.model.baseItem.faces.length == 1 ) 
 			{
 				//there are no other faces ...
 				return; 
 			}
+			if ( transitionActive == false ) 
+			{
+				this.loadNextFace() 
+			}
+			else
+			{
+				this.ui.cover.visible = true; 
+				this.ui.fxFade.alphaTo = 1 ; 
+				this.ui.fxFade.play()
+				
+				setTimeout(  this.loadNextFace , 500)
+				this.active = false;
+			}
+		}
+		
+		private function loadNextFace() : void
+		{
+			var currentFace : FaceVO = this.model.currentFace
+			var index : int = this.model.baseItem.faces.getItemIndex( currentFace ) ; 
 			this.model.currentFace
 			var nextIndex : int = index; 
 			if ( index >= this.model.baseItem.faces.length - 1 )
@@ -62,7 +108,7 @@ package  org.virid.component
 			nextIndex++
 			
 			var face : FaceVO = this.model.baseItem.faces.getItemAt( nextIndex ) as FaceVO; 
-
+			
 			this.dispatch( new EditProductCommandTriggerEvent(
 				EditProductCommandTriggerEvent.LOAD_FACE, face, null ) ) 
 		}

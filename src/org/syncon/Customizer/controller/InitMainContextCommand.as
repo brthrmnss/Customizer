@@ -374,9 +374,10 @@ package org.syncon.Customizer.controller
 			
 			
 			textLayer = new TextLayerVO;
-			textLayer.text = '' 
+			textLayer.text = 'first' 
 			textLayer.name = 'Text'
-			textLayer.maxChars = 3
+			//face.importFirstLayerSelection = textLayer
+			textLayer.maxChars = 6
 			textLayer.fonts = fonts; 
 			//textLayer.fontFamily = 'Arial'
 			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
@@ -398,7 +399,8 @@ package org.syncon.Customizer.controller
 			
 			
 			textLayer = new TextLayerVO;
-			textLayer.text = 'd' 
+			textLayer.text = 'ddd '
+			
 			textLayer.name = 'Text 3'
 			//textLayer.maxChars = 3
 			textLayer.fonts = fonts; 
@@ -407,7 +409,7 @@ package org.syncon.Customizer.controller
 			textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
 			textLayer.maxFontSize = 35
 			textLayer.minFontSize = 12
-			textLayer.maxChars = 6
+			textLayer.maxChars = 20
 			
 				textLayer.verticalText = true
 				
@@ -424,8 +426,6 @@ package org.syncon.Customizer.controller
 			//textLayer.minFontSize = 6
 			textLayer.fonts = fonts; 
 			textLayer.prompt_layer = true; 
-			face.layersToImport.push(textLayer);
-			
 			face.layersToImport.push(textLayer);
 			
 			face  = new FaceVO()

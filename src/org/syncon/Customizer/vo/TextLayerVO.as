@@ -8,7 +8,20 @@ package  org.syncon.Customizer.vo
 		public var text : String = ''; 
 		
 		public static var Type:String= 'TEX';
-		public var fontSize:int = 12;
+		private var _fontSize:int = 12;
+		
+		public function get fontSize():int
+		{
+			return _fontSize;
+		}
+		
+		public function set fontSize(value:int):void
+		{
+			if ( value  <= 0 ) 
+				throw 'Font Size for layer  ' + this.name + ' is too small: ' + value
+			_fontSize = value;
+		}
+		
 		public var fontFamily : String;// = ''; 
 		public var color:*;
 		public var sizingSettings: String;
@@ -31,7 +44,10 @@ package  org.syncon.Customizer.vo
 			if ( this.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE ) 
 			{
 				if ( this.maxChars <= 0 ) 
-					throw 'Max Chars for layer ' + this.name + ' is too small: ' + this.maxChars
+					throw 'Max Chars for layer "' + this.name + '" is too small: ' + this.maxChars
+				if ( this.maxChars <  this.text.length  ) 
+					throw 'Text input for layer "' + this.name + '" is too large: ' + this.text +
+						' ' + this.maxChars + ' check import settings ' ;						
 				var steps :  Number =( this.maxFontSize - this.minFontSize)/this.maxChars; 
 				var dbg : Array = [this.maxFontSize - this.minFontSize, this.maxFontSize, this.minFontSize]
 				var charCount : int = this.text.length; 
@@ -42,6 +58,8 @@ package  org.syncon.Customizer.vo
 				var newFontSize2 : int = int( newFontSize ); 
 				if ( fontSize ==  newFontSize2   )
 					return; 
+				if ( newFontSize2  <= 0 ) 
+					throw 'Font Size for layer  ' + this.name + ' is too small: ' + this.fontSize
 				fontSize =newFontSize2
 				update('fontSize'); 
 			}

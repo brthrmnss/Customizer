@@ -847,6 +847,14 @@ package org.syncon.Customizer.controller
 									colorLayer = colorLayer.clone() as ColorLayerVO ; 
 									this.model.addLayer( colorLayer )
 								}	
+								if ( face.importFirstLayerSelection == layer ) 
+								{
+									for each ( var sl : LayerBaseVO in face.layers )
+									{
+										if ( sl.name == layer.name && sl.type == layer.type ) 
+											var selectLayerFirst : LayerBaseVO  = sl;
+									}
+								}
 							}	
 							
 							this.model.blockUndoAdding = false; 
@@ -857,8 +865,16 @@ package org.syncon.Customizer.controller
 					dbg = [this.model.layers.length, this.model.layers.toArray() ] 
 					this.model.undo.clearAll(); 
 					this.model.undoList.removeAll(); 
-					this.model.recreateDisplayableLayers(); 
-					this.model.currentLayer = this.model.getNextLayer();
+					this.model.recreateDisplayableLayers();
+					//select user specified first layer 
+					if ( event.firstTime && face.importFirstLayerSelection != null && selectLayerFirst != null ) 
+					{
+						this.model.currentLayer = selectLayerFirst
+					}
+					else
+					{ //select any layer 
+						this.model.currentLayer = this.model.getNextLayer();
+					}
 					this.model.calculateProductPrice();
 					//this.model.layersChanged(); 
 				}

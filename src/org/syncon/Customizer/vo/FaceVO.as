@@ -5,15 +5,15 @@ package  org.syncon.Customizer.vo
 	import mx.collections.ArrayCollection;
 	
 	import org.syncon.onenote.onenotehelpers.base.IPageVO;
-
+	
 	/**
 	 * Face image
 	 * */
 	public class FaceVO  extends EventDispatcher  implements  IPageVO
 	{
-		 
+		
 		public var name : String = ''; 
-	/*	public var url : String  = ''; */
+		/*	public var url : String  = ''; */
 		public var description : String = ''; 
 		
 		/**
@@ -28,7 +28,7 @@ package  org.syncon.Customizer.vo
 		public var image_mask : String = ''; 
 		
 		public var more_info_url : String = ''; 
-
+		
 		
 		public var limits : Object   = { };
 		
@@ -102,6 +102,10 @@ package  org.syncon.Customizer.vo
 		 * */
 		public var imported:Boolean;
 		public var price:Number;
+		/**
+		 * when importing will be selected first ...
+		 * */
+		[Transient] public var importFirstLayerSelection:LayerBaseVO;
 		[Transient]
 		public function get lists():ArrayCollection
 		{

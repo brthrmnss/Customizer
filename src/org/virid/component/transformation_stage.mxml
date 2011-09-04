@@ -32,7 +32,7 @@
 				/* 
 				this.productImageArea.source = (_prodImageReverese)?"assets/images/product_hero1r.jpg":"assets/images/product_hero1.jpg"; 
 				_prodImageReverese = !_prodImageReverese;
-				 */
+				*/
 				this.dispatchEvent( new Event(SWITCH_FACE) ) 
 				
 			}
@@ -42,7 +42,7 @@
 	<fx:Declarations>
 		
 		
-
+		<s:Fade id="fxFade"  target="{this.cover}" duration="500"  />
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		
 		<!--This component will need to know via json:
@@ -50,15 +50,15 @@
 		-->
 		
 		<!--This compnent will recieve signals from controller 
-			switch from design/engrave mode
-			add layer/image
-			switch side
+		switch from design/engrave mode
+		add layer/image
+		switch side
 		-->
 		
 		<!--This component will send signals to controller/model for:
-			layer edited / tranformed / moved
-			request to change sides
-			edit item button clicked
+		layer edited / tranformed / moved
+		request to change sides
+		edit item button clicked
 		
 		display notice - whenever user clicks question mark - let the main application handle displaying a message to the users
 		-->
@@ -75,8 +75,17 @@
 	
 	<!-- transform stage-->
 	<component:DesignView  width="100%" height="100%"
-						   
-						    horizontalCenter="0" verticalCenter="0"/>
+						   id="designView"
+						   horizontalCenter="0" verticalCenter="0"/>
+	
+	<s:Rect id="cover" alpha="0.0" visible="false" radiusX="8" radiusY="8" top="0" left="0" right="0" bottom="0">
+		<s:fill >
+			<s:SolidColor color="0xffffff" />
+		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke color="0xe9e9e9"/>
+		</s:stroke>
+	</s:Rect>
 	
 	<s:Group width="100%" height="100%">
 		
@@ -103,13 +112,13 @@
 			</s:Line>
 			<s:HGroup id="holderProductTitle" paddingLeft="10" paddingRight="10">
 				<s:Label id="txtProductName" 
-					 styleName="grayTxt Arial"
-					 text="Zippo Lighter |"
-					 />
+						 styleName="grayTxt Arial"
+						 text="Zippo Lighter |"
+						 />
 				<s:Label text="Edit" styleName="redTxt Arial"/>
 			</s:HGroup>
 		</s:Group>
-
+		
 		
 		
 		
@@ -118,33 +127,33 @@
 		
 		<s:Group 
 			height="15" bottom="0" horizontalCenter="0" width="100%">
-				<s:Image id="btnSwitchSide" 
-						 source="assets/images/flip.png"
-						  click="switchSide_clickHandler(event)"
-						  left="3" bottom="3" toolTip="Switch Sides"
-						  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+			<s:Image id="btnSwitchSide" 
+					 source="assets/images/flip.png"
+					 click="switchSide_clickHandler(event)"
+					 left="3" bottom="3" toolTip="Switch Sides"
+					 buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 			<!--icon="assets/images/flip.png" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"-->
 			
-				<s:HGroup paddingLeft="5" paddingRight="5" horizontalCenter="0">
-
-					<s:Rect radiusX="10" radiusY="10" top="0" left="0" right="0" bottom="0" >
-						<s:fill >
-							<s:SolidColor color="0xffffff" />
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="0xc1c1c1"/>
-						</s:stroke>
-					</s:Rect>
-					<s:Label id="zoomLevel" visible="false" includeInLayout="false"
-							 text="100%" styleName="redTxt Arial"/>			
-					
-				</s:HGroup>
+			<s:HGroup paddingLeft="5" paddingRight="5" horizontalCenter="0">
+				
+				<s:Rect radiusX="10" radiusY="10" top="0" left="0" right="0" bottom="0" >
+					<s:fill >
+						<s:SolidColor color="0xffffff" />
+					</s:fill>
+					<s:stroke>
+						<s:SolidColorStroke color="0xc1c1c1"/>
+					</s:stroke>
+				</s:Rect>
+				<s:Label id="zoomLevel" visible="false" includeInLayout="false"
+						 text="100%" styleName="redTxt Arial"/>			
+				
+			</s:HGroup>
 			
 			
-
-				<s:Button id="zoom" visible="false" includeInLayout="false"
-						  right="0" bottom="0"
-						  icon="assets/images/zoom.jpg" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"/>
+			
+			<s:Button id="zoom" visible="false" includeInLayout="false"
+					  right="0" bottom="0"
+					  icon="assets/images/zoom.jpg" skinClass="org.virid.skins.IconBasedBtnSkin" iconPlacement="top"/>
 		</s:Group>
 		
 		

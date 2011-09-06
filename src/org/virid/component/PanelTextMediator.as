@@ -10,6 +10,7 @@ package org.virid.component
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.Customizer.vo.TextLayerVO;
 	import org.syncon.onenote.onenotehelpers.impl.layer_item_renderer;
+	import org.syncon.Customizer.vo.FontVO;
 	
 	public class PanelTextMediator extends Mediator 
 	{
@@ -111,8 +112,20 @@ package org.virid.component
 		
 		protected function onChangeFontFamily(event:CustomEvent):void
 		{
+			
+			var font : FontVO= event.data as FontVO
+			var fontName : String = font.name; 
+			if ( font.swf_name != null && font.swf_name != '' ) 
+				fontName = font.swf_name; 
+			/*
 			this.dispatch( new EditProductCommandTriggerEvent ( 
-				EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY, event.data 
+			EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY, fontName 
+			) )  
+			*/
+			this.ui.txt.setStyle('fontFamily', fontName ) ; 
+			
+			this.dispatch( new EditProductCommandTriggerEvent ( 
+				EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY,fontName
 			) )  
 		}
 		

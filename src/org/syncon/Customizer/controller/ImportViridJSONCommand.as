@@ -223,6 +223,8 @@ package  org.syncon.Customizer.controller
 				layer.x = layerImport.transform.x;
 			if( layerImport.transform.hasOwnProperty( 'y' )  )
 				layer.y = layerImport.transform.y;
+			if( layerImport.transform.hasOwnProperty( 'rotation' )  )
+				layer.rotation = layerImport.transform.rotation;
 		}
 		
 	}

@@ -118,7 +118,7 @@
 			<s:Label styleName="price"  id="txtPrice" text="$14.00" paddingTop="8" />
 			<s:Image  id="btnDelete"  click="onRemove(event)"
 					   useHandCursor="true" buttonMode="true"
-					    toolTip="Hide Layer"
+					    toolTip="Disable Layer"
 				styleName="removeBtn" source="assets/images/x.jpg"
 				width="14" height="14" />
 		</s:HGroup>

@@ -2,6 +2,8 @@ package  	org.syncon.Customizer.view.popup.rs
 {
 	import flash.events.Event;
 	
+	import mx.collections.ArrayList;
+	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
@@ -42,6 +44,11 @@ package  	org.syncon.Customizer.view.popup.rs
 				this.ui.list.selectedItem = null; 
 			var img : ImageVO = e.data as ImageVO; 
 			//	img.name = 'foo'; 
+			
+			var oldScroll : Number = this.ui.list.scroller.verticalScrollBar.value; 
+		this.ui.list.dataProvider = new ArrayList(); 
+		this.ui.list.dataProvider = this.model.images; 
+		this.ui.list.scroller.verticalScrollBar.value; 
 			this.ui.hide()
 			this.ui.fxDone( img ) ; 
 		}

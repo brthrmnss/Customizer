@@ -68,5 +68,19 @@ package  org.syncon2.utils.file
 		  * i do not undersatnd how this is ok to compile ...
 		   * */
 		  function get   getBaseFolder(  ):String 
+			  
+			 /**
+			 * GenerateRequestForFile
+			 *  in flex, we have a local file definition , that was generated using get base folder
+			 * convert that back to something i can send to server and get contents of file
+			 * only used b/c we don't want to parse the information differnetly for non air environments
+			 * ..which might be a bad idea .... yes it is, ... iwill leave this a sa remind this is wrong 
+			 * ... one day we will want to go to flex, so do this conversion on ones own? 
+			 * how do you take off the adding of locations? 
+			 * your code should be able to handle both for testing purposes 
+			 * 
+			 * just disable prepend and you have what you needed
+			 * */
+		  //function  GenerateRequestForFile(url : String ) : URLRequest
 	}
 }

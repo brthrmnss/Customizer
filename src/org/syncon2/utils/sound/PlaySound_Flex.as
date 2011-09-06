@@ -1,6 +1,8 @@
 package org.syncon2.utils.sound
 {
+	import flash.errors.IOError;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.net.URLRequest;
@@ -12,6 +14,8 @@ package org.syncon2.utils.sound
 	
 	public class  PlaySound_Flex implements  IPlaySound
 	{
+		
+		private var _fxCallAfterSoundCompletePlaying:Function;
 		public function  get  fxCallAfterSoundCompletePlaying (  ) : Function
 		{
 			return this._fxCallAfterSoundCompletePlaying  
@@ -20,7 +24,21 @@ package org.syncon2.utils.sound
 		{
 			this._fxCallAfterSoundCompletePlaying = fx; 
 		}
-		private var _fxCallAfterSoundCompletePlaying:Function;
+		
+		
+		
+		private var _fxChangeSoundLocation : Function; 
+		public function get fxChangeSoundLocation():Function
+		{
+			return _fxChangeSoundLocation;
+		}
+		
+		public function set fxChangeSoundLocation(value:Function):void
+		{
+			_fxChangeSoundLocation = value;
+		}
+		
+		
 		
 		public var song:SoundAsset;
 		
@@ -37,6 +55,10 @@ package org.syncon2.utils.sound
 		{
 			
 			var soundReq:URLRequest = new URLRequest(url);
+			if ( fxChangeSoundLocation != null ) 
+				var newLocation :  URLRequest = fxChangeSoundLocation( url ) 
+			if ( newLocation != null ) 
+				soundReq = newLocation; 
 			/*var e : GetSoundTriggerEvent = new GetSoundTriggerEvent( GetSoundTriggerEvent.GET_SOUND , url ) 
 			this.dispatch( e ) 
 			if ( e.urlReq != null ) 
@@ -45,6 +67,7 @@ package org.syncon2.utils.sound
 			{this.stopSound()}
 			this.sound = new Sound(); 
 			soundControl = new SoundChannel(); 
+			sound.addEventListener(IOErrorEvent.IO_ERROR, ioSoundErrorHandler);
 			//sound.addEventListener(Event.COMPLETE, completeSound);
 			/*sound.addEventListener(Event.COMPLETE, completeHandler);
 			sound.addEventListener(Event.ID3, id3Handler);
@@ -57,6 +80,11 @@ package org.syncon2.utils.sound
 			soundControl.addEventListener(Event.SOUND_COMPLETE, this.onSoundComplete ) ; 
 		}
 		
+		protected function ioSoundErrorHandler(event:IOErrorEvent):void
+		{
+			trace('error', event.text ) ; 
+		}
+		
 		protected function onSoundComplete(event:Event):void
 		{
 			if ( fxCallAfterSoundCompletePlaying != null ) 
@@ -66,6 +94,7 @@ package org.syncon2.utils.sound
 		public function stopSound():void{
 			if ( sound != null ) 
 			{
+				sound.removeEventListener(IOErrorEvent.IO_ERROR, this.ioSoundErrorHandler ) 
 				soundControl.stop();
 				soundControl.removeEventListener(Event.COMPLETE,onSoundComplete);
 			}

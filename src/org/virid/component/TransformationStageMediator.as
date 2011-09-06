@@ -17,10 +17,25 @@ package  org.virid.component
 		 * Flag, if true, will play transitions between faces
 		 * */
 		private var transitionActive:Boolean = true;
+		private var _active:Boolean=true;
+
 		/**
 		 * Flag blocks switching faces while transition active
 		 * */
-		private var active:Boolean=true;
+		public function get active():Boolean
+		{
+			return _active;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set active(value:Boolean):void
+		{
+			_active = value;
+			trace('set active to ', value ) ; 
+		}
+
 		
 		override public function onRegister():void
 		{
@@ -42,7 +57,7 @@ package  org.virid.component
 			{
 				this.ui.fxFade.alphaTo = 0 
 				this.ui.fxFade.play(); 
-				this.active = true; 
+				
 				setTimeout( this.hideCover, this.ui.fxFade.duration ) ; 
 				
 			}
@@ -50,6 +65,7 @@ package  org.virid.component
 		public function hideCover() : void
 		{
 			this.ui.cover.visible = false; 
+			this.active = true; 
 		}
 		
 		/**

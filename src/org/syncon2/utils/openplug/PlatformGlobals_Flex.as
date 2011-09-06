@@ -5,6 +5,7 @@ package org.syncon2.utils.openplug
 	
 	import mx.controls.Alert;
 	import mx.events.ListEvent;
+	
 	import openplug.elips.controls.List;
 	
 	public class PlatformGlobals_Flex implements IPlatformGlobals
@@ -45,8 +46,8 @@ package org.syncon2.utils.openplug
 		
 		public function getItemClickEventData(event : Event ) : Object
 		{
-			//.itemRenderer.data
-			return event['item'] ; 
+			var e :  ListEvent = event as ListEvent; 
+			return e.itemRenderer.data; 
 		}
 		
 		private var _fxMediate : Function;

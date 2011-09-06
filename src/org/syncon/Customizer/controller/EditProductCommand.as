@@ -254,7 +254,8 @@ package org.syncon.Customizer.controller
 						//we have uploaded an image
 						imgLayer.url = ''
 						imgLayer.source = event.data2; 
-						//09/03/11 wtf ...? why? 
+						//09/03/11 wtf ...? why?  //oh ok u are calling to export image ... this 
+						//might be fine .... no upload image first, andwhen done call this function
 						var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(
 							ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE, '');
 						this.dispatch(trgevent);

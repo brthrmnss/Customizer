@@ -490,6 +490,7 @@ package org.syncon.Customizer.view.ui
 			/*	if ( this.layer.height == 16 ) 
 			trace('setting to 16');*/ 
 			this.flexModel1.height = this.layer.height; 
+			this.flexModel1.rotation = this.layer.rotation; 
 			trace('copyLayerToModel', this.layer.aaa ) 
 		}
 		

@@ -232,7 +232,7 @@
 			<s:HGroup width="100%">
 				<s:TextInput  id="txt" text="Text" change="txt_changeHandler(event)"  width="100%" height="38" paddingTop="10" focusAlpha="0"
 							  skinClass="org.virid.skins.LightGrayRoundedFormField" borderColor="0xe9e9e9"/>
-				<s:Button label="ADD  MY  TEXT"  click="onAddText(event)"
+				<s:Button label="ADD  MY  TEXT"  click="onAddText(event)" visible="false" includeInLayout="false"
 						  skinClass="org.virid.skins.simpleBlackBtn" verticalCenter="0"
 						  height="20"/>
 				

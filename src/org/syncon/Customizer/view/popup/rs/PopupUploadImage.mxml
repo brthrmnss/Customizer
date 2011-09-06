@@ -15,6 +15,8 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
+			
 			import org.virid.skins.Heading;
 			
 			import spark.events.IndexChangeEvent;
@@ -84,7 +86,7 @@
 			
 			public var args : Array = [] ; 
 			public var fxDone:Function;
-			public function done(   fxDone : Function = null ) : void
+			public function showPopup(   fxDone : Function = null ) : void
 			{
 				this.width =  this.parentApplication.width*.8
 				this.height =  this.parentApplication.height*.8
@@ -139,6 +141,11 @@
 			
 			protected function onFileRefrenceComplete(event:Event):void
 			{
+				if(this.fileRef.size > 4000000)
+				{
+					Alert.show("File larger than 4mb, please select a new Image");
+					return;
+				}
 				imageUploadedPic.source = fileRef.data;
 				imageUploaded = true;
 				this.btnSelect.enabled = true; 

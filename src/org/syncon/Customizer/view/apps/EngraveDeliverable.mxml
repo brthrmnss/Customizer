@@ -17,7 +17,7 @@
 				<s:VGroup width="350">
 					<component:MainMenuBar height="67"/>
 					<s:Spacer height="-1"/>
-					<component:engrave_panel width="350" height="260"/>
+					<component:PanelEngrave width="350" height="260"/>
 				</s:VGroup>	
 				
 				<s:Spacer width="20"/>

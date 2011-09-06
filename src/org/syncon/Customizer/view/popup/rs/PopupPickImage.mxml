@@ -70,7 +70,7 @@
 			
 			public var args : Array = [] ; 
 			public var fxDone:Function;
-			public function done(   fxDone : Function = null ) : void
+			public function showPopup(   fxDone : Function = null ) : void
 			{
 				//this.width =  this.parentApplication.width*.8
 				//this.height =  this.parentApplication.height*.8

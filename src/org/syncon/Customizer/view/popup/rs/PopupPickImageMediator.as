@@ -41,16 +41,18 @@ package  	org.syncon.Customizer.view.popup.rs
 		private function onSelect(e:CustomEvent):void
 		{
 			this.ui.list.selectedIndex = -1
-				this.ui.list.selectedItem = null; 
+			this.ui.list.selectedItem = null; 
 			var img : ImageVO = e.data as ImageVO; 
 			//	img.name = 'foo'; 
 			
 			var oldScroll : Number = this.ui.list.scroller.verticalScrollBar.value; 
-		this.ui.list.dataProvider = new ArrayList(); 
-		this.ui.list.dataProvider = this.model.images; 
-		this.ui.list.scroller.verticalScrollBar.value; 
+			this.ui.list.dataProvider = new ArrayList(); 
+			this.ui.list.dataProvider = this.model.images; 
+			this.ui.list.scroller.verticalScrollBar.value; 
+			
 			this.ui.hide()
-			this.ui.fxDone( img ) ; 
+			//if ( this.ui.fxDone != null ) 
+				this.ui.fxDone( img ) ; 
 		}
 		
 		private function onUpload(event:Event=null):void

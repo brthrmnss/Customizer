@@ -52,9 +52,9 @@ package  org.syncon.Customizer.controller
 				var face : FaceVO = new FaceVO()
 				face.name = faceImport.name;
 				/*if ( faceImport.image.indexOf( '/customize/' ) == 0 ) 
-					faceImport.image = faceImport.image.replace('/customize/', ''  ) ;*/
+				faceImport.image = faceImport.image.replace('/customize/', ''  ) ;*/
 				face.base_image_url = faceImport.image;
- 
+				
 				face.image_mask_alpha = .9;
 				///face.base_image_url = 'assets/images/imgbase.png'
 				if(faceImport.mask == null || faceImport.mask == "null")
@@ -114,9 +114,10 @@ package  org.syncon.Customizer.controller
 						this.copyBasics(textLayer, layerImport );
 						textLayer.text = layerImport.Media.source;
 						textLayer.maxChars = layerImport.Media.max
-						textLayer.orientation = layerImport.orientation;
+						//TODO: orientation has been removed
+						textLayer.verticalText = layerImport.orientation=='vertical';
 						textLayer.fontSize = layerImport.Fonts[0].size;//for engraving
-							
+						
 						
 						if(layerImport.type == "engrave"){						
 							textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
@@ -128,18 +129,18 @@ package  org.syncon.Customizer.controller
 						var fonts:Array = [];
 						for each(var fontIncoming:Object in layerImport.Fonts)
 						{
-								var font:FontVO = new FontVO();
-								font.name = fontIncoming.name;
-								font.swf_name = fontIncoming.swfname;
-								font.defaultSize = fontIncoming.size;
-								font.weight = fontIncoming.weight;
-								
-								fonts.push(font);
+							var font:FontVO = new FontVO();
+							font.name = fontIncoming.name;
+							font.swf_name = fontIncoming.swfname;
+							font.defaultSize = fontIncoming.size;
+							font.weight = fontIncoming.weight;
+							
+							fonts.push(font);
 							
 						}
 						textLayer.fonts = fonts;
 						if(fonts.length > 0 )
-						textLayer.fontFamily = ( fonts[0].swf_name != null )?fonts[0].swf_name : fonts[0].name;
+							textLayer.fontFamily = ( fonts[0].swf_name != null )?fonts[0].swf_name : fonts[0].name;
 						
 						textLayer.vertStartAlignment="";
 						textLayer.horizStartAlignment="";
@@ -151,18 +152,18 @@ package  org.syncon.Customizer.controller
 					}
 					else if(layerImport.type == "text")
 					{
-						var textLayer: TextLayerVO = new TextLayerVO;
-
+						textLayer  = new TextLayerVO;
+						
 						this.copyBasics(textLayer, layerImport );
 						
 						textLayer.prompt_layer = true; 
 						textLayer.text = 'AAA' ;
 						this.copyBasics(textLayer, layerImport );
-						
-						textLayer.orientation = layerImport.orientation;
+						//TODO: orientation has been removed
+						textLayer.verticalText = layerImport.orientation=='vertical';
 						textLayer.maxChars = layerImport.Media.max
 						textLayer.fontSize = 20
-							
+						
 						textLayer.text = layerImport.Media.source;
 						
 						face.layersToImport.push(textLayer);

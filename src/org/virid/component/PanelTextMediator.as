@@ -11,9 +11,9 @@ package org.virid.component
 	import org.syncon.Customizer.vo.TextLayerVO;
 	import org.syncon.onenote.onenotehelpers.impl.layer_item_renderer;
 	
-	public class LayerTextInspectorMediator extends Mediator 
+	public class PanelTextMediator extends Mediator 
 	{
-		[Inject] public var ui : LayerTextInspector;
+		[Inject] public var ui : PanelText;
 		[Inject] public var model : NightStandModel;
 		
 		override public function onRegister():void
@@ -21,15 +21,15 @@ package org.virid.component
 			/*
 			this.ui.addEventListener( design_panel.CHANGE_FONT_SIZE, 
 				this.onChangeFontSize);	*/
-			this.ui.addEventListener( LayerTextInspector.CHANGE_COLOR, 
+			this.ui.addEventListener( PanelText.CHANGE_COLOR, 
 				this.onChangeColor);				
-			this.ui.addEventListener( LayerTextInspector.CHANGE_FONT_FAMILY, 
+			this.ui.addEventListener( PanelText.CHANGE_FONT_FAMILY, 
 				this.onChangeFontFamily);	
-			this.ui.addEventListener( LayerTextInspector.CHANGE_TEXT_ALIGN, 
+			this.ui.addEventListener( PanelText.CHANGE_TEXT_ALIGN, 
 				this.onChangeTextAlign);	
-			this.ui.addEventListener( LayerTextInspector.CHANGED_TEXT, 
+			this.ui.addEventListener( PanelText.CHANGED_TEXT, 
 				this.onChangeText );	
-			this.ui.addEventListener( LayerTextInspector.DATA_CHANGED, 
+			this.ui.addEventListener( PanelText.DATA_CHANGED, 
 				this.onDataChanged );	
 			onDataChanged(null)
 		}

@@ -324,6 +324,7 @@ package org.syncon.Customizer.controller
 				if ( event.undo == false )
 				{
 					txtLayer = this.model.currentLayer as TextLayerVO; 
+					layer = txtLayer; //select it
 					if ( event.data2 != null ) //the layer to target
 						txtLayer = event.data2 as TextLayerVO; 
 					if ( event.firstTime ) 

@@ -50,7 +50,7 @@ package com.roguedevelopment.objecthandles
 			this.addChild( img ) 
 			this.useHandCursor = true
 			this.buttonMode = true;
-			
+			img.smoothBitmapContent = true; 
 			img.width = 22
 			img.height = 22; 
 			img.x = -img.width/2

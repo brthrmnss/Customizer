@@ -20,9 +20,9 @@ package  org.virid.component
 	import org.syncon.Customizer.vo.TextLayerVO;
 	import org.syncon.popups.controller.ShowPopupEvent;
 	
-	public class  EngravePanelMediator extends Mediator 
+	public class  PanelEngraveMediator extends Mediator 
 	{
-		[Inject] public var ui : engrave_panel;
+		[Inject] public var ui : PanelEngrave;
 		[Inject] public var model : NightStandModel;
 		
 		override public function onRegister():void
@@ -41,15 +41,15 @@ package  org.virid.component
 				this.onLoadLocations);	
 			this.onLoadLocations(); */
 
-			this.ui.addEventListener( engrave_panel.CHANGED_TEXT, 
+			this.ui.addEventListener( PanelEngrave.CHANGED_TEXT, 
 				this.onTextChanged );	
 			
-			this.ui.addEventListener( LayerTextInspector.DATA_CHANGED, 
+			this.ui.addEventListener( PanelText.DATA_CHANGED, 
 				this.onDataChanged );	
 			onDataChanged(null)
 			
 			
-			this.ui.addEventListener( LayerTextInspector.CHANGE_FONT_FAMILY, 
+			this.ui.addEventListener( PanelText.CHANGE_FONT_FAMILY, 
 				this.onFontChanged );	
 			//onFontChanged(null)
 		}
@@ -93,6 +93,7 @@ package  org.virid.component
 				EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY, fontName 
 			) )  
 				*/
+			this.ui.txt.setStyle('fontFamily', fontName ) ; 
 			this.dispatch( new EditProductCommandTriggerEvent ( 
 				EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY_PRODUCT, fontName 
 			) )  

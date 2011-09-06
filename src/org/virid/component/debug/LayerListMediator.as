@@ -1,4 +1,4 @@
-package org.virid.component
+package org.virid.component.debug
 {
 	import flash.events.Event;
 	

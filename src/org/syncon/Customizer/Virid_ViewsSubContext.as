@@ -4,6 +4,7 @@ package org.syncon.Customizer
 	import org.syncon.onenote.onenotehelpers.impl.layer_item_renderer;
 	import org.syncon2.utils.SubContext;
 	import org.virid.component.*;
+	import org.virid.component.debug.*;
 	
 	public class Virid_ViewsSubContext extends SubContext 
 	{
@@ -20,12 +21,12 @@ package org.syncon.Customizer
 			//mediatorMap.mapView( layer_item_renderer, LayerItemRendererMediator ) 	
 			//mediatorMap.mapView( LayerInspectorSizeLocation, LayerInspectorSizeLocationMediator ) 	
 			
-			mediatorMap.mapView( text_panel, TextPanelMediator ) 	
-			mediatorMap.mapView( design_panel, DesignPanelMediator ) 	
-			mediatorMap.mapView( engrave_panel, EngravePanelMediator ) 
+			//mediatorMap.mapView( text_panel, TextPanelMediator ) 	
+			mediatorMap.mapView( PanelDesign, PanelDesignMediator ) 	
+			mediatorMap.mapView( PanelEngrave, PanelEngraveMediator ) 
 				
 			mediatorMap.mapView( Deliverable, DeliverablesMediator ) 	
-			mediatorMap.mapView( LayerTextInspector, LayerTextInspectorMediator ) 	
+			mediatorMap.mapView( PanelText, PanelTextMediator ) 	
 				
 			mediatorMap.mapView( transformation_stage, TransformationStageMediator ) 	
 			mediatorMap.mapView( LayerList, LayerListMediator ) 	

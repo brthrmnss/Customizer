@@ -33,7 +33,7 @@ package  org.syncon.Customizer.vo
 		public var minFontSize: Number = -1 ;
 		public var maxFontSize: Number = -1 ;
 		public var default_text:String= 'Add Text';
-		public var orientation:String ="Horizontal";
+		//public var orientation:String ="Horizontal";
 		[Transient] public var  fonts : Array = []; 
 		
 		/**
@@ -64,6 +64,9 @@ package  org.syncon.Customizer.vo
 				update('fontSize'); 
 			}
 		}
+		
+		//static public const PROP_HORIZ_TEXT_ALIGN_ : String = 'PROP_TEXT_ALIGN' ; 
+		//static public const PROP_TEXT_ALIGN : String = 'PROP_TEXT_ALIGN' ; 
 		public var horizontalTextAlignment : String = 'center'; 
 		public var verticalTextAlignment : String = 'middle'; 
 		
@@ -122,7 +125,7 @@ package  org.syncon.Customizer.vo
 			textLayer.minFontSize = this.minFontSize
 			textLayer.maxFontSize = this.maxFontSize
 			textLayer.default_text = this.default_text
-			textLayer.orientation = this.orientation
+			//textLayer.orientation = this.orientation
 			textLayer.verticalText = this.verticalText; 
 			textLayer.verticalTextAlignment = verticalTextAlignment; 
 			textLayer.horizontalTextAlignment = horizontalTextAlignment; 

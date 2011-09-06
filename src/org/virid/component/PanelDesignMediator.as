@@ -20,9 +20,9 @@ package  org.virid.component
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.popups.controller.ShowPopupEvent;
 	
-	public class  DesignPanelMediator extends Mediator 
+	public class  PanelDesignMediator extends Mediator 
 	{
-		[Inject] public var ui : design_panel;
+		[Inject] public var ui : PanelDesign;
 		[Inject] public var model : NightStandModel;
 		/**
 		 * will not allow creation of new layers.... weill resuse prompt layers
@@ -32,10 +32,10 @@ package  org.virid.component
 		
 		override public function onRegister():void
 		{
-			this.ui.addEventListener( design_panel.ADD_IMAGE,  this.onAddClipArtImage);	
-			this.ui.addEventListener( design_panel.ADD_UPLOAD_IMAGE,  this.onAddUploadImage);	
+			this.ui.addEventListener( PanelDesign.ADD_IMAGE,  this.onAddClipArtImage);	
+			this.ui.addEventListener( PanelDesign.ADD_UPLOAD_IMAGE,  this.onAddUploadImage);	
 			
-			this.ui.addEventListener( design_panel.CHANGE_COLOR,  this.onChangeColor);			
+			this.ui.addEventListener( PanelDesign.CHANGE_COLOR,  this.onChangeColor);			
 			
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.SHOW_EMPTY_LAYER, 
 				this.onShowingNullLayer);	
@@ -80,7 +80,7 @@ package  org.virid.component
 			'PopupPickImage', [this.onPickedImage], 'done' ) 		
 			this.dispatch( event_ ) */
 			var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP,
-				'PopupUploadImage', [onUploadedImage], 'done' ) 		
+				'PopupUploadImage', [onUploadedImage], 'showPopup' ) 		
 			this.dispatch( event_ ) 
 		}
 		/**

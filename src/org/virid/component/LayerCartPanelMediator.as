@@ -123,20 +123,20 @@ package org.virid.component
 				{
 					if ( img.image_source == ViridConstants.IMAGE_SOURCE_CLIPART )
 					{
-					var event : Event = new NightStandModelEvent(
-						NightStandModelEvent.SHOW_EMPTY_LAYER, img ) 
-					this.dispatch(event ) ;
-					if ( event.isDefaultPrevented() ) 
-					{
-						this.ui.list.selectedItem = null; 	//why set it to null?
-						this.onCurrentLayerChanged(null); //reset to current layer for time being ...
-						//preferablly switch to layer you're going too ... then switch back?
-						return; 
-					}
+						var event : Event = new NightStandModelEvent(
+							NightStandModelEvent.SHOW_EMPTY_LAYER, img ) 
+						this.dispatch(event ) ;
+						if ( event.isDefaultPrevented() ) 
+						{
+							this.ui.list.selectedItem = null; 	//why set it to null?
+							this.onCurrentLayerChanged(null); //reset to current layer for time being ...
+							//preferablly switch to layer you're going too ... then switch back?
+							return; 
+						}
 					}
 					else if ( img.image_source == ViridConstants.IMAGE_SOURCE_UPLOAD )
 					{
-						var event : Event = new NightStandModelEvent(
+						event  = new NightStandModelEvent(
 							NightStandModelEvent.SHOW_EMPTY_LAYER, img ) 
 						this.dispatch(event ) ;
 						if ( event.isDefaultPrevented() ) 
@@ -163,9 +163,9 @@ package org.virid.component
 		}
 		
 		private function onPriceChanged(e:NightStandModelEvent):void{
-						this.ui.subCost.text = '$'+this.model.currentFace.price.toFixed(2);
+			this.ui.subCost.text = '$'+this.model.currentFace.price.toFixed(2);
 			this.ui.txtTotal.text = '$'+this.model.baseItem.grand_total.toFixed(2);
-		
+			
 		}
 		
 	}

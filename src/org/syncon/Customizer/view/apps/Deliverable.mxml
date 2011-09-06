@@ -6,7 +6,7 @@
 		 xmlns:view1="org.syncon2.utils.mobile.view.*"
 		 xmlns:ui="org.syncon.Customizer.view.ui.*"
 		 xmlns:component="org.virid.component.*"  initialize="group1_initializeHandler(event)"
-		 width="100%" height="100%" creationComplete="onInit(event)">
+		 width="100%" height="100%" creationComplete="onInit(event)" xmlns:debug="org.virid.component.debug.*">
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
@@ -135,18 +135,19 @@
 					
 					<component:MainMenuBar height="67"/>
 					<s:Spacer height="-1"/>
+					
 					<!--<component:engrave_panel includeIn="engrave" width="350" height="260"/>-->
 					<s:SkinnableContainer  id="panels" creationPolicy="all"> 
 						
-						<component:engrave_panel id="engravePanel" 
+						<component:PanelEngrave id="engravePanel" 
 												 alpha="0" alpha.engrave="1"
 												 includeIn="engrave"  width="350" height="260" />
 						<!--<component:text_panel  includeIn="engrave" width="350" height="260" />-->
 						<!-- need this to be here to be mediated first for the show_EMPTY_LAYER event -->
-						<component:design_panel id="designPanel"  
+						<component:PanelDesign id="designPanel"  
 												alpha="0" alpha.normal="1"
 												visible="false" visible.normal="true" width="350" height="260" />
-						<component:LayerTextInspector id="text" 
+						<component:PanelText id="text" 
 													  alpha="0" alpha.Text="1"
 													  includeIn="Text" width="350" height="260"/> 
 					</s:SkinnableContainer> 
@@ -162,7 +163,7 @@
 		</s:Group>
 		
 		<!--<component:LayerList id="list" />-->
-	 <component:UndoList id="list" y="100"  visible="false" alpha="0" right="0" /> 
+	 <debug:UndoList id="list" y="100"  visible="false" alpha="0" right="0" /> 
 	</s:Group>
 
 	

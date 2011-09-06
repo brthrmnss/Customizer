@@ -215,14 +215,27 @@ package  org.syncon.Customizer.controller
 				layer.cost = layerImport.price; 
 			if ( layerImport.hasOwnProperty( 'required' ) ) 
 				layer.required = layerImport.required
-			if( layerImport.transform.hasOwnProperty( 'width' )  )		
+			if( layerImport.transform.hasOwnProperty( 'width' ) && layerImport.transform.width != null ){		
 				layer.width = layerImport.transform.width;
-			if( layerImport.transform.hasOwnProperty( 'height' )  )
+				layer.horizStartAlignment = "";
+				layer.vertStartAlignment = "";
+			}
+			if( layerImport.transform.hasOwnProperty( 'height' )  ){
 				layer.height = layerImport.transform.height;
-			if( layerImport.transform.hasOwnProperty( 'x' )  )
-				layer.x = layerImport.transform.x;
-			if( layerImport.transform.hasOwnProperty( 'y' )  )
+				layer.horizStartAlignment = "";
+				layer.vertStartAlignment = "";
+			}
+			if( layerImport.transform.hasOwnProperty( 'x' )  ){
+				layer.x = layerImport.transform.x;	
+				layer.horizStartAlignment = "";
+				layer.vertStartAlignment = "";
+				
+			}			
+			if( layerImport.transform.hasOwnProperty( 'y' )  ){
 				layer.y = layerImport.transform.y;
+				layer.horizStartAlignment = "";
+				layer.vertStartAlignment = "";
+			}
 			if( layerImport.transform.hasOwnProperty( 'rotation' )  )
 				layer.rotation = layerImport.transform.rotation;
 		}

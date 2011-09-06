@@ -131,6 +131,16 @@
 				
 			}
 			
+			protected function dropDown_FontSelect_changeHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				if ( event.newIndex == -1 ) 
+					return; 
+				var item:Object = event.currentTarget.selectedItem;
+				this.dispatchEvent( new CustomEvent( CHANGE_FONT_FAMILY, item   ) ) 
+			}
+			
+			
 		]]>
 	</fx:Script>
 	
@@ -192,6 +202,7 @@
 					
 				</s:HGroup>
 				<s:DropDownList id="fontSelect" width="100%" height="38"
+								change="dropDown_FontSelect_changeHandler(event)"
 								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
 								cornerRadius="8" borderColor="0xe9e9e9" dropShadowVisible="false"
 								/>			

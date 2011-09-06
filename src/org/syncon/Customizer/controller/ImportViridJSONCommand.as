@@ -157,12 +157,28 @@ package  org.syncon.Customizer.controller
 						this.copyBasics(textLayer, layerImport );
 						
 						textLayer.prompt_layer = true; 
-						textLayer.text = 'AAA' ;
 						this.copyBasics(textLayer, layerImport );
 						//TODO: orientation has been removed
 						textLayer.verticalText = layerImport.orientation=='vertical';
 						textLayer.maxChars = layerImport.Media.max
 						textLayer.fontSize = 20
+							
+						var fonts:Array = [];
+						for each(var fontIncoming:Object in layerImport.Fonts)
+						{
+							var font:FontVO = new FontVO();
+							font.name = fontIncoming.name;
+							font.swf_name = fontIncoming.swfname;
+							font.defaultSize = fontIncoming.size;
+							font.weight = fontIncoming.weight;
+							
+							fonts.push(font);
+							
+						}
+						textLayer.fonts = fonts;
+						if(fonts.length > 0 )
+							textLayer.fontFamily = ( fonts[0].swf_name != null )?fonts[0].swf_name : fonts[0].name;
+						
 						
 						textLayer.text = layerImport.Media.source;
 						

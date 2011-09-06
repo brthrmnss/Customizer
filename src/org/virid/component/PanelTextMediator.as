@@ -2,15 +2,17 @@ package org.virid.component
 {
 	import flash.events.Event;
 	
+	import mx.collections.ArrayList;
+	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.view.ui.LayerInspector;
+	import org.syncon.Customizer.vo.FontVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.Customizer.vo.TextLayerVO;
 	import org.syncon.onenote.onenotehelpers.impl.layer_item_renderer;
-	import org.syncon.Customizer.vo.FontVO;
 	
 	public class PanelTextMediator extends Mediator 
 	{
@@ -39,6 +41,7 @@ package org.virid.component
 		{
 			this.ui.txt.prompt = this.layer.default_text; 
 			this.onChangeText(null); 
+			this.updateFontList(); 
 		}
 		
 		public function get layer () : TextLayerVO 
@@ -70,8 +73,12 @@ package org.virid.component
 			this.layer.setFontSize(); 
 			this.layer.adjustDisplayText()
 			this.model.calculateProductPrice();
-			
+			if ( this.layer.propChanged == 'fontFamily' )
+			{
+				this.updateFontList(); 
+			}
 			this.layer.update(); 
+
 		}
 		
 		
@@ -129,7 +136,29 @@ package org.virid.component
 			) )  
 		}
 		
-		
+		private function updateFontList():void
+		{
+			var fonts : Array = this.ui.layer.fonts; 
+			//y do this 
+			//this.ui.dropDown_FontSelect.labelFunction = this.labelForDropDown; 
+			this.ui.fontSelect.labelField = 'name' ; 
+			this.ui.fontSelect.dataProvider = new ArrayList( fonts ) ; 
+			var foundFound : FontVO; 
+			for each ( var f : FontVO in fonts ) 
+			{
+				if ( f.name ==  this.ui.layer.fontFamily )
+				{
+					foundFound = f; 	
+				}
+				if ( f.swf_name != null && f.swf_name ==  this.ui.layer.fontFamily )
+				{
+					foundFound = f; 	
+				}
+				
+			}
+			this.ui.fontSelect.selectedItem = foundFound; //this.ui.layer.fontFamily; 
+			
+		}
 		
 		
 		

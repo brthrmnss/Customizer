@@ -167,6 +167,10 @@ package org.syncon.Customizer.vo
 		{
 			if ( this._width == value ) 
 				return; 
+			if  ( this.name == 'Clipart Layer 1' ) 
+			{
+				trace('setting height or layer 1 ' ) ; 
+			}
 			if ( value < 100 ) 
 			{
 				trace('LayerBaseVO','value', 'ListVO' ) ; 

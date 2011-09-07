@@ -113,6 +113,24 @@
 					this.notifyWhenSizeKnown(null);
 					//this.img_resizeHandler(null); 
 				}
+		/* 		//make sure that if layer has a width height set we do not overwrite 
+				if ( ! isNaN( this.layer.height ) || ! isNaN ( this.layer.width )  && this.layer.) 
+				{
+					this.img.height = this.layer.height; 
+					this.img.width =  this.layer.width; 
+					this.loadingToken = null; 
+					this.notifyWhenSizeKnown(null);
+				} */
+				/**
+				 * do not resize if the layer set they don' want this 
+				 * */
+				if ( this.layer.vertStartAlignment == '' || this.layer.horizStartAlignment == '' ) 
+				{
+					this.img.height = this.layer.height; 
+					this.img.width =  this.layer.width; 
+					this.loadingToken = null; 
+					this.notifyWhenSizeKnown(null);
+				} 
 			}
 			
 			protected function img_resizeHandler(event:ResizeEvent, wait : Boolean = true ):void

@@ -51,9 +51,9 @@
 			public function saveApp():void{
 
 				var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(
-					ExportJSONCommandTriggerEvent.EXPORT_JSON, '');
-				dispatchEvent(trgevent);
-				Alert.show('saving' + trgevent.toString() );
+					ExportJSONCommandTriggerEvent.EXPORT_JSON, 'gotoNextStep');
+				this.mainApp.context.dispatchEvent(trgevent);
+				
 	
 			}
 			

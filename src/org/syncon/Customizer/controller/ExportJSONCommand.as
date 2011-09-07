@@ -5,6 +5,7 @@ package  org.syncon.Customizer.controller
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.ProgressEvent;
+	import flash.external.ExternalInterface;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
@@ -18,7 +19,6 @@ package  org.syncon.Customizer.controller
 	import mx.rpc.http.HTTPService;
 	
 	import org.robotlegs.mvcs.Command;
-	
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.ViridConstants;
 	import org.syncon.Customizer.vo.ColorLayerVO;
@@ -38,10 +38,15 @@ package  org.syncon.Customizer.controller
 		
 		private var service:HTTPService;
 		private var finalJSON:String;		
+		private var gotoNextStep:Boolean = false;
 		override public function execute():void
 		{
 			if ( event.type == ExportJSONCommandTriggerEvent.EXPORT_JSON ) 
 			{
+				if(event.url == "gotoNextStep"){
+					gotoNextStep = true;
+					
+				}
 				//this.loadSound()
 				//trace('bigbing');
 				var product:Object = new Object;
@@ -256,7 +261,7 @@ package  org.syncon.Customizer.controller
 				
 				loader.addEventListener(FaultEvent.FAULT,httpFault);
 				loader.addEventListener(Event.COMPLETE,imageUploadResult);
-				loader.addEventListener(HTTPStatusEvent.HTTP_STATUS,result);
+				loader.addEventListener(HTTPStatusEvent.HTTP_STATUS,uploadResult);
 				loader.load(req);				
 				
 				/*
@@ -276,7 +281,7 @@ package  org.syncon.Customizer.controller
 		
 
 		
-		protected function result(event:HTTPStatusEvent):void
+		protected function uploadResult(event:HTTPStatusEvent):void
 		{
 			//Alert.show( event.status.toString() );
 			//Alert.show( event..toString() );
@@ -300,6 +305,14 @@ package  org.syncon.Customizer.controller
 		protected function saveResult(event:ResultEvent):void
 		{
 			//Alert.show( event.result.toString() + finalJSON);
+			if(gotoNextStep)
+			{
+				Alert.show('saved...');
+				if(ExternalInterface.available)
+				{
+					ExternalInterface.call('navigateToNextStep');	
+				}
+			}
 			
 		}
 		

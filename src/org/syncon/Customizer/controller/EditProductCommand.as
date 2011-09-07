@@ -1122,7 +1122,7 @@ package org.syncon.Customizer.controller
 						//to keep ceterpoint consistent, objecthandles moves xy then sets rotation 
 						//we must remove that event ... there is no time for a user to act inbetween, so 
 						//we can safetly remove it 
-						if ( lastUndo.type == EditProductCommandTriggerEvent.MOVE_LAYER && lastUndo.data3 == layer ) 
+						if ( lastUndo != null && lastUndo.type == EditProductCommandTriggerEvent.MOVE_LAYER && lastUndo.data3 == layer ) 
 						{
 							var popuppedEvent : EditProductCommandTriggerEvent = this.popUndo()
 							event.autoSubEvents.push( popuppedEvent ) ; 

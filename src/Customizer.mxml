@@ -32,7 +32,10 @@
 				*/
 				ButtonSkin
 				this.addEventListener(MouseEvent.CLICK, this.onClick ) ; 
-				
+								//allow us to detect when next button is clicked from application
+				if(ExternalInterface.available){
+					ExternalInterface.addCallback("saveApp", this.saveApp);
+				}
 				return;
 			}
 			
@@ -41,6 +44,11 @@
 				processFlashVars();
 				
 			}
+			
+			public function saveApp():void{
+				
+			}
+			
 			protected function onClick(event:MouseEvent):void
 			{
 				var dbg : Array = [ event.currentTarget, event.target] // TODO Auto-generated method stub

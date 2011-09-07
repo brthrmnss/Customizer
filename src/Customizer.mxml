@@ -13,9 +13,12 @@
 	-->
 	<fx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			
+			import org.robotlegs.mvcs.Mediator;
+			import org.syncon.Customizer.controller.ExportJSONCommandTriggerEvent;
 			import org.syncon.Customizer.model.NightStandConstants;
 			
 			import spark.skins.spark.ButtonSkin;
@@ -46,7 +49,12 @@
 			}
 			
 			public function saveApp():void{
-				
+
+				var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(
+					ExportJSONCommandTriggerEvent.EXPORT_JSON, '');
+				dispatchEvent(trgevent);
+				Alert.show('saving' + trgevent.toString() );
+	
 			}
 			
 			protected function onClick(event:MouseEvent):void

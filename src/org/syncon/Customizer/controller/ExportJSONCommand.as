@@ -79,9 +79,9 @@ package  org.syncon.Customizer.controller
 						
 						jsonMedia.source = layer.url;
 						jsonMedia.type = layer.type;
-						
-						jsonTransform.x = layer.x;
-						jsonTransform.y = layer.y;
+						///TODO: Why is this next part necessary -23 x - 13.5
+						jsonTransform.x = layer.x -23;
+						jsonTransform.y = layer.y - 13.5;
 						jsonTransform.width = layer.width;
 						jsonTransform.height = layer.height;
 						jsonTransform.rotation = layer.rotation.toFixed(2);

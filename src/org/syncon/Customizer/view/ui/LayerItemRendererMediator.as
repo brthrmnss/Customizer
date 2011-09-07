@@ -292,6 +292,15 @@ package org.syncon.Customizer.view.ui
 				//clone baselayer height if possible ...
 				if ( this.layer != this.model.baseLayer && this.model.baseLayer != null )
 				{
+					/*
+				}
+					if ( this.layer.width > 0 &&  ! isNaN( this.layer.importX ) )
+					{
+						trace('this layer was set manually dont adjust size'); 
+						this.copyLayerToModel(); 
+					}
+					else
+					{*/
 					if ( this.ui.width > this.model.baseLayer.width ) 
 					{
 						this.blockUpdatingModel = true 
@@ -311,6 +320,7 @@ package org.syncon.Customizer.view.ui
 						//but handles are not propelry placed? ...
 						this.blockUpdatingModel = false 
 					}
+				/*	}*/
 				}
 			}	
 			
@@ -482,8 +492,10 @@ package org.syncon.Customizer.view.ui
 			this.model.objectHandles.selectionManager.setSelected( this.flexModel1 ) ; 
 		}
 		
-		private function copyLayerToModel():void
+		private function copyLayerToModel(blockUndos:Boolean=false):void
 		{
+			var initialValue : Boolean = this.blockUpdatingModel
+			if ( blockUndos) this.blockUpdatingModel = true; 
 			this.flexModel1.x = this.layer.x ; 
 			this.flexModel1.y = this.layer.y ; 
 			this.flexModel1.width = this.layer.width; 
@@ -492,6 +504,7 @@ package org.syncon.Customizer.view.ui
 			this.flexModel1.height = this.layer.height; 
 			this.flexModel1.rotation = this.layer.rotation; 
 			trace('copyLayerToModel', this.layer.aaa ) 
+			if ( blockUndos) this.blockUpdatingModel = initialValue; 
 		}
 		
 		/**

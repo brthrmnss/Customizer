@@ -37,10 +37,12 @@ package  org.syncon.Customizer.vo
 		[Transient] public var  fonts : Array = []; 
 		
 		/**
-		 * Adjusts the font size based on autosizing options
+		 * Adjusts the font size based on autosizing option
+		 * offBy, how much larger is this text than what it is supposed to be?
 		 * */
-		public function setFontSize () : void
+		public function setFontSize ( offBy : Number = 0) : void
 		{
+			return;
 			if ( this.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE ) 
 			{
 				if ( this.maxChars <= 0 ) 
@@ -71,10 +73,24 @@ package  org.syncon.Customizer.vo
 		public var verticalTextAlignment : String = 'middle'; 
 		
 		public var verticalText : Boolean = false; 
+		private var _displayText : String = ''; 
+
 		/**
 		 * Thsi is the setting that the textinput uses to show text ... 
 		 * */
-		public var displayText : String = ''; 
+		public function get displayText():String
+		{
+			return _displayText;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set displayText(value:String):void
+		{
+			_displayText = value;
+		}
+
 		
 		public function adjustDisplayText () : void
 		{

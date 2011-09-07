@@ -992,6 +992,7 @@ package org.syncon.Customizer.controller
 					event.oldData = txtLayer.text; 
 					this.model.blockUndoExecution=true
 					txtLayer.text= event.data.toString()
+					txtLayer.adjustDisplayText();
 					layer.update(); 
 					event.data2 = txtLayer ; 
 					this.model.blockUndoExecution=false

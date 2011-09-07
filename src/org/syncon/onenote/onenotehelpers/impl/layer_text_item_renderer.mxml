@@ -154,6 +154,19 @@
 					this.layer.nonChromeWidth = this.width; 
 					this.layer.nonChromeHeight = this.height;
 				}
+				else
+				{
+					if ( this.txt.width > this.layer.width ) 
+					{
+						var offBy : Number =  this.layer.width / this.txt.width  
+						this.layer.setFontSize(offBy)
+					}
+					if ( this.txt.height > this.layer.height ) 
+					{
+						offBy  =  this.layer.height / this.txt.height  
+						this.layer.setFontSize(offBy)
+					}
+				}
 				//this is detrimetnal 
 				/* this.layer.width = this.width; 
 				this.layer.height = this.height; 

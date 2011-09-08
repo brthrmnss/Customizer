@@ -145,7 +145,7 @@
 	
 	<s:VGroup paddingBottom="12" paddingLeft="12" paddingRight="12" paddingTop="12" >
 		<s:Group id="header" width="620" clipAndEnableScrolling="true">
-			<s:BitmapImage source="@Embed('assets/images/sprite_headers.png')" smooth="true" height="100%" width="100%" />
+			<s:BitmapImage source="assets/images/sprite_headers.png" smooth="true" height="100%" width="100%" />
 			<s:Label text="Zippo  Image  Library" x="10" fontSize="20" verticalCenter="6" color="0xffffff"/>
 		</s:Group>
 		

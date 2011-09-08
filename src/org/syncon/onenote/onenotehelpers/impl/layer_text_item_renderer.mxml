@@ -46,6 +46,12 @@
 			private var resetNext:Boolean;
 			public var active:Boolean=true;
 			private var lastLayer:TextLayerVO;
+			private var lastTextChecked:String='';
+			private var lastOffBy:Number=1;
+			private var lastTextCount:int;
+			private var lastTxtSize:int;
+			private var lastTimeCheckedText:String;
+			private var countOfResizeAttempts:Object;
 			
 			public function set data ( value :   Object ) : void
 			{
@@ -89,19 +95,27 @@
 					this.layer.adjustDisplayText(); 
 					this.layer.setFontSize(); 
 					var newLayerSetAllProps :  Boolean = true; 
+					
+					this.lastTextChecked = ''; 
 				}
 				
 				if ( this.layer.propChanged == 'fontSize' || newLayerSetAllProps  )
 				{
+					trace( 'set font size', layer.fontSize  ) 
 					this.txt.setStyle('fontSize', layer.fontSize ) ;
+					this.txtMeasure.setStyle('fontSize', layer.fontSize ) ;
 				}
 				if ( this.layer.propChanged == 'fontFamily'  || newLayerSetAllProps )
 				{
 					if ( this.layer.fontFamily != null ) 
+					{
 						this.txt.setStyle('fontFamily', layer.fontFamily ) ;
+						this.txtMeasure.setStyle('fontFamily', layer.fontFamily ) ;
+					}
 					else
 					{
 						this.layer.fontFamily = this.txt.getStyle('fontFamily'); 
+						
 						this.layer.update( 'fontFamily' ) ; 
 					}
 					//this.txt.setStyle('fontFamily', layer.fontFamily ) ;
@@ -109,14 +123,17 @@
 				if ( this.layer.propChanged == 'color'   || newLayerSetAllProps )
 				{
 					this.txt.setStyle('color', layer.color ) ;
+					this.txtMeasure.setStyle('color', layer.color ) ;					
 				}		
 				if ( this.layer.propChanged ==TextLayerVO.PROP_TEXT_ALIGN  || newLayerSetAllProps )
 				{
 					this.txt.setStyle('textAlign', layer.horizontalTextAlignment  ) ;
+					this.txtMeasure.setStyle('textAlign', layer.horizontalTextAlignment  ) ;					
 				}		
 				if ( this.layer.propChanged ==TextLayerVO.PROP_VERTICAL_TEXT_ALIGN  || newLayerSetAllProps )
 				{
 					this.txt.setStyle('verticalAlign', layer.verticalTextAlignment  ) ;
+					this.txtMeasure.setStyle('verticalAlign', layer.verticalTextAlignment  ) ;					
 				}		
 				
 				
@@ -128,7 +145,7 @@
 				
 				//this.txt.text  = layer.text; 
 				this.txt.text = layer.displayText; 
-				
+				this.txtMeasure.text = this.layer.displayText;
 				//handle any situations where this component might not resize 
 				if ( newLayerSetAllProps && this.layer.locked  ) 
 				{
@@ -156,16 +173,16 @@
 				}
 				else
 				{
-					if ( this.txt.width > this.layer.width ) 
+					/* 	if ( this.txt.width > this.layer.width ) 
 					{
-						var offBy : Number =  this.layer.width / this.txt.width  
-						this.layer.setFontSize(offBy)
+					var offBy : Number =  this.layer.width / this.txt.width  
+					this.layer.setFontSize(offBy)
 					}
 					if ( this.txt.height > this.layer.height ) 
 					{
-						offBy  =  this.layer.height / this.txt.height  
-						this.layer.setFontSize(offBy)
-					}
+					offBy  =  this.layer.height / this.txt.height  
+					this.layer.setFontSize(offBy)
+					} */
 				}
 				//this is detrimetnal 
 				/* this.layer.width = this.width; 
@@ -206,8 +223,7 @@
 					return; 
 				if ( this.parentDocument == null ) //y are these necessary? b/c txt update doesnt 'care?
 					return; 
-				// TODO Auto-generated method stub
-				//
+				
 				if ( resetNext )
 				{
 					this.parentDocument.resetting= false; 
@@ -254,6 +270,161 @@
 			{
 				txtEdit.text = this.layer.text; 
 			}
+			
+			protected function resize2( ):void
+			{
+				if ( this.layer == null ) 
+					return;
+				if ( this.txtMeasure.text == this.lastTimeCheckedText ) 
+				{
+					this.countOfResizeAttempts+=1
+					if ( countOfResizeAttempts > 50 ) 
+						return; 
+					/*
+					if ( this.layer.fontSize < this.lastTxtSize+2 && this.layer.fontSize > lastTxtSize -2 )
+						return; //close enough ...
+					*/
+				}
+				else
+				{
+					countOfResizeAttempts = 0; 
+				}
+				this.layer.incrementFontSize( this.txtMeasure.width, 
+					this.txtMeasure.height, this.txtMeasure.getStyle('fontSize')  ) ;
+				this.lastTxtSize = this.layer.fontSize
+				this.lastTimeCheckedText =  this.txtMeasure.text
+			}
+			
+			
+			
+			protected function txtMeasure_updateCompleteHandler(event:FlexEvent):void
+			{
+				resize2(); 
+			}
+			
+			/**
+			 * when used is x 
+			 * */
+			protected function txtMeasure_resizeHandler(event:ResizeEvent, callLate : Boolean = true):void
+			{
+				//resize2(); 
+				return; 
+				/* if ( callLate )
+				{
+				this.callLater( this.txtMeasure_resizeHandler, [event, false] )
+				return; 
+				} */
+				// TODO Auto-generated method stub
+				trace('xy', this.txtMeasure.width, this.txtMeasure.height ) ; 
+				//return;
+				if ( this.layer == null ) 
+					return; 
+				if ( this.layer.locked == false ) 
+					return; 
+				
+				
+				/* var dbg : Array = [ this.txt.getStyle('textAlign' ),this.txt.getStyle('verticalAlign' ),
+				this.txt.getStyle('fontSize' ),this.txt.getStyle('verticalAlign' )] */
+				var tx : String  =this.txtMeasure.text
+				if ( this.layer.displayText != this.txtMeasure.text ) 
+					return;
+				/* 				if ( this.lastTextChecked == this.layer.displayText ) 
+				return ; */
+				if ( this.lastTextChecked == this.layer.displayText ) 
+				{
+					/* return
+					lastTextCount++
+					if ( lastTextCount > 3 ) 
+					{
+					return;
+					}	  */
+				}
+				else
+				{
+					var dirty : Boolean = true; 
+					this.lastTextCount =0 
+				}
+				
+				if ( this.lastTextChecked.length  <= this.layer.displayText.length )
+					var smaller : Boolean = true
+				if ( this.lastTextChecked.length  > this.layer.displayText.length )
+					var larger : Boolean = true						
+				this.lastTextChecked = this.layer.displayText; 
+				
+				if ( this.layer.verticalText == false ) 
+				{
+					if ( this.txtMeasure.width > this.layer.width ) 
+					{
+						var offBy : Number =  (this.layer.width*.8) /  this.txtMeasure.width  
+						//offBy = offBy*2/3
+						if ( smaller   ) 
+						{
+							/* if ( offBy >= this.lastOffBy ) 
+							return;  */
+							offBy = Math.min( offBy, this.lastOffBy ) 
+						}
+						if ( larger    ) 
+						{
+							/* if ( offBy <= this.lastOffBy ) 
+							return;  */
+							offBy = Math.max( offBy, this.lastOffBy ) 	
+						}	
+						if ( offBy == this.lastOffBy ) 
+							return; 
+						this.lastOffBy = offBy
+						this.layer.setFontSize(offBy)
+						//trace('offBy', offBy ) ; 
+					}
+					else
+					{
+						offBy  =  (this.layer.width*.8) /  this.txtMeasure.width  
+						//don't reset after i have resized ...., only if just changed
+						if ( dirty == false ) 
+							return;
+						//only reset if offBy is greater than 1
+						if ( offBy > 1 ) 
+						{
+							this.lastOffBy = 1
+							this.layer.setFontSize(1)
+						}
+					}
+				}
+				else
+				{
+					if ( this.txtMeasure.height > this.layer.height ) 
+					{
+						offBy  =   ( this.layer.height  *.9)/this.txtMeasure.height 
+						if ( smaller   ) 
+						{
+							if ( offBy >= this.lastOffBy ) 
+								return; 
+							offBy = Math.min( offBy, this.lastOffBy ) 
+						}
+						if ( larger    ) 
+						{
+							if ( offBy <= this.lastOffBy ) 
+								return; 
+							offBy = Math.max( offBy, this.lastOffBy )
+						}
+						this.lastOffBy = offBy
+						
+						this.layer.setFontSize(offBy)
+						//trace('offBy', offBy ) ; 
+					}
+					else
+					{
+						//don't reset after i have resized ...., only if just changed
+						if ( dirty == false ) 
+							return; 
+						this.lastOffBy = 1
+						this.layer.setFontSize(1)
+					}
+				}
+				
+			}
+			
+
+			
 		]]>
 	</fx:Script>
 	
@@ -279,13 +450,12 @@
 		<s:SolidColorStroke color="0xe9e9e9"/>
 		</s:stroke> -->
 	</s:Rect>
-	<s:RichText id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
-				horizontalCenter="0" verticalCenter="0" fontFamily="Helvetica"
 	
+	<s:RichText id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
+				fontFamily="Helvetica"
+				horizontalCenter="0" verticalCenter="0"
 				updateComplete="txt_updateCompleteHandler(event)" >
-		<s:filters>
-			
-		</s:filters>
+		
 	</s:RichText>
 	<!--	<s:Label id="txt" click="txt_clickHandler(event)" resize="img_resizeHandler(event)"
 	horizontalCenter="0" verticalCenter="0"
@@ -296,4 +466,12 @@
 				 creationComplete="this.setupTxtEdit()"
 				 horizontalCenter="0" verticalCenter="0"
 				 visible.edit="true"/>
+	
+	<!-- 
+	this is the text field used to measure for resiaing
+	-->
+	<s:Group width="1" height="1" visible="false">
+		<s:RichText id="txtMeasure"  updateComplete="txtMeasure_updateCompleteHandler(event)"
+					resize="txtMeasure_resizeHandler(event)" />
+	</s:Group>
 </s:Group>

@@ -353,6 +353,7 @@ package org.syncon.Customizer.controller
 			
 			if ( event.type == EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY_PRODUCT ) 
 			{
+				selectLayerWhenFinished = false 
 				this.model.blockUndoAdding = true
 				if ( event.undo == false )
 				{

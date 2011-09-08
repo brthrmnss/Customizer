@@ -63,11 +63,13 @@
 				//this.fontSize.selectedItem = this.layer.fontSize; 
 				//.chkVisible.selected = this.layer.visible ; 
 				txtMaxChars.text = ''; 
+				this.txt.maxChars = 0;
 				if ( this.layer.maxChars > 0 ) 
 				{
 					this.txtMaxChars.text = this.layer.maxChars.toString( )+ ' characters max'; 
 					this.txt.maxChars = this.layer.maxChars
 				}
+				
 				
 			}
 			

@@ -55,7 +55,7 @@ package org.syncon.Customizer.controller
 				
 				this.createDetailedDefaultProduct();
 				//this.createDetailedDefaultProduct_Engrave()
-				//this.createDetailedDefaultProduct_Engrave2()
+				this.createDetailedDefaultProduct_Engrave2()
 				if ( this.model.flex ) 
 				{
 					
@@ -377,16 +377,16 @@ package org.syncon.Customizer.controller
 			textLayer.text = 'first' 
 			textLayer.name = 'Text'
 			//face.importFirstLayerSelection = textLayer
-			textLayer.maxChars = 6
+			//textLayer.maxChars = 6
 			textLayer.fonts = fonts; 
 			//textLayer.fontFamily = 'Arial'
-			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
+			 textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
 			textLayer.maxFontSize = 35
-			*/
-			textLayer.width = 20
-			textLayer.height = 140 
-			textLayer.x = 60
-			textLayer.y =60; 
+			textLayer.minFontSize = 12
+			textLayer.width = 120
+			textLayer.height = 120
+			textLayer.x = 50
+			textLayer.y =50; 
 			textLayer.locked = true; 
 			textLayer.fontSize = 35
 			textLayer.location = 'front Large'; 

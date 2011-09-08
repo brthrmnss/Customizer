@@ -78,6 +78,8 @@ package org.syncon2.utils.sound
 				times = int.MAX_VALUE
 			soundControl = sound.play(0,times);
 			soundControl.addEventListener(Event.SOUND_COMPLETE, this.onSoundComplete ) ; 
+			
+			this.fxCallAfterSoundCompletePlaying = fxDone
 		}
 		
 		protected function ioSoundErrorHandler(event:IOErrorEvent):void

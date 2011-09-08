@@ -36,14 +36,113 @@ package  org.syncon.Customizer.vo
 		//public var orientation:String ="Horizontal";
 		[Transient] public var  fonts : Array = []; 
 		
+		public function incrementFontSize (  ww : Number, hh : Number, fontSizeT : Number ) : void
+		{
+			if ( this.locked == false ) 
+				return; 
+			if ( this.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE ) 
+			{
+				if ( this.text == '' ) 
+				{
+					fontSize = this.maxFontSize; 
+					update('fontSize'); 
+					return;
+				}
+				if ( this.verticalText == false ) 
+				{
+					trace('font size', fontSizeT, ww, hh ) ; 
+					if ( ww*1.1 > this.width ) 
+					{
+						trace('down font'); 
+						fontSize =fontSizeT-1
+						ratio  = ww /width
+						ratio =  Math.round( ratio )
+						if (ratio > 1 ) 
+						{
+							fontSize =fontSize-(ratio*ratio*2 )
+						}							
+						fontSize = Math.max( fontSize, this.minFontSize )
+						update('fontSize'); 
+					}
+					else
+					{
+						//if great than 75%, it's within margin of error
+						if ( ww >= this.width*.75 ) 
+							return; 
+						trace('up font'); 
+						fontSize =fontSizeT+1
+						//smudge
+						var ratio :  Number =  width / ww; 
+						ratio =  Math.round( ratio )
+						if ( ratio > 1 ) 
+						{
+							fontSize =fontSize+(ratio*ratio)
+						}
+						fontSize = Math.min( fontSize, this.maxFontSize )
+						update('fontSize'); 
+					}
+				}
+				
+				
+				if ( this.verticalText == true ) 
+				{
+					trace('font size', fontSizeT, ww, hh ) ; 
+					if ( hh*1.1 > this.height ) 
+					{
+						trace('down font'); 
+						fontSize =fontSizeT-1
+						ratio  = hh /height
+						ratio =  Math.round( ratio )
+						if (ratio > 1 ) 
+						{
+							fontSize =fontSize-(ratio*ratio*2 )
+						}							
+						fontSize = Math.max( fontSize, this.minFontSize )
+						update('fontSize'); 
+					}
+					else
+					{
+						//if great than 75%, it's within margin of error
+						if ( hh >= this.height*.75 ) 
+							return; 
+						trace('up font'); 
+						fontSize =fontSizeT+1
+						//smudge
+						var ratio :  Number =  height / hh; 
+						ratio =  Math.round( ratio )
+						if ( ratio > 1 ) 
+						{
+							fontSize =fontSize+(ratio*ratio)
+						}
+						fontSize = Math.min( fontSize, this.maxFontSize )
+						update('fontSize'); 
+					}
+				}
+			}
+		}
+		
 		/**
 		 * Adjusts the font size based on autosizing option
 		 * offBy, how much larger is this text than what it is supposed to be?
 		 * */
 		public function setFontSize ( offBy : Number = 0) : void
 		{
-			return;
 			if ( this.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE ) 
+			{
+				if ( offBy == 0  ) 
+					return; 
+				
+				//offBy = Math.floor( offBy*100 ) /100
+				newFontSize = this.maxFontSize * offBy 
+				newFontSize = Math.max(newFontSize, this.minFontSize ) ; 
+				newFontSize2 = int( newFontSize ); 
+				if ( fontSize ==  newFontSize2   )
+					return; 
+				fontSize =newFontSize2
+				update('fontSize'); 
+			}
+			
+			if ( this.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE && 7==9 ) 
 			{
 				if ( this.maxChars <= 0 ) 
 					throw 'Max Chars for layer "' + this.name + '" is too small: ' + this.maxChars
@@ -74,7 +173,7 @@ package  org.syncon.Customizer.vo
 		
 		public var verticalText : Boolean = false; 
 		private var _displayText : String = ''; 
-
+		
 		/**
 		 * Thsi is the setting that the textinput uses to show text ... 
 		 * */
@@ -82,7 +181,7 @@ package  org.syncon.Customizer.vo
 		{
 			return _displayText;
 		}
-
+		
 		/**
 		 * @private
 		 */
@@ -90,7 +189,7 @@ package  org.syncon.Customizer.vo
 		{
 			_displayText = value;
 		}
-
+		
 		
 		public function adjustDisplayText () : void
 		{

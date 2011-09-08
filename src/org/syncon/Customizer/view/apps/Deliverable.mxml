@@ -163,7 +163,7 @@
 		</s:Group>
 		
 		<!--<component:LayerList id="list" />-->
-	 <debug:UndoList id="list" y="100"  visible="false" alpha="0" right="0" /> 
+	 <!--<debug:UndoList id="list" y="100"  visible="false" alpha="0" right="0" /> -->
 	</s:Group>
 
 	

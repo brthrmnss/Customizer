@@ -71,7 +71,7 @@ package  org.syncon.Customizer.controller
 					if(layerImport.type == "color")
 					{
 						//this.copyBasics(face.color_overlay_layer, layerImport );
-						face.color_overlay_layer = layerImport.Media.source;
+						face.color_overlay_layer = '0x' +layerImport.Media.source;///TODO: wth are we doing here?
 						var colorLayer  : ColorLayerVO = new ColorLayerVO;
 						colorLayer.name = layerImport.name;
 						colorLayer.name = 'Color Layer';
@@ -79,7 +79,8 @@ package  org.syncon.Customizer.controller
 						colorLayer.url = faceImport.mask;
 						colorLayer.showInList = true;
 						colorLayer.prompt_layer = true;
-						colorLayer.color = 0x166571;
+						colorLayer.color = '0x'+layerImport.Media.source;
+						
 						colorLayer.locked = true; //all masks should be locked by default 
 						if ( layerImport.hasOwnProperty( 'required' ) ) 
 							colorLayer.required = layerImport.required;
@@ -146,7 +147,7 @@ package  org.syncon.Customizer.controller
 						textLayer.horizStartAlignment="";
 						
 						textLayer.text = layerImport.Media.source;
-						
+
 						face.layersToImport.push(textLayer);
 						
 					}
@@ -162,7 +163,8 @@ package  org.syncon.Customizer.controller
 						textLayer.verticalText = layerImport.orientation=='vertical';
 						textLayer.maxChars = layerImport.Media.max
 						textLayer.fontSize = 20
-							
+						if( layerImport.Media.hasOwnProperty( 'color' ) && layerImport.Media.color != null && layerImport.Media.color != '' )
+							textLayer.color = '0x'+layerImport.Media.color
 						var fonts:Array = [];
 						for each(var fontIncoming:Object in layerImport.Fonts)
 						{

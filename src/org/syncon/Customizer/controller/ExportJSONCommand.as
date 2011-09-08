@@ -71,7 +71,11 @@ package  org.syncon.Customizer.controller
 					
 					for each( var layer: LayerBaseVO in Surface.layers){
 						if(layer.name == "Base Image")
+							continue;						
+						if(layer.name == 'Base Layer')
 							continue;
+						/*if(!layer.visible)
+							continue;*/
 						var jsonLayer:Object = {};
 						var jsonMedia:Object = {};
 						var jsonTransform:Object = {};
@@ -92,8 +96,7 @@ package  org.syncon.Customizer.controller
 						jsonTransform.rotation = layer.rotation.toFixed(2);
 						jsonLayer.orientation = "default";
 						
-						if(layer.name == 'Base Layer')
-							continue;
+
 						if(layer.type == TextLayerVO.Type)
 						{		
 					
@@ -157,7 +160,7 @@ package  org.syncon.Customizer.controller
 							var colorLayer : ColorLayerVO = layer as ColorLayerVO;
 							jsonLayer.type = "color";
 							//jsonMedia.color = (colorLayer.color,'000000');
-							jsonMedia.source = String(colorLayer.color.toString(16));
+							jsonMedia.source = String(colorLayer.color.toString());
 							while( jsonMedia.source.length < 6 )
 							{
 								jsonMedia.source = '0' + jsonMedia.source;
@@ -167,11 +170,11 @@ package  org.syncon.Customizer.controller
 							jsonLayer.color = jsonMedia.source; //because the backed was built to listen to jsonLayer.color - would love to remove this
 
 						}
+						
+						
 						jsonLayer.Media = jsonMedia;
 						//jsonLayer.Fonts = jsonFonts;
-						
 						jsonLayer.transform = jsonTransform;
-						
 
 						layers.push(jsonLayer);
 						

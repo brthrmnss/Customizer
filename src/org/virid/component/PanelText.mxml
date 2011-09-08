@@ -264,10 +264,19 @@
 			</s:dataProvider>
 			</s:ComboBox>
 			-->
-			<!--- @private -->
-			<mx:ColorPicker id="colorPicker" height="23" color="0x000000"
+			<s:VGroup width="100%" paddingTop="20">
+				<s:HGroup width="100%" horizontalAlign="left">
+					<s:Label text="EDIT COLOR" 
+							 styleName="subHeading" textAlign="left" fontSize="16"/>
+				</s:HGroup>
+				<s:HGroup>
+					<mx:ColorPicker id="colorPicker" height="23" color="0x000000"
 							mouseOver="this.colorList_ClickHandler(event)" focusAlpha="0.1"
 							change="colorPicker_changeHandler(event)" toolTip="Text color"/>
+			
+				</s:HGroup>
+			</s:VGroup>
+			<!--- @private -->
 			<!--- @private -->
 			<skins:ColorList id="colorList" width="50" height="23" visible="false"
 							 includeInLayout="false"

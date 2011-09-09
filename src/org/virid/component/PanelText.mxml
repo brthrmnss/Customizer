@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 width="100%" height="100%" xmlns:skins="org.syncon.Customizer.view.skins.*">
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:skins="org.syncon.Customizer.view.skins.*"
+		 width="100%" height="100%">
 	
 	<fx:Script>
 		<![CDATA[
@@ -53,6 +54,7 @@
 			private function onUpdatedLayer(e:Event=null):void
 			{
 				this.txt.text = this.layer.text
+				colorList.selectedItem = this.layer.color; 
 				//only if fresh loading ...	
 				if ( e == null ) 
 				{
@@ -140,6 +142,10 @@
 					return; 
 				var item:Object = event.currentTarget.selectedItem;
 				this.dispatchEvent( new CustomEvent( CHANGE_FONT_FAMILY, item   ) ) 
+					
+					
+				this.txt.setFocus(); 
+				this.txt.selectRange( this.txt.text.length, this.txt.text.length );
 			}
 			
 			
@@ -166,10 +172,9 @@
 		display notice - whenever user clicks question mark - let the main application handle displaying a message to the users
 		-->
 	</fx:Declarations>
-	<s:Rect radiusX="8" radiusY="8"
-			width="100%" height="100%" >
-		<s:fill >
-			<s:SolidColor color="0xffffff" />
+	<s:Rect width="100%" height="100%" radiusX="8" radiusY="8">
+		<s:fill>
+			<s:SolidColor color="0xffffff"/>
 		</s:fill>
 		<s:stroke>
 			<s:SolidColorStroke color="0xe9e9e9"/>
@@ -177,8 +182,8 @@
 	</s:Rect>
 	
 	
-	<s:VGroup id="menu" width="100%" height="100%" gap="10"
-			  paddingBottom="12" paddingLeft="12" paddingRight="12" paddingTop="16">
+	<s:VGroup id="menu" width="100%" height="100%" gap="10" paddingBottom="12" paddingLeft="12"
+			  paddingRight="12" paddingTop="16">
 		
 		
 		
@@ -198,22 +203,19 @@
 		<s:HGroup width="100%" height="60" paddingTop="12">
 			<s:VGroup width="100%">
 				<s:HGroup width="50%">
-					<s:Label text="Choose A Font" fontSize="16" 
-							 styleName="subHeading"/>
-					<s:Label text="45 charectors max"  id="txtMaxChars" styleName="Arial grayTxt"/>
+					<s:Label fontSize="16" styleName="subHeading" text="Choose A Font"/>
+					<s:Label id="txtMaxChars" styleName="Arial grayTxt" text="45 charectors max"/>
 					
 				</s:HGroup>
-				<s:DropDownList id="fontSelect" width="100%" height="38"
-								change="dropDown_FontSelect_changeHandler(event)"
-								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
-								cornerRadius="8" borderColor="0xe9e9e9" dropShadowVisible="false"
-								/>			
+				<s:DropDownList id="fontSelect" width="100%" height="38" borderColor="0xe9e9e9"
+								change="dropDown_FontSelect_changeHandler(event)" cornerRadius="8"
+								dropShadowVisible="false"
+								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"/>			
 			</s:VGroup>
 			
 			
-			<s:VGroup width="50%" visible="false" includeInLayout="false">
-				<s:HGroup><s:CheckBox label="Right to Left"  
-									  id="chkBoxAlign"
+			<s:VGroup visible="false" width="50%" includeInLayout="false">
+				<s:HGroup><s:CheckBox id="chkBoxAlign" label="Right to Left"
 									  change="chkBoxAlign_changeHandler(event)"
 									  styleName="Arial grayTxt"/></s:HGroup>
 				<s:HGroup><s:CheckBox label="Monogram" styleName="Arial grayTxt"/></s:HGroup>
@@ -226,17 +228,17 @@
 		
 		<s:VGroup width="100%" paddingTop="20">
 			<s:HGroup width="100%" horizontalAlign="left">
-				<s:Label text="EDIT Text" 
-						 styleName="subHeading" textAlign="left" fontSize="16"/>
+				<s:Label fontSize="16" styleName="subHeading" text="EDIT Text" textAlign="left"/>
 			</s:HGroup>
 			
 			
 			<s:HGroup width="100%">
-				<s:TextInput  id="txt" text="Text" change="txt_changeHandler(event)"  width="100%" height="38" paddingTop="10" focusAlpha="0"
-							  skinClass="org.virid.skins.LightGrayRoundedFormField" borderColor="0xe9e9e9"/>
-				<s:Button label="ADD  MY  TEXT"  click="onAddText(event)" visible="false" includeInLayout="false"
-						  skinClass="org.virid.skins.simpleBlackBtn" verticalCenter="0"
-						  height="20"/>
+				<s:TextInput id="txt" width="100%" height="38" borderColor="0xe9e9e9"
+							 change="txt_changeHandler(event)" focusAlpha="0" paddingTop="10"
+							 skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>
+				<s:Button visible="false" height="20" label="ADD  MY  TEXT" click="onAddText(event)"
+						  includeInLayout="false" skinClass="org.virid.skins.simpleBlackBtn"
+						  verticalCenter="0"/>
 				
 			</s:HGroup>			
 			
@@ -266,24 +268,24 @@
 			-->
 			<s:VGroup width="100%" paddingTop="20">
 				<s:HGroup width="100%" horizontalAlign="left">
-					<s:Label text="EDIT COLOR" 
-							 styleName="subHeading" textAlign="left" fontSize="16"/>
+					<s:Label fontSize="16" styleName="subHeading" text="EDIT COLOR" textAlign="left"/>
 				</s:HGroup>
 				<s:HGroup>
-					<mx:ColorPicker id="colorPicker" height="23" color="0x000000"
-							mouseOver="this.colorList_ClickHandler(event)" focusAlpha="0.1"
-							change="colorPicker_changeHandler(event)" toolTip="Text color"/>
+					<mx:ColorPicker id="colorPicker" height="23"
+									change="colorPicker_changeHandler(event)" color="0x000000"
+									focusAlpha="0.1" mouseOver="this.colorList_ClickHandler(event)"
+									toolTip="Text color"/>
 			
 				</s:HGroup>
 			</s:VGroup>
 			<!--- @private -->
 			<!--- @private -->
-			<skins:ColorList id="colorList" width="50" height="23" visible="false"
-							 includeInLayout="false"
-							 focusIn="colorList_focusInHandler(event)" 
-							 skinClass="org.syncon.Customizer.view.skins.ColorListSkin"
+			<skins:ColorList id="colorList" visible="false" width="50" height="23"
+							 change="colorPicker_changeHandler(event)"
+							 focusIn="colorList_focusInHandler(event)" includeInLayout="false"
 							 itemRenderer="org.syncon.Customizer.view.skins.ColorListItemRenderer"
-							 selectedIndex="0" change="colorPicker_changeHandler(event)"
+							 selectedIndex="0"
+							 skinClass="org.syncon.Customizer.view.skins.ColorListSkin"
 							 toolTip="Text color"/>
 		</s:VGroup>
 	</s:VGroup>

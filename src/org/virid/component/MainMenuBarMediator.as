@@ -1,6 +1,7 @@
 package  org.virid.component
 {
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import flashx.undo.IOperation;
 	
@@ -42,6 +43,9 @@ package  org.virid.component
 				this.checkUndoButtons);	
 			this.checkUndoButtons(); 
 			
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.UNDOS_CHANGED, 
+				this.unselectSaveButtonBcProductChanged);	
+			
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.FACE_CHANGED, 
 				this.onFaceChanged);	
 			this.onFaceChanged(); 
@@ -63,6 +67,7 @@ package  org.virid.component
 			if ( this.model.previewMode ) 
 			{
 				this.ui.btnPreview.toolTip = "Leave Preview Mode"
+					
 				for ( var i : int = 0 ; i < this.ui.holderMainMenuBar.numElements ; i ++ ) 
 				{
 					var uic : UIComponent = this.ui.holderMainMenuBar.getChildAt( i ) as UIComponent; 
@@ -72,10 +77,15 @@ package  org.virid.component
 						uic.enabled = false
 					}
 				}
+				this.ui.callLater( this.ui.stage.addEventListener, [MouseEvent.CLICK, this.onClickStageDuringPreviewMode] )
+				/*
+				this.ui.stage.addEventListener(MouseEvent.CLICK, this.onClickStageDuringPreviewMode ) ; 
+				*/
 			}
 			else
 			{
 				this.ui.btnPreview.toolTip = "Preview Design"
+				this.ui.stage.removeEventListener(MouseEvent.CLICK, this.onClickStageDuringPreviewMode ) ; 
 				for (   i  = 0 ; i < this.ui.holderMainMenuBar.numElements ; i ++ ) 
 				{
 					uic   = this.ui.holderMainMenuBar.getChildAt( i ) as UIComponent; 
@@ -84,6 +94,14 @@ package  org.virid.component
 				}
 			}
 			
+		}
+		
+		/**
+		 * listens for stage to be clicked to leave preview mode
+		 * */
+		protected function onClickStageDuringPreviewMode(event:MouseEvent):void
+		{
+			this.onPreview(null); 
 		}
 		/**
 		 * if currentLayer changed highlight the correct mainMenuButton
@@ -240,7 +258,17 @@ package  org.virid.component
 			var trgevent : ExportJSONCommandTriggerEvent = new ExportJSONCommandTriggerEvent(
 				ExportJSONCommandTriggerEvent.EXPORT_JSON, '');
 			this.dispatch(trgevent);
-			
+			//9-9-11: strange request, keep button on forever, until something is changed
+			this.ui.btnSave.selected = true; 
+		}
+		/**
+		 * keep save highlted until they change something 
+		 * ... what about when they select the other buttons: if a problem 
+		 * make this a 'togglemode' button so it will not become curren tselected when clicked
+		 * */
+		protected function unselectSaveButtonBcProductChanged(event:Event):void
+		{
+			this.ui.btnSave.selected = false; 
 		}
 		
 		protected function onRedo(event:Event):void

@@ -27,12 +27,12 @@
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
 				var arrayBtn:Array = [this.btnBackground, this.btnEngrave, this.btnText, this.btnPreview ]
-					for each(var item:UIComponent in arrayBtn ){
-						
-						item.addEventListener(MouseEvent.CLICK,onSelectBtn);
-					}
+				for each(var item:UIComponent in arrayBtn ){
 					
-		
+					item.addEventListener(MouseEvent.CLICK,onSelectBtn);
+				}
+				
+				
 			}
 			
 			protected function onBackground(event:MouseEvent):void
@@ -103,13 +103,13 @@
 	</s:Rect>
 	
 	<s:HGroup gap="-6" id="holderMainMenuBar"
-			   horizontalAlign="center" width="100%"
+			  horizontalAlign="center" width="100%"
 			  paddingBottom="5" paddingLeft="0" paddingRight="5" paddingTop="5">
 		
 		<smallComponents:MainMenuButton label="undo" id="btnUndo" 
 										icon="assets/images/undo.png" width="48" 
 										click="onUndo(event)" 
-										 toolTip="Undo Last Action"
+										toolTip="Undo Last Action"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="redo" id="btnRedo" 
 										icon="assets/images/redo.png" width="46"
@@ -138,15 +138,16 @@
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Preview" id="btnPreview"
 										icon="assets/images/preview.png" width="66"
-										 click="onPreivew(event)"
-										 toolTip="See Preview of Design"
+										click="onPreivew(event)"
+										toolTip="See Preview of Design"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 		<smallComponents:MainMenuButton label="Save It" 
 										icon="assets/images/save.png" width="56"
 										click="onSave(event)"
+										id="btnSave"
 										toolTip="Save Design"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
-
+		
 	</s:HGroup>
 	
 </s:Group>

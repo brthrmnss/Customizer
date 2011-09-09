@@ -43,30 +43,23 @@
 				//this.fontSize.selectedItem = this.layer.fontSize; 
 				//.chkVisible.selected = this.layer.visible ; 
 				//this.txt.maxChars
-				this.rowOne.alpha = 1; 
-				this.secondRow.alpha = 1; 
-				this.thirdRow.alpha = 1
-				this.rowOne.enabled = true; 
-				this.secondRow.enabled = true; 
-				this.thirdRow.enabled = true;
+	/* 			 */
+				
+				this.rowOne.alpha = 0.2
+				this.rowOne.enabled = false; 
+				
+				this.secondRow.alpha = 0.2
+				this.secondRow.enabled = false; 
+				
+				this.thirdRow.alpha = 0.2
+				this.thirdRow.enabled = false; 
+				
 				if ( this.layer == null )
 				{
-					this.rowOne.alpha = 0.2
-					this.rowOne.enabled = false; 
-					
-					this.secondRow.alpha = 0.2
-					this.secondRow.enabled = false; 
-					
-					this.thirdRow.alpha = 0.2
-					this.thirdRow.enabled = false; 
 					return; 
 				}
 				
-				if (  this.layer.type != ColorLayerVO.Type ) 
-				{
-					this.rowOne.alpha = 0.2; 
-					this.rowOne.enabled = false; 
-				}
+
 				//b/c of oddity in how viriid has proompt layers ..
 				//we don' remove them, so when they are invisible 
 				//they should'nt be removed from ui
@@ -77,29 +70,36 @@
 					return;
 				}
 				
+				
+				if (  this.layer.type == ColorLayerVO.Type ) 
+				{
+					this.enabledAllSubPanels(); 
+					/* this.rowOne.alpha = 0.2; 
+					this.rowOne.enabled = false;  */
+				}
+				
 				if ( layer.type == ImageLayerVO.Type )
 				{
 					var imageLayer : ImageLayerVO = layer as ImageLayerVO
 					if (  imageLayer.image_source ==ViridConstants.IMAGE_SOURCE_UPLOAD ) 
 					{
 						this.secondRow.alpha = 1; 
-						this.thirdRow.alpha = 0.2
-						this.thirdRow.enabled = false; 
+						this.secondRow.enabled = true; 
 					}
 					else if ( imageLayer.image_source ==ViridConstants.IMAGE_SOURCE_CLIPART ) 
 					{
 						this.thirdRow.alpha = 1; 
-						this.secondRow.alpha = 0.2
-						this.secondRow.enabled = false; 
+						this.thirdRow.enabled = true; 
 					}
 				}
-				else
+				/* else
 				{
 					this.secondRow.alpha = 0.2; 
 					this.secondRow.enabled = false; 
 					this.thirdRow.alpha = 0.2; 
 					this.thirdRow.enabled = false; 
 				}
+ 				*/			
 			}
 			
 			
@@ -129,6 +129,16 @@
 			
 			
 			
+			
+			private function enabledAllSubPanels():void
+			{
+				this.rowOne.alpha = 1; 
+				this.secondRow.alpha = 1; 
+				this.thirdRow.alpha = 1
+				this.rowOne.enabled = true; 
+				this.secondRow.enabled = true; 
+				this.thirdRow.enabled = true;
+			}
 			
 		]]>
 	</fx:Script>
@@ -179,7 +189,8 @@
 			
 			<s:TileGroup id="backgroundColorChooser" 
 						 width="100" height="30"
-						 horizontalCenter="0"
+						 horizontalCenter="0" 
+						 useHandCursor="true" buttonMode="true"
 						 horizontalGap="0" verticalGap="0" verticalCenter="0">
 				<smallComponents:color_swatch swatchColor="0x030000"/>
 				<smallComponents:color_swatch swatchColor="0xffffff"/>

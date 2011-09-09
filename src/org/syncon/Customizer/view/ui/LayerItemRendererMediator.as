@@ -738,6 +738,10 @@ package org.syncon.Customizer.view.ui
 						//this.ui.text.txt.width =this.layer.width;
 						this.ui.text.bg.height = this.layer.height; 
 						this.ui.text.bg.width = this.layer.width; 
+						/*
+						this.ui.text.maxHeight = this.layer.height; 
+						this.ui.text.maxWidth = this.layer.width; 
+						*/
 					}
 				}
 			}

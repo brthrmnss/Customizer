@@ -114,7 +114,8 @@ package  org.virid.component
 			this.model.currentLayer.repositionedOnce = false
 			this.model.currentLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
 			this.model.currentLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
-				
+			this.resetCurrentLayer() ; 
+			
 			//upload to me,  if i am current layer 
 			if (  this.ui.layer == this.model.currentLayer ) 
 			{
@@ -179,8 +180,8 @@ package  org.virid.component
 			this.model.currentLayer.repositionedOnce = false
 			this.model.currentLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
 			this.model.currentLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
-				
-			
+
+			this.resetCurrentLayer() ; 
 			//if a prompt layer, change the source, do not add a new one 
 			//08-29-11 ,even if it ws not a prompt layer you would still not add a new one ..
 			// reuse what ever is loaded if it is valid
@@ -196,7 +197,15 @@ package  org.virid.component
 				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, e.url) ) ;
 			this.model.calculateProductPrice()
 		}
-		
+		/**
+		 * set all properties back to initial state so it stayes in teh center
+		 * */
+		private function resetCurrentLayer():void
+		{
+			this.model.currentLayer.x = 0   ;
+			this.model.currentLayer.y = 0; 
+			this.model.currentLayer.rotation = 0 ; 
+		}		
 		
 		public function onShowingNullLayer( e : NightStandModelEvent ) : void
 		{

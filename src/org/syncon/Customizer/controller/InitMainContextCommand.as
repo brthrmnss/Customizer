@@ -55,7 +55,7 @@ package org.syncon.Customizer.controller
 				
 				this.createDetailedDefaultProduct();
 				//this.createDetailedDefaultProduct_Engrave()
-				this.createDetailedDefaultProduct_Engrave2()
+				//this.createDetailedDefaultProduct_Engrave2()
 				if ( this.model.flex ) 
 				{
 					
@@ -167,7 +167,7 @@ package org.syncon.Customizer.controller
 			textLayer.maxFontSize = 35
 			*/
 			textLayer.width = 50
-			textLayer.height =30 
+			textLayer.height =60 
 			textLayer.x = 60
 			textLayer.y = 120; 
 			textLayer.vertStartAlignment = ''; //no necessary if you lock the layer

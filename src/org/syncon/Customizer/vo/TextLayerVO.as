@@ -59,7 +59,8 @@ package  org.syncon.Customizer.vo
 						ratio =  Math.round( ratio )
 						if (ratio > 1 ) 
 						{
-							fontSize =fontSize-(ratio*ratio*2 )
+							if ( fontSize-(ratio*ratio*2 ) > this.minFontSize ) 
+								fontSize =fontSize-(ratio*ratio*2 )
 						}							
 						fontSize = Math.max( fontSize, this.minFontSize )
 						update('fontSize'); 

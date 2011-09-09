@@ -3,7 +3,7 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:skins="org.syncon.Customizer.view.skins.*"
-		 width="100%" height="100%">
+		 width="100%" height="100%" xmlns:component="org.virid.component.*">
 	
 	<fx:Script>
 		<![CDATA[
@@ -54,7 +54,14 @@
 			private function onUpdatedLayer(e:Event=null):void
 			{
 				this.txt.text = this.layer.text
-				colorList.selectedItem = this.layer.color; 
+					
+					this.colorList.changeColor = this.layer.color; 
+			/* 	colorList.selectedItem = this.layer.color;
+				if ( this.layer.color is String ) 
+				{
+					colorList.selectedItem = uint(this.layer.color ) 
+				}
+				colorList.labelDisplay.data = this.layer.color */
 				//only if fresh loading ...	
 				if ( e == null ) 
 				{
@@ -119,6 +126,10 @@
 				
 				this.dispatchEvent( new CustomEvent( CHANGE_COLOR, colorFormat   ) ) 
 			}
+			public function colorPicker_changeHandler2(event:Event):void {
+				var colorFormat:uint = this.colorList.getSelectedColor; 
+				this.dispatchEvent( new CustomEvent( CHANGE_COLOR, colorFormat   ) ) 
+			}
 			
 			
 			protected function colorList_focusInHandler(event:FocusEvent):void
@@ -142,8 +153,8 @@
 					return; 
 				var item:Object = event.currentTarget.selectedItem;
 				this.dispatchEvent( new CustomEvent( CHANGE_FONT_FAMILY, item   ) ) 
-					
-					
+				
+				
 				this.txt.setFocus(); 
 				this.txt.selectRange( this.txt.text.length, this.txt.text.length );
 			}
@@ -266,27 +277,29 @@
 			</s:dataProvider>
 			</s:ComboBox>
 			-->
-			<s:VGroup width="100%" paddingTop="20">
+ 	<s:VGroup width="100%" paddingTop="20">
 				<s:HGroup width="100%" horizontalAlign="left">
 					<s:Label fontSize="16" styleName="subHeading" text="EDIT COLOR" textAlign="left"/>
 				</s:HGroup>
-				<s:HGroup>
+<!--				<s:HGroup>
 					<mx:ColorPicker id="colorPicker" height="23"
 									change="colorPicker_changeHandler(event)" color="0x000000"
 									focusAlpha="0.1" mouseOver="this.colorList_ClickHandler(event)"
 									toolTip="Text color"/>
-			
-				</s:HGroup>
-			</s:VGroup>
+					
+				</s:HGroup>-->
+		<component:ColorPicker id="colorList"  change="colorPicker_changeHandler2(event)"  width="100%"/>
+			</s:VGroup> 
 			<!--- @private -->
 			<!--- @private -->
-			<skins:ColorList id="colorList" visible="false" width="50" height="23"
+			<!--<skins:ColorList id="colorList" visible="false" width="50" height="23"
 							 change="colorPicker_changeHandler(event)"
 							 focusIn="colorList_focusInHandler(event)" includeInLayout="false"
 							 itemRenderer="org.syncon.Customizer.view.skins.ColorListItemRenderer"
 							 selectedIndex="0"
 							 skinClass="org.syncon.Customizer.view.skins.ColorListSkin"
-							 toolTip="Text color"/>
+							 toolTip="Text color"/>-->
+	
 		</s:VGroup>
 	</s:VGroup>
 </s:Group>

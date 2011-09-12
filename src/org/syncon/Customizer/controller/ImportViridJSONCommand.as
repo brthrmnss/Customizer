@@ -79,14 +79,17 @@ package  org.syncon.Customizer.controller
 						colorLayer.showInList = true;
 						colorLayer.prompt_layer = true;
 						//set incoming color for color layer
-						if(layerImport.Media.hasOwnProperty("color")){
-							face.color_overlay_layer = '0x' +layerImport.Media.color;///TODO: wth are we doing here?
-							colorLayer.color = '0x'+layerImport.Media.color;
+						if(layerImport.Media.hasOwnProperty("source") && layerImport.Media.source != ""){
+							face.color_overlay_layer = '0x' +layerImport.Media.source;///TODO: wth are we doing here?
+							colorLayer.color = '0x'+layerImport.Media.source;
 						}
-						else if(layerImport.hasOwnProperty("color")){
+						else{
+							colorLayer.color = "0xffffff";
+						}
+						/*else if(layerImport.hasOwnProperty("color")){
 							face.color_overlay_layer = '0x' +layerImport.color;///TODO: wth are we doing here?
 							colorLayer.color = '0x'+layerImport.color;
-						}
+						}*/
 						
 						colorLayer.locked = true; //all masks should be locked by default 
 						if ( layerImport.hasOwnProperty( 'required' ) ) 

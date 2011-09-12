@@ -35,7 +35,16 @@
 				//alert('punch');
 				//trace('crunch');
 				//this.parentDocument.selectedColorSwatch.color = this.mainSwatch.color;
-				this.parentDocument.changeColor = this.mainSwatch.color; 
+				if(this.parentDocument.hasOwnProperty("changeColor2") )
+				{
+				this.parentDocument.changeColor2 = this.mainSwatch.color; 
+				}
+				else
+				{
+					this.parentDocument.changeColor = this.mainSwatch.color; 
+					
+				}
+				
 			}
 			
 		]]>

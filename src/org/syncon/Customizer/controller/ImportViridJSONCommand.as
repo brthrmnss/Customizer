@@ -69,8 +69,8 @@ package  org.syncon.Customizer.controller
 					
 					if(layerImport.type == "color")
 					{
-						//this.copyBasics(face.color_overlay_layer, layerImport );
-						face.color_overlay_layer = '0x' +layerImport.Media.color;///TODO: wth are we doing here?
+						
+						
 						var colorLayer  : ColorLayerVO = new ColorLayerVO;
 						colorLayer.name = layerImport.name;
 						colorLayer.name = 'Color Layer';
@@ -78,7 +78,15 @@ package  org.syncon.Customizer.controller
 						colorLayer.url = faceImport.mask;
 						colorLayer.showInList = true;
 						colorLayer.prompt_layer = true;
-						colorLayer.color = '0x'+layerImport.Media.color;
+						//set incoming color for color layer
+						if(layerImport.Media.hasOwnProperty("color")){
+							face.color_overlay_layer = '0x' +layerImport.Media.color;///TODO: wth are we doing here?
+							colorLayer.color = '0x'+layerImport.Media.color;
+						}
+						else if(layerImport.hasOwnProperty("color")){
+							face.color_overlay_layer = '0x' +layerImport.color;///TODO: wth are we doing here?
+							colorLayer.color = '0x'+layerImport.color;
+						}
 						
 						colorLayer.locked = true; //all masks should be locked by default 
 						if ( layerImport.hasOwnProperty( 'required' ) ) 

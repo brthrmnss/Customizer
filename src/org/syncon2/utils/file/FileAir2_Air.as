@@ -39,6 +39,7 @@ package  org.syncon2.utils.file
 				fx( str )
 				return;
 			}
+			trace('could not load file FileAir2_Air ... 42', folder, filename )
 			fx( null) 
 		}
 		

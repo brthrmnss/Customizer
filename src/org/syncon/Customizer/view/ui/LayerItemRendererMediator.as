@@ -276,6 +276,8 @@ package org.syncon.Customizer.view.ui
 				//silent means no undos ... this is on till reposition is finished ..
 				return; 
 			}
+			if ( this.layer.repositionedOnce ) //why hardcode this?
+				return; 
 			if ( this.layer is ImageLayerVO ) 
 			{
 				/*if ( this.ui.image == null ) 
@@ -358,6 +360,7 @@ package org.syncon.Customizer.view.ui
 				this.layer.horizStartAlignment = ''
 				//this.ui.layer.y = this.model.baseLayer.y + this.ui.layer.y; 
 				this.ui.x = this.model.baseLayer.x + this.ui.layer.x; 
+				trace('reposition x', this.layer.name, this.layer.x,  this.model.baseLayer.x + this.ui.layer.x )
 				this.layer.x = this.model.baseLayer.x + this.ui.layer.x; 
 				//this.ui.layer.y = this.ui.y = this.model.viewer.height/2 - this.ui.height/2
 				/*}*/
@@ -688,33 +691,7 @@ package org.syncon.Customizer.view.ui
 				
 				this.onPreviewModeChanged(null);
 			}
-			
-			this.flexModel1.isLocked = this.layer.locked; 
-			//this.copyLayerToModel();
-			
-			
-			
-			//try to copy back the x's and y's ...
-			if ( layer.repositionedOnce ) 
-			{
-				this.onReturnToPreviousSize();
-			}
-			else
-			{
-				if ( this.layer.vertStartAlignment != null || this.layer.horizStartAlignment != null ) 
-				{
-					this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
-					//if this is a new layer ... bring it to the front .... 
-					//also when clicked in layerlist 
-					this.ui.depth = this.ui.parent.numChildren-1
-				}
-				//always resize the mask layers so they switch between faces
-				if ( this.isImage && this.ui.image.layer.mask ) 
-				{
-					this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
-				}
-			}
-			
+
 			
 			//if ingrave layer turn on the background
 			if ( this.isText ) 
@@ -745,6 +722,46 @@ package org.syncon.Customizer.view.ui
 					}
 				}
 			}
+			
+			
+			
+			
+			this.flexModel1.isLocked = this.layer.locked; 
+			//this.copyLayerToModel();
+			
+			
+			
+			//try to copy back the x's and y's ...
+			if ( layer.repositionedOnce ) 
+			{
+				this.onReturnToPreviousSize();
+			}
+			else
+			{
+				if ( this.layer.locked ) //if layer locked no need to remeasure or resize, place it down 
+				{
+					//this.layer.repositionedOnce = true; 
+					//this is for text layers, they not dispatch a resize ? this should be handled in itemrenderer
+					this.onResize(null); 
+					//this.onReturnToPreviousSize(); 
+				}
+				if ( this.layer.vertStartAlignment != null || this.layer.horizStartAlignment != null ) 
+				{
+					this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
+					//if this is a new layer ... bring it to the front .... 
+					//also when clicked in layerlist 
+					this.ui.depth = this.ui.parent.numChildren-1
+				}
+				//always resize the mask layers so they switch between faces
+				if ( this.isImage && this.ui.image.layer.mask ) 
+				{
+					this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
+				}
+			}
+			
+			
+			
+			
 		}
 		
 		private function onReturnToPreviousSize():void

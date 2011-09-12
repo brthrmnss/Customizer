@@ -67,7 +67,6 @@ package  org.syncon.Customizer.controller
 				for each(var layerImport:Object in faceImport.Layers)
 				{
 					
-					//continue; 
 					if(layerImport.type == "color")
 					{
 						//this.copyBasics(face.color_overlay_layer, layerImport );
@@ -113,6 +112,9 @@ package  org.syncon.Customizer.controller
 						textLayer.subType = ViridConstants.SUBTYPE_ENGRAVE;
 						
 						this.copyBasics(textLayer, layerImport );
+						if(textLayer.name.indexOf("Top") >= 0){
+							face.importFirstLayerSelection = textLayer;
+						}
 						textLayer.text = layerImport.Media.source;
 						textLayer.maxChars = layerImport.Media.max
 						//TODO: orientation has been removed
@@ -201,6 +203,10 @@ package  org.syncon.Customizer.controller
 						
 						
 					}
+					
+					if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
+						face.importFirstLayerSelection = layerImport as LayerBaseVO; 
+					
 				}
 			}
 			//face.layersToImport = [];

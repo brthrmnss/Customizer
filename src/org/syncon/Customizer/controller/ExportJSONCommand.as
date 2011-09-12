@@ -160,11 +160,18 @@ package  org.syncon.Customizer.controller
 							var colorLayer : ColorLayerVO = layer as ColorLayerVO;
 							jsonLayer.type = "color";
 							//jsonMedia.color = (colorLayer.color,'000000');
-							jsonMedia.source = String(colorLayer.color.toString(16));
-							while( jsonMedia.source.length < 6 )
+							var s:String = String(colorLayer.color);
+							if(s.indexOf("0x") == 0)
+								jsonMedia.source = colorLayer.color;
+							else
 							{
-								jsonMedia.source = '0' + jsonMedia.source;
+								jsonMedia.source = String( colorLayer.color.toString(16) );
+								while( jsonMedia.source.length < 6 )
+								{
+									jsonMedia.source = '0' + jsonMedia.source;
+								}
 							}
+
 							if( jsonMedia.source == "" )
 								jsonMedia.source = 'ffffff';
 							jsonLayer.color = jsonMedia.source; //because the backed was built to listen to jsonLayer.color - would love to remove this

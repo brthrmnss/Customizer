@@ -35,7 +35,7 @@
 				//alert('punch');
 				//trace('crunch');
 				//this.parentDocument.selectedColorSwatch.color = this.mainSwatch.color;
-				this.parentDocument.changeColor2 = this.mainSwatch.color; 
+				this.parentDocument.changeColor = this.mainSwatch.color; 
 			}
 			
 		]]>

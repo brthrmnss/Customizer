@@ -160,7 +160,7 @@ package  org.syncon.Customizer.controller
 							var colorLayer : ColorLayerVO = layer as ColorLayerVO;
 							jsonLayer.type = "color";
 							//jsonMedia.color = (colorLayer.color,'000000');
-							jsonMedia.source = String(colorLayer.color.toString());
+							jsonMedia.source = String(colorLayer.color.toString(16));
 							while( jsonMedia.source.length < 6 )
 							{
 								jsonMedia.source = '0' + jsonMedia.source;

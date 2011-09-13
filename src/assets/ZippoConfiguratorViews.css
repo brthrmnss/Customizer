@@ -167,7 +167,8 @@ mx|ToolTip {
 	src: url("images/fonts/TriniteNo1-Bold.otf");
 	embedAsCFF: true;
 }
-/*engraving*/
+/*engraving from personal collection*/
+/*
 @font-face
 {
 	fontFamily: "Avalon";
@@ -190,5 +191,44 @@ mx|ToolTip {
 {
 	fontFamily: "Helv";
 	src: url("images/fonts/HelveticaLTStdBoldCond.otf");
+	embedAsCFF: true;
+}
+*/
+
+/*engraving from zippo*/
+@font-face
+{
+	fontFamily: "Avalon";
+	src: url("fonts/itc_avant_garde_gothic.ttf");
+	embedAsCFF: true;
+}
+@font-face
+{
+	fontFamily: "Century";
+	src: url("fonts/itc_century.ttf");
+	embedAsCFF: true;
+}
+@font-face
+{
+	fontFamily: "Connecting Script";
+	src: url("fonts/emmascriptmvb.ttf");
+	embedAsCFF: true;
+}
+@font-face
+{
+	fontFamily: "Helvetica";
+	src: url("fonts/Helvetica.ttf");
+	embedAsCFF: true;
+}
+@font-face
+{
+	fontFamily: "Roman";
+	src: url("fonts/times.ttf");
+	embedAsCFF: true;
+}
+@font-face
+{
+	fontFamily: "Old English";
+	src: url("fonts/EngraversOldEnglish.TTF");
 	embedAsCFF: true;
 }

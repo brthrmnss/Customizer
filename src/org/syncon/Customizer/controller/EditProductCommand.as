@@ -681,7 +681,8 @@ package org.syncon.Customizer.controller
 				undoable = false 
 				if ( event.undo == false )
 				{
-					
+					if ( this.model.currentFace != null ) 
+						this.model.currentFace.currentLayer = this.model.currentLayer
 					//event.oldData = this.model.cur
 					face = event.data as FaceVO
 					if ( face == null ) 
@@ -870,9 +871,14 @@ package org.syncon.Customizer.controller
 					this.model.undoList.removeAll(); 
 					this.model.recreateDisplayableLayers();
 					//select user specified first layer 
+					
 					if ( event.firstTime && face.importFirstLayerSelection != null && selectLayerFirst != null ) 
 					{
 						this.model.currentLayer = selectLayerFirst
+					}
+					else if ( face.currentLayer != null ) 
+					{
+						this.model.currentLayer = face.currentLayer
 					}
 					else
 					{ //select any layer 

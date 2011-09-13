@@ -106,6 +106,10 @@ package  org.syncon.Customizer.vo
 		 * when importing will be selected first ...
 		 * */
 		[Transient] public var importFirstLayerSelection:LayerBaseVO;
+		/**
+		 * this layer is stored and reselected when switching faces
+		 * */
+		[Transient] public var currentLayer:LayerBaseVO;
 		[Transient]
 		public function get lists():ArrayCollection
 		{

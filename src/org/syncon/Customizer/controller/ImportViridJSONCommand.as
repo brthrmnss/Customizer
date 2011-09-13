@@ -95,6 +95,8 @@ package  org.syncon.Customizer.controller
 						if ( layerImport.hasOwnProperty( 'required' ) ) 
 							colorLayer.required = layerImport.required;
 						
+						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
+							face.importFirstLayerSelection = colorLayer; 
 						face.layersToImport.push(colorLayer);
 						
 					}
@@ -109,6 +111,8 @@ package  org.syncon.Customizer.controller
 						imageLayer.url = layerImport.Media.source;
 						this.copyBasics(imageLayer, layerImport );
 						
+						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
+							face.importFirstLayerSelection = imageLayer; 
 						face.layersToImport.push(imageLayer);
 						
 						
@@ -161,6 +165,8 @@ package  org.syncon.Customizer.controller
 						
 						textLayer.text = layerImport.Media.source;
 
+						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
+							face.importFirstLayerSelection = textLayer; 
 						face.layersToImport.push(textLayer);
 						
 					}
@@ -197,6 +203,8 @@ package  org.syncon.Customizer.controller
 							textLayer.fontFamily = layerImport.Media.font;
 						textLayer.text = layerImport.Media.source;
 						
+						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
+							face.importFirstLayerSelection = textLayer; 
 						face.layersToImport.push(textLayer);
 						
 					}
@@ -210,13 +218,16 @@ package  org.syncon.Customizer.controller
 						imageLayer.image_source = ViridConstants.IMAGE_SOURCE_CLIPART	
 						if(imageLayer.url == null || imageLayer.url == "" )
 							imageLayer.visible = false;
+						
+						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
+							face.importFirstLayerSelection = imageLayer; 
 						face.layersToImport.push(imageLayer);
 						
+
 						
 					}
 					
-					if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
-						face.importFirstLayerSelection = layerImport as LayerBaseVO; 
+
 					
 				}
 			}

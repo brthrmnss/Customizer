@@ -110,11 +110,11 @@
 		</s:List>
 		
 		<s:VGroup width="100%">
-			<s:Group width="100%">
+			<s:Group width="100%"  toolTip="Price for this face only">
 				<s:Label   text="SubTotal"/>
 				<s:Label id="subCost" textAlign="right" right="18" styleName="price" text="$0.00"/>
 			</s:Group>
-			<s:Group width="100%">
+			<s:Group width="100%"  toolTip="Total Product Price">
 				<s:Label   text="Total"/>
 				<s:Label id="txtTotal" textAlign="right" right="18" styleName="price" text="$0.00"/>
 			</s:Group>

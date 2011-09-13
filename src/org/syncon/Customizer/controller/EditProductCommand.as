@@ -736,7 +736,7 @@ package org.syncon.Customizer.controller
 						
 						
 					}
-					else
+					else //fisrt time 
 					{
 						
 						this.model.baseLayer = null; 
@@ -796,7 +796,14 @@ package org.syncon.Customizer.controller
 						{
 							//disable adding undos 
 							this.model.blockUndoAdding = true; 
-							
+							//transfer fonts from product to face, if the face does not have any specified
+							if ( face.fonts == null  ||   face.fonts.length == 0  ) 
+							{
+								if ( this.model.baseItem.fonts != null &&  this.model.baseItem.fonts.length > 0 ) 
+								{
+									face.fonts  =  this.model.baseItem.fonts
+								}
+							}
 							if ( face.image_color_overlay != null && face.image_color_overlay != '' ) 
 							{
 								colorLayer = new ColorLayerVO(); 
@@ -842,6 +849,11 @@ package org.syncon.Customizer.controller
 								if ( layer is TextLayerVO ) 
 								{
 									txtLayer = layer as TextLayerVO
+									//transfer fonts from face to layer if not alreayd sepcified
+									if ( txtLayer.fonts.length == 0 &&  face.fonts != null && face.fonts.length > 0 ) 
+									{
+										txtLayer.fonts = face.fonts; 
+									}
 									this.dispatch( new EditProductCommandTriggerEvent(
 										EditProductCommandTriggerEvent.ADD_TEXT_LAYER, txtLayer ) ) ; 
 								}	

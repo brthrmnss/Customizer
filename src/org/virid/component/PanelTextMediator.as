@@ -136,6 +136,9 @@ package org.virid.component
 			) )  
 		}
 		
+		/**
+		 * go through select fonts, case insensitive and make matches
+		 * */
 		private function updateFontList():void
 		{
 			var fonts : Array = this.ui.layer.fonts; 
@@ -146,18 +149,22 @@ package org.virid.component
 			var foundFound : FontVO; 
 			for each ( var f : FontVO in fonts ) 
 			{
-				if ( f.name ==  this.ui.layer.fontFamily )
+				if ( f.name.toLowerCase() ==  this.ui.layer.fontFamily.toLowerCase() )
 				{
 					foundFound = f; 	
 				}
-				if ( f.swf_name != null && f.swf_name ==  this.ui.layer.fontFamily )
+				if ( f.swf_name != null && f.swf_name.toLowerCase() ==  this.ui.layer.fontFamily.toLowerCase() )
 				{
 					foundFound = f; 	
 				}
 				
 			}
 			this.ui.fontSelect.selectedItem = foundFound; //this.ui.layer.fontFamily; 
-			
+			this.ui.rowFonts.visible = true; 
+			if ( fonts.length == 0 ) 
+			{
+				this.ui.rowFonts.visible = false; 
+			}
 		}
 		
 		

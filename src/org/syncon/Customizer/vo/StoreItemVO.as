@@ -12,8 +12,12 @@ package  org.syncon.Customizer.vo
 	{
 		public var name :  String = '';
 		public var desc :  String = '';
-		public var faces : ArrayCollection = new ArrayCollection()
+		public var faces : ArrayCollection = new ArrayCollection();
 		
+		/**
+		 * Import fonts for text layers for all faces, can override on face or textlayer level
+		 * */
+		[Transient] public var  fonts : Array;// = []; 
 		/*
 		
 		private var _height : Number; 

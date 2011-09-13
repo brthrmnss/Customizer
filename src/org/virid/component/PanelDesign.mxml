@@ -43,7 +43,7 @@
 				//this.fontSize.selectedItem = this.layer.fontSize; 
 				//.chkVisible.selected = this.layer.visible ; 
 				//this.txt.maxChars
-	/* 			 */
+				/* 			 */
 				
 				this.rowOne.alpha = 0.2
 				this.rowOne.enabled = false; 
@@ -59,15 +59,19 @@
 					return; 
 				}
 				
-
+				
 				//b/c of oddity in how viriid has proompt layers ..
 				//we don' remove them, so when they are invisible 
 				//they should'nt be removed from ui
 				if ( this.layer.visible == false && this.layer.prompt_layer )
 				{
-					this.layer = null; //unload the layer ... 
-					//move this to mediator so ti is clearer
-					return;
+					//request that empty ImageLayers layers can be modified using panel (only matters at startup ) 
+					if ( this.layer.type != ImageLayerVO.Type ) 
+					{
+						this.layer = null; //unload the layer ... 
+						//move this to mediator so ti is clearer
+						return;
+					}
 				}
 				
 				
@@ -94,12 +98,12 @@
 				}
 				/* else
 				{
-					this.secondRow.alpha = 0.2; 
-					this.secondRow.enabled = false; 
-					this.thirdRow.alpha = 0.2; 
-					this.thirdRow.enabled = false; 
+				this.secondRow.alpha = 0.2; 
+				this.secondRow.enabled = false; 
+				this.thirdRow.alpha = 0.2; 
+				this.thirdRow.enabled = false; 
 				}
- 				*/			
+				*/			
 			}
 			
 			

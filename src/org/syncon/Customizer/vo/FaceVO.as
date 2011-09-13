@@ -32,6 +32,12 @@ package  org.syncon.Customizer.vo
 		
 		public var limits : Object   = { };
 		
+		/**
+		 * Import fonts for text layers
+		 * */
+		[Transient] public var  fonts : Array;// = []; 
+		
+		
 		static public var UPDATED : String = 'updatedImaveVO'; 
 		
 		private var _layers : ArrayCollection = new ArrayCollection(); 

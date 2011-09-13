@@ -100,7 +100,7 @@
 				
 			</s:TileGroup>
 			
-			<s:Group id="selectedColor" right="0" verticalCenter="0">
+			<s:Group id="selectedColor" right="0" verticalCenter="0" toolTip="Selected Color">
 				<s:Rect id="color" width="60" height="30" >
 					<s:fill>
 						<s:SolidColor id="selectedColorSwatch" color="0x166571"/>

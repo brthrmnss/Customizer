@@ -154,9 +154,12 @@
 				var item:Object = event.currentTarget.selectedItem;
 				this.dispatchEvent( new CustomEvent( CHANGE_FONT_FAMILY, item   ) ) 
 				
-				
+				//this.fontSelect.closeDropDown(true)
 				this.txt.setFocus(); 
 				this.txt.selectRange( this.txt.text.length, this.txt.text.length );
+				
+				this.callLater( this.fontSelect.closeDropDown, [true] )  ; 
+				
 			}
 			
 			
@@ -220,7 +223,8 @@
 				</s:HGroup>
 				<s:DropDownList id="fontSelect" width="100%" height="38" borderColor="0xe9e9e9"
 								change="dropDown_FontSelect_changeHandler(event)" cornerRadius="8"
-								dropShadowVisible="false"
+								dropShadowVisible="false"  prompt="SELECT A FONT"
+								focusEnabled="false" tabFocusEnabled="false" tabEnabled="false"
 								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"/>			
 			</s:VGroup>
 			
@@ -288,7 +292,7 @@
 									toolTip="Text color"/>
 					
 				</s:HGroup>-->
-		<component:ColorPicker id="colorList"  change="colorPicker_changeHandler2(event)"  width="100%"/>
+		<component:ColorPicker id="colorList" toolTip="Select Color"  change="colorPicker_changeHandler2(event)"  width="100%"/>
 			</s:VGroup> 
 			<!--- @private -->
 			<!--- @private -->

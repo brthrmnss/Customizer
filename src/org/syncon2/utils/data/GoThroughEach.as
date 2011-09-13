@@ -21,23 +21,30 @@ package   org.syncon2.utils.data
 			this.fxCallAfterSoundCompletePlaying = fxComplete
 			this.fxCallback = fxCallback; 
 			this.currentIndex = -1
-			this.nextSound(); 		
+			
 			this.timeDelay = timeDelay_
 			if ( timeDelay > 0 ) 
 			{
+				if ( timer != null ) 
+					timer.removeEventListener(TimerEvent.TIMER, this.nextTimerComplete ) 
 				timer = new Timer(timeDelay,1 )
 				timer.addEventListener(TimerEvent.TIMER, this.nextTimerComplete ) 
 			}
+			
+			
+			this.nextSound(); 		
 		}
 		
 		private function nextSound(e:Object=null, timed : Boolean = false) : void
 		{
 			if ( timeDelay != 0 && timed == false  ) 
 			{
+				this.timer.reset(); 
 				this.timer.start();
 				return; 
 			}
-			if ( this.complete ) return; 
+			if ( this.complete ) 
+				return; 
 			this.currentIndex ++
 			if ( currentIndex>=  this.songs.length ) 
 			{

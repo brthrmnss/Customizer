@@ -5,6 +5,7 @@ package org.syncon.Customizer.controller
 	import org.robotlegs.mvcs.Command;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.ViridConstants;
+	import org.syncon.Customizer.vo.CollectiveLayerPriceVO;
 	import org.syncon.Customizer.vo.ColorLayerVO;
 	import org.syncon.Customizer.vo.FaceVO;
 	import org.syncon.Customizer.vo.FontVO;
@@ -581,19 +582,24 @@ package org.syncon.Customizer.controller
 			imageLayer.name = 'Clip Art 2'
 			imageLayer.prompt_layer = true; 
 			imageLayer.visible = false; 
-			imageLayer.cost = 14.00
+			//imageLayer.cost = 14.00
 			imageLayer.image_source = ViridConstants.IMAGE_SOURCE_CLIPART					
 			face.layersToImport.push(imageLayer);
 			
 			imageLayer = new ImageLayerVO;
 			imageLayer.prompt_layer = true; 		
 			imageLayer.name = 'Clip Art 3'
-			imageLayer.cost = 14.00
+			//imageLayer.cost = 14.00
 			imageLayer.image_source = ViridConstants.IMAGE_SOURCE_CLIPART
 			imageLayer.url ='assets/images/img.jpg'
 			imageLayer.visible = false; 
 			face.layersToImport.push(imageLayer);
 			
+			var collectivePrice : CollectiveLayerPriceVO = new CollectiveLayerPriceVO() ; 
+			collectivePrice.price = 9.95; 
+			collectivePrice.type = ImageLayerVO.Type; 
+			collectivePrice.subtype  = ViridConstants.IMAGE_SOURCE_CLIPART; 
+			face.collectiveLayerPrices.push( collectivePrice ) ; 
 			/*var l : Array = [] ; 
 			l = MakeVOs.makeObjs(['L1', 'L2'], LessonVO, 'name' )
 			var lp : LessonGroupVO = new LessonGroupVO(); 

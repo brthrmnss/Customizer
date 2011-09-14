@@ -3,10 +3,13 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:skins="org.syncon.Customizer.view.skins.*"
-		 width="100%" height="100%" xmlns:component="org.virid.component.*">
+		 xmlns:component="org.virid.component.*"
+		 width="100%" height="100%">
 	
 	<fx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
 			import org.syncon.Customizer.model.CustomEvent;
 			public static var ADD_TEXT:String='ADD_TEXT';
 			
@@ -54,12 +57,12 @@
 			private function onUpdatedLayer(e:Event=null):void
 			{
 				this.txt.text = this.layer.text
-					
-					this.colorList.changeColor = this.layer.color; 
-			/* 	colorList.selectedItem = this.layer.color;
+				
+				this.colorList.changeColor = this.layer.color; 
+				/* 	colorList.selectedItem = this.layer.color;
 				if ( this.layer.color is String ) 
 				{
-					colorList.selectedItem = uint(this.layer.color ) 
+				colorList.selectedItem = uint(this.layer.color ) 
 				}
 				colorList.labelDisplay.data = this.layer.color */
 				//only if fresh loading ...	
@@ -77,6 +80,11 @@
 				{
 					this.txtMaxChars.text = this.layer.maxChars.toString( )+ ' characters max'; 
 					this.txt.maxChars = this.layer.maxChars
+				}
+				
+				if ( this.layer.propChanged == 'fontSize' ) 
+				{
+					this.fontSize.selectedItem = this.layer.fontSize; 
 				}
 				
 				
@@ -214,18 +222,26 @@
 		</s:HGroup>-->
 		
 		
-		<s:HGroup width="100%" height="60" paddingTop="12" id="rowFonts">
+		<s:HGroup id="rowFonts" width="100%" height="60" paddingTop="12">
 			<s:VGroup width="100%">
 				<s:HGroup width="50%">
 					<s:Label fontSize="16" styleName="subHeading" text="Choose A Font"/>
 					<s:Label id="txtMaxChars" styleName="Arial grayTxt" text="45 charectors max"/>
 					
 				</s:HGroup>
-				<s:DropDownList id="fontSelect" width="100%" height="38" borderColor="0xe9e9e9"
-								change="dropDown_FontSelect_changeHandler(event)" cornerRadius="8"
-								dropShadowVisible="false"  prompt="SELECT A FONT"
-								focusEnabled="false" tabFocusEnabled="false" tabEnabled="false"
-								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"/>			
+				<s:HGroup id="holderDropdown" width="100%">
+					<s:DropDownList id="fontSelect" width="100%" height="38" borderColor="0xe9e9e9"
+									change="dropDown_FontSelect_changeHandler(event)"
+									cornerRadius="8" dropShadowVisible="false" focusEnabled="false"
+									prompt="SELECT A FONT"
+									skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
+									tabEnabled="false" tabFocusEnabled="false"/>	
+					<s:ComboBox id="fontSize" width="50" change="fontSize_changeHandler(event)"
+								cornerRadius="0"
+								dataProvider="{new ArrayCollection([6,7,8,9,10,11,12,13,14,15,16,18,20,22,24,26,28,32,36,40,44,48,54,60,66,72,80,88,96])}"
+								selectedItem="12" toolTip="Font size"/>
+				</s:HGroup>
+				
 			</s:VGroup>
 			
 			
@@ -248,9 +264,13 @@
 			
 			
 			<s:HGroup width="100%">
-				<s:TextInput id="txt" width="100%" height="38" borderColor="0xe9e9e9"
+				<!-- no need to flip back and forth ... there is a seperate engrave panel -->
+				<!--<s:TextInput id="txt" width="100%" height="38" borderColor="0xe9e9e9"
 							 change="txt_changeHandler(event)" focusAlpha="0" paddingTop="10"
-							 skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>
+							 skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>-->
+				<s:TextArea id="txt" width="100%" height="38" borderColor="0xe9e9e9" 
+							change="txt_changeHandler(event)" focusAlpha="0" paddingTop="10"
+							skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>
 				<s:Button visible="false" height="20" label="ADD  MY  TEXT" click="onAddText(event)"
 						  includeInLayout="false" skinClass="org.virid.skins.simpleBlackBtn"
 						  verticalCenter="0"/>
@@ -281,29 +301,30 @@
 			</s:dataProvider>
 			</s:ComboBox>
 			-->
- 	<s:VGroup width="100%" paddingTop="20">
+			<s:VGroup width="100%" paddingTop="20">
 				<s:HGroup width="100%" horizontalAlign="left">
 					<s:Label fontSize="16" styleName="subHeading" text="EDIT COLOR" textAlign="left"/>
 				</s:HGroup>
-<!--				<s:HGroup>
-					<mx:ColorPicker id="colorPicker" height="23"
-									change="colorPicker_changeHandler(event)" color="0x000000"
-									focusAlpha="0.1" mouseOver="this.colorList_ClickHandler(event)"
-									toolTip="Text color"/>
-					
+				<!--				<s:HGroup>
+				<mx:ColorPicker id="colorPicker" height="23"
+				change="colorPicker_changeHandler(event)" color="0x000000"
+				focusAlpha="0.1" mouseOver="this.colorList_ClickHandler(event)"
+				toolTip="Text color"/>
+				
 				</s:HGroup>-->
-		<component:ColorPicker id="colorList" toolTip="Select Color"  change="colorPicker_changeHandler2(event)"  width="100%"/>
+				<component:ColorPicker id="colorList" width="100%" change="colorPicker_changeHandler2(event)"
+									   toolTip="Select Color"/>
 			</s:VGroup> 
 			<!--- @private -->
 			<!--- @private -->
 			<!--<skins:ColorList id="colorList" visible="false" width="50" height="23"
-							 change="colorPicker_changeHandler(event)"
-							 focusIn="colorList_focusInHandler(event)" includeInLayout="false"
-							 itemRenderer="org.syncon.Customizer.view.skins.ColorListItemRenderer"
-							 selectedIndex="0"
-							 skinClass="org.syncon.Customizer.view.skins.ColorListSkin"
-							 toolTip="Text color"/>-->
-	
+			change="colorPicker_changeHandler(event)"
+			focusIn="colorList_focusInHandler(event)" includeInLayout="false"
+			itemRenderer="org.syncon.Customizer.view.skins.ColorListItemRenderer"
+			selectedIndex="0"
+			skinClass="org.syncon.Customizer.view.skins.ColorListSkin"
+			toolTip="Text color"/>-->
+			
 		</s:VGroup>
 	</s:VGroup>
 </s:Group>

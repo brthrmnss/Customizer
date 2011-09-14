@@ -134,18 +134,25 @@
 				{
 					this.txt.setStyle('verticalAlign', layer.verticalTextAlignment  ) ;
 					this.txtMeasure.setStyle('verticalAlign', layer.verticalTextAlignment  ) ;					
-				}		
+				}
+				//this doesn;'t feel so safe ... someone migiht not be sending out proper event 
+				if ( this.layer.propChanged ==TextLayerVO.PROP_UPDATED_TEXT  || newLayerSetAllProps )
+				{
+					//this.txt.text  = layer.text; 
+					this.txt.text = layer.displayText; 
+					this.txtMeasure.text = this.layer.displayText;				
+				}	
 				
-				
-				this.layer.propChanged = null
+				//09/12/11 had to comment this out ... why was this here? it will auto remove this 
+				//this.layer.propChanged = null
 				
 				
 				this.lastLayer =  this.layer
 				//this.txt.setStyle('fontFamily', asdf ) ; 
-				
+				/* 
 				//this.txt.text  = layer.text; 
 				this.txt.text = layer.displayText; 
-				this.txtMeasure.text = this.layer.displayText;
+				this.txtMeasure.text = this.layer.displayText; */
 				//handle any situations where this component might not resize 
 				if ( newLayerSetAllProps && this.layer.locked  ) 
 				{

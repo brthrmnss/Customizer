@@ -5,6 +5,10 @@ package  org.syncon.Customizer.vo
 		
 		static public const PROP_TEXT_ALIGN : String = 'PROP_TEXT_ALIGN' ; 
 		static public const PROP_VERTICAL_TEXT_ALIGN : String = 'PROP_VERTICAL_TEXT_ALIGN'; 
+		/**
+		 * when the text is changed ...
+		 * */
+		static public const PROP_UPDATED_TEXT : String = 'PROP_UPDATED_TEXT'; 
 		public var text : String = ''; 
 		
 		public static var Type:String= 'TEX';

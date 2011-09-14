@@ -40,12 +40,36 @@ package org.syncon.Customizer.vo
 			this.dispatchEvent( new Event( LAYER_SELEECTED  ) ) ; 
 		}
 		
+		static public var UPDATE_LAYER_PRICE : String = 'UPDATE_LAYER_PRICE';
+		public function layerUpdatePrice( ) : void
+		{
+			this.dispatchEvent( new Event( UPDATE_LAYER_PRICE  ) ) ; 
+		}
 		
+		
+		private var _propChanged : String = ''; 
+
 		/**
 		 * .
 		 * USed by x so we don't have to setStyle constantly 
 		 * */
-		public var propChanged : String = ''; 
+		public function get propChanged():String
+		{
+			return _propChanged;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set propChanged(value:String):void
+		{
+			if ( value == null ) 
+			{
+				trace('prop null'); 
+			}
+			_propChanged = value;
+		}
+
 		/**
 		 * pretty name, sometimes overridden by subclasses
 		 * */
@@ -71,7 +95,18 @@ package org.syncon.Customizer.vo
 		}
 		
 		public var rotation:Number = 0;
-		public var subType:Object;
+		private var _subType: String;
+
+		public function get subType():String
+		{
+			return _subType;
+		}
+
+		public function set subType(value:String):void
+		{
+			_subType = value;
+		}
+
 		private var _visible : Boolean = true; 
 
 		public function get visible():Boolean
@@ -89,7 +124,7 @@ package org.syncon.Customizer.vo
 		
 		public var location :  String = '' // = false; 
 		
-		public var _cost :  Number = 0
+		public var _cost :  Number = NaN;
 		public function get cost():Number
 		{
 			return _cost;
@@ -100,6 +135,11 @@ package org.syncon.Customizer.vo
 			_cost = value;
 		}
 		
+		/**
+		 * flag, used by CollectiveLayerPriceVO ,designed to 
+		 * allow ut to have set costs by default 
+		 * */
+		public var costSetByColletive : Boolean = false ; 
 		
 		
 		/**

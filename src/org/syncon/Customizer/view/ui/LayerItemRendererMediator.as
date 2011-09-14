@@ -9,7 +9,7 @@ package org.syncon.Customizer.view.ui
 	import com.roguedevelopment.objecthandles.constraints.MovementConstraint;
 	import com.roguedevelopment.objecthandles.constraints.SizeConstraint;
 	
-	import flash.display.BlendMode;
+	import flash.display.BlendMode; 
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -29,7 +29,6 @@ package org.syncon.Customizer.view.ui
 	import org.syncon.onenote.onenotehelpers.impl.layer_item_renderer;
 	import org.syncon.onenote.onenotehelpers.impl.viewer2_store;
 	
-	import spark.components.Group;
 	import spark.core.MaskType;
 	
 	/**
@@ -219,7 +218,7 @@ package org.syncon.Customizer.view.ui
 					if ( createUndos == false )
 					{
 						this.layer.width = this.ui.width
-
+						
 					}
 					else
 					{
@@ -295,11 +294,11 @@ package org.syncon.Customizer.view.ui
 				if ( this.layer != this.model.baseLayer && this.model.baseLayer != null )
 				{
 					/*
-				}
+					}
 					if ( this.layer.width > 0 &&  ! isNaN( this.layer.importX ) )
 					{
-						trace('this layer was set manually dont adjust size'); 
-						this.copyLayerToModel(); 
+					trace('this layer was set manually dont adjust size'); 
+					this.copyLayerToModel(); 
 					}
 					else
 					{*/
@@ -322,7 +321,7 @@ package org.syncon.Customizer.view.ui
 						//but handles are not propelry placed? ...
 						this.blockUpdatingModel = false 
 					}
-				/*	}*/
+					/*	}*/
 				}
 			}	
 			
@@ -543,7 +542,7 @@ package org.syncon.Customizer.view.ui
 			}
 			
 			this.returnUIToDefaultState()
-			
+			this.disableClickSelection = true; 
 			this.layer = this.ui.layer; 
 			this.layer.addEventListener(LayerBaseVO.LAYER_REDD, this.onLayerReAdd ) 
 			this.layer.addEventListener(LayerBaseVO.LAYER_REMOVED, this.onLayerRemoved ) 
@@ -691,7 +690,7 @@ package org.syncon.Customizer.view.ui
 				
 				this.onPreviewModeChanged(null);
 			}
-
+			
 			
 			//if ingrave layer turn on the background
 			if ( this.isText ) 
@@ -720,6 +719,10 @@ package org.syncon.Customizer.view.ui
 						this.ui.text.maxWidth = this.layer.width; 
 						*/
 					}
+					///09/12+1/11: click engrave layers to type on them 
+					this.ui.buttonMode=true 
+					this.ui.useHandCursor=true
+					this.disableClickSelection = false 
 				}
 			}
 			
@@ -888,9 +891,11 @@ package org.syncon.Customizer.view.ui
 			//stop pover selecting ....
 			/*if ( this.model.currentLayer == this.ui.listData ) 
 			return;*/ 
-			if ( this.layer.locked ) 
-				return
-			
+			if ( this.model.fxIsEngraveLayer( this.layer ) == false ) 
+			{
+				if ( this.layer.locked ) 
+					return;
+			}
 			if ( this.disableClickSelection ) 
 				return; 
 			

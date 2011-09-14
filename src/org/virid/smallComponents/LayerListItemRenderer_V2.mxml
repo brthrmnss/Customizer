@@ -25,6 +25,7 @@
 			override public function set data(value:Object):void { 
 				super.data = value; 
 				this.help.listenForObj(value,LayerBaseVO.UPDATED, this.updateItemRenderer )
+				this.help.listenForObj(value,LayerBaseVO.UPDATE_LAYER_PRICE, this.updateItemRenderer )
 				layer = value as LayerBaseVO
 				this.help.disableIfNull( value, new LayerBaseVO, 'layer' )  
 				this.help.setupParent( this.owner ) ;
@@ -36,7 +37,7 @@
 			{
 				txtLbl.text = this.layer.displayName 
 				txtPrice.text = '$'+this.layer.cost.toFixed(2)
-				if ( this.layer.cost == 0 ) 
+				if ( this.layer.cost == 0  || isNaN( this.layer.cost ) ) 
 					this.txtPrice.text = ''; 
 				//this.lblCount.text = this.layer.type; 
 				if (this.selected == false && this.currentState == 'selected' )

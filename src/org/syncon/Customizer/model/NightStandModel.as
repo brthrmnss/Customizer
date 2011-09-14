@@ -623,90 +623,90 @@ package org.syncon.Customizer.model
 				subTotal = 0;
 				for each ( var l : LayerBaseVO in face.layers.toArray() )  
 				{
-					if ( l.visible == false &&  l.type != ColorLayerVO.Type  )
-						continue
-					/*if ( l.visible || l.type == ColorLayerVO.Type  ) 
-					{*/
-					//see if this layer is empty
-					if(l.type == TextLayerVO.Type )
-					{
-						var textLayer:TextLayerVO = l as TextLayerVO;
-						if(textLayer.text == null || textLayer.text == "")
-							continue;
-					}
-					if(l.type == ImageLayerVO.Type )
-					{
-						var imgLayer:ImageLayerVO = l as ImageLayerVO;
-						if(imgLayer.source == null && imgLayer.url == null)
-							continue;
-						if( imgLayer.source == "" && imgLayer.url == ""  )
-							continue;
-						else if( imgLayer.source == null && imgLayer.url == ""  )
-							continue;
-						
-					}
-					for each (   c  in collective ) 
-					{
-						if ( c.type != l.type ) 
-							continue; 
-						if ( c.subtype != null && c.subtype != l.subType ) 
-							continue; 
-						
-						if ( c.overrideSetPrices  == false ) 
+					/*if ( l.visible == false &&  l.type != ColorLayerVO.Type  )
+					continue*/
+					if ( l.visible || l.type == ColorLayerVO.Type  ) 
+					{ 
+						//see if this layer is empty
+						if(l.type == TextLayerVO.Type )
 						{
-							if ( isNaN( l.cost ) || l.costSetByColletive  ) 
-							{
-								
-							}
-							else
-							{
-								continue; ///this layer has a cost, do not override it
-							}
+							var textLayer:TextLayerVO = l as TextLayerVO;
+							if(textLayer.text == null || textLayer.text == "")
+								continue;
 						}
-						if ( c.layer != null ) 
+						if(l.type == ImageLayerVO.Type )
 						{
-							//strange one ... 
-							//if i match and have a higher index than the prefered, change that one ... 
-							var currentLayerIndex : int = face.layers.getItemIndex( l ) 
-							var collectiveLayerIndex : int =  face.layers.getItemIndex(  c.layer ) 
-							if ( currentLayerIndex< collectiveLayerIndex )
+							var imgLayer:ImageLayerVO = l as ImageLayerVO;
+							if(imgLayer.source == null && imgLayer.url == null)
+								continue;
+							if( imgLayer.source == "" && imgLayer.url == ""  )
+								continue;
+							else if( imgLayer.source == null && imgLayer.url == ""  )
+								continue;
+							
+						}
+						for each (   c  in collective ) 
+						{
+							if ( c.type != l.type ) 
+								continue; 
+							if ( c.subtype != null && c.subtype != l.subType ) 
+								continue; 
+							
+							if ( c.overrideSetPrices  == false ) 
 							{
-								c.layer.cost = 0 ; 
-								c.layer.costSetByColletive = true; 
-								c.layer.layerUpdatePrice()
+								if ( isNaN( l.cost ) || l.costSetByColletive  ) 
+								{
+									
+								}
+								else
+								{
+									continue; ///this layer has a cost, do not override it
+								}
+							}
+							if ( c.layer != null ) 
+							{
+								//strange one ... 
+								//if i match and have a higher index than the prefered, change that one ... 
+								var currentLayerIndex : int = face.layers.getItemIndex( l ) 
+								var collectiveLayerIndex : int =  face.layers.getItemIndex(  c.layer ) 
+								if ( currentLayerIndex< collectiveLayerIndex )
+								{
+									c.layer.cost = 0 ; 
+									c.layer.costSetByColletive = true; 
+									c.layer.layerUpdatePrice()
+									
+									l.cost = c.price
+									c.layer = l 
+									l.costSetByColletive = true; 
+									l.layerUpdatePrice()
+								}
+							}
+							if ( c.layer == l ) 
+							{
 								
+							}
+							else if ( c.layer == null  ) 
+							{
 								l.cost = c.price
 								c.layer = l 
 								l.costSetByColletive = true; 
 								l.layerUpdatePrice()
 							}
+							else
+							{
+								l.cost = 0 ; 
+								l.costSetByColletive = true; 
+								l.layerUpdatePrice()
+							}
 						}
-						if ( c.layer == l ) 
+						//so we don't add NaN costs
+						var layerCost : Number =  l.cost;; 
+						if ( isNaN(layerCost ) ) 
 						{
-							
+							layerCost = 0 ; 
 						}
-						else if ( c.layer == null  ) 
-						{
-							l.cost = c.price
-							c.layer = l 
-							l.costSetByColletive = true; 
-							l.layerUpdatePrice()
-						}
-						else
-						{
-							l.cost = 0 ; 
-							l.costSetByColletive = true; 
-							l.layerUpdatePrice()
-						}
-					}
-					//so we don't add NaN costs
-					var layerCost : Number =  l.cost;; 
-					if ( isNaN(layerCost ) ) 
-					{
-						layerCost = 0 ; 
-					}
-					subTotal += layerCost
-					/*	}*/
+						subTotal += layerCost
+					} 
 				}
 				face.price = subTotal;
 				grandTotal += face.price;

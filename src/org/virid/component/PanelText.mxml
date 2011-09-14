@@ -236,10 +236,12 @@
 									prompt="SELECT A FONT"
 									skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
 									tabEnabled="false" tabFocusEnabled="false"/>	
-					<s:ComboBox id="fontSize" width="50" change="fontSize_changeHandler(event)"
-								cornerRadius="0"
+					<s:DropDownList id="fontSize" width="50" height="38" borderColor="0xe9e9e9"
+								change="fontSize_changeHandler(event)" cornerRadius="8"  
 								dataProvider="{new ArrayCollection([6,7,8,9,10,11,12,13,14,15,16,18,20,22,24,26,28,32,36,40,44,48,54,60,66,72,80,88,96])}"
-								selectedItem="12" toolTip="Font size"/>
+								dropShadowVisible="false" focusEnabled="false" selectedItem="12"
+								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
+								toolTip="Font size"/>
 				</s:HGroup>
 				
 			</s:VGroup>
@@ -266,9 +268,9 @@
 			<s:HGroup width="100%">
 				<!-- no need to flip back and forth ... there is a seperate engrave panel -->
 				<!--<s:TextInput id="txt" width="100%" height="38" borderColor="0xe9e9e9"
-							 change="txt_changeHandler(event)" focusAlpha="0" paddingTop="10"
-							 skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>-->
-				<s:TextArea id="txt" width="100%" height="38" borderColor="0xe9e9e9" 
+				change="txt_changeHandler(event)" focusAlpha="0" paddingTop="10"
+				skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>-->
+				<s:TextArea id="txt" width="100%" height="38" borderColor="0xe9e9e9"
 							change="txt_changeHandler(event)" focusAlpha="0" paddingTop="10"
 							skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>
 				<s:Button visible="false" height="20" label="ADD  MY  TEXT" click="onAddText(event)"
@@ -312,7 +314,8 @@
 				toolTip="Text color"/>
 				
 				</s:HGroup>-->
-				<component:ColorPicker id="colorList" width="100%" change="colorPicker_changeHandler2(event)"
+				<component:ColorPicker id="colorList" width="100%"
+									   change="colorPicker_changeHandler2(event)"
 									   toolTip="Select Color"/>
 			</s:VGroup> 
 			<!--- @private -->

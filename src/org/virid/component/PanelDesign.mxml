@@ -189,7 +189,7 @@
 		<s:Group id="rowOne" 
 				 width="100%" height="50" >
 			
-			<s:Label y="8" text="Change  Color" fontSize="16" verticalCenter="0"/>
+			<s:Label y="8" text="Background  Color" fontSize="16" verticalCenter="0"/>
 			
 			<s:TileGroup id="backgroundColorChooser" 
 						 width="100" height="30"

@@ -235,6 +235,11 @@ package  org.syncon.Customizer.controller
 
 						
 					}
+					else if(layerImport.type == "hidden"){
+						var hiddenLayer : LayerBaseVO = new LayerBaseVO;
+						hiddenLayer.showInList = false;
+						//hiddenLayer.
+					}
 					
 
 					

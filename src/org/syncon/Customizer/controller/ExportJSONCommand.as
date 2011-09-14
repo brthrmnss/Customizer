@@ -197,8 +197,17 @@ package  org.syncon.Customizer.controller
 				if(product.type == "engrave"){
 					exportObj['ACTION'] = "engrave";
 					exportObj['PRODUCTID'] = this.model.baseItem.sku;
+					//find valid font
 					try{
-					exportObj['FONT'] = product.Faces[0].Layers[0].fontFamily;
+						if(product.Faces[0].Layers[0].fontFamily != "" && product.Faces[0].Layers[0].fontFamily != null)
+							exportObj['FONT'] = product.Faces[0].Layers[0].fontFamily;
+						else if(product.Faces[0].Layers[1].fontFamily != "" && product.Faces[0].Layers[1].fontFamily != null)
+							exportObj['FONT'] = product.Faces[0].Layers[1].fontFamily;
+						else if(product.Faces[1].Layers[0].fontFamily != "" && product.Faces[1].Layers[0].fontFamily != null)
+							exportObj['FONT'] = product.Faces[1].Layers[0].fontFamily;
+						else if(product.Faces[1].Layers[1].fontFamily != "" && product.Faces[1].Layers[1].fontFamily != null)
+							exportObj['FONT'] = product.Faces[1].Layers[1].fontFamily;
+						
 					}catch(e:Error){};
 					try{
 					exportObj['TEXT1'] = product.Faces[0].Layers[0].text;

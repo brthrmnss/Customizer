@@ -148,11 +148,7 @@
 			
 			
 			
-			protected function chkBoxAlign_changeHandler(event:Event):void
-			{
-				this.dispatchEvent( new CustomEvent( CHANGE_TEXT_ALIGN, this.chkBoxAlign.selected   ) ) 
-				
-			}
+
 			
 			protected function dropDown_FontSelect_changeHandler(event:IndexChangeEvent):void
 			{
@@ -222,7 +218,7 @@
 		</s:HGroup>-->
 		
 		
-		<s:HGroup id="rowFonts" width="100%" height="60" paddingTop="12">
+		<s:HGroup id="rowFonts" width="100%" height="60" paddingTop="2">
 			<s:VGroup width="100%">
 				<s:HGroup width="50%">
 					<s:Label fontSize="16" styleName="subHeading" text="Choose A Font"/>
@@ -237,7 +233,7 @@
 									skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
 									focusEnabled="false"
 									tabEnabled="false" tabFocusEnabled="false"/>	
-					<s:DropDownList id="fontSize" width="50" height="38" borderColor="0xe9e9e9"
+					<s:DropDownList id="fontSize" width="54" height="38" borderColor="0xe9e9e9"
 								change="fontSize_changeHandler(event)" cornerRadius="8"  
 								dataProvider="{new ArrayCollection([6,7,8,9,10,11,12,13,14,15,16,18,20,22,24,26,28,32,36,40,44,48,54,60,66,72,80,88,96])}"
 								dropShadowVisible="false" focusEnabled="false" selectedItem="12"
@@ -248,19 +244,39 @@
 			</s:VGroup>
 			
 			
-			<s:VGroup visible="false" width="50%" includeInLayout="false">
-				<s:HGroup><s:CheckBox id="chkBoxAlign" label="Right to Left"
-									  change="chkBoxAlign_changeHandler(event)"
-									  styleName="Arial grayTxt"/></s:HGroup>
-				<s:HGroup><s:CheckBox label="Monogram" styleName="Arial grayTxt"/></s:HGroup>
-				
-			</s:VGroup>
 		</s:HGroup>
 		
 		
 		
+		<s:Line width="100%">
+			<s:stroke>
+				<s:SolidColorStroke color="0xf9f9f9"/>
+			</s:stroke>
+		</s:Line>
 		
-		<s:VGroup width="100%" paddingTop="20">
+		
+		<s:VGroup width="100%" paddingTop="2">
+			<s:Group width="100%">
+				<s:Label fontSize="16" styleName="subHeading" text="EDIT COLOR" 
+						 textAlign="left" verticalCenter="0"/>
+			
+				<component:ColorPicker id="colorList" width="190" right="0"
+									   change="colorPicker_changeHandler2(event)"
+									   toolTip="Select Color"/>
+			</s:Group>
+		</s:VGroup> 
+		
+		
+		
+		<s:Line width="100%">
+			<s:stroke>
+				<s:SolidColorStroke color="0xf9f9f9"/>
+			</s:stroke>
+		</s:Line>
+		
+		
+		
+		<s:VGroup width="100%" paddingTop="10">
 			<s:HGroup width="100%" horizontalAlign="left">
 				<s:Label fontSize="16" styleName="subHeading" text="EDIT Text" textAlign="left"/>
 			</s:HGroup>
@@ -271,8 +287,8 @@
 				<!--<s:TextInput id="txt" width="100%" height="38" borderColor="0xe9e9e9"
 				change="txt_changeHandler(event)" focusAlpha="0" paddingTop="10"
 				skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>-->
-				<s:TextArea id="txt" width="100%" height="38" borderColor="0xe9e9e9"
-							change="txt_changeHandler(event)" focusAlpha="0" paddingTop="10"
+				<s:TextArea id="txt" width="100%" height="68" borderColor="0xe9e9e9"
+							change="txt_changeHandler(event)" focusAlpha="0" paddingTop="0"
 							skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>
 				<s:Button visible="false" height="20" label="ADD  MY  TEXT" click="onAddText(event)"
 						  includeInLayout="false" skinClass="org.virid.skins.simpleBlackBtn"
@@ -304,21 +320,7 @@
 			</s:dataProvider>
 			</s:ComboBox>
 			-->
-			<s:VGroup width="100%" paddingTop="20">
-				<s:HGroup width="100%" horizontalAlign="left">
-					<s:Label fontSize="16" styleName="subHeading" text="EDIT COLOR" textAlign="left"/>
-				</s:HGroup>
-				<!--				<s:HGroup>
-				<mx:ColorPicker id="colorPicker" height="23"
-				change="colorPicker_changeHandler(event)" color="0x000000"
-				focusAlpha="0.1" mouseOver="this.colorList_ClickHandler(event)"
-				toolTip="Text color"/>
-				
-				</s:HGroup>-->
-				<component:ColorPicker id="colorList" width="100%"
-									   change="colorPicker_changeHandler2(event)"
-									   toolTip="Select Color"/>
-			</s:VGroup> 
+
 			<!--- @private -->
 			<!--- @private -->
 			<!--<skins:ColorList id="colorList" visible="false" width="50" height="23"

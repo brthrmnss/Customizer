@@ -116,6 +116,10 @@ package  org.syncon.Customizer.vo
 		 * this layer is stored and reselected when switching faces
 		 * */
 		[Transient] public var currentLayer:LayerBaseVO;
+		/**
+		 * expects collective layer types 
+		 * */
+		public var collectiveLayerPrices: Array = [];
 		[Transient]
 		public function get lists():ArrayCollection
 		{

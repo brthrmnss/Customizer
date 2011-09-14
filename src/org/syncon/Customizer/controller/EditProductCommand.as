@@ -1012,7 +1012,7 @@ package org.syncon.Customizer.controller
 					this.model.blockUndoExecution=true
 					txtLayer.text= event.data.toString()
 					txtLayer.adjustDisplayText();
-					layer.update(); 
+					layer.update( TextLayerVO.PROP_UPDATED_TEXT); 
 					event.data2 = txtLayer ; 
 					this.model.blockUndoExecution=false
 					

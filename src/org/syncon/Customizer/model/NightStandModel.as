@@ -398,10 +398,10 @@ package org.syncon.Customizer.model
 			//wrong ...
 			/*
 			if ( newLayersVisible.length == this.layersVisible.length ) 
-				return; 
+			return; 
 			*/
 			this.addAllTo( this.layersVisible, newLayersVisible )
-				
+			
 			this.layersChanged();
 		}
 		
@@ -595,19 +595,38 @@ package org.syncon.Customizer.model
 			return null
 		}
 		
-		
+		/**
+		 * Calculates price for all layers 
+		 * */
 		public function calculateProductPrice():void
 		{
 			var subTotal : Number = 0;
 			var grandTotal : Number = 0;
 			grandTotal += this.baseItem.price;
+			//shouldn't this calculate for faces that haven't been loaded? ... 
+			//or force user to see other side
 			for each ( var face : FaceVO in this.baseItem.faces.toArray() )  
 			{
+				var collective : Array = face.collectiveLayerPrices.concat();
+				//clear teh first layer
+				for each ( var c : CollectiveLayerPriceVO in collective ) 
+				{
+					if ( c.layer == null )  continue;
+					//if layer is hidden clear it from being the base layer 
+					if  ( c.layer.visible == false ) 
+					{
+						c.layer.cost = 0 ; 
+						c.layer.layerUpdatePrice()
+						c.layer = null
+					}
+				}
 				subTotal = 0;
 				for each ( var l : LayerBaseVO in face.layers.toArray() )  
 				{
+					/*if ( l.visible == false &&  l.type != ColorLayerVO.Type  )
+					continue*/
 					if ( l.visible || l.type == ColorLayerVO.Type  ) 
-					{
+					{ 
 						//see if this layer is empty
 						if(l.type == TextLayerVO.Type )
 						{
@@ -624,10 +643,70 @@ package org.syncon.Customizer.model
 								continue;
 							else if( imgLayer.source == null && imgLayer.url == ""  )
 								continue;
-					
+							
 						}
-						subTotal += l.cost; 
-					}
+						for each (   c  in collective ) 
+						{
+							if ( c.type != l.type ) 
+								continue; 
+							if ( c.subtype != null && c.subtype != '' && c.subtype != l.subType ) 
+								continue; 
+							
+							if ( c.overrideSetPrices  == false ) 
+							{
+								if ( isNaN( l.cost ) || l.costSetByColletive  ) 
+								{
+									
+								}
+								else
+								{
+									continue; ///this layer has a cost, do not override it
+								}
+							}
+							if ( c.layer != null ) 
+							{
+								//strange one ... 
+								//if i match and have a higher index than the prefered, change that one ... 
+								var currentLayerIndex : int = face.layers.getItemIndex( l ) 
+								var collectiveLayerIndex : int =  face.layers.getItemIndex(  c.layer ) 
+								if ( currentLayerIndex< collectiveLayerIndex )
+								{
+									c.layer.cost = 0 ; 
+									c.layer.costSetByColletive = true; 
+									c.layer.layerUpdatePrice()
+									
+									l.cost = c.price
+									c.layer = l 
+									l.costSetByColletive = true; 
+									l.layerUpdatePrice()
+								}
+							}
+							if ( c.layer == l ) 
+							{
+								
+							}
+							else if ( c.layer == null  ) 
+							{
+								l.cost = c.price
+								c.layer = l 
+								l.costSetByColletive = true; 
+								l.layerUpdatePrice()
+							}
+							else
+							{
+								l.cost = 0 ; 
+								l.costSetByColletive = true; 
+								l.layerUpdatePrice()
+							}
+						}
+						//so we don't add NaN costs
+						var layerCost : Number =  l.cost;; 
+						if ( isNaN(layerCost ) ) 
+						{
+							layerCost = 0 ; 
+						}
+						subTotal += layerCost
+					} 
 				}
 				face.price = subTotal;
 				grandTotal += face.price;

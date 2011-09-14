@@ -21,9 +21,9 @@ package org.virid.component
 		
 		override public function onRegister():void
 		{
-			/*
-			this.ui.addEventListener( design_panel.CHANGE_FONT_SIZE, 
-				this.onChangeFontSize);	*/
+	 
+			this.ui.addEventListener( PanelText.CHANGE_FONT_SIZE, 
+				this.onChangeFontSize); 
 			this.ui.addEventListener( PanelText.CHANGE_COLOR, 
 				this.onChangeColor);				
 			this.ui.addEventListener( PanelText.CHANGE_FONT_FAMILY, 
@@ -55,6 +55,8 @@ package org.virid.component
 				
 	/*		}*/
 
+			if ( this.layer.displayText == this.ui.txt.text ) 
+				return; //invalid, this happens because change event is occuring when i set the font back? 
 			
 			var e : EditProductCommandTriggerEvent = new EditProductCommandTriggerEvent(
 				EditProductCommandTriggerEvent.CHANGE_TEXT, this.ui.txt.text, 
@@ -103,6 +105,9 @@ package org.virid.component
 		
 		protected function onChangeFontSize(event:CustomEvent):void
 		{
+			//surpress duplicates on on commit 
+			if ( this.layer.fontSize == event.data ) 
+				return; 
 			this.dispatch( new EditProductCommandTriggerEvent ( 
 				EditProductCommandTriggerEvent.CHANGE_FONT_SIZE, event.data 
 			) )  
@@ -160,11 +165,24 @@ package org.virid.component
 				
 			}
 			this.ui.fontSelect.selectedItem = foundFound; //this.ui.layer.fontFamily; 
-			this.ui.rowFonts.visible = true; 
+			
+			if ( this.model.fxIsEngraveLayer( this.layer ) ) 
+			{
+				this.ui.fontSize.includeInLayout = false; 
+				//this.ui.fontSelect.width = this.holderDropdown.width; 
+			}
+			else
+			{
+				//this.ui.fontSelect.width = this.holderDropdown.width - 50 - 10; 
+				this.ui.fontSize.selectedItem  = this.layer.fontSize; 
+				this.ui.fontSize.includeInLayout = true; 
+			}
+			//hide font row if no fonts ... can't b/c of size issue
+			/*this.ui.rowFonts.visible = true; 
 			if ( fonts.length == 0 ) 
 			{
 				this.ui.rowFonts.visible = false; 
-			}
+			}*/
 		}
 		
 		

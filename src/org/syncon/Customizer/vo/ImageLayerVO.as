@@ -6,10 +6,31 @@ package  org.syncon.Customizer.vo
 		
 		public static var Type:String= 'IMAGE';
 		
+		private var _image_source : String = ''; 
+
 		/**
 		 * Specifies limits on change this image ...internally does nothing
+		 * ...replaced with subtype ...
 		 * */
-		public var image_source : String = ''; 
+		public function get image_source():String
+		{
+			return _image_source;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set image_source(value:String):void
+		{
+			_image_source = value;
+			super.subType = value; 
+		}
+
+		override public function set subType( value : String ) : void
+		{
+			this._image_source = value 
+			super.subType = value; 
+		}
 		
 		/***
 		 * when specifying default picks, this notifies us that the user did not change this 

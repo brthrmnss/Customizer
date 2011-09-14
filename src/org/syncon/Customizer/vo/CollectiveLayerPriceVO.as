@@ -41,6 +41,8 @@ package  org.syncon.Customizer.vo
 		 * flag, if true, will override any set prices,( not NaN )
 		 * */
 		public var overrideSetPrices : Boolean = false; 
+	
 		
+		public var tooltipMessage : String  = ''; 
 	}
 }

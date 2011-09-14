@@ -161,6 +161,8 @@
 				
 				this.txt.setFocus(); 
 				this.txt.selectRange( this.txt.text.length, this.txt.text.length );
+				
+				this.callLater( this.dropDown_FontSelect.closeDropDown, [true] )  ; 
 			}
 			
 		]]>
@@ -236,7 +238,9 @@
 								borderColor="0xe9e9e9"
 								change="dropDown_FontSelect_changeHandler(event)" cornerRadius="8"
 								dropShadowVisible="false"
-								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"/>			
+								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
+								focusEnabled="false"
+								tabEnabled="false" tabFocusEnabled="false"/>			
 			</s:VGroup>
 			
 			

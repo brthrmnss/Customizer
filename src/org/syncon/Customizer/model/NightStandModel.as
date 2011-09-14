@@ -649,7 +649,7 @@ package org.syncon.Customizer.model
 						{
 							if ( c.type != l.type ) 
 								continue; 
-							if ( c.subtype != null && c.subtype != l.subType ) 
+							if ( c.subtype != null && c.subtype != '' && c.subtype != l.subType ) 
 								continue; 
 							
 							if ( c.overrideSetPrices  == false ) 

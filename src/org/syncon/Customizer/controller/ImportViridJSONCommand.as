@@ -2,6 +2,8 @@ package  org.syncon.Customizer.controller
 {
 	import com.adobe.serialization.json.JSON;
 	
+	import mx.controls.Text;
+	
 	import org.robotlegs.mvcs.Command;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.ViridConstants;
@@ -236,9 +238,10 @@ package  org.syncon.Customizer.controller
 						
 					}
 					else if(layerImport.type == "hidden"){
-						var hiddenLayer : LayerBaseVO = new LayerBaseVO;
+						var hiddenLayer : TextLayerVO = new TextLayerVO;
 						this.copyBasics(hiddenLayer, layerImport );
 						hiddenLayer.showInList = false;
+						hiddenLayer.subType = ViridConstants.SUBTYPE_ENGRAVE;
 						face.layersToImport.push(hiddenLayer);
 						//hiddenLayer.
 					}

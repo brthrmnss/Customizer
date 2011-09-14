@@ -103,9 +103,9 @@ package  org.syncon.Customizer.controller
 							//convert to text layer
 							var textLayer:TextLayerVO = layer as TextLayerVO;
 							jsonLayer.text = textLayer.text;///remove
-							if( textLayer.text == "" )
+							if( textLayer.text == "" && textLayer.showInList == true )
 								continue;		
-							//only if we have content
+							//only if we have content and isnt a hidden layer
 
  							jsonMedia.source = textLayer.text;
 							jsonMedia.font = textLayer.fontFamily;
@@ -134,14 +134,14 @@ package  org.syncon.Customizer.controller
 							}							
 
 						}						
-						if(layer.type == ImageLayerVO.Type)
+						else if(layer.type == ImageLayerVO.Type)
 						{
 							var imgLayer : ImageLayerVO = layer as ImageLayerVO;
 							if(imgLayer.mask == true)
 								continue;
 							if(imgLayer.name == 'Base Layer')
 								continue;
-							if(imgLayer.url == "")
+							if(imgLayer.url == "" && imgLayer.showInList == true)
 								continue;
 							
 							jsonMedia.source = imgLayer.url;
@@ -155,7 +155,7 @@ package  org.syncon.Customizer.controller
 								jsonMedia.type ='photo';								
 							}
 						}
-						if(layer.type == ColorLayerVO.Type)
+						else if(layer.type == ColorLayerVO.Type)
 						{
 							var colorLayer : ColorLayerVO = layer as ColorLayerVO;
 							jsonLayer.type = "color";
@@ -175,6 +175,14 @@ package  org.syncon.Customizer.controller
 								jsonMedia.source = 'ffffff';
 							//jsonLayer.color = jsonMedia.source; //because the backed was built to listen to jsonLayer.color - would love to remove this
 
+						}
+						else
+						{
+							if( layer.showInList == false )
+							{
+								jsonLayer.type = "hidden";
+								Alert.show('hidden layer');	
+							}
 						}
 						
 						

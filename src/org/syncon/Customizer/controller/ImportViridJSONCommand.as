@@ -153,6 +153,15 @@ package  org.syncon.Customizer.controller
 							font.defaultSize = fontIncoming.size;
 							font.weight = fontIncoming.weight;
 							
+							if(fontIncoming.hasOwnProperty('maxSize') && fontIncoming.maxSize != "" && fontIncoming.maxSize != null)
+							{
+								textLayer.maxFontSize = fontIncoming.maxSize;
+							}
+							if(fontIncoming.hasOwnProperty('minSize') && fontIncoming != "" && fontIncoming != null)
+							{
+								textLayer.maxFontSize = fontIncoming.minSize;
+							}
+							
 							fonts.push(font);
 							
 						}

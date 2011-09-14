@@ -56,7 +56,7 @@ package org.syncon.Customizer.controller
 				
 				this.createDetailedDefaultProduct();
 				//this.createDetailedDefaultProduct_Engrave()
-				this.createDetailedDefaultProduct_Engrave2()
+				this.createDetailedDefaultProduct_Engrave2(true)
 				if ( this.model.flex ) 
 				{
 					
@@ -362,7 +362,7 @@ package org.syncon.Customizer.controller
 		}
 		
 		
-		private function createDetailedDefaultProduct_Engrave2():void
+		private function createDetailedDefaultProduct_Engrave2(noLayersOnFace1 :Boolean = false):void
 		{
 			var base : StoreItemVO = new StoreItemVO(); 
 			base.name = '1941 Replica &#8482;'
@@ -505,6 +505,8 @@ package org.syncon.Customizer.controller
 			textLayer.fonts = fonts; 
 			textLayer.prompt_layer = true; 
 			face.layersToImport.push(textLayer);
+			if ( noLayersOnFace1 ) 
+				face.layersToImport = [] ; 
 			
 			face  = new FaceVO()
 			face.layersToImport = []; 

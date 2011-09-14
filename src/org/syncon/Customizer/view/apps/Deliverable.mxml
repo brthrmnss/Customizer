@@ -90,6 +90,10 @@
 					this.currentState = 'normal'; 
 					designPanel.layer = layer; // layer as ColorLayerVO
 				}
+				if ( layer == null ) 
+				{
+					this.currentState = 'noLayers'; 
+				}
 				return; 
 			}
 			
@@ -114,6 +118,7 @@
 		<s:State name="normal"/>
 		<s:State  name="engrave"/>
 		<s:State name="Text"/>
+		<s:State name="noLayers"/>
 	</s:states>
 	
 	<s:transitions>
@@ -150,6 +155,9 @@
 						<component:PanelText id="text" 
 													  alpha="0" alpha.Text="1"
 													  includeIn="Text" width="350" height="260"/> 
+						<component:PanelNoLayers id="noLayers" 
+											 alpha="0" alpha.noLayers="1"
+											 includeIn="noLayers" width="350" height="260"/> 
 					</s:SkinnableContainer> 
 					<!--<component:design_panel includeIn="normal" width="350" height="260"/>
 					-->

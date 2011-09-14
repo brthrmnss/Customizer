@@ -530,9 +530,10 @@ package org.syncon.Customizer.controller
 			textLayer.text = 'bac' 
 			textLayer.name = 'Text'
 			textLayer.maxChars = 3
+			textLayer.showInList = false			
 			/*textLayer.sizingSettings = TextLayerVO.SIZING_AUTO_SIZE; //'get smaller' 
 			textLayer.maxFontSize = 35
-			*/
+			*/ 
 			textLayer.width = 50
 			textLayer.height =30 
 			textLayer.x = 60

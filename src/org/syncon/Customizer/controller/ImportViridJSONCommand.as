@@ -241,6 +241,8 @@ package  org.syncon.Customizer.controller
 						var hiddenLayer : TextLayerVO = new TextLayerVO;
 						this.copyBasics(hiddenLayer, layerImport );
 						hiddenLayer.showInList = false;
+						hiddenLayer.locked = true; 
+						hiddenLayer.visible = false
 						hiddenLayer.subType = ViridConstants.SUBTYPE_ENGRAVE;
 						face.layersToImport.push(hiddenLayer);
 						//hiddenLayer.

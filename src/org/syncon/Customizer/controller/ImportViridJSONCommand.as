@@ -87,8 +87,8 @@ package  org.syncon.Customizer.controller
 							colorLayer.color = "0xffffff";
 						}
 						/*else if(layerImport.hasOwnProperty("color")){
-							face.color_overlay_layer = '0x' +layerImport.color;///TODO: wth are we doing here?
-							colorLayer.color = '0x'+layerImport.color;
+						face.color_overlay_layer = '0x' +layerImport.color;///TODO: wth are we doing here?
+						colorLayer.color = '0x'+layerImport.color;
 						}*/
 						
 						colorLayer.locked = true; //all masks should be locked by default 
@@ -173,7 +173,7 @@ package  org.syncon.Customizer.controller
 						textLayer.horizStartAlignment="";
 						
 						textLayer.text = layerImport.Media.source;
-
+						
 						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
 							face.importFirstLayerSelection = textLayer; 
 						face.layersToImport.push(textLayer);
@@ -193,8 +193,8 @@ package  org.syncon.Customizer.controller
 						textLayer.fontSize = 20
 						if( layerImport.Media.hasOwnProperty( 'color' ) && layerImport.Media.color != null && layerImport.Media.color != '' )
 							textLayer.color = '0x'+layerImport.Media.color
-						var fonts:Array = [];
-						for each(var fontIncoming:Object in layerImport.Fonts)
+						fonts = [];
+						for each(  fontIncoming  in layerImport.Fonts)
 						{
 							var font:FontVO = new FontVO();
 							font.name = fontIncoming.name;
@@ -232,7 +232,7 @@ package  org.syncon.Customizer.controller
 							face.importFirstLayerSelection = imageLayer; 
 						face.layersToImport.push(imageLayer);
 						
-
+						
 						
 					}
 					else if(layerImport.type == "hidden"){
@@ -241,7 +241,7 @@ package  org.syncon.Customizer.controller
 						//hiddenLayer.
 					}
 					
-
+					
 					
 				}
 			}

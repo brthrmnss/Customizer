@@ -198,6 +198,7 @@ package  org.syncon2.utils.file
 			var folder:File = baseFolder.resolvePath(dir);
 			var dirList:Array = folder.getDirectoryListing();
 			var directories:Array  = [] ;
+			dirList.sortOn('name' )
 			for each ( var d : File in dirList ) 
 			{
 				if ( d.isDirectory ) 

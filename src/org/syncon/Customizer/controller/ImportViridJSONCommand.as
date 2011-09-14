@@ -237,7 +237,9 @@ package  org.syncon.Customizer.controller
 					}
 					else if(layerImport.type == "hidden"){
 						var hiddenLayer : LayerBaseVO = new LayerBaseVO;
+						this.copyBasics(hiddenLayer, layerImport );
 						hiddenLayer.showInList = false;
+						face.layersToImport.push(hiddenLayer);
 						//hiddenLayer.
 					}
 					

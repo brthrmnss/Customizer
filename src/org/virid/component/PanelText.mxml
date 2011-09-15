@@ -288,8 +288,9 @@
 				change="txt_changeHandler(event)" focusAlpha="0" paddingTop="10"
 				skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>-->
 				<s:TextArea id="txt" width="100%" height="68" borderColor="0xe9e9e9"
-							change="txt_changeHandler(event)" focusAlpha="0" paddingTop="0"
-							skinClass="org.virid.skins.LightGrayRoundedFormField" text="Text"/>
+							change="txt_changeHandler(event)" focusAlpha="0" paddingTop="5"
+							 verticalAlign="top" 
+							skinClass="org.virid.skins.TextAreaSkin" text="Text"/>
 				<s:Button visible="false" height="20" label="ADD  MY  TEXT" click="onAddText(event)"
 						  includeInLayout="false" skinClass="org.virid.skins.simpleBlackBtn"
 						  verticalCenter="0"/>

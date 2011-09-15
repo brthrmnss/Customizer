@@ -21,7 +21,7 @@ package org.virid.component
 		
 		override public function onRegister():void
 		{
-	 
+			
 			this.ui.addEventListener( PanelText.CHANGE_FONT_SIZE, 
 				this.onChangeFontSize); 
 			this.ui.addEventListener( PanelText.CHANGE_COLOR, 
@@ -42,6 +42,8 @@ package org.virid.component
 			this.ui.txt.prompt = this.layer.default_text; 
 			this.onChangeText(null); 
 			this.updateFontList(); 
+			if ( this.layer.fontFamily != '' || this.layer.fontFamily != null ) 
+				this.ui.txt.setStyle('fontFamily', this.layer.fontFamily ) ; 
 		}
 		
 		public function get layer () : TextLayerVO 
@@ -50,11 +52,11 @@ package org.virid.component
 		}
 		protected function onChangeText(event:Event):void
 		{
-		/*	if ( this.layer.text == '' && this.layer.default_text!= ''  ) 
+			/*	if ( this.layer.text == '' && this.layer.default_text!= ''  ) 
 			{*/
-				
-	/*		}*/
-
+			
+			/*		}*/
+			
 			if ( this.layer.displayText == this.ui.txt.text ) 
 				return; //invalid, this happens because change event is occuring when i set the font back? 
 			
@@ -80,7 +82,7 @@ package org.virid.component
 				this.updateFontList(); 
 			}
 			this.layer.update(); 
-
+			
 		}
 		
 		
@@ -91,15 +93,15 @@ package org.virid.component
 		{
 			if ( event.data ==  false ) 
 			{
-			this.dispatch( new EditProductCommandTriggerEvent ( 
-				EditProductCommandTriggerEvent.CHANGE_TEXT_ALIGN, 'left' 
-			) )  
+				this.dispatch( new EditProductCommandTriggerEvent ( 
+					EditProductCommandTriggerEvent.CHANGE_TEXT_ALIGN, 'left' 
+				) )  
 			}
 			else
 			{
-			this.dispatch( new EditProductCommandTriggerEvent ( 
-				EditProductCommandTriggerEvent.CHANGE_TEXT_ALIGN, 'right' 
-			) )  
+				this.dispatch( new EditProductCommandTriggerEvent ( 
+					EditProductCommandTriggerEvent.CHANGE_TEXT_ALIGN, 'right' 
+				) )  
 			}
 		}
 		
@@ -181,7 +183,7 @@ package org.virid.component
 			/*this.ui.rowFonts.visible = true; 
 			if ( fonts.length == 0 ) 
 			{
-				this.ui.rowFonts.visible = false; 
+			this.ui.rowFonts.visible = false; 
 			}*/
 		}
 		

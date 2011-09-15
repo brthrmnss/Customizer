@@ -329,14 +329,17 @@ package  org.syncon.Customizer.controller
 		
 		
 		protected function saveResult(event:ResultEvent):void
-		{
+		{//Alert.show( event.result.toString() + finalJSON);
 			var resultJSON:Object = JSON.decode( event.result.toString() );
-			//Alert.show( event.result.toString() + finalJSON);
-			if(resultJSON.ERROR == true)
+			
+			if(resultJSON.hasOwnProperty('ERROR') && resultJSON.ERROR == true)
 			{
-				Alert.show(resultJSON.ERRORMSG);	
+				if( resultJSON.hasOwnProperty('ERRORMSG') )
+					Alert.show(resultJSON.ERRORMSG);	
+				gotoNextStep = false;
 			}
-			else if(gotoNextStep && resultJSON.ERROR == false)
+			
+			if(gotoNextStep)
 			{
 				Alert.show('saved...');
 				if(ExternalInterface.available)

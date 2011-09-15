@@ -332,9 +332,9 @@ package  org.syncon.Customizer.controller
 		{//Alert.show( event.result.toString() + finalJSON);
 			var resultJSON:Object = JSON.decode( event.result.toString() );
 			
-			if(resultJSON.hasOwnProperty('ERROR') && resultJSON.ERROR == true)
+			if(resultJSON.hasOwnProperty('SUCCESS') && resultJSON.SUCCESS == false)
 			{
-				if( resultJSON.hasOwnProperty('ERRORMSG') )
+				if( resultJSON.hasOwnProperty('ERROR') )
 					Alert.show(resultJSON.ERRORMSG);	
 				gotoNextStep = false;
 			}

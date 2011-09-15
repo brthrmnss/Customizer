@@ -105,6 +105,8 @@ package  org.virid.component
 			s.listenForObj( layer, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; //we have to 
 			//do this so we can catch it the first time ...  it if was not set initially 
 			this.updateFontList(); 
+			if ( this.layer.fontFamily != '' || this.layer.fontFamily != null ) 
+				this.ui.txt.setStyle('fontFamily', this.layer.fontFamily ) ; 
 		}
 		
 		private function onUpdatedLayer(e:Event=null):void

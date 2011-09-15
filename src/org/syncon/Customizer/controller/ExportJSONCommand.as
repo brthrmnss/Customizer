@@ -85,6 +85,9 @@ package  org.syncon.Customizer.controller
 						jsonLayer.name = layer.name;
 						jsonLayer.type = layer.type;
 						jsonLayer.price = layer.cost;
+						if(jsonLayer.price == null || isNaN(jsonLayer.price) )
+							jsonLayer.price = 0;
+						
 						
 						jsonMedia.source = layer.url;
 						jsonMedia.type = layer.type;
@@ -246,9 +249,10 @@ package  org.syncon.Customizer.controller
 				}
 				else
 				{
+					//send design lighter design
 					var exportThis:Object = JSON.encode(product);
-					/*exportObj['ACTION'] = "engrave";
-					exportObj['PRODUCTID'] = this.model.baseItem.sku;
+					//exportObj['ACTION'] = "image";
+					/*exportObj['PRODUCTID'] = this.model.baseItem.sku;
 					exportObj['LAYERS'] = JSON.decode(product.Faces); */
 					
 					service = new HTTPService();
@@ -334,7 +338,7 @@ package  org.syncon.Customizer.controller
 			//Alert.show(resultJSON.SUCCESS);
 			if(resultJSON.hasOwnProperty('SUCCESS') && resultJSON.SUCCESS == 'false')
 			{
-				if( resultJSON.hasOwnProperty('ERROR') )
+				if( resultJSON.hasOwnProperty('ERROR') && resultJSON.ERROR != "" )
 					Alert.show(resultJSON.ERROR,"Please Correct the Following Problem");	
 				gotoNextStep = false;
 			}

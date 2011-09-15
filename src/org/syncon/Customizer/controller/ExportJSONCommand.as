@@ -331,11 +331,11 @@ package  org.syncon.Customizer.controller
 		protected function saveResult(event:ResultEvent):void
 		{//Alert.show( event.result.toString() + finalJSON);
 			var resultJSON:Object = JSON.decode( event.result.toString() );
-			
-			if(resultJSON.hasOwnProperty('SUCCESS') && resultJSON.SUCCESS == false)
+			//Alert.show(resultJSON.SUCCESS);
+			if(resultJSON.hasOwnProperty('SUCCESS') && resultJSON.SUCCESS == 'false')
 			{
 				if( resultJSON.hasOwnProperty('ERROR') )
-					Alert.show(resultJSON.ERRORMSG);	
+					Alert.show(resultJSON.ERROR,"Please Correct the Following Problem");	
 				gotoNextStep = false;
 			}
 			

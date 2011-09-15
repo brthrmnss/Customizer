@@ -330,8 +330,13 @@ package  org.syncon.Customizer.controller
 		
 		protected function saveResult(event:ResultEvent):void
 		{
+			var resultJSON:Object = JSON.decode( event.result.toString() );
 			//Alert.show( event.result.toString() + finalJSON);
-			if(gotoNextStep)
+			if(resultJSON.ERROR == true)
+			{
+				Alert.show(resultJSON.ERRORMSG);	
+			}
+			else if(gotoNextStep && resultJSON.ERROR == false)
 			{
 				Alert.show('saved...');
 				if(ExternalInterface.available)

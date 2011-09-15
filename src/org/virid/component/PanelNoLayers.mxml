@@ -38,7 +38,7 @@
 	</s:Rect>
 	
 	
-	<s:Label fontSize="16" horizontalCenter="0" styleName="subHeading"
-			 text="This face has no configurable layers" textAlign="left" verticalCenter="0"/>
+	<s:Label fontSize="14" horizontalCenter="0" styleName="Arial grayTxt"
+			 text="THIS FACE HAS NO CONFIGURABLE LAYERS" textAlign="left" verticalCenter="0"/>
 	
 </s:Group>

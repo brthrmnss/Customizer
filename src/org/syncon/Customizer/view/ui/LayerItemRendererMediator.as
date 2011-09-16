@@ -9,7 +9,7 @@ package org.syncon.Customizer.view.ui
 	import com.roguedevelopment.objecthandles.constraints.MovementConstraint;
 	import com.roguedevelopment.objecthandles.constraints.SizeConstraint;
 	
-	import flash.display.BlendMode; 
+	import flash.display.BlendMode;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -84,6 +84,10 @@ package org.syncon.Customizer.view.ui
 		{
 			if ( this.model.previewMode ) //do not auto select in preview mode 
 				return; 
+			
+			if ( this.preventSelectionOfEmptyImage() ) 
+				return; 
+			
 			this.model.objectHandles.selectionManager.setSelected( this.model.currentLayer.model ) ; 
 		}
 		
@@ -371,6 +375,12 @@ package org.syncon.Customizer.view.ui
 			//if image maintain aspect ration
 			if ( this.isImage ) 
 			{
+				if ( this.layer == this.model.currentLayer ) 
+				{
+					if ( this.preventSelectionOfEmptyImage() == false ) 
+						if ( this.model.objectHandles.selectionManager.isSelected( this.flexModel1 ) == false )
+							this.model.objectHandles.selectionManager.setSelected( this.flexModel1 )  
+				}
 				/*var itemMovementCons : MaintainProportionConstraint = new MaintainProportionConstraint()
 				this.unregister()
 				this.register([ itemMovementCons] )*/
@@ -691,6 +701,7 @@ package org.syncon.Customizer.view.ui
 				this.onPreviewModeChanged(null);
 			}
 			
+			this.preventSelectionOfEmptyImage()
 			
 			//if ingrave layer turn on the background
 			if ( this.isText ) 
@@ -765,6 +776,18 @@ package org.syncon.Customizer.view.ui
 			
 			
 			
+		}
+		
+		private function preventSelectionOfEmptyImage(): Boolean
+		{
+			if ( this.layer == null ) 
+				return false; 
+			if ( this.isImage && (this.ui.image.layer.url == '' || this.ui.image.layer.url == null ) )  
+			{
+				this.model.objectHandles.selectionManager.clearSelection()
+				return true 
+			}
+			return false; 
 		}
 		
 		private function onReturnToPreviousSize():void

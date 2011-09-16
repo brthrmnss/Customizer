@@ -243,7 +243,8 @@ package  org.virid.component
 		
 		public function onShowingNullLayer( e : NightStandModelEvent ) : void
 		{
-			
+			//09/16/11 .. do not show poups to add images ..
+			return
 			var layer : LayerBaseVO = e.data as LayerBaseVO; 
 			if ( layer is ImageLayerVO ) 
 			{

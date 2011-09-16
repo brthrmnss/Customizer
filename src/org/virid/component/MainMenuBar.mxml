@@ -129,7 +129,7 @@
 										toolTip="Go to Image Panel"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>		
 		<smallComponents:MainMenuButton label="Pictures" id="btnImage" visible="true" includeInLayout="true" 
-										icon="assets/images/background.png" width="88"
+										icon="assets/images/pictures.png" width="88"
 										click="onImage(event)"
 										toolTip="Go to Image Panel"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>	

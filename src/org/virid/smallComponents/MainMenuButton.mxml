@@ -44,7 +44,7 @@
 			public function changeColorToNormal() : void
 			{
 				var newColor:ColorTransform =  new ColorTransform();
-				newColor.color = 0x8e8e8e;
+				newColor.color = 0xbbbbbb;
 				this.iconDisplay.transform.colorTransform = newColor;
 			}
 			
@@ -149,7 +149,7 @@
 	-->
 	<!-- <s:Image id="iconDisplay" horizontalCenter="0"/> -->
 	<s:BitmapImage id="iconDisplay" 
-				   width="32" height="32" y.normal="0" y.hovered="-2" y.selected="-1" horizontalCenter="0" 
+				   width="30" height="30" y.normal="5" y.hovered="3" y.selected="4" horizontalCenter="0" 
 				   smooth="true" smoothingQuality="high" 
 				   >
 		<!--<s:filters>
@@ -157,7 +157,7 @@
 		</s:filters>-->
 	</s:BitmapImage>
 	<s:Label id="labelDisplay"
-			 textAlign="center" styleName="grayTxt" styleName.hovered="redTxt"
+			 textAlign="center" styleName="bbbTxt" styleName.hovered="redTxt"
 			 maxDisplayedLines="1"
 			 horizontalCenter="0"   verticalAlign="bottom"
 			 left="2" right="2" top="2" bottom="2">

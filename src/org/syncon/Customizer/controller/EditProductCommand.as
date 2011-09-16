@@ -1196,6 +1196,7 @@ package org.syncon.Customizer.controller
 			{
 				if ( event.undo == false )
 				{
+					selectLayerWhenFinished = false 
 					layer = event.data as LayerBaseVO; 
 					var layerIndex : int = this.model.layers.getItemIndex( layer ) ; 
 					
@@ -1203,7 +1204,6 @@ package org.syncon.Customizer.controller
 					
 					if ( layer.prompt_layer == true && 
 						this.model.currentFace.can_remove_prompt_layers == false ) 
-						
 					{
 						///could forward this to chanve visiblity ...
 						layer.visible = false; 

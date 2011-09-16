@@ -22,6 +22,7 @@ package org.syncon.Customizer.view.ui
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
+	import org.syncon.Customizer.model.ViridConstants;
 	import org.syncon.Customizer.vo.ColorLayerVO;
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
@@ -782,10 +783,21 @@ package org.syncon.Customizer.view.ui
 		{
 			if ( this.layer == null ) 
 				return false; 
-			if ( this.isImage && (this.ui.image.layer.url == '' || this.ui.image.layer.url == null ) )  
+			if ( this.isImage)
 			{
-				this.model.objectHandles.selectionManager.clearSelection()
-				return true 
+				if (   this.layer.subType == ViridConstants.IMAGE_SOURCE_CLIPART &&
+					(this.ui.image.layer.url == '' || this.ui.image.layer.url == null )  )
+				{
+					this.model.objectHandles.selectionManager.clearSelection()
+					return true 
+				}
+				if (   this.layer.subType == ViridConstants.IMAGE_SOURCE_UPLOAD &&
+					(this.ui.image.layer.source  == null )  )
+				{
+					this.model.objectHandles.selectionManager.clearSelection()
+					return true 
+				}
+				
 			}
 			return false; 
 		}

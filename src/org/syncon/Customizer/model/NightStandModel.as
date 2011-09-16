@@ -577,6 +577,12 @@ package org.syncon.Customizer.model
 					if ( layer_.type != ImageLayerVO.Type ) 
 						continue; 
 					layer = layer_ as ImageLayerVO; 
+					if ( subType != null ) 
+					{
+						if ( layer.image_source != subType  )
+							continue;
+					}
+					
 					return layer; 
 				}
 			}

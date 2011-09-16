@@ -14,7 +14,8 @@ package  org.syncon.Customizer.vo
 		 * */
 		public function get image_source():String
 		{
-			return _image_source;
+			//return _image_source;
+			return this.subType; 
 		}
 
 		/**

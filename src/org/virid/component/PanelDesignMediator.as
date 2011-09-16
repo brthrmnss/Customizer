@@ -132,6 +132,12 @@ package  org.virid.component
 					
 					this.model.currentLayer = imgLayer; 
 				}
+				if ( currentLayer.visible == false ) 
+				{
+					currentLayer.visible = true
+					currentLayer.update(); 
+					currentLayer.updateVisibility();
+				}
 			}
 			
 			//reset the resizing parameters so the image is resized to fit the product in the center again ....
@@ -204,8 +210,14 @@ package  org.virid.component
 					//seems wrong to do this here , make intention ... 
 					imgLayer.visible = true
 					imgLayer.update(); 
-					
+					imgLayer.updateVisibility();
 					this.model.currentLayer = imgLayer; 
+				}
+				if ( currentLayer.visible == false ) 
+				{
+					currentLayer.visible = true
+					currentLayer.update(); 
+					currentLayer.updateVisibility();
 				}
 			}
 			

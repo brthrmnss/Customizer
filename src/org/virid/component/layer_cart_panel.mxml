@@ -101,7 +101,7 @@
 		
 		<s:List id="list" width="100%" height="300" borderVisible="false"
 				change="list_changeHandler(event)" contentBackgroundAlpha="0"
-				focusAlpha="0" mouseUp="list_mouseUpHandler(event)"
+				focusAlpha="0" mouseUp="list_mouseUpHandler(event)" 
 				itemRenderer="org.virid.smallComponents.LayerListItemRenderer_V2">
 			<s:layout>
 				<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>

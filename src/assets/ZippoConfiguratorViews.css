@@ -7,7 +7,7 @@ global
 {
 	font-family: "BEBAS___";
 	color:#151517;
-	typographicCase:uppercase;
+/*	typographicCase:uppercase;*/
 }
 @font-face {
 	src: url("styles/fonts/Helvetica.ttf");	

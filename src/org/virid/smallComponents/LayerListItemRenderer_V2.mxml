@@ -36,9 +36,11 @@
 			public function updateItemRenderer(e:Event=null)  : void
 			{
 				txtLbl.text = this.layer.displayName 
+				/*
 				txtPrice.text = '$'+this.layer.cost.toFixed(2)
 				if ( this.layer.cost == 0  || isNaN( this.layer.cost ) ) 
-					this.txtPrice.text = ''; 
+					this.txtPrice.text = '';
+					*/
 				//this.lblCount.text = this.layer.type; 
 				if (this.selected == false && this.currentState == 'selected' )
 					this.currentState = ''; 
@@ -121,7 +123,7 @@
 				 color.hovered="0x545454"
 				 color.selected="0" styleName="grayTxt Arial" />
 		<s:HGroup right="0" verticalCenter="0" verticalAlign="middle">
-			<s:Label styleName="price"  id="txtPrice" text="$14.00" paddingTop="8" />
+			<s:Label styleName="price"  id="txtPrice" text="" paddingTop="8" />
 			<s:Image  id="btnDelete"  click="onRemove(event)"
 					   useHandCursor="true" buttonMode="true"
 					    toolTip="Disable Layer"

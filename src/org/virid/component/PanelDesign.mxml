@@ -77,24 +77,28 @@
 				
 				if (  this.layer.type == ColorLayerVO.Type ) 
 				{
-					this.enabledAllSubPanels(); 
-					/* this.rowOne.alpha = 0.2; 
-					this.rowOne.enabled = false;  */
+					//this.enabledAllSubPanels(); 
+					this.rowOne.alpha = 1; 
+					this.rowOne.enabled = true;  
 				}
 				
 				if ( layer.type == ImageLayerVO.Type )
 				{
+					//09/16/11: have all avaialble 
+					enableImagePanels()
+					/* 
 					var imageLayer : ImageLayerVO = layer as ImageLayerVO
 					if (  imageLayer.image_source ==ViridConstants.IMAGE_SOURCE_UPLOAD ) 
 					{
-						this.secondRow.alpha = 1; 
-						this.secondRow.enabled = true; 
+					this.secondRow.alpha = 1; 
+					this.secondRow.enabled = true; 
 					}
 					else if ( imageLayer.image_source ==ViridConstants.IMAGE_SOURCE_CLIPART ) 
 					{
-						this.thirdRow.alpha = 1; 
-						this.thirdRow.enabled = true; 
+					this.thirdRow.alpha = 1; 
+					this.thirdRow.enabled = true; 
 					}
+					*/
 				}
 				/* else
 				{
@@ -132,6 +136,15 @@
 			}
 			
 			
+			public function enableImagePanels() : void
+			{
+				this.rowOne.alpha = 0.2
+				this.secondRow.alpha = 1; 
+				this.thirdRow.alpha = 1
+				this.rowOne.enabled = false; 
+				this.secondRow.enabled = true; 
+				this.thirdRow.enabled = true;
+			}
 			
 			
 			private function enabledAllSubPanels():void

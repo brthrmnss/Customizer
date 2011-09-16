@@ -1,11 +1,6 @@
 package  org.virid.component
 {
-	import flash.events.Event;
 	import flash.utils.ByteArray;
-	
-	import flashx.undo.IOperation;
-	
-	import mx.collections.ArrayList;
 	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
@@ -13,7 +8,6 @@ package  org.virid.component
 	import org.syncon.Customizer.model.NightStandModel;
 	import org.syncon.Customizer.model.NightStandModelEvent;
 	import org.syncon.Customizer.model.ViridConstants;
-	import org.syncon.Customizer.view.ui.Toolbar;
 	import org.syncon.Customizer.vo.ColorLayerVO;
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.ImageVO;
@@ -40,10 +34,30 @@ package  org.virid.component
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.SHOW_EMPTY_LAYER, 
 				this.onShowingNullLayer);	
 			
+			
+			eventMap.mapListener(eventDispatcher,  EditProductCommandTriggerEvent.IMAGE_URL_CHANGED,
+				this.onUpdateLayerNamesToMatchClipArtName);	
+			
 			//set default color if defined ... do not make na undo fo rthis ....
 			this.model.blockUndoAdding = true; 
 			this.setColorFromLayer(); 
 			this.model.blockUndoAdding = false; 
+		}
+		
+		private function onUpdateLayerNamesToMatchClipArtName(e:EditProductCommandTriggerEvent):void
+		{
+			var layer : ImageLayerVO = e.data2 as  ImageLayerVO; 
+			var newName : String = this.model.convertClipArtToName( layer.url ) 
+				
+				if ( newName == '' )
+					return
+					
+			if ( newName != layer.name ) 
+			{
+				layer.name = newName + ' Clipart'; 
+				layer.update(); 
+			}
+			
 		}
 		
 		//use Object b/c uint does not like null...
@@ -75,6 +89,16 @@ package  org.virid.component
 		
 		protected function onAddUploadImage(e:CustomEvent):void
 		{
+			/*
+			//select first clip art image
+			if ( this.model.currentLayer.subType != ViridConstants.IMAGE_SOURCE_UPLOAD ) 
+			{
+				var imgLayer : ImageLayerVO = this.model.getEmptyImageLayer( ViridConstants.IMAGE_SOURCE_UPLOAD )
+				if ( imgLayer  == null ) 
+					return; 
+				this.model.currentLayer = imgLayer; 
+			}
+			*/
 			/*	var obj : Object = e.data
 			var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP, 
 			'PopupPickImage', [this.onPickedImage], 'done' ) 		
@@ -99,7 +123,7 @@ package  org.virid.component
 			if ( inViridMode ) 
 			{
 				//rather than create a new layer, use one of the prompts 
-				if (currentLayer == null ||  currentLayer.type != ImageLayerVO.Type ) 
+				if (currentLayer == null ||  currentLayer.type != ImageLayerVO.Type || currentLayer.subType != ViridConstants.IMAGE_SOURCE_UPLOAD) 
 				{
 					var imgLayer  : ImageLayerVO = this.model.getEmptyImageLayer(ViridConstants.IMAGE_SOURCE_UPLOAD)
 					//seems wrong to do this here , make intention ... 
@@ -138,6 +162,16 @@ package  org.virid.component
 		
 		private function onAddClipArtImage(e:  CustomEvent): void
 		{
+			/*
+			//select first clip art image
+			if ( this.model.currentLayer.subType != ViridConstants.IMAGE_SOURCE_CLIPART ) 
+			{
+				var imgLayer : ImageLayerVO = this.model.getEmptyImageLayer( ViridConstants.IMAGE_SOURCE_CLIPART )
+				if ( imgLayer  == null ) 
+					return; 
+				this.model.currentLayer = imgLayer; 
+			}
+			*/
 			//var obj : Object = e.data
 			var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP, 
 				'PopupPickImage', [this.onPickedImage], 'showPopup' ) 		
@@ -164,7 +198,7 @@ package  org.virid.component
 			if ( inViridMode ) 
 			{
 				//rather than create a new layer, use one of the prompts 
-				if (currentLayer == null ||  currentLayer.type != ImageLayerVO.Type ) 
+				if (currentLayer == null ||  currentLayer.type != ImageLayerVO.Type  || currentLayer.subType != ViridConstants.IMAGE_SOURCE_CLIPART ) 
 				{
 					var imgLayer  : ImageLayerVO = this.model.getEmptyImageLayer(ViridConstants.IMAGE_SOURCE_CLIPART)
 					//seems wrong to do this here , make intention ... 

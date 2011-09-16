@@ -125,7 +125,7 @@
 				</s:fill>
 			</s:Rect> 
 			<s:Image    id="img" horizontalCenter="0" verticalCenter="0" 
-						 useHandCursor="true" buttonMode="true"
+						 useHandCursor="true" buttonMode="true" smooth="true" smoothingQuality="default"
 						height="50" width="75" >
 				
 			</s:Image>

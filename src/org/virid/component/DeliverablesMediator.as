@@ -25,6 +25,11 @@ package  org.virid.component
 				
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.PRESENTATION_MODE_CHANGED, 
 				this.onPresentationModeChanged);	
+			
+			eventMap.mapListener(eventDispatcher, NightStandModelEvent.GO_TO_IMAGE_PANEL, 
+				this.onGoToImagePanel);	
+			this.onGoToImagePanel( null ) 
+			
 				
 		}
 		
@@ -61,6 +66,31 @@ package  org.virid.component
 			}
 			this.ui.layer = this.model.currentLayer; 
 		}
+		
+		private function onGoToImagePanel(param0:Object):void
+		{
+			/*
+			if ( this.model.previewMode )
+				return;
+			if ( this.model.currentLayer == null ) 
+			{
+				this.ui.currentState = 'normal' 
+				//this.ui.designPanel.hideImageOptions();//overkill
+			}
+			this.ui.layer = this.model.currentLayer; 
+			*/
+			/*if ( this.model.previewMode )
+				return;*/
+			/*if ( this.model.currentLayer == null ) 
+			{
+				this.ui.currentState = 'normal' 
+			}
+			this.ui.layer = this.model.currentLayer; */
+			this.ui.currentState = 'normal' 
+			this.ui.designPanel.enableImagePanels(); 
+		}
+		
+		
 		
 		private function onUpdateJSON(e:  CustomEvent): void
 		{

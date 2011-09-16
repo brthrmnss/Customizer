@@ -138,7 +138,7 @@
 			<s:HGroup>
 				<s:VGroup width="350" >
 					
-					<component:MainMenuBar height="67"/>
+					<component:MainMenuBar height="67" width="350"/>
 					<s:Spacer height="-1"/>
 					
 					<!--<component:engrave_panel includeIn="engrave" width="350" height="260"/>-->

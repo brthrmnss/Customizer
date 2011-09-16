@@ -56,7 +56,7 @@ package  org.virid.component
 				this.onPresentationModeChanged);	
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.CURRENT_LAYER_CHANGED, 
 				this.onCurrentLayerChanged);	
-			this.onLayersChanged( null ) 
+			this.onCurrentLayerChanged( null ) 
 		}
 		
 		
@@ -128,8 +128,8 @@ package  org.virid.component
 			}	
 			if ( layer is ImageLayerVO )
 			{
-				this.ui.btnBackground.selected = true;
-				this.ui.lastBtnSelected = this.ui.btnBackground;
+				this.ui.btnImage.selected = true;
+				this.ui.lastBtnSelected = this.ui.btnImage;
 			}
 			if ( layer is ColorLayerVO ) 
 			{
@@ -194,10 +194,13 @@ package  org.virid.component
 			// TODO Auto Generated method stub
 			this.ui.btnText.includeInLayout = false; 
 			this.ui.btnBackground.includeInLayout = false; 
+			this.ui.btnImage.includeInLayout =  false;
 			this.ui.btnEngrave.includeInLayout = false;
 			this.ui.btnText.visible = false; 
 			
+			 
 			this.ui.btnBackground.visible = false; 
+			this.ui.btnImage.visible =  false;
 			this.ui.btnEngrave.visible = false; 			
 			//return
 			var layers : Array = this.model.layersVisible.toArray()
@@ -218,8 +221,11 @@ package  org.virid.component
 				}
 				if ( layer.type == ImageLayerVO.Type  ) //&& subtype != null 
 				{
-					this.ui.btnBackground.includeInLayout = true; 
+					/*this.ui.btnBackground.includeInLayout = true; 
 					this.ui.btnBackground.visible = true; 
+					*/
+					this.ui.btnImage.includeInLayout =  true; 
+					this.ui.btnImage.visible =  true; 
 					continue; 
 				}
 				if ( layer.type == ColorLayerVO.Type ) 
@@ -244,11 +250,14 @@ package  org.virid.component
 			}
 			trace('width of buttons', measureWdith ) ; 
 			
-			var diff : Number = this.ui.holderMainMenuBar.width -measureWdith; 
+			var diff : Number = this.ui.width -measureWdith; 
 			var newGap : Number = diff/numVisibleElements; 
 			//newGap += 4+5+4
-			newGap -= 5
+		//	if ( re
+			//newGap -= 5
+			newGap -= 2
 			this.ui.holderMainMenuBar.gap = newGap; 
+			//this.ui.holderMainMenuBar.gap = 0
 			/**/
 		}
 		
@@ -298,7 +307,7 @@ package  org.virid.component
 		{
 			var dbg : Array = [this.model.undo.canUndo()] 
 			var x : Object = this.model.undo.peekUndo()
-			this.ui.btnRedo.enabled = this.model.undo.canRedo() 
+			/*this.ui.btnRedo.enabled = this.model.undo.canRedo() */
 			this.ui.btnUndo.enabled = this.model.undo.canUndo() 
 			return;
 		}
@@ -323,9 +332,15 @@ package  org.virid.component
 		
 		private function onAddImage(e:  CustomEvent): void
 		{
+			this.model.currentLayer = null;
+			this.dispatch(  new NightStandModelEvent( NightStandModelEvent.GO_TO_IMAGE_PANEL )  ) 
+		}		
+/*		
+		private function onAddImage(e:  CustomEvent): void
+		{
 			var obj : Object = e.data
 			var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP, 
-				'PopupPickImage', [this.onPickedImage], 'done' ) 		
+				'PopupPickImage', [this.onPickedImage], 'showPopup' ) 		
 			this.dispatch( event_ ) 
 		}		
 		
@@ -333,7 +348,7 @@ package  org.virid.component
 		{
 			this.dispatch( new EditProductCommandTriggerEvent (
 				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, e.url) ) ; 
-		}
+		}*/
 		
 	}
 }

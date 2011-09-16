@@ -1,6 +1,5 @@
 package org.syncon2.utils.sound
 {
-	import flash.errors.IOError;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.media.Sound;
@@ -8,8 +7,6 @@ package org.syncon2.utils.sound
 	import flash.net.URLRequest;
 	
 	import mx.core.SoundAsset;
-	
-	import org.syncon.TalkingClock.vo.SoundVO;
 	
 	
 	public class  PlaySound_Flex implements  IPlaySound

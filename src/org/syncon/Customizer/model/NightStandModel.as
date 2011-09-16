@@ -543,9 +543,9 @@ package org.syncon.Customizer.model
 		}
 		
 		/**
-		 * prefer one with no text or default text, then will show any available one
+		 * prefer one with no source or default source, then will show any available one
 		 * */
-		public function getEmptyImageLayer( sourcing : String = null ) : ImageLayerVO
+		public function getEmptyImageLayer( subType : String = null ) : ImageLayerVO
 		{
 			var foundLayer : ImageLayerVO; 
 			for ( var i : int = 0 ; i < this.layers.length ; i++ ) 
@@ -554,9 +554,9 @@ package org.syncon.Customizer.model
 				if ( layer_.type != ImageLayerVO.Type ) 
 					continue; 
 				var layer : ImageLayerVO = layer_ as ImageLayerVO; 
-				if ( sourcing != null ) 
+				if ( subType != null ) 
 				{
-					if ( layer.image_source != sourcing  )
+					if ( layer.image_source != subType  )
 						continue;
 				}
 				if ( layer.url =='' ||  layer.url ==null   || layer.url == null || layer.url == layer.default_url ) 
@@ -715,6 +715,19 @@ package org.syncon.Customizer.model
 			this.baseItem.grand_total = grandTotal;
 			this.dispatch(new NightStandModelEvent(NightStandModelEvent.PRICE_CANGED,grandTotal));
 			
+		}
+		
+		/**
+		 * perhaps a better place to put this/ call this? 
+		 * */
+		public function convertClipArtToName(source  : String ) : String
+		{
+			for each ( var img : ImageVO in this.images )
+			{
+				if ( img.url == source ) 
+					return img.name; 
+			}
+			return ''; 
 		}
 		
 		public function isDescendent( e : Object , againsts : Object ) : Boolean 

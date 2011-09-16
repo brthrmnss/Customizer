@@ -33,6 +33,7 @@ package  org.syncon.Customizer.model
 		public static const CORRECT_ITEM : String = 'CORRECT_ITEM';
 		public static const WRONG_ITEM : String = 'WRONG_ITEM';
 		
+		public static const GO_TO_IMAGE_PANEL : String = 'GO_TO_IMAGE_PANEL'; 
 		/**
 		 * Must cancel event or showing will proceed
 		 * 

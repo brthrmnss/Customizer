@@ -287,7 +287,7 @@ package org.syncon.Customizer.controller
 				//this.model.currentPage.updated();
 				//this.model.layersChanged(); 
 				this.dispatch( new EditProductCommandTriggerEvent(
-					EditProductCommandTriggerEvent.IMAGE_URL_CHANGED, event, null ) ) 
+					EditProductCommandTriggerEvent.IMAGE_URL_CHANGED, event, imgLayer ) ) 
 			}	
 			
 			
@@ -886,6 +886,8 @@ package org.syncon.Customizer.controller
 					
 					if ( event.firstTime && face.importFirstLayerSelection != null && selectLayerFirst != null ) 
 					{
+						/*if ( selectLayerFirst.visible == false ) 
+							throw 'Error ' + ' Face ' +  face.name +  ' selectLayerFirst is not visible' */
 						this.model.currentLayer = selectLayerFirst
 					}
 					else if ( face.currentLayer != null ) 

@@ -163,6 +163,7 @@ package org.virid.component
 		}
 		
 		private function onPriceChanged(e:NightStandModelEvent):void{
+			this.ui.txtLighterPrince.text = '$'+this.model.baseItem.price.toFixed(2); 
 			this.ui.subCost.text = '$'+this.model.currentFace.price.toFixed(2);
 			this.ui.txtTotal.text = '$'+this.model.baseItem.grand_total.toFixed(2);
 			

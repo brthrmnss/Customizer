@@ -25,9 +25,6 @@
 				}
 				else{
 					this.currentState="normal";	
-					var newColor:ColorTransform =  new ColorTransform();
-					newColor.color = 0x8e8e8e;
-					this.iconDisplay.transform.colorTransform = newColor;
 				}
 			}
 			
@@ -36,14 +33,23 @@
 				this.creationCompleteCalled = true;
 				this.label = this._labelName;
 				this.icon = this._iconSource;
-				
-				 
 			}
 			
 			protected function button1_rollOverHandler(event:MouseEvent):void
 			{
 				this.currentState = "hovered";
-				
+			}
+			
+			
+			public function changeColorToNormal() : void
+			{
+				var newColor:ColorTransform =  new ColorTransform();
+				newColor.color = 0x8e8e8e;
+				this.iconDisplay.transform.colorTransform = newColor;
+			}
+			
+			public function changeColorToRed(): void
+			{
 				//change main icon color
 				var newColor:ColorTransform =  new ColorTransform();
 				newColor.color = 0xf6171c;
@@ -57,13 +63,7 @@
 					return;
 				}
 				this.currentState = "normal";
-				
-				
-				
-				//change main icon color
-				var newColor:ColorTransform =  new ColorTransform();
-				newColor.color = 0x8e8e8e;
-				this.iconDisplay.transform.colorTransform = newColor;
+				 
 			}
 			
 			
@@ -84,16 +84,28 @@
 			}
 			
 
+			protected function state1_enterStateHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				changeColorToRed()
+			}
+			
+			protected function stateNormal_enterStateHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				this.changeColorToNormal()
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<s:Linear id="easing"/>
 	</fx:Declarations>
 	<s:states> 
-		<s:State name="normal"/> 
-		<s:State name="hovered"/> 
+		<s:State name="normal"   enterState="stateNormal_enterStateHandler(event)" />
+		<s:State name="hovered" enterState="state1_enterStateHandler(event)"/> 
 		<s:State name="disabled"/> 
-		<s:State name="selected"/> 
+		<s:State name="selected"  enterState="state1_enterStateHandler(event)"/> 
 	</s:states> 
 	
 	<s:transitions>
@@ -128,7 +140,13 @@
 			</s:Parallel>
 		</mx:Transition>
 	</s:transitions>	
-
+	<!--
+	<s:Rect id="rect" width="100%" height="100%"  >
+		<s:fill >
+			<s:SolidColor id="mainSwatch" color="0xFF" />
+		</s:fill>
+	</s:Rect>
+	-->
 	<!-- <s:Image id="iconDisplay" horizontalCenter="0"/> -->
 	<s:BitmapImage id="iconDisplay" 
 				   width="32" height="32" y.normal="0" y.hovered="-2" y.selected="-1" horizontalCenter="0" 
@@ -142,6 +160,6 @@
 			 textAlign="center" styleName="grayTxt" styleName.hovered="redTxt"
 			 maxDisplayedLines="1"
 			 horizontalCenter="0"   verticalAlign="bottom"
-			 left="10" right="10" top="2" bottom="2">
+			 left="2" right="2" top="2" bottom="2">
 	</s:Label>
 </s:Group>

@@ -26,13 +26,18 @@
 			
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
-				var arrayBtn:Array = [this.btnBackground, this.btnEngrave, this.btnText, this.btnPreview ]
+				var arrayBtn:Array = [this.btnBackground, this.btnImage, this.btnEngrave, this.btnText, this.btnPreview ]
 				for each(var item:UIComponent in arrayBtn ){
 					
 					item.addEventListener(MouseEvent.CLICK,onSelectBtn);
 				}
 				
 				
+			}
+			
+			protected function onImage(event:MouseEvent):void
+			{
+				this.dispatchEvent( new CustomEvent( ADD_IMAGE ))
 			}
 			
 			protected function onBackground(event:MouseEvent):void
@@ -111,21 +116,28 @@
 										click="onUndo(event)" 
 										toolTip="Undo Last Action"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+		<!--
 		<smallComponents:MainMenuButton label="redo" id="btnRedo" 
 										icon="assets/images/redo.png" width="46"
 										click="onRedo(event)" 
 										toolTip="Redo Action"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+		-->
 		<smallComponents:MainMenuButton label="Background" id="btnBackground" visible="true" includeInLayout="true" 
 										icon="assets/images/background.png" width="88"
 										click="onBackground(event)"
 										toolTip="Go to Image Panel"
 										buttonMode="true" useHandCursor="true" mouseChildren="false"/>		
-		<smallComponents:MainMenuButton label="Choose a Location" visible="false" includeInLayout="false"
+		<smallComponents:MainMenuButton label="Pictures" id="btnImage" visible="true" includeInLayout="true" 
+										icon="assets/images/background.png" width="88"
+										click="onImage(event)"
+										toolTip="Go to Image Panel"
+										buttonMode="true" useHandCursor="true" mouseChildren="false"/>	
+		<!--<smallComponents:MainMenuButton label="Choose a Location" visible="false" includeInLayout="false"
 										icon="assets/images/location.png" width="100"
 										click="onBackground(event)"
 										toolTip="Go to Location Selection Menu"
-										buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+										buttonMode="true" useHandCursor="true" mouseChildren="false"/>-->
 		<smallComponents:MainMenuButton label="Text" id="btnText"
 										icon="assets/images/engrave.png" width="46"
 										click="onText(event)"

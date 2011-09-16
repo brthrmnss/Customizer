@@ -38,9 +38,6 @@ package org.syncon.Customizer
 			this.commandMap.mapEvent(  TestImportViridJSONCommandTriggerEvent.TEST_IMPORT_VIRID_JSON, TestImportViridJSONCommand );
 			
 			
-			
-			
-			
 			EditProductCommandTriggerEvent.mapCommands( this.commandMap, EditProductCommand ) ; 
 			EditProductCommandTriggerEvent.fxAnimate = this.dispatchEvent; 
 			ConfigCommandTriggerEvent.mapCommands( this.commandMap, ConfigCommand); 
@@ -106,7 +103,7 @@ package org.syncon.Customizer
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.CREATE_CLIP_ART_LIBRARY ) ) ; 
 			this.importAnySpecifiedJSON(); 
-			return;
+			//return;
 			this.dispatchEvent( new InitMainContextCommandTriggerEvent(
 				InitMainContextCommandTriggerEvent.INIT3_MAKEUP_FLEX_DATA ) ) ; 
 			//return;

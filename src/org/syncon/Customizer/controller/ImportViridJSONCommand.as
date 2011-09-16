@@ -232,6 +232,10 @@ package  org.syncon.Customizer.controller
 						
 						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
 							face.importFirstLayerSelection = imageLayer; 
+						
+						if ( imageLayer.url != '' && imageLayer.url != null ) 
+							imageLayer.name = this.model.convertClipArtToName(imageLayer.url); 
+						
 						face.layersToImport.push(imageLayer);
 						
 						

@@ -129,7 +129,7 @@ package  org.virid.component
 					//seems wrong to do this here , make intention ... 
 					imgLayer.visible = true
 					imgLayer.update(); 
-					
+					currentLayer = imgLayer;
 					this.model.currentLayer = imgLayer; 
 				}
 				if ( currentLayer.visible == false ) 

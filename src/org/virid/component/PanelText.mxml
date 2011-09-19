@@ -3,7 +3,7 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:skins="org.syncon.Customizer.view.skins.*"
-		 xmlns:component="org.virid.component.*"
+		 xmlns:component="org.virid.component.*" creationComplete="onInit(event)"
 		 width="100%" height="100%">
 	
 	<fx:Script>
@@ -11,6 +11,7 @@
 			import mx.collections.ArrayCollection;
 			
 			import org.syncon.Customizer.model.CustomEvent;
+			import org.virid.smallComponents.FontDropDownItemRenderer;
 			public static var ADD_TEXT:String='ADD_TEXT';
 			
 			protected function onAddText(event:MouseEvent):void
@@ -43,6 +44,8 @@
 			public var s : ItemRendererHelpers = new ItemRendererHelpers(null)
 			protected function onInit(event:FlexEvent):void
 			{
+				//FontDropDownItemRenderer
+			//	this.fontSelect.skin['dataGroup'].itemRenderer = new  ClassFactory(FontDropDownItemRenderer) 
 			}		
 			private var _layer :  TextLayerVO = new TextLayerVO() ;
 			public function get layer()  : TextLayerVO { return this._layer } 
@@ -162,7 +165,7 @@
 				this.txt.setFocus(); 
 				this.txt.selectRange( this.txt.text.length, this.txt.text.length );
 				
-				this.callLater( this.fontSelect.closeDropDown, [true] )  ; 
+				this.callLater( this.dropDown_FontSelect.closeDropDown, [true] )  ; 
 				
 			}
 			
@@ -226,11 +229,11 @@
 					
 				</s:HGroup>
 				<s:HGroup id="holderDropdown" width="100%">
-					<s:DropDownList id="fontSelect" width="100%" height="38" borderColor="0xe9e9e9"
+					<s:DropDownList id="dropDown_FontSelect" width="100%" height="38" borderColor="0xe9e9e9"
 									change="dropDown_FontSelect_changeHandler(event)"
 									cornerRadius="8" dropShadowVisible="false"
-									prompt="SELECT A FONT"
-									skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
+									prompt="SELECT A FONT"  fontSize="21"
+									skinClass="org.virid.smallComponents.LightGrayRoundedDropDown_Fonts"
 									focusEnabled="false"
 									tabEnabled="false" tabFocusEnabled="false"/>	
 					<s:DropDownList id="fontSize" width="54" height="38" borderColor="0xe9e9e9"

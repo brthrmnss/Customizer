@@ -1,6 +1,7 @@
 package org.virid.component
 {
 	import flash.events.Event;
+	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayList;
 	
@@ -13,11 +14,13 @@ package org.virid.component
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.Customizer.vo.TextLayerVO;
 	import org.syncon.onenote.onenotehelpers.impl.layer_item_renderer;
+	import org.virid.smallComponents.FontDropDownItemRenderer;
 	
 	public class PanelTextMediator extends Mediator 
 	{
 		[Inject] public var ui : PanelText;
 		[Inject] public var model : NightStandModel;
+		private var dictFonts:Dictionary;
 		
 		override public function onRegister():void
 		{
@@ -35,6 +38,11 @@ package org.virid.component
 			this.ui.addEventListener( PanelText.DATA_CHANGED, 
 				this.onDataChanged );	
 			onDataChanged(null)
+			
+			this.ui.addEventListener( FontDropDownItemRenderer.GET_FONT_FAMILY_FOR, 
+				this.onGetFontFamilyFor );				
+			/*this.ui.dropDown_FontSelect.skin.addEventListener( FontDropDownItemRenderer.GET_FONT_FAMILY_FOR, 
+				this.onGetFontFamilyFor );	*/	
 		}
 		
 		protected function onDataChanged(event:Event):void
@@ -42,8 +50,16 @@ package org.virid.component
 			this.ui.txt.prompt = this.layer.default_text; 
 			this.onChangeText(null); 
 			this.updateFontList(); 
+			this.dictFonts = new Dictionary(true)
+			for each ( var font : FontVO in layer.fonts ) 
+			{
+				dictFonts[font.name] = font
+			}
 			if ( this.layer.fontFamily != '' || this.layer.fontFamily != null ) 
-				this.ui.txt.setStyle('fontFamily', this.layer.fontFamily ) ; 
+			{
+				this.ui.txt.setStyle('fontFamily', this.layer.fontFamily ) ;
+				this.ui.dropDown_FontSelect.setStyle('fontFamily', this.layer.fontFamily ) ;
+			}
 		}
 		
 		public function get layer () : TextLayerVO 
@@ -137,11 +153,29 @@ package org.virid.component
 			) )  
 			*/
 			this.ui.txt.setStyle('fontFamily', fontName ) ; 
+			this.ui.dropDown_FontSelect.setStyle('fontFamily', fontName ) ; 
 			
 			this.dispatch( new EditProductCommandTriggerEvent ( 
 				EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY,fontName
 			) )  
 		}
+		
+		
+		public function onGetFontFamilyFor(e:CustomEvent):void
+		{
+			var font : FontVO= dictFonts[e.data] as FontVO
+			var fontName : String = font.name; 
+			if ( font.swf_name != null && font.swf_name != '' ) 
+				fontName = font.swf_name; 
+			
+			if ( fontName != null )
+			{
+				e.preventDefault()
+				e.data = fontName
+			}
+			
+		}
+		
 		
 		/**
 		 * go through select fonts, case insensitive and make matches
@@ -151,8 +185,8 @@ package org.virid.component
 			var fonts : Array = this.ui.layer.fonts; 
 			//y do this 
 			//this.ui.dropDown_FontSelect.labelFunction = this.labelForDropDown; 
-			this.ui.fontSelect.labelField = 'name' ; 
-			this.ui.fontSelect.dataProvider = new ArrayList( fonts ) ; 
+			this.ui.dropDown_FontSelect.labelField = 'name' ; 
+			this.ui.dropDown_FontSelect.dataProvider = new ArrayList( fonts ) ; 
 			var foundFound : FontVO; 
 			for each ( var f : FontVO in fonts ) 
 			{
@@ -166,7 +200,7 @@ package org.virid.component
 				}
 				
 			}
-			this.ui.fontSelect.selectedItem = foundFound; //this.ui.layer.fontFamily; 
+			this.ui.dropDown_FontSelect.selectedItem = foundFound; //this.ui.layer.fontFamily; 
 			
 			if ( this.model.fxIsEngraveLayer( this.layer ) ) 
 			{

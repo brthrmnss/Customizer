@@ -230,15 +230,16 @@
 				<s:HGroup width="100%">
 					<s:Label fontSize="20" styleName="subHeading" text="Choose A Font"/>
 					<s:Label id="txtMaxChars" fontSize="14" styleName="Arial grayTxt"
-							 text="45 charectors max"/>
+							 text="45 characters max"/>
 					
 				</s:HGroup>
 				
 				<s:DropDownList id="dropDown_FontSelect" width="100%" height="38"
 								borderColor="0xe9e9e9"
+								fontSize="21"
 								change="dropDown_FontSelect_changeHandler(event)" cornerRadius="8"
 								dropShadowVisible="false"
-								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown"
+								skinClass="org.virid.smallComponents.LightGrayRoundedDropDown_Fonts"
 								focusEnabled="false"
 								tabEnabled="false" tabFocusEnabled="false"/>			
 			</s:VGroup>

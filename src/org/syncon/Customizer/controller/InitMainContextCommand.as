@@ -55,8 +55,8 @@ package org.syncon.Customizer.controller
 				//this.createDefaultProduct() ; 
 				
 				this.createDetailedDefaultProduct();
-				//this.createDetailedDefaultProduct_Engrave()
-				this.createDetailedDefaultProduct_Engrave2(false)
+				this.createDetailedDefaultProduct_Engrave()
+				//this.createDetailedDefaultProduct_Engrave2(false)
 				if ( this.model.flex ) 
 				{
 					

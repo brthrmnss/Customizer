@@ -15,6 +15,7 @@ package org.syncon.Customizer.model
 	import org.robotlegs.mvcs.Actor;
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
 	import org.syncon.Customizer.vo.*;
+	import org.syncon.popups.controller.ShowPopupEvent;
 	import org.syncon.popups.controller.default_commands.ShowAlertMessageTriggerEvent;
 	
 	public class NightStandModel extends Actor 
@@ -756,5 +757,14 @@ package org.syncon.Customizer.model
 				ShowAlertMessageTriggerEvent.SHOW_ALERT_POPUP, 
 				str, title ) ) 
 		}
+		
+		
+		public function notify( str : String, title : String = '' ) : void
+		{
+			this.dispatch( new ShowPopupEvent(
+				ShowPopupEvent.SHOW_POPUP, 'PopupNotification', 
+				[str, title], 'showPopup' ) ) 
+		}
+		
 	}
 }

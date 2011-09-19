@@ -83,6 +83,11 @@ package   org.syncon.Customizer
 			this._this.dispatchEvent( new CreatePopupEvent( CreatePopupEvent.REGISTER_AND_CREATE_POPUP, 
 				PopupUploadImage, 'PopupUploadImage', true  ) );		
 	 
+			mediatorMap.mapView(  PopupNotification,  PopupNotificationMediator, null, false, false );	
+			this._this.dispatchEvent( new CreatePopupEvent( CreatePopupEvent.REGISTER_AND_CREATE_POPUP, 
+				PopupNotification, 'PopupNotification', false   ) );		
+			
+			
 		}
 		
 		public function onInit()  : void

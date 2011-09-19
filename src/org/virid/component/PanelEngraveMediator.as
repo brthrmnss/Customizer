@@ -1,29 +1,25 @@
 package  org.virid.component
 {
 	import flash.events.Event;
+	import flash.utils.Dictionary;
 	
-	import flashx.undo.IOperation;
-	
-	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
 	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.Customizer.controller.EditProductCommandTriggerEvent;
 	import org.syncon.Customizer.model.CustomEvent;
 	import org.syncon.Customizer.model.NightStandModel;
-	import org.syncon.Customizer.model.NightStandModelEvent;
-	import org.syncon.Customizer.view.ui.Toolbar;
 	import org.syncon.Customizer.vo.FontVO;
-	import org.syncon.Customizer.vo.ImageVO;
 	import org.syncon.Customizer.vo.ItemRendererHelpers;
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.Customizer.vo.TextLayerVO;
-	import org.syncon.popups.controller.ShowPopupEvent;
+	import org.virid.smallComponents.FontDropDownItemRenderer;
 	
 	public class  PanelEngraveMediator extends Mediator 
 	{
 		[Inject] public var ui : PanelEngrave;
 		[Inject] public var model : NightStandModel;
+		private var dictFonts:Dictionary;
 		
 		override public function onRegister():void
 		{
@@ -33,20 +29,23 @@ package  org.virid.component
 			this.ui.addEventListener( MainMenuBar.REDO,  this.onRedo);	
 			
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.UNDOS_CHANGED, 
-				this.checkUndoButtons);	
+			this.checkUndoButtons);	
 			this.checkUndoButtons(); 
 			*/
 			/*
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.BASE_ITEM_CHANGED, 
-				this.onLoadLocations);	
+			this.onLoadLocations);	
 			this.onLoadLocations(); */
-
+			
 			this.ui.addEventListener( PanelEngrave.CHANGED_TEXT, 
 				this.onTextChanged );	
 			
 			this.ui.addEventListener( PanelText.DATA_CHANGED, 
 				this.onDataChanged );	
 			onDataChanged(null)
+			this.ui.addEventListener( FontDropDownItemRenderer.GET_FONT_FAMILY_FOR, 
+				this.onGetFontFamilyFor );			
+			
 			
 			
 			this.ui.addEventListener( PanelText.CHANGE_FONT_FAMILY, 
@@ -66,7 +65,7 @@ package  org.virid.component
 				this.layer ) 
 			e.fxPost = this.updateLayer;
 			this.dispatch( e )
-				 ; 
+				; 
 		}
 		
 		public function updateLayer() : void
@@ -90,14 +89,32 @@ package  org.virid.component
 				fontName = font.swf_name; 
 			/*
 			this.dispatch( new EditProductCommandTriggerEvent ( 
-				EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY, fontName 
+			EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY, fontName 
 			) )  
-				*/
+			*/
 			this.ui.txt.setStyle('fontFamily', fontName ) ; 
+			this.ui.dropDown_FontSelect.setStyle('fontFamily', fontName ) ; 
+			
 			this.dispatch( new EditProductCommandTriggerEvent ( 
 				EditProductCommandTriggerEvent.CHANGE_FONT_FAMILY_PRODUCT, fontName 
 			) )  
 		}
+		public function onGetFontFamilyFor(e:CustomEvent):void
+		{
+			var font : FontVO= dictFonts[e.data] as FontVO
+			var fontName : String = font.name; 
+			if ( font.swf_name != null && font.swf_name != '' ) 
+				fontName = font.swf_name; 
+			
+			if ( fontName != null )
+			{
+				e.preventDefault()
+				e.data = fontName
+				e.stopPropagation()
+			}
+			
+		}
+		
 		public var s : ItemRendererHelpers = new ItemRendererHelpers(null)
 		protected function onDataChanged(event:Event):void
 		{
@@ -105,19 +122,28 @@ package  org.virid.component
 			s.listenForObj( layer, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; //we have to 
 			//do this so we can catch it the first time ...  it if was not set initially 
 			this.updateFontList(); 
+			
+			this.dictFonts = new Dictionary(true)
+			for each ( var font : FontVO in layer.fonts ) 
+			{
+				dictFonts[font.name] = font
+			}
 			if ( this.layer.fontFamily != '' || this.layer.fontFamily != null ) 
-				this.ui.txt.setStyle('fontFamily', this.layer.fontFamily ) ; 
+			{
+				this.ui.txt.setStyle('fontFamily', this.layer.fontFamily ) ;
+				this.ui.dropDown_FontSelect.setStyle('fontFamily', this.layer.fontFamily ) ;
+			}
 		}
 		
 		private function onUpdatedLayer(e:Event=null):void
 		{
 			if ( layer == null ) 
 				return; 
- 
-				if ( this.layer.propChanged == 'fontFamily' )
-				{
-					this.updateFontList(); 
-				}
+			
+			if ( this.layer.propChanged == 'fontFamily' )
+			{
+				this.updateFontList(); 
+			}
 		}
 		
 		private function updateFontList():void
@@ -151,57 +177,57 @@ package  org.virid.component
 		/*
 		private function onLoadLocations(e:Event=null):void
 		{
-			this.ui.list.dataProvider = new ArrayCollection( this.model.locations ) ; 
-			
+		this.ui.list.dataProvider = new ArrayCollection( this.model.locations ) ; 
+		
 		}*/
 		
-	/*	
+		/*	
 		protected function onRedo(event:Event):void
 		{
-			// TODO Auto-generated method stub
-			var op : IOperation = this.model.undo.popRedo()
-			op.performRedo()
-			this.model.undo.pushUndo( op ) ; 
-			//this.model.undo.redo(); 
-			this.checkUndoButtons()
+		// TODO Auto-generated method stub
+		var op : IOperation = this.model.undo.popRedo()
+		op.performRedo()
+		this.model.undo.pushUndo( op ) ; 
+		//this.model.undo.redo(); 
+		this.checkUndoButtons()
 		}
 		
 		protected function onUndo(event:Event):void
 		{
-			// TODO Auto-generated method stub
-			//	this.model.undo.undo()
-			var op : IOperation = this.model.undo.popUndo()
-			op.performUndo()
-			this.model.undo.pushRedo( op ) ; 
-			this.checkUndoButtons()
+		// TODO Auto-generated method stub
+		//	this.model.undo.undo()
+		var op : IOperation = this.model.undo.popUndo()
+		op.performUndo()
+		this.model.undo.pushRedo( op ) ; 
+		this.checkUndoButtons()
 		}
 		
 		private function checkUndoButtons(e:Event=null):void
 		{
-			var dbg : Array = [this.model.undo.canUndo()] 
-			//this.ui.btnRedo.enabled = this.model.undo.canRedo() 
-			this.ui.btnUndo.enabled = this.model.undo.canUndo() 
+		var dbg : Array = [this.model.undo.canUndo()] 
+		//this.ui.btnRedo.enabled = this.model.undo.canRedo() 
+		this.ui.btnUndo.enabled = this.model.undo.canUndo() 
 		}
 		
 		private function onAddText(e:  CustomEvent): void
 		{
-			var obj : Object = e.data
-			this.dispatch( new EditProductCommandTriggerEvent (
-				EditProductCommandTriggerEvent.ADD_TEXT_LAYER, e) ) ; 
+		var obj : Object = e.data
+		this.dispatch( new EditProductCommandTriggerEvent (
+		EditProductCommandTriggerEvent.ADD_TEXT_LAYER, e) ) ; 
 		}		
 		
 		private function onAddImage(e:  CustomEvent): void
 		{
-			var obj : Object = e.data
-			var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP, 
-				'PopupPickImage', [this.onPickedImage], 'done' ) 		
-			this.dispatch( event_ ) 
+		var obj : Object = e.data
+		var event_ : ShowPopupEvent = new ShowPopupEvent(ShowPopupEvent.SHOW_POPUP, 
+		'PopupPickImage', [this.onPickedImage], 'done' ) 		
+		this.dispatch( event_ ) 
 		}		
 		
 		private function onPickedImage( e : ImageVO ) : void
 		{
-			this.dispatch( new EditProductCommandTriggerEvent (
-				EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, e.url) ) ; 
+		this.dispatch( new EditProductCommandTriggerEvent (
+		EditProductCommandTriggerEvent.ADD_IMAGE_LAYER, e.url) ) ; 
 		}
 		*/
 	}

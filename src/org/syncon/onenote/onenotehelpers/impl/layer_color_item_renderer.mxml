@@ -252,7 +252,7 @@
 	</fx:Declarations>
 	
 	
-	<s:Image blendMode="erase"  alpha="0.6"
+	<s:Image blendMode="erase"  alpha="1"
 			 id="img" smooth="true" smoothingQuality="high" 
 			 securityError="img_securityErrorHandler(event)"
 			 ioError="img_ioErrorHandler(event)"

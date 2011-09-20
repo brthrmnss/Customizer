@@ -54,7 +54,7 @@ package  org.virid.component
 					
 			if ( newName != layer.name ) 
 			{
-				layer.name = newName + ' Clipart'; 
+				layer.name = newName /*+ ' Clipart'*/; 
 				layer.update(); 
 			}
 			

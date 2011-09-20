@@ -14,11 +14,11 @@ global
 	fontFamily: Helvetica;
 	embedAsCFF: true;
 }
-@font-face {
+/*@font-face {
 	src: url("styles/fonts/monof55.ttf");	
 	fontFamily: Arial;
 	embedAsCFF: true;
-}
+}*/
 @font-face {
 	src: url("styles/fonts/TRANA___.TtF");	
 	fontFamily: TimesFont;
@@ -116,87 +116,7 @@ mx|ToolTip {
 	fontFamily: ArialMX; 
 }
 /*customization fonts*/
-@font-face
-{
-	fontFamily: "Futura";
-	src: url("images/fonts/FuturaStd-Condensed.otf");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "BrushScript";
-	src: url("images/fonts/BrushScriptStd_0.otf");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "MarkerFelt";
-	src: url("images/fonts/MarkerFelt.ttf");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "Times";
-	src: url("images/fonts/timesbd.ttf");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "FranklinGothic";
-	src: url("images/fonts/FRAMDCN.TTF");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "Stencil";
-	src: url("images/fonts/STENCIL.TTF");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "Engravers";
-	src: url("images/fonts/OLDENGL.TTF");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "Impact";
-	src: url("images/fonts/impact.ttf");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "Clarendon";
-	src: url("images/fonts/TriniteNo1-Bold.otf");
-	embedAsCFF: true;
-}
-/*engraving from personal collection*/
-/*
-@font-face
-{
-	fontFamily: "Avalon";
-	src: url("images/fonts/arial.ttf");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "Century";
-	src: url("images/fonts/ACaslonPro-Semibold_0.otf");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "Script";
-	src: url("images/fonts/BickhamScriptPro-Semibold.otf");
-	embedAsCFF: true;
-}
-@font-face
-{
-	fontFamily: "Helv";
-	src: url("images/fonts/HelveticaLTStdBoldCond.otf");
-	embedAsCFF: true;
-}
-*/
+/*CI fonts from personal collection*/
 
 /*engraving from zippo*/
 @font-face
@@ -235,3 +155,142 @@ mx|ToolTip {
 	src: url("fonts/EngraversOldEnglish.TTF");
 	embedAsCFF: true;
 }
+/*CI fonts from zippo*/
+/*times*/
+
+/*futura*/
+@font-face
+{
+	fontFamily: "Futura";
+	src: url("fonts/CI/Futura_Book_BT.ttf");
+	embedAsCFF: true;
+}
+/*brush script*/
+@font-face
+{
+	fontFamily: "Brush Script";
+	src: url("fonts/CI/Brush_Script_BT.ttf");
+	embedAsCFF: true;
+}
+/*Commercial Script*/
+@font-face
+{
+	fontFamily: "Commercial Script";
+	src: url("fonts/CI/Commercial_Script_BT.ttf");
+	embedAsCFF: true;
+}
+/*Marker Felt*/
+@font-face
+{
+	fontFamily: "Marker Felt";
+	src: url("fonts/CI/MarkerFeltWide_Regular.ttf");
+	embedAsCFF: true;
+}
+/*Times - Roman*/
+	/*already defined*/
+/*Franklin Gothic*/
+@font-face
+{
+	fontFamily: "Franklin Gothic";
+	src: url("fonts/CI/Franklin_Gothic_ITC_Heavy_BT.ttf");
+	embedAsCFF: true;
+}
+/*Stencil*/
+@font-face
+{
+	fontFamily: "Stencil";
+	src: url("fonts/CI/Stencil_BT.TTF");
+	embedAsCFF: true;
+}
+/*Engravers Old English*/
+	/*already defined*/
+/*Impact*/
+@font-face
+{
+	fontFamily: "Impact";
+	src: url("fonts/CI/Impact.TTF");
+	embedAsCFF: true;
+}
+/*Clarendon*/
+
+@font-face
+{
+	fontFamily: "Clarendon";
+	src: url("fonts/CI/Clarendon.TTF");
+	embedAsCFF: true;
+}
+
+
+/*
+@font-face
+{
+fontFamily: "Futura";
+src: url("images/fonts/FuturaStd-Condensed.otf");
+embedAsCFF: true;
+}
+@font-face
+{
+fontFamily: "BrushScript";
+src: url("images/fonts/BrushScriptStd_0.otf");
+embedAsCFF: true;
+}
+@font-face
+{
+fontFamily: "MarkerFelt";
+src: url("images/fonts/MarkerFelt.ttf");
+embedAsCFF: true;
+}
+@font-face
+{
+fontFamily: "Times";
+src: url("images/fonts/timesbd.ttf");
+embedAsCFF: true;
+}
+
+
+@font-face
+{
+fontFamily: "Engravers";
+src: url("images/fonts/OLDENGL.TTF");
+embedAsCFF: true;
+}
+@font-face
+{
+fontFamily: "Impact";
+src: url("images/fonts/impact.ttf");
+embedAsCFF: true;
+}
+@font-face
+{
+fontFamily: "Clarendon";
+src: url("images/fonts/TriniteNo1-Bold.otf");
+embedAsCFF: true;
+}
+*/
+/*engraving from personal collection*/
+/*
+@font-face
+{
+fontFamily: "Avalon";
+src: url("images/fonts/arial.ttf");
+embedAsCFF: true;
+}
+@font-face
+{
+fontFamily: "Century";
+src: url("images/fonts/ACaslonPro-Semibold_0.otf");
+embedAsCFF: true;
+}
+@font-face
+{
+fontFamily: "Script";
+src: url("images/fonts/BickhamScriptPro-Semibold.otf");
+embedAsCFF: true;
+}
+@font-face
+{
+fontFamily: "Helv";
+src: url("images/fonts/HelveticaLTStdBoldCond.otf");
+embedAsCFF: true;
+}
+*/

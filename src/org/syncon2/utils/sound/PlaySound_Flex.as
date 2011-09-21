@@ -45,7 +45,14 @@ package org.syncon2.utils.sound
 		public function playSound( s : Object, fxCallAfterSoundCompletePlaying_ : Function = null ) : void
 		{
 			//NightStandConstants.PlaySound.playSound( s, fxCallAfterSoundCompletePlaying_ ); 
-			this.playSound2( s.url ); 
+			if ( s is String ) 
+			{
+				this.playSound2( s.toString()  );
+			}
+			else
+			{
+			this.playSound2( s.url );
+			}
 			this.fxCallAfterSoundCompletePlaying = fxCallAfterSoundCompletePlaying_
 		}
 		public function playSound2(url : String , times : int = 1, x : Object = null, fxDone : Function = null ) : void
@@ -100,6 +107,34 @@ package org.syncon2.utils.sound
 			sound = null;
 		}
 		
+		private var currentIndex:int;
+		public var chainList : Array = []; 
+		public function chainUp( arr : Array ) : void{
+			this.currentIndex = 0 ; 
+			this.chainList = arr; 
+			this.playNextSound()
+			//this.cleanUP()
+		}
+		
+		private function playNextSound():void
+		{
+			if ( this.currentIndex >= this.chainList.length) 
+			{
+				//this.dispatch( new Event('done');
+				this.stopSound(); 
+				return; 
+			}
+			var current : String = this.chainList[this.currentIndex]
+			this.playSound(  current, this.onPlaybackComplete ) ; // 'a.mp3' ); //current+this.suffix ) ; 
+			return ;
+		}
+		protected function onPlaybackComplete(event:Event):void
+		{
+			//trace('finisehd' )
+			this.stopSound(); 
+			this.currentIndex++
+				this.playNextSound()
+		}
 		
 	}
 }

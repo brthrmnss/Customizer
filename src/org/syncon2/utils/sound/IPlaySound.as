@@ -12,6 +12,7 @@ package   org.syncon2.utils.sound
 		 * In different context we might need to use relative vs abs paths 
 		 * */
 		/*function set fxChangeSoundLocation(value:Function):void*/
-		
+		function chainUp(arr:Array):void
+		function setVolume( volume : int) :void
 	}
 }

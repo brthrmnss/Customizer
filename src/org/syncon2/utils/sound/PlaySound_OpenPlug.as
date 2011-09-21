@@ -132,6 +132,7 @@ package org.syncon2.utils.sound
 				SystemAPI.playSoundFile(soundID);
 				SystemAPI.playSoundFile(soundID);
 				this.currentSoundId= soundID
+				SystemAPI.setVolumeSoundFile( this.currentSoundId, volume ) 
 			//	PlatformGlobals.show('play sound sound '  + this.currentSoundId  )
 			}
 			
@@ -170,5 +171,41 @@ package org.syncon2.utils.sound
 			}
 		}
 		
+		
+		private var currentIndex:int;
+		public var chainList : Array = []; 
+		public function chainUp( arr : Array ) : void{
+			this.currentIndex = 0 ; 
+			this.chainList = arr; 
+			this.playNextSound()
+			//this.cleanUP()
+		}
+		
+		private function playNextSound():void
+		{
+			if ( this.currentIndex >= this.chainList.length) 
+			{
+				//this.dispatch( new Event('done');
+				this.stopSound(); 
+				return; 
+			}
+			var current : String = this.chainList[this.currentIndex]
+			this.playSound(  current, this.onPlaybackComplete ) ; // 'a.mp3' ); //current+this.suffix ) ; 
+			return ;
+		}
+		protected function onPlaybackComplete(event:Event):void
+		{
+			//trace('finisehd' )
+			this.stopSound(); 
+			this.currentIndex++
+				this.playNextSound()
+		}
+		
+		static private var volume : int = 50 
+		public function setVolume( v : int) : void
+		{
+			volume = v; 
+			SystemAPI.setVolumeSoundFile( this.currentSoundId, volume ) 
+		}
 	}
 }

@@ -61,7 +61,7 @@ package   org.syncon2.utils.data
 			timer.stop(); 
 			this.nextSound(null, true ); 
 		}
-		public function next() : void
+		public function next(o:Object=null) : void
 		{
 			this.nextSound(null); 
 		}

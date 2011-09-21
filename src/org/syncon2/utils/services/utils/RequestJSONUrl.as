@@ -65,9 +65,10 @@ package org.syncon2.utils.services.utils
 			if ( url.indexOf('http://') == -1 )
 			{
 				url = 'http://'+url
+				url = escape( url ) 
 			} 
 			//url = url + '&login=bitly'
-			url = escape( url ) 
+			
 			return url;
 		}				
 		

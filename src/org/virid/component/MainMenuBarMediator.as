@@ -333,7 +333,9 @@ package  org.virid.component
 		
 		private function onAddImage(e:  CustomEvent): void
 		{
-			this.model.currentLayer = null;
+			if(this.model.currentLayer != null && this.model.currentLayer.type != ImageLayerVO.Type)
+				this.model.currentLayer = null;
+			
 			this.dispatch(  new NightStandModelEvent( NightStandModelEvent.GO_TO_IMAGE_PANEL )  ) 
 		}		
 /*		

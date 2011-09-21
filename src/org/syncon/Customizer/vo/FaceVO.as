@@ -120,6 +120,10 @@ package  org.syncon.Customizer.vo
 		 * expects collective layer types 
 		 * */
 		public var collectiveLayerPrices: Array = [];
+		/**
+		 * Price of all the layer stha thave been configured
+		 * */
+		public var priceConfiguredLayers:int;
 		[Transient]
 		public function get lists():ArrayCollection
 		{

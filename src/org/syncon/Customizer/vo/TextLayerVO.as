@@ -228,6 +228,8 @@ package  org.syncon.Customizer.vo
 		
 		override public function get displayName():String
 		{
+			if ( this.nameHidden != null && this.visible == false ) 
+				return this.nameHidden
 			return [this.name , '(', this.text, ')' ].join(' ');
 		}
 		

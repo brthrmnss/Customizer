@@ -1,5 +1,6 @@
 package  org.virid.component
 {
+	import flash.events.Event;
 	import flash.utils.ByteArray;
 	
 	import org.robotlegs.mvcs.Mediator;
@@ -28,9 +29,12 @@ package  org.virid.component
 		{
 			this.ui.addEventListener( PanelDesign.ADD_IMAGE,  this.onAddClipArtImage);	
 			this.ui.addEventListener( PanelDesign.ADD_UPLOAD_IMAGE,  this.onAddUploadImage);	
-			
 			this.ui.addEventListener( PanelDesign.CHANGE_COLOR,  this.onChangeColor);			
 			
+			this.ui.addEventListener( PanelDesign.CLICKED_DISABLED_BG_PANEL, onGoToColorLayerFromDisabled ) 
+			this.ui.addEventListener( PanelDesign.CLICKED_DISABLED_IMAGE_PANEL, onGoToImageUploadLayerFromDisabled ) 
+			this.ui.addEventListener( PanelDesign.CLICKED_DISABLED_CLIPART_PANEL, onGoToClipartLayerFromDisabled ) 
+				
 			eventMap.mapListener(eventDispatcher, NightStandModelEvent.SHOW_EMPTY_LAYER, 
 				this.onShowingNullLayer);	
 			
@@ -48,10 +52,10 @@ package  org.virid.component
 		{
 			var layer : ImageLayerVO = e.data2 as  ImageLayerVO; 
 			var newName : String = this.model.convertClipArtToName( layer.url ) 
-				
-				if ( newName == '' )
-					return
-					
+			
+			if ( newName == '' )
+				return
+			
 			if ( newName != layer.name ) 
 			{
 				layer.name = newName /*+ ' Clipart'*/; 
@@ -93,10 +97,10 @@ package  org.virid.component
 			//select first clip art image
 			if ( this.model.currentLayer.subType != ViridConstants.IMAGE_SOURCE_UPLOAD ) 
 			{
-				var imgLayer : ImageLayerVO = this.model.getEmptyImageLayer( ViridConstants.IMAGE_SOURCE_UPLOAD )
-				if ( imgLayer  == null ) 
-					return; 
-				this.model.currentLayer = imgLayer; 
+			var imgLayer : ImageLayerVO = this.model.getEmptyImageLayer( ViridConstants.IMAGE_SOURCE_UPLOAD )
+			if ( imgLayer  == null ) 
+			return; 
+			this.model.currentLayer = imgLayer; 
 			}
 			*/
 			/*	var obj : Object = e.data
@@ -172,10 +176,10 @@ package  org.virid.component
 			//select first clip art image
 			if ( this.model.currentLayer.subType != ViridConstants.IMAGE_SOURCE_CLIPART ) 
 			{
-				var imgLayer : ImageLayerVO = this.model.getEmptyImageLayer( ViridConstants.IMAGE_SOURCE_CLIPART )
-				if ( imgLayer  == null ) 
-					return; 
-				this.model.currentLayer = imgLayer; 
+			var imgLayer : ImageLayerVO = this.model.getEmptyImageLayer( ViridConstants.IMAGE_SOURCE_CLIPART )
+			if ( imgLayer  == null ) 
+			return; 
+			this.model.currentLayer = imgLayer; 
 			}
 			*/
 			//var obj : Object = e.data
@@ -227,7 +231,7 @@ package  org.virid.component
 			this.model.currentLayer.repositionedOnce = false
 			this.model.currentLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
 			this.model.currentLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
-
+			
 			this.resetCurrentLayer() ; 
 			//if a prompt layer, change the source, do not add a new one 
 			//08-29-11 ,even if it ws not a prompt layer you would still not add a new one ..
@@ -279,5 +283,42 @@ package  org.virid.component
 			}
 			
 		}
+		
+		
+		public function onGoToColorLayerFromDisabled( e : Event ) : void
+		{
+			var colorLayer : LayerBaseVO = this.model.getLayerByName( 'Color Layer'); 
+			var layers : Array =  this.model.getLayersByType2( ColorLayerVO.Type  ) 
+			if ( layers.length >  0 ) 
+				colorLayer  = layers[0] as LayerBaseVO
+			this.model.currentLayer = colorLayer 
+		}
+		
+		public function onGoToImageUploadLayerFromDisabled( e : Event ) : void
+		{
+			var layers : Array =  this.model.getLayersByType2( ImageLayerVO.Type, 
+				ViridConstants.IMAGE_SOURCE_UPLOAD  ) 
+			if ( layers.length >  0 ) 
+			{
+				var selectLayer: LayerBaseVO  = layers[0] as LayerBaseVO
+				this.model.currentLayer = selectLayer 
+			}
+		}
+		
+		public function onGoToClipartLayerFromDisabled( e : Event ) : void
+		{
+			var layers : Array =  this.model.getLayersByType2( ImageLayerVO.Type,
+				ViridConstants.IMAGE_SOURCE_CLIPART  ) 
+			if ( layers.length >  0 ) 
+			{
+				var selectLayer  : LayerBaseVO = layers[0] as LayerBaseVO
+				this.model.currentLayer = selectLayer 
+			}
+		}
+		
+		
+		
+		
+		
 	}
 }

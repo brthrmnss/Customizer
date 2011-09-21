@@ -14,12 +14,12 @@ package  org.syncon.Customizer.vo
 		{
 			return Type;
 		}
-		
+	/*	
 		override public function get displayName():String
 		{
 			return this.name;// [this.name , '(', this.text, ')' ].join(' ');
 		}
-		
+		*/
 		
 		override  public function clone() : LayerBaseVO
 		{

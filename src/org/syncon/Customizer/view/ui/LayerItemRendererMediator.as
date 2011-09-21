@@ -774,11 +774,27 @@ package org.syncon.Customizer.view.ui
 				}
 			}
 			
-			
-			
+			this.ui.callLater( this.setAsSelectedLayerIfSelected ) ; 
+
 			
 		}
 		
+		private function setAsSelectedLayerIfSelected():void
+		{
+			// TODO Auto Generated method stub
+			if ( this.layer ==null ) 
+				return; 
+			//first time layer is loaded in and is Face's importLayerTOSelect, must be selected manually 
+			if ( this.layer.locked == false && this.model.currentLayer == this.layer ) 
+			{
+				//if (  this.preventSelectionOfEmptyImage() == false ) 
+				this.model.objectHandles.selectionManager.setSelected( this.model.currentLayer.model ) ; 
+			}
+		}		
+		
+		/**
+		 * Why was this function needed? 
+		 * */
 		private function preventSelectionOfEmptyImage(): Boolean
 		{
 			if ( this.layer == null ) 
@@ -827,7 +843,6 @@ package org.syncon.Customizer.view.ui
 				if ( this.ui.image.layer.mask )
 				{
 					this.adjustMaskToMatchLayer()
-					
 				}
 			}
 			

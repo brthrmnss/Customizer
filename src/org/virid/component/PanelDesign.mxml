@@ -19,6 +19,10 @@
 			public static const ADD_UPLOAD_IMAGE:String='ADD_UPLOAD_IMAGE';
 			public static const ADD_IMAGE:String='ADD_IMAGE';
 			
+			public static const CLICKED_DISABLED_BG_PANEL:String='CLICKED_DISABLED_BG_PANEL';
+			public static const CLICKED_DISABLED_IMAGE_PANEL:String='CLICKED_DISABLED_IMAGE_PANEL';
+			public static const CLICKED_DISABLED_CLIPART_PANEL:String='CLICKED_DISABLED_CLIPART_PANEL';
+			
 			protected function onInit(event:FlexEvent):void
 			{
 				//send up initial color
@@ -45,14 +49,18 @@
 				//this.txt.maxChars
 				/* 			 */
 				
-				this.rowOne.alpha = 0.2
+/* 				this.rowOne.alpha = 0.2
 				this.rowOne.enabled = false; 
 				
 				this.secondRow.alpha = 0.2
 				this.secondRow.enabled = false; 
 				
 				this.thirdRow.alpha = 0.2
-				this.thirdRow.enabled = false; 
+				this.thirdRow.enabled = false;  */
+				
+				this.coverRowOne.visible = true; 
+				this.coverRowTwo.visible = true; 
+				this.coverRowThree.visible = true;
 				
 				if ( this.layer == null )
 				{
@@ -78,8 +86,10 @@
 				if (  this.layer.type == ColorLayerVO.Type ) 
 				{
 					//this.enabledAllSubPanels(); 
-					this.rowOne.alpha = 1; 
-					this.rowOne.enabled = true;  
+					/* this.rowOne.alpha = 1; 
+					this.rowOne.enabled = true;   */
+					this.coverRowOne.visible = false; 
+					
 				}
 				
 				if ( layer.type == ImageLayerVO.Type )
@@ -138,24 +148,59 @@
 			
 			public function enableImagePanels() : void
 			{
+				/* 
 				this.rowOne.alpha = 0.2
 				this.secondRow.alpha = 1; 
 				this.thirdRow.alpha = 1
 				this.rowOne.enabled = false; 
 				this.secondRow.enabled = true; 
 				this.thirdRow.enabled = true;
+				 */
+				this.coverRowOne.visible = true; 
+				this.coverRowTwo.visible = false; 
+				this.coverRowThree.visible = false;
 			}
 			
 			
 			private function enabledAllSubPanels():void
 			{
-				this.rowOne.alpha = 1; 
+/* 				this.rowOne.alpha = 1; 
 				this.secondRow.alpha = 1; 
 				this.thirdRow.alpha = 1
 				this.rowOne.enabled = true; 
 				this.secondRow.enabled = true; 
-				this.thirdRow.enabled = true;
+				this.thirdRow.enabled = true; */
+				
+				this.coverRowOne.visible = false; 
+				this.coverRowTwo.visible = false; 
+				this.coverRowThree.visible = false;
 			}
+			
+			protected function onClickBgPanelWhenDisabled(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				if ( this.rowOne.alpha == 1 ) 
+				{
+					return;
+				}
+				//trace(); 
+			}
+			
+			protected function onClickBgPanel_WhenDisabled(event:MouseEvent):void
+			{
+				this.dispatchEvent( new Event(CLICKED_DISABLED_BG_PANEL  ) ) ; 
+			}
+			
+			protected function onClickUploadControls_WhenDisabled(event:MouseEvent):void
+			{
+				this.dispatchEvent( new Event(CLICKED_DISABLED_IMAGE_PANEL  ) ) ; 
+			}
+			
+			protected function onClickClipArtControls_WhenDisabled(event:MouseEvent):void
+			{
+				this.dispatchEvent( new Event(CLICKED_DISABLED_CLIPART_PANEL  ) ) ; 
+			}
+
 			
 		]]>
 	</fx:Script>
@@ -199,7 +244,7 @@
 		gap="20">
 		
 		<!-- 1st Row-->
-		<s:Group id="rowOne" 
+		<s:Group id="rowOne"  				
 				 width="100%" height="50" >
 			
 			<s:Label y="8" text="Background  Color" fontSize="16" verticalCenter="0"/>
@@ -253,6 +298,18 @@
 			</s:Group>
 			
 			
+			
+			<s:Group id="coverRowOne"  		 visible="false"		
+					 useHandCursor="true" buttonMode="true"
+					 click="onClickBgPanel_WhenDisabled(event)"
+					 width="100%" height="100%" >
+				<s:Rect   width="100%" height="100%" >
+					<s:fill>
+						<s:SolidColor  alpha="0.7"    color="0xFFFFFF"/>
+					</s:fill>
+				</s:Rect>
+			</s:Group>
+			
 		</s:Group>
 		
 		
@@ -284,6 +341,19 @@
 					 source="assets/images/upload.jpg"
 					 smooth="true"/>
 			
+			
+			
+			<s:Group id="coverRowTwo"  		 visible="false"		
+					 click="onClickUploadControls_WhenDisabled(event)"
+					 useHandCursor="true" buttonMode="true"
+					 width="100%" height="100%" >
+				<s:Rect   width="100%" height="100%" >
+					<s:fill>
+						<s:SolidColor  alpha="0.7"    color="0xFFFFFF"/>
+					</s:fill>
+				</s:Rect>
+			</s:Group>
+			
 		</s:Group>
 		
 		
@@ -312,6 +382,19 @@
 			<s:Image id="openClipart" smooth="true"
 					 right="0" width="60" height="30" mouseChildren="false"
 					 source="assets/images/browse.jpg" verticalCenter="0"/>
+			
+			
+			
+			<s:Group id="coverRowThree"  		 visible="false"		
+					 click="onClickClipArtControls_WhenDisabled(event)"
+					 useHandCursor="true" buttonMode="true"
+					 width="100%" height="100%" >
+				<s:Rect   width="100%" height="100%" >
+					<s:fill>
+						<s:SolidColor  alpha="0.7"  color="0xFFFFFF"/>
+					</s:fill>
+				</s:Rect>
+			</s:Group>
 			
 		</s:Group>
 		

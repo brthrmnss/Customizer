@@ -75,6 +75,8 @@ package org.syncon.Customizer.vo
 		 * */
 		public function get displayName():String
 		{
+			if ( this.nameHidden != null && this.visible == false ) 
+				return this.nameHidden
 			return this.name;
 		}
 		public function get aaa():String
@@ -119,6 +121,11 @@ package org.syncon.Customizer.vo
 			_visible = value;
 		}
 
+		/**
+		 * If set, name will change when hidden 
+		 * */
+		public var nameHidden : String; 
+		
 		public var locked : Boolean = false; 
 		public var required : Boolean = false;
 		

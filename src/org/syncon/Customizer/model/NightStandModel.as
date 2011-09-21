@@ -440,6 +440,25 @@ package org.syncon.Customizer.model
 		}
 		
 		/**
+		 * The more approprite implementationof the above function
+		 * */
+		public function getLayersByType2(layerType : String, layerSubType : String = null ) : Array
+		{
+			var found : Array = [] ; 
+			for each ( var l : LayerBaseVO in this.layers ) 
+			{
+				if (l.type == layerType ) 
+				{
+					if ( layerSubType == null ) 
+					found.push(l)
+					else if ( l.subType == layerSubType) 
+						found.push(l)
+				}
+			}
+			return found; 
+		}
+		
+		/**
 		 * Get next visible layer going upward ...
 		 * */
 		public function getNextLayer(startingIndex : int = 0, inListOnly : Boolean = true, testFunction : Function = null  ) : LayerBaseVO
@@ -610,12 +629,13 @@ package org.syncon.Customizer.model
 			var subTotal : Number = 0;
 			var grandTotal : Number = 0;
 			grandTotal += this.baseItem.price;
+			var totalCustomizedPrice : Number = 0 ; 
 			//shouldn't this calculate for faces that haven't been loaded? ... 
 			//or force user to see other side
 			for each ( var face : FaceVO in this.baseItem.faces.toArray() )  
 			{
 				var collective : Array = face.collectiveLayerPrices.concat();
-				//clear teh first layer
+				//reset collective layers 
 				for each ( var c : CollectiveLayerPriceVO in collective ) 
 				{
 					if ( c.layer == null )  continue;
@@ -652,6 +672,9 @@ package org.syncon.Customizer.model
 								continue;
 							
 						}
+						//process collectives
+						//look for matching type, identify if we should override the price
+						//if  collective does not already have a layer set
 						for each (   c  in collective ) 
 						{
 							if ( c.type != l.type ) 
@@ -715,11 +738,14 @@ package org.syncon.Customizer.model
 						subTotal += layerCost
 					} 
 				}
+				face.priceConfiguredLayers = 0 
 				face.price = subTotal;
 				grandTotal += face.price;
+				totalCustomizedPrice += face.priceConfiguredLayers;
 			}
 			
 			this.baseItem.grand_total = grandTotal;
+			this.baseItem.totalConfiguredPrice = totalCustomizedPrice
 			this.dispatch(new NightStandModelEvent(NightStandModelEvent.PRICE_CANGED,grandTotal));
 			
 		}

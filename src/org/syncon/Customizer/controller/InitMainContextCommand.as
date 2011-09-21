@@ -55,7 +55,7 @@ package org.syncon.Customizer.controller
 				//this.createDefaultProduct() ; 
 				
 				this.createDetailedDefaultProduct();
-				this.createDetailedDefaultProduct_Engrave()
+				//this.createDetailedDefaultProduct_Engrave()
 				//this.createDetailedDefaultProduct_Engrave2(false)
 				if ( this.model.flex ) 
 				{
@@ -703,9 +703,10 @@ package org.syncon.Customizer.controller
 			textLayer.maxFontSize = 35
 			textLayer.minFontSize = 6
 			textLayer.prompt_layer = true; 
+			textLayer.nameHidden = 'put something here';  
 			face.layersToImport.push(textLayer);
 			var imageLayer: ImageLayerVO
-			
+			//face.importFirstLayerSelection = textLayer; 
 			
 			imageLayer = new ImageLayerVO;
 			imageLayer.name = 'Upload'

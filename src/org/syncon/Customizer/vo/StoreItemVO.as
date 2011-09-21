@@ -72,6 +72,10 @@ package  org.syncon.Customizer.vo
 		public var price:Number=0;
 		public var sku:String;
 		public var grand_total:Number;
+		/**
+		 * price of all the layers that have been configuredd
+		 * */
+		public var totalConfiguredPrice:Number;
 		
 		public function export() : void
 		{

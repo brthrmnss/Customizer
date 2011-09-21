@@ -201,7 +201,7 @@ package org.syncon2.utils.sound
 				this.playNextSound()
 		}
 		
-		static private var volume : int = 50 
+		static private var volume : int = 90 
 		public function setVolume( v : int) : void
 		{
 			volume = v; 

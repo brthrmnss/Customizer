@@ -42,7 +42,7 @@ package  org.syncon.Customizer.controller
 			var json:Object = JSON.decode(event.str);
 			trace();	
 			var product:StoreItemVO = new StoreItemVO;
-			product.name = json.name + "  |";
+			product.name = json.name ;
 			
 			product.sku = json.sku; 
 			if(json.hasOwnProperty( 'price' )) 

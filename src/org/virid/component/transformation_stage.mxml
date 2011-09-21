@@ -111,11 +111,12 @@
 				</s:stroke>
 			</s:Line>
 			<s:HGroup id="holderProductTitle" paddingLeft="10" paddingRight="10">
+				<s:Label text="Product " styleName=" Arial"/>
 				<s:Label id="txtProductName" 
 						 styleName="grayTxt Arial"
-						 text="Zippo Lighter |"
+						 text="Zippo Lighter"
 						 />
-				<s:Label text="Edit" styleName="redTxt Arial"/>
+				
 			</s:HGroup>
 		</s:Group>
 		

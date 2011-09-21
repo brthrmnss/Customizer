@@ -54,7 +54,7 @@ package  org.virid.component
 					
 			if ( newName != layer.name ) 
 			{
-				layer.name = newName + ' Clipart'; 
+				layer.name = newName /*+ ' Clipart'*/; 
 				layer.update(); 
 			}
 			
@@ -212,6 +212,7 @@ package  org.virid.component
 					imgLayer.update(); 
 					imgLayer.updateVisibility();
 					this.model.currentLayer = imgLayer; 
+					currentLayer = this.model.currentLayer
 				}
 				if ( currentLayer.visible == false ) 
 				{

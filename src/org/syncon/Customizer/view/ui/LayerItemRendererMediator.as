@@ -264,7 +264,15 @@ package org.syncon.Customizer.view.ui
 		public function onResize(event:ResizeEvent):void
 		{
 			if ( this.layer == null ) //why is this necessary? 
+				return;
+			if ( this.layer != this.ui.layer ) 
+			{
+				//09/22/11
+				//this happens when a image layer i sloaded ... we can safely ignore thise 
+				//as data change will be called to resolve this 
+				trace('layer is not same as ui layer ....', this.layer.name, this.ui.layer.name ) 
 				return; 
+			}
 			if ( this.ui.resetting ) 
 				return; 
 			/**
@@ -337,9 +345,14 @@ package org.syncon.Customizer.view.ui
 			}
 			else if ( this.layer.vertStartAlignment == '' ) 
 			{
+				/*if ( this.layer.name == "Jack 'o Lantern" ) 
+				{
+					trace('caught layer name'); 
+				}*/
 				this.layer.vertStartAlignment = ''
 				this.ui.y = this.model.baseLayer.y + this.ui.layer.y; 
 				this.layer.y = this.model.baseLayer.y + this.ui.layer.y; 
+				trace('reposition y', this.layer.name, this.layer.y,  this.model.baseLayer.y + this.ui.layer.y )
 				//this.ui.layer.x = this.model.baseLayer.x + this.ui.layer.x; 
 				
 				//this.ui.layer.y = this.ui.y = this.model.viewer.height/2 - this.ui.height/2
@@ -361,6 +374,7 @@ package org.syncon.Customizer.view.ui
 				}
 				else
 				{*/
+				//if ( !  isNaN( this.layer.x
 				this.layer.horizStartAlignment = ''
 				//this.ui.layer.y = this.model.baseLayer.y + this.ui.layer.y; 
 				this.ui.x = this.model.baseLayer.x + this.ui.layer.x; 

@@ -4,16 +4,13 @@ package  org.syncon.Customizer.controller
 	
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;
-	import flash.events.ProgressEvent;
 	import flash.external.ExternalInterface;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
-	import flash.net.URLVariables;
 	
 	import mx.controls.Alert;
-	import mx.controls.Image;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
@@ -26,9 +23,6 @@ package  org.syncon.Customizer.controller
 	import org.syncon.Customizer.vo.ImageLayerVO;
 	import org.syncon.Customizer.vo.LayerBaseVO;
 	import org.syncon.Customizer.vo.TextLayerVO;
-	
-	import spark.effects.interpolation.RGBInterpolator;
-	
 	
 	
 	public class ExportJSONCommand extends Command
@@ -60,7 +54,7 @@ package  org.syncon.Customizer.controller
 				
 				
 				//just dealign with one face at the moment
-
+				
 				for each(var Surface:FaceVO in this.model.baseItem.faces){
 					
 					Face = new Object;
@@ -75,7 +69,7 @@ package  org.syncon.Customizer.controller
 						if(layer.name == 'Base Layer')
 							continue;
 						/*if(!layer.visible)
-							continue;*/
+						continue;*/
 						var jsonLayer:Object = {};
 						var jsonMedia:Object = {};
 						var jsonTransform:Object = {};
@@ -91,26 +85,34 @@ package  org.syncon.Customizer.controller
 						
 						jsonMedia.source = layer.url;
 						jsonMedia.type = layer.type;
+						/*
 						///TODO: Why is this next part necessary -23 x - 13.5
 						jsonTransform.x = layer.x -23;
 						jsonTransform.y = layer.y - 13.5;
+						*/
+						//take offsets caused by base layer 
+						//100x100 canvas, and 50x50 base image, we center image first so base image at 
+						//25x25 .... all images have to placed at an offset to 25x25, we must take it out to export 
+						jsonTransform.x = layer.x - this.model.baseLayer.x;
+						jsonTransform.y = layer.y - this.model.baseLayer.y; 
+						
 						jsonTransform.width = layer.width;
 						jsonTransform.height = layer.height;
 						jsonTransform.rotation = layer.rotation.toFixed(2);
 						jsonLayer.orientation = "default";
 						
-
+						
 						if(layer.type == TextLayerVO.Type)
 						{		
-					
+							
 							//convert to text layer
 							var textLayer:TextLayerVO = layer as TextLayerVO;
 							jsonLayer.text = textLayer.text;///remove
 							if( textLayer.text == "" && textLayer.showInList == true )
 								continue;		
 							//only if we have content and isnt a hidden layer
-
- 							jsonMedia.source = textLayer.text;
+							
+							jsonMedia.source = textLayer.text;
 							jsonMedia.font = textLayer.fontFamily;
 							jsonMedia.fontsize = textLayer.fontSize;
 							if(textLayer.color.indexOf('0x') == 0)//if we have 0x in the color, remove it and use that
@@ -128,8 +130,8 @@ package  org.syncon.Customizer.controller
 							
 							
 							jsonLayer.fontFamily = textLayer.fontFamily;								//engrave layer
-								textLayer.fontFamily; //remove
-								textLayer.fontSize //remove
+							textLayer.fontFamily; //remove
+							textLayer.fontSize //remove
 							if(layer.subType == ViridConstants.SUBTYPE_ENGRAVE)
 							{
 								product.type = "engrave";
@@ -137,9 +139,9 @@ package  org.syncon.Customizer.controller
 							else
 							{
 								//design text layer	
-							
+								
 							}							
-
+							
 						}						
 						else if(layer.type == ImageLayerVO.Type)
 						{
@@ -181,7 +183,7 @@ package  org.syncon.Customizer.controller
 							if( jsonMedia.source == "" )
 								jsonMedia.source = 'ffffff';
 							//jsonLayer.color = jsonMedia.source; //because the backed was built to listen to jsonLayer.color - would love to remove this
-
+							
 						}
 						else
 						{
@@ -196,7 +198,7 @@ package  org.syncon.Customizer.controller
 						jsonLayer.Media = jsonMedia;
 						//jsonLayer.Fonts = jsonFonts;
 						jsonLayer.transform = jsonTransform;
-
+						
 						layers.push(jsonLayer);
 						
 					}
@@ -206,6 +208,7 @@ package  org.syncon.Customizer.controller
 				}
 				product.Faces = Faces;
 				
+				this.printObject(product); 
 				
 				var exportObj:Object = new Object;
 				
@@ -225,10 +228,10 @@ package  org.syncon.Customizer.controller
 						
 					}catch(e:Error){};
 					try{
-					exportObj['TEXT1'] = product.Faces[0].Layers[0].text;
+						exportObj['TEXT1'] = product.Faces[0].Layers[0].text;
 					}catch(e:Error){};
 					try{
-					exportObj['TEXT2'] = product.Faces[0].Layers[1].text;
+						exportObj['TEXT2'] = product.Faces[0].Layers[1].text;
 					}catch(e:Error){};
 					try{
 						exportObj['TEXT3'] = product.Faces[1].Layers[0].text;
@@ -268,7 +271,7 @@ package  org.syncon.Customizer.controller
 					service.addEventListener(FaultEvent.FAULT, httpFault);
 					service.send(exportThis);
 				}
-
+				
 				
 			}	
 			
@@ -276,8 +279,8 @@ package  org.syncon.Customizer.controller
 			if ( event.type == ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE ) 
 			{
 				
-
-			
+				
+				
 				
 				imgLayer = this.model.currentLayer as ImageLayerVO; 
 				//trace('layer_image_item_renderer', 'source', imgLayer.source ) ;
@@ -313,7 +316,38 @@ package  org.syncon.Customizer.controller
 			
 		}
 		
-
+		private function printObject(product:Object):void
+		{
+			// TODO Auto Generated method stub
+			var result : String = this.traceObject( product ) 
+			trace( result ) ;  
+		}		
+		private function traceObject(obj:*,level:int=0,output:String=""):*{
+			var tabs:String = "";
+			for(var i:int=0; i<=level; i++)//, tabs+="\t")
+			{
+				
+				tabs += "\t";
+				
+				tabs = ''; 
+				for ( var j : int = 0 ; j < level; j++ ) 
+				{
+					tabs += "\t";
+				}
+				
+				for(var child:* in obj)
+				{
+					output += tabs +"["+ child +"] => "+obj[child];
+					var childOutput:String=traceObject(obj[child], level+1);
+					if(childOutput!='')
+					{
+						output+=' {\n'+childOutput+tabs +'}';
+					}
+					output += "\n";
+				}
+				return output;
+			}
+		}
 		
 		protected function uploadResult(event:HTTPStatusEvent):void
 		{
@@ -366,7 +400,7 @@ package  org.syncon.Customizer.controller
 		/*		
 		private function loadSound():void
 		{
-			
+		
 		}*/
 		
 		

@@ -204,7 +204,8 @@
 					text.data = a ; 
 					//this.dispatchEvent( new ResizeEvent(ResizeEvent.RESIZE) ) ; 
 				}
-				this.dispatchEvent( new CustomEvent(DATA_CHANGED) ) 
+				this.dispatchEvent( new CustomEvent(DATA_CHANGED) ) //why was this below? 
+					//when it is below ... the image will notify my insteantly of soame changes and messup everything 
 			}
 			
 			private function onUpdatedLayer(e:Event=null):void

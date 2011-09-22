@@ -261,7 +261,41 @@ package  org.syncon.Customizer.controller
 			}
 			//face.layersToImport = [];
 			this.model.baseItem = product;
-			
+			this.printObject( json ) ; 
+		}
+		
+		
+		private function printObject(product:Object):void
+		{
+			// TODO Auto Generated method stub
+			var result : String =  traceObject( product ) 
+			trace( result ) ;  
+		}		
+		static public  function traceObject(obj:*,level:int=0,output:String=""):*{
+			var tabs:String = "";
+			for(var i:int=0; i<=level; i++)//, tabs+="\t")
+			{
+				
+				tabs += "\t";
+				
+				tabs = ''; 
+				for ( var j : int = 0 ; j < level; j++ ) 
+				{
+					tabs += "\t";
+				}
+				
+				for(var child:* in obj)
+				{
+					output += tabs +"["+ child +"] => "+obj[child];
+					var childOutput:String=traceObject(obj[child], level+1);
+					if(childOutput!='')
+					{
+						output+=' {\n'+childOutput+tabs +'}';
+					}
+					output += "\n";
+				}
+				return output;
+			}
 		}
 		
 		private function copyBasics(layer:LayerBaseVO, layerImport:Object):void

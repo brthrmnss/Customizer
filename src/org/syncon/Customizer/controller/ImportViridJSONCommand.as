@@ -253,6 +253,9 @@ package  org.syncon.Customizer.controller
 					}
 					
 					
+				}
+				
+				if(face.importFirstLayerSelection == null){
 					
 				}
 			}
@@ -264,8 +267,10 @@ package  org.syncon.Customizer.controller
 		private function copyBasics(layer:LayerBaseVO, layerImport:Object):void
 		{
 			// TODO Auto Generated method stub
-			if( layerImport.hasOwnProperty( 'name' )  )
-				layer.name = layerImport.name; 
+			if( layerImport.hasOwnProperty( 'name' )  ){
+				layer.name = layerImport.name;
+				layer.nameHidden = layerImport.name;
+			}
 			if( layerImport.hasOwnProperty( 'price' )  )
 				layer.cost = layerImport.price; 
 			if ( layerImport.hasOwnProperty( 'required' ) ) 

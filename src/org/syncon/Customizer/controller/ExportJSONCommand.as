@@ -113,7 +113,11 @@ package  org.syncon.Customizer.controller
  							jsonMedia.source = textLayer.text;
 							jsonMedia.font = textLayer.fontFamily;
 							jsonMedia.fontsize = textLayer.fontSize;
-							if(textLayer.color != null )
+							if(textLayer.color.indexOf('0x') == 0)//if we have 0x in the color, remove it and use that
+							{
+								jsonMedia.color = textLayer.color.replace("0x","");
+							}
+							else if(textLayer.color != null )
 								jsonMedia.color = String(textLayer.color.toString(16));
 							else
 								jsonMedia.color = '';

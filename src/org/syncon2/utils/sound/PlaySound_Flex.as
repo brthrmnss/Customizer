@@ -136,5 +136,11 @@ package org.syncon2.utils.sound
 				this.playNextSound()
 		}
 		
+		public function setVolume( v : int) : void
+		{
+		}
+		
+		
+		
 	}
 }

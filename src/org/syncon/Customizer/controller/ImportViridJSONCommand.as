@@ -192,7 +192,10 @@ package  org.syncon.Customizer.controller
 						//TODO: orientation has been removed
 						textLayer.verticalText = layerImport.orientation=='vertical';
 						textLayer.maxChars = layerImport.Media.max
-						textLayer.fontSize = 20
+						if( layerImport.Media.hasOwnProperty( 'fontsize' ) && layerImport.Media.fontsize != null && layerImport.Media.fontsize != '' )
+							textLayer.fontSize = layerImport.Media.fontsize;
+						else
+							textLayer.fontSize = 20;
 						if( layerImport.Media.hasOwnProperty( 'color' ) && layerImport.Media.color != null && layerImport.Media.color != '' )
 							textLayer.color = '0x'+layerImport.Media.color
 						fonts = [];

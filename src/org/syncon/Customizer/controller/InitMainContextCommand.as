@@ -87,6 +87,7 @@ package org.syncon.Customizer.controller
 			}*/
 			var prefix : String = "assets/images/zippoLibrary/clipart/";
 			var cprefix : String = "assets/images/zippoLibrary/clipart/color/";
+			var backprefix : String = "assets/images/zippoLibrary/clipart/set2/";
 			var importImages : Array = [
 				/*['Four Pointed Star', prefix + '4ptstar-01.png'],
 				['Airplane', prefix + 'airplane.png'],
@@ -236,7 +237,37 @@ package org.syncon.Customizer.controller
 				['Wedding Bells' , cprefix + 'whitenredweddingbells.png'],
 				['SnowFlake' , cprefix + 'whitesnowflake.png'],
 				['WineGlass' , cprefix + 'wineglasses.png'],
-				['YellowRose' , cprefix + 'yellowrose.png']
+				['YellowRose' , cprefix + 'yellowrose.png'],
+				
+				['Blue' , backprefix + '001775-RF_Color.png'],
+				['50 Yard Line' , backprefix + '002076-RF_Color.png'],
+				['Baseball' , backprefix + '002077-RF_Color.png'],
+				['Checker Flag' , backprefix + '002082-RF_Color.png'],
+				['Speaker' , backprefix + '002663-RF_Color.png'],
+				['Ace' , backprefix + '003948-RF_Color.png'],
+				['Wanted' , backprefix + '003949-RF_Color.png'],
+				['Fractal Card Suit' , backprefix + 'Background005.png'],
+				['Trees' , backprefix + 'Background009.png'],
+				['Tiger Stripe' , backprefix + 'Background018.png'],
+				['Chrome' , backprefix + 'Background042.png'],
+				['American Flag' , backprefix + 'Background045.png'],
+				['Wood' , backprefix + 'Background048.png'],
+				['Leopard' , backprefix + 'Background068.png'],
+				['Brick' , backprefix + 'Background095.png'],
+				['Wood 2' , backprefix + 'Background103.png'],
+				['Hearts + Roses' , backprefix + 'Background112.png'],
+				['Fireworks' , backprefix + 'Background122.png'],
+				['Tartan' , backprefix + 'Background184.png'],
+				['Winter' , backprefix + 'Background197.png'],
+				['Lightning' , backprefix + 'Background219.png'],
+				['Barbwire' , backprefix + 'barbwire.png'],
+				['Card Suit' , backprefix + 'cardsuit.png'],
+				['Congratulations' , backprefix + 'congratulations.png'],
+				['Frame' , backprefix + 'frame.png'],
+				['Scroll' , backprefix + 'scroll.png'],
+				['Shamrock' , backprefix + 'shamrock.png'],
+				['Sheild' , backprefix + 'shield.png']
+
 			]
 			var i : int = 0 ; 
 			var imgs : Array = []; 

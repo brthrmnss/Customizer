@@ -170,11 +170,14 @@ package  org.syncon.Customizer.controller
 						textLayer.fonts = fonts;
 						if(fonts.length > 0 )
 							textLayer.fontFamily = ( fonts[0].swf_name != null )?fonts[0].swf_name : fonts[0].name;
+						if(layerImport.Media.hasOwnProperty( 'font' ))
+							textLayer.fontFamily = layerImport.Media.font;
+						textLayer.text = layerImport.Media.source;
 						
 						textLayer.vertStartAlignment="";
 						textLayer.horizStartAlignment="";
 						
-						textLayer.text = layerImport.Media.source;
+						
 						
 						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
 							face.importFirstLayerSelection = textLayer; 

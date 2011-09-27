@@ -68,8 +68,8 @@ package  org.syncon.Customizer.controller
 							continue;						
 						if(layer.name == 'Base Layer')
 							continue;
-						/*if(!layer.visible)
-						continue;*/
+						if(layer.visible == false)
+							continue;
 						var jsonLayer:Object = {};
 						var jsonMedia:Object = {};
 						var jsonTransform:Object = {};
@@ -191,7 +191,7 @@ package  org.syncon.Customizer.controller
 							if( layer.showInList == false )
 							{
 								jsonLayer.type = "hidden";
-								Alert.show('hidden layer');	
+								//Alert.show('hidden layer');	
 							}
 						}
 						
@@ -384,7 +384,7 @@ package  org.syncon.Customizer.controller
 			
 			if(gotoNextStep)
 			{
-				Alert.show('saved...');
+				//Alert.show('saved...');
 				if(ExternalInterface.available)
 				{
 					ExternalInterface.call('navigateToNextStep');	

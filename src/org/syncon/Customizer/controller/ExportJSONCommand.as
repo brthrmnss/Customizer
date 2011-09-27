@@ -108,8 +108,8 @@ package  org.syncon.Customizer.controller
 							//convert to text layer
 							var textLayer:TextLayerVO = layer as TextLayerVO;
 							jsonLayer.text = textLayer.text;///remove
-							if( textLayer.text == "" && textLayer.showInList == true )
-								continue;		
+							if( textLayer.text == "" && textLayer.showInList == true && layer.subType != ViridConstants.SUBTYPE_ENGRAVE )
+								continue;	
 							//only if we have content and isnt a hidden layer
 							
 							jsonMedia.source = textLayer.text;
@@ -229,17 +229,17 @@ package  org.syncon.Customizer.controller
 						
 					}catch(e:Error){};
 					try{
-						exportObj['TEXT1'] = product.Faces[0].Layers[0].text;
-					}catch(e:Error){};
+						exportObj['TEXT1'] = product.Faces[0].Layers[0].text || "";
+					}catch(e:Error){exportObj['TEXT1'] = "";};
 					try{
-						exportObj['TEXT2'] = product.Faces[0].Layers[1].text;
-					}catch(e:Error){};
+						exportObj['TEXT2'] = product.Faces[0].Layers[1].text || "";
+					}catch(e:Error){exportObj['TEXT2'] = "";};
 					try{
-						exportObj['TEXT3'] = product.Faces[1].Layers[0].text;
-					}catch(e:Error){};
+						exportObj['TEXT3'] = product.Faces[1].Layers[0].text || "";
+					}catch(e:Error){exportObj['TEXT3'] = "";};
 					try{
-						exportObj['TEXT4'] = product.Faces[1].Layers[1].text;
-					}catch(e:Error){};
+						exportObj['TEXT4'] = product.Faces[1].Layers[1].text || "";
+					}catch(e:Error){exportObj['TEXT4'] = "";};
 					
 					trace( exportObj['TEXT1'] );//product.layer);
 					for ( var prop: Object in exportObj ) 

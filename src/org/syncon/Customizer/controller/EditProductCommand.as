@@ -244,6 +244,10 @@ package org.syncon.Customizer.controller
 						imgLayer = event.data3 as ImageLayerVO; 
 					event.oldData = imgLayer.url;
 					//upload sends bitmapdata bytes, otherwise we have string url (event.data)
+					/*
+					event.oldData2 = imgLayer.width; 
+					event.oldData3 = imgLayer.height; 
+					*/
 					if ( event.data != null ) 
 					{
 						imgLayer.url = event.data.toString()
@@ -265,6 +269,9 @@ package org.syncon.Customizer.controller
 						imgLayer.update(ImageLayerVO.SOURCE_CHANGED)//'fontSize'); 
 						imgLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER
 						imgLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER//need better way to refresh this
+						
+						imgLayer.importWidth = NaN
+						imgLayer.importHeight = NaN; 
 					}
 					this.model.currentLayer = imgLayer; 
 					event.data3 = imgLayer ; //don't like this feel like storing old layer should be automatic ...
@@ -887,7 +894,7 @@ package org.syncon.Customizer.controller
 					if ( event.firstTime && face.importFirstLayerSelection != null && selectLayerFirst != null ) 
 					{
 						/*if ( selectLayerFirst.visible == false ) 
-							throw 'Error ' + ' Face ' +  face.name +  ' selectLayerFirst is not visible' */
+						throw 'Error ' + ' Face ' +  face.name +  ' selectLayerFirst is not visible' */
 						this.model.currentLayer = selectLayerFirst
 					}
 					else if ( face.currentLayer != null ) 
@@ -1338,6 +1345,14 @@ package org.syncon.Customizer.controller
 				layer.importY = layer.y;
 				layer.vertStartAlignment = ''; 
 			}
+			if ( ! isNaN( layer.height ) )
+			{
+				layer.importHeight = layer.height;
+			}
+			if ( ! isNaN( layer.width ) )
+			{
+				layer.importWidth = layer.width;
+			}			
 			
 		}		
 		

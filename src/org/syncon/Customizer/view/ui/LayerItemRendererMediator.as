@@ -317,22 +317,39 @@ package org.syncon.Customizer.view.ui
 					{*/
 					if ( this.ui.width > this.model.baseLayer.width ) 
 					{
-						this.blockUpdatingModel = true 
-						var wH : Number = this.ui.image.img.height/this.ui.image.img.width
-						this.flexModel1.width = this.model.baseLayer.width - 40; 
+						var shrinkLayerToFitWidth : Boolean = true; 
+						//if a layer height is specified, use that, 
+						//if not, and ui is wider than layer, deacrese it's size
+						if (  ! isNaN(this.layer.importWidth ) || ! isNaN( this.layer.importHeight ) ) 
+						{
+							//be sure to clear this with the image source changes ... 
+							if ( this.layer.importWidth == this.layer.width || this.layer.importHeight == this.layer.height ) 
+							{
+								shrinkLayerToFitWidth = false; 
+								trace('did not resize large layer');
+							}
+							//Note: do not like this ... prefrably layerVO has setting of autoResize, and here we won't do that
+						}
 						
-						this.ui.image.img.width = this.flexModel1.width; 
-						this.flexModel1.height =this.ui.image.img.width *wH
-						this.ui.image.img.height = this.flexModel1.height; 				
-						
-						//have to copy it back to ensure it is not change back to layer 
-						this.layer.width = this.flexModel1.width; 
-						this.layer.height = this.flexModel1.height;
-						//ui is used to set the height ... setting it explclity, will this allow it to be rezies later? 
-						this.ui.width = this.flexModel1.width; 
-						this.ui.height = this.flexModel1.height; 	
-						//but handles are not propelry placed? ...
-						this.blockUpdatingModel = false 
+						if ( shrinkLayerToFitWidth ) 
+						{
+							this.blockUpdatingModel = true 
+							var wH : Number = this.ui.image.img.height/this.ui.image.img.width
+							this.flexModel1.width = this.model.baseLayer.width - 40-10; 
+							
+							this.ui.image.img.width = this.flexModel1.width; 
+							this.flexModel1.height =this.ui.image.img.width *wH
+							this.ui.image.img.height = this.flexModel1.height; 				
+							
+							//have to copy it back to ensure it is not change back to layer 
+							this.layer.width = this.flexModel1.width; 
+							this.layer.height = this.flexModel1.height;
+							//ui is used to set the height ... setting it explclity, will this allow it to be rezies later? 
+							this.ui.width = this.flexModel1.width; 
+							this.ui.height = this.flexModel1.height; 	
+							//but handles are not propelry placed? ...
+							this.blockUpdatingModel = false
+						}
 					}
 					/*	}*/
 				}
@@ -347,7 +364,7 @@ package org.syncon.Customizer.view.ui
 			{
 				/*if ( this.layer.name == "Jack 'o Lantern" ) 
 				{
-					trace('caught layer name'); 
+				trace('caught layer name'); 
 				}*/
 				this.layer.vertStartAlignment = ''
 				this.ui.y = this.model.baseLayer.y + this.ui.layer.y; 
@@ -788,7 +805,7 @@ package org.syncon.Customizer.view.ui
 			}
 			
 			this.ui.callLater( this.setAsSelectedLayerIfSelected ) ; 
-
+			
 			
 		}
 		

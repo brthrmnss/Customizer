@@ -220,6 +220,14 @@ package org.syncon.Customizer.vo
 		 * */
 		public var importX:Number;
 		public var importY:Number;
+		
+		/**
+		 * used by images so we don't resize them when too large ...
+		 * or when importing a face where the image is outside the area ... 
+		 * */
+		public var importWidth:Number;
+		public var importHeight:Number;
+		
 		/**
 		 * turns of alignment options after first time ...
 		 * */

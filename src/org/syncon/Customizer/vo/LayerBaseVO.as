@@ -186,7 +186,18 @@ package org.syncon.Customizer.vo
 		private var _loadedIntoLister : Object; 
 		private var _data : Object = new Object();
 		public var vertStartAlignment: String = ALIGNMENT_CENTER ;
-		public var horizStartAlignment: String = ALIGNMENT_CENTER;
+		private var _horizStartAlignment: String = ALIGNMENT_CENTER;
+
+		public function get horizStartAlignment():String
+		{
+			return _horizStartAlignment;
+		}
+
+		public function set horizStartAlignment(value:String):void
+		{
+			_horizStartAlignment = value;
+		}
+
 		
 		public static const ALIGNMENT_CENTER : String = 'center' 
 		/**

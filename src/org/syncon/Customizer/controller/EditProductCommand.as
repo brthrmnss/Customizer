@@ -1331,7 +1331,7 @@ package org.syncon.Customizer.controller
 			if ( ! isNaN( layer.x ) )
 			{
 				layer.importX = layer.x;
-				layer.horizStartAlignment = ''; 
+				layer.vertStartAlignment = ''; 
 			}
 			if ( ! isNaN( layer.y ) )
 			{

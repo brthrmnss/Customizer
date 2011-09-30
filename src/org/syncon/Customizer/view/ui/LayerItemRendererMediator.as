@@ -359,7 +359,6 @@ package org.syncon.Customizer.view.ui
 			} 
 			if ( this.layer.horizStartAlignment == LayerBaseVO.ALIGNMENT_CENTER) 
 			{
-				
 				this.ui.layer.x = this.ui.x = this.model.viewer.width/2 - this.ui.width/2
 				this.layer.horizStartAlignment = null 
 			}

@@ -224,6 +224,10 @@ package  org.syncon.Customizer.controller
 						{
 							textLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER;
 							textLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER;
+							//if you don' tset to NaN EditProductCommand importLayer will remove the vert alignment
+							//need to work out which intention is prefered ...
+							textLayer.x = NaN; 
+							textLayer.y = NaN; 
 						}
 						
 						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )

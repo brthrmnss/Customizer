@@ -120,7 +120,16 @@ package org.syncon.Customizer.vo
 		{
 			_visible = value;
 		}
-
+		private var _hidden : Boolean = false;
+		public function get hidden():Boolean
+		{
+			
+			return _hidden;
+		}
+		public function set hidden(value:Boolean):void
+		{
+			_hidden = value;
+		}
 		/**
 		 * If set, name will change when hidden 
 		 * */

@@ -170,11 +170,14 @@ package  org.syncon.Customizer.controller
 						textLayer.fonts = fonts;
 						if(fonts.length > 0 )
 							textLayer.fontFamily = ( fonts[0].swf_name != null )?fonts[0].swf_name : fonts[0].name;
+						if(layerImport.Media.hasOwnProperty( 'font' ))
+							textLayer.fontFamily = layerImport.Media.font;
+						textLayer.text = layerImport.Media.source;
 						
 						textLayer.vertStartAlignment="";
 						textLayer.horizStartAlignment="";
 						
-						textLayer.text = layerImport.Media.source;
+						
 						
 						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
 							face.importFirstLayerSelection = textLayer; 
@@ -192,7 +195,10 @@ package  org.syncon.Customizer.controller
 						//TODO: orientation has been removed
 						textLayer.verticalText = layerImport.orientation=='vertical';
 						textLayer.maxChars = layerImport.Media.max
-						textLayer.fontSize = 20
+						if( layerImport.Media.hasOwnProperty( 'fontsize' ) && layerImport.Media.fontsize != null && layerImport.Media.fontsize != '' )
+							textLayer.fontSize = layerImport.Media.fontsize;
+						else
+							textLayer.fontSize = 20;
 						if( layerImport.Media.hasOwnProperty( 'color' ) && layerImport.Media.color != null && layerImport.Media.color != '' )
 							textLayer.color = '0x'+layerImport.Media.color
 						fonts = [];
@@ -213,6 +219,12 @@ package  org.syncon.Customizer.controller
 						if(layerImport.Media.hasOwnProperty( 'font' ))
 							textLayer.fontFamily = layerImport.Media.font;
 						textLayer.text = layerImport.Media.source;
+						
+						if(textLayer.text == "" && textLayer.x == 0 && textLayer.y == 0)
+						{
+							textLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER;
+							textLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER;
+						}
 						
 						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
 							face.importFirstLayerSelection = textLayer; 
@@ -246,7 +258,8 @@ package  org.syncon.Customizer.controller
 						this.copyBasics(hiddenLayer, layerImport );
 						hiddenLayer.showInList = false;
 						hiddenLayer.locked = true; 
-						hiddenLayer.visible = false
+						hiddenLayer.visible = false;
+						hiddenLayer.hidden = true;
 						hiddenLayer.subType = ViridConstants.SUBTYPE_ENGRAVE;
 						face.layersToImport.push(hiddenLayer);
 						//hiddenLayer.

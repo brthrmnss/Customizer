@@ -68,8 +68,8 @@ package  org.syncon.Customizer.controller
 							continue;						
 						if(layer.name == 'Base Layer')
 							continue;
-						/*if(!layer.visible)
-						continue;*/
+						if(layer.visible == false && layer.hidden == false)
+							continue;
 						var jsonLayer:Object = {};
 						var jsonMedia:Object = {};
 						var jsonTransform:Object = {};
@@ -108,14 +108,19 @@ package  org.syncon.Customizer.controller
 							//convert to text layer
 							var textLayer:TextLayerVO = layer as TextLayerVO;
 							jsonLayer.text = textLayer.text;///remove
-							if( textLayer.text == "" && textLayer.showInList == true )
-								continue;		
+							if( textLayer.text == "" && textLayer.showInList == true && layer.subType != ViridConstants.SUBTYPE_ENGRAVE )
+								continue;	
 							//only if we have content and isnt a hidden layer
 							
 							jsonMedia.source = textLayer.text;
 							jsonMedia.font = textLayer.fontFamily;
 							jsonMedia.fontsize = textLayer.fontSize;
-							if(textLayer.color != null )
+							var s:String = String(textLayer.color);
+							if(s.indexOf("0x") == 0)//if we have 0x in the color, remove it and use that
+							{
+								jsonMedia.color = textLayer.color.replace("0x","");
+							}
+							else if(textLayer.color != null )
 								jsonMedia.color = String(textLayer.color.toString(16));
 							else
 								jsonMedia.color = '';
@@ -186,7 +191,7 @@ package  org.syncon.Customizer.controller
 							if( layer.showInList == false )
 							{
 								jsonLayer.type = "hidden";
-								Alert.show('hidden layer');	
+								//Alert.show('hidden layer');	
 							}
 						}
 						
@@ -224,17 +229,17 @@ package  org.syncon.Customizer.controller
 						
 					}catch(e:Error){};
 					try{
-						exportObj['TEXT1'] = product.Faces[0].Layers[0].text;
-					}catch(e:Error){};
+						exportObj['TEXT1'] = product.Faces[0].Layers[0].text || "";
+					}catch(e:Error){exportObj['TEXT1'] = "";};
 					try{
-						exportObj['TEXT2'] = product.Faces[0].Layers[1].text;
-					}catch(e:Error){};
+						exportObj['TEXT2'] = product.Faces[0].Layers[1].text || "";
+					}catch(e:Error){exportObj['TEXT2'] = "";};
 					try{
-						exportObj['TEXT3'] = product.Faces[1].Layers[0].text;
-					}catch(e:Error){};
+						exportObj['TEXT3'] = product.Faces[1].Layers[0].text || "";
+					}catch(e:Error){exportObj['TEXT3'] = "";};
 					try{
-						exportObj['TEXT4'] = product.Faces[1].Layers[1].text;
-					}catch(e:Error){};
+						exportObj['TEXT4'] = product.Faces[1].Layers[1].text || "";
+					}catch(e:Error){exportObj['TEXT4'] = "";};
 					
 					trace( exportObj['TEXT1'] );//product.layer);
 					for ( var prop: Object in exportObj ) 
@@ -379,7 +384,7 @@ package  org.syncon.Customizer.controller
 			
 			if(gotoNextStep)
 			{
-				Alert.show('saved...');
+				//Alert.show('saved...');
 				if(ExternalInterface.available)
 				{
 					ExternalInterface.call('navigateToNextStep');	

@@ -157,7 +157,7 @@
 		</s:filters>-->
 	</s:BitmapImage>
 	<s:Label id="labelDisplay"
-			 textAlign="center" styleName="bbbTxt" styleName.hovered="redTxt"
+			 textAlign="center" styleName="bbbTxt" styleName.hovered="redTxt" styleName.selected="redTxt"
 			 maxDisplayedLines="1"
 			 horizontalCenter="0"   verticalAlign="bottom"
 			 left="2" right="2" top="2" bottom="2">

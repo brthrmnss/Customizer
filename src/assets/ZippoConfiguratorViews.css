@@ -134,7 +134,7 @@ mx|ToolTip {
 @font-face
 {
 	fontFamily: "Connecting Script";
-	src: url("fonts/emmascriptmvb.ttf");
+	src: url("fonts/CI/Commercial_Script_BT.ttf");
 	embedAsCFF: true;
 }
 @font-face

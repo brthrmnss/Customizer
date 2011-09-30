@@ -204,7 +204,7 @@ package  org.syncon.Customizer.controller
 						fonts = [];
 						for each(  fontIncoming  in layerImport.Fonts)
 						{
-							var font:FontVO = new FontVO();
+							 font = new FontVO();
 							font.name = fontIncoming.name;
 							font.swf_name = fontIncoming.swfname;
 							font.defaultSize = fontIncoming.size;
@@ -226,7 +226,7 @@ package  org.syncon.Customizer.controller
 							textLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER;
 							//if you don' tset to NaN EditProductCommand importLayer will remove the vert alignment
 							//need to work out which intention is prefered ...
-							textLayer.x = NaN; 
+							textLayer.x = 0+30; //give some padding .. 
 							textLayer.y = NaN; 
 						}
 						

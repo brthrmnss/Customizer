@@ -68,7 +68,7 @@ package  org.syncon.Customizer.controller
 							continue;						
 						if(layer.name == 'Base Layer')
 							continue;
-						if(layer.visible == false)
+						if(layer.visible == false && layer.hidden == false)
 							continue;
 						var jsonLayer:Object = {};
 						var jsonMedia:Object = {};

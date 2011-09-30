@@ -220,6 +220,12 @@ package  org.syncon.Customizer.controller
 							textLayer.fontFamily = layerImport.Media.font;
 						textLayer.text = layerImport.Media.source;
 						
+						if(textLayer.text == "" && textLayer.x == 0 && textLayer.y == 0)
+						{
+							textLayer.vertStartAlignment = LayerBaseVO.ALIGNMENT_CENTER;
+							textLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER;
+						}
+						
 						if( layerImport.hasOwnProperty( 'default' ) && layerImport.default == true  )
 							face.importFirstLayerSelection = textLayer; 
 						face.layersToImport.push(textLayer);
@@ -252,7 +258,8 @@ package  org.syncon.Customizer.controller
 						this.copyBasics(hiddenLayer, layerImport );
 						hiddenLayer.showInList = false;
 						hiddenLayer.locked = true; 
-						hiddenLayer.visible = false
+						hiddenLayer.visible = false;
+						hiddenLayer.hidden = true;
 						hiddenLayer.subType = ViridConstants.SUBTYPE_ENGRAVE;
 						face.layersToImport.push(hiddenLayer);
 						//hiddenLayer.

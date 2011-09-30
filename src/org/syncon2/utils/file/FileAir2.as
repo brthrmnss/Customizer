@@ -212,9 +212,21 @@ package  org.syncon2.utils.file
 			var pss :   SendRequest = new SendRequest(); 
 			var params : Object = {}; 
 			params.folder =dir
-				this.randomize(params); 
+			this.randomize(params); 
 			cmd = 'get_sub_dirs'
-				fxPreProc = JSON_decode
+			fxPreProc = JSON_decode
+			pss.request( baseAddressOfProxyServer+cmd, params, autoResult , autoFault ); 
+			fxResult = fx; 
+		}
+		
+		public function getSubFiles( dir :String, fx : Function=null ):void
+		{
+			var pss :   SendRequest = new SendRequest(); 
+			var params : Object = {}; 
+			params.folder =dir
+			this.randomize(params); 
+			cmd = 'get_sub_files'
+			fxPreProc = JSON_decode
 			pss.request( baseAddressOfProxyServer+cmd, params, autoResult , autoFault ); 
 			fxResult = fx; 
 		}

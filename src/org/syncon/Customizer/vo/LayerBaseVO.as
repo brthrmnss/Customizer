@@ -271,10 +271,10 @@ package org.syncon.Customizer.vo
 		
 		public function set y(value:Number):void
 		{
-			if ( value == 199.5 )
+			/*if ( value == 199.5 )
 			{
 				trace('LayerBaseVO', 'set y to ', 199.5 ); 
-			}
+			}*/
 			_y = value;
 		}
 		

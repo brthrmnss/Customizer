@@ -46,6 +46,23 @@ package org.syncon2.utils.itemRenderer
 				this._this.enabled = true
 			}
 		}		
+		
+		/**
+		 * Can refer to atrbitrary UI element, not _this
+		 * */
+		public function disableIfNull_DifferentUi( value :   Object, ui : Object)  : void
+		{
+			if ( value == null ) 
+			{
+				ui.enabled = false; 
+				//	this.s.listenForObj_Break() 
+			}
+			else
+			{
+				ui.enabled = true
+			}
+		}	
+		
 		//this suld be seprate 
 		/*	
 		

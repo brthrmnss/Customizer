@@ -46,7 +46,9 @@ package org.syncon2.utils.file
 			var fileAir : FileAir2 = new FileAir2(); 
 			if ( dir == '' ) dir =  baseFolder 
 			if ( dir.indexOf(':') == -1 ) 
-				dir = baseFolder + '/' +  dir   				
+				dir = baseFolder + '/' +  dir   	
+			if (filename.indexOf(':') !=  -1 ) 
+				dir = ''
 			fileAir.read(dir, filename, fxCallbak)
 		}
 		
@@ -131,7 +133,8 @@ package org.syncon2.utils.file
 			var fileAir : FileAir2 = new FileAir2();
 			if ( dir == '' ) dir =  baseFolder 
 			if ( dir.indexOf(':') == -1 ) 
-				dir = baseFolder + '/' +  dir   				
+				dir = baseFolder + '/' +  dir   	
+			fileAir.getSubFiles( dir , fxCallbak)
 		}
 		
 		

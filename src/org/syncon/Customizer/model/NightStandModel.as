@@ -354,6 +354,8 @@ package org.syncon.Customizer.model
 		
 		public function addLayer(layer : LayerBaseVO ) : void
 		{
+			//if ( layer.currentFace == null ) 
+			layer.currentFace = this.currentFace; 
 			this.layers.addItem( layer ) ; 
 			this.recreateDisplayableLayers()
 			//this.layersChanged();
@@ -450,7 +452,7 @@ package org.syncon.Customizer.model
 				if (l.type == layerType ) 
 				{
 					if ( layerSubType == null ) 
-					found.push(l)
+						found.push(l)
 					else if ( l.subType == layerSubType) 
 						found.push(l)
 				}

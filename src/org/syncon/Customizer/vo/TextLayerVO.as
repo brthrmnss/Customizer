@@ -21,8 +21,15 @@ package  org.syncon.Customizer.vo
 		
 		public function set fontSize(value:int):void
 		{
-			if ( value  <= 0 ) 
-				throw 'Font Size for layer  ' + this.name + ' is too small: ' + value
+			/*if  ( this.currentFace != null ) 
+			{
+				this.currentFace.updateFontSize( value )
+			}
+			if ( !  isNaN(this.overrideFontSize ) ) 
+				value = this.overrideFontSize
+					//update('fontSize'); 
+				*/	
+					
 			_fontSize = value;
 		}
 		
@@ -50,6 +57,7 @@ package  org.syncon.Customizer.vo
 				{
 					fontSize = this.maxFontSize; 
 					update('fontSize'); 
+					this.checkSizeOnAllLayers(); 
 					return;
 				}
 				if ( this.verticalText == false ) 
@@ -73,7 +81,10 @@ package  org.syncon.Customizer.vo
 					{
 						//if great than 75%, it's within margin of error
 						if ( ww >= this.width*.75 ) 
+						{
+							this.checkSizeOnAllLayers(); 
 							return; 
+						}
 						trace('up font'); 
 						fontSize =fontSizeT+1
 						//smudge
@@ -84,6 +95,10 @@ package  org.syncon.Customizer.vo
 							fontSize =fontSize+(ratio*ratio)
 						}
 						fontSize = Math.min( fontSize, this.maxFontSize )
+							if ( fontSize == this.maxFontSize ) 
+							{
+								this.checkSizeOnAllLayers(); 
+							}
 						update('fontSize'); 
 					}
 				}
@@ -109,7 +124,10 @@ package  org.syncon.Customizer.vo
 					{
 						//if great than 75%, it's within margin of error
 						if ( hh >= this.height*.75 ) 
+						{
+							this.checkSizeOnAllLayers()
 							return; 
+						}
 						trace('up font'); 
 						fontSize =fontSizeT+1
 						//smudge
@@ -120,11 +138,33 @@ package  org.syncon.Customizer.vo
 							fontSize =fontSize+(ratio*ratio)
 						}
 						fontSize = Math.min( fontSize, this.maxFontSize )
+						if ( fontSize == this.maxFontSize ) 
+						{
+							this.checkSizeOnAllLayers(); 
+						}
 						update('fontSize'); 
 					}
 				}
 			}
 		}
+		
+		private function checkSizeOnAllLayers():void
+		{
+			if  ( this.currentFace != null ) 
+			{
+				this.currentFace.updateFontSize( this.fontSize )
+			}
+			/*
+			if ( !  isNaN(this.overrideFontSize ) ) 
+				value = this.overrideFontSize
+					//update('fontSize'); 
+			*/		
+		}
+		
+		/**
+		 * if set, set layers to this size .... 
+		 * */
+		public var overrideFontSize : Number 
 		
 		/**
 		 * Adjusts the font size based on autosizing option
@@ -144,7 +184,12 @@ package  org.syncon.Customizer.vo
 				if ( fontSize ==  newFontSize2   )
 					return; 
 				fontSize =newFontSize2
+				/*if ( !  isNaN(this.overrideFontSize ) ) 
+				fontSize = this.overrideFontSize*/
 				update('fontSize'); 
+				
+				
+				/*this.currentFace.updateFontSize( this )*/
 			}
 			
 			if ( this.sizingSettings == TextLayerVO.SIZING_AUTO_SIZE && 7==9 ) 

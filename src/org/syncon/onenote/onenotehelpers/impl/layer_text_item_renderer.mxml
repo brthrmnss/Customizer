@@ -102,7 +102,15 @@
 				if ( this.layer.propChanged == 'fontSize' || newLayerSetAllProps  )
 				{
 					trace( 'set font size', layer.fontSize  ) 
-					this.txt.setStyle('fontSize', layer.fontSize ) ;
+					if ( isNaN( this.layer.overrideFontSize ) )  
+					{
+						this.txt.setStyle('fontSize', this.layer.fontSize ) ;
+						
+					}
+					else
+					{
+						this.txt.setStyle('fontSize', this.layer.overrideFontSize ) ;
+					}
 					this.txtMeasure.setStyle('fontSize', layer.fontSize ) ;
 				}
 				if ( this.layer.propChanged == 'fontFamily'  || newLayerSetAllProps )
@@ -289,7 +297,7 @@
 						return; 
 					/*
 					if ( this.layer.fontSize < this.lastTxtSize+2 && this.layer.fontSize > lastTxtSize -2 )
-						return; //close enough ...
+					return; //close enough ...
 					*/
 				}
 				else
@@ -430,7 +438,7 @@
 				
 			}
 			
-
+			
 			
 		]]>
 	</fx:Script>

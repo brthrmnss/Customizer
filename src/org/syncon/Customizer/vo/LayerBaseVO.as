@@ -397,6 +397,8 @@ package org.syncon.Customizer.vo
 			
 		}
 		
+		public var currentFace : FaceVO
+		
 		public function setWH(oldData:Object, oldData2:Object):void
 		{
 			var ww : Number = Number( oldData )

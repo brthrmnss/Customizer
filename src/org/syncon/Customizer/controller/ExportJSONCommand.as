@@ -52,6 +52,7 @@ package  org.syncon.Customizer.controller
 				this.model.baseItem.faces;
 				product.sku = this.model.baseItem.sku;
 				
+				this.model.lastSaveSuccess = false;
 				
 				//just dealign with one face at the moment
 				
@@ -131,6 +132,10 @@ package  org.syncon.Customizer.controller
 							
 							
 							jsonLayer.fontFamily = textLayer.fontFamily;								//engrave layer
+							if(jsonLayer.fontFamily == "" || jsonLayer.fontFamily == null){
+								Alert.show("Please select a font for the Text Layer","Please Correct the Following Problem");
+								return;
+							}
 							textLayer.fontFamily; //remove
 							textLayer.fontSize //remove
 							if(layer.subType == ViridConstants.SUBTYPE_ENGRAVE)
@@ -380,6 +385,10 @@ package  org.syncon.Customizer.controller
 				if( resultJSON.hasOwnProperty('ERROR') && resultJSON.ERROR != "" )
 					Alert.show(resultJSON.ERROR,"Please Correct the Following Problem");	
 				gotoNextStep = false;
+			}
+			else if(resultJSON.hasOwnProperty('SUCCESS') && resultJSON.SUCCESS =='true')
+			{
+				this.model.lastSaveSuccess = true;
 			}
 			
 			if(gotoNextStep)

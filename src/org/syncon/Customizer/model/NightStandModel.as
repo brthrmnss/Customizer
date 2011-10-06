@@ -351,6 +351,7 @@ package org.syncon.Customizer.model
 		public var locations:  Array;
 		public var tempsku:String;//TODO:REMOVE THIS
 		public var lastUndoAddDate:Date;
+		public var lastSaveSuccess:Boolean;
 		
 		public function addLayer(layer : LayerBaseVO ) : void
 		{

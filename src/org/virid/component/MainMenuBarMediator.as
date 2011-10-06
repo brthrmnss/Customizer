@@ -268,8 +268,11 @@ package  org.virid.component
 				ExportJSONCommandTriggerEvent.EXPORT_JSON, '');
 			this.dispatch(trgevent);
 			//9-9-11: strange request, keep button on forever, until something is changed
-			this.ui.btnSave.selected = true; 
-			this.model.notify('Product Saved', 'Notification'); 
+			if(this.model.lastSaveSuccess)
+			{
+				this.ui.btnSave.selected = true; 
+				this.model.notify('Product Saved', 'Notification'); 
+			}
 		}
 		/**
 		 * keep save highlted until they change something 

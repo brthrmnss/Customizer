@@ -38,7 +38,7 @@
 	</s:Rect>
 	
 	
-	<s:Label fontSize="14" horizontalCenter="0" styleName="Arial grayTxt"
-			 text="THIS SURFACE  IS NOT AVAILABLE FOR CUSTOMIZATION" textAlign="left" verticalCenter="0"/>
+	<s:Label fontSize="14" horizontalCenter="0" styleName="Arial grayTxt" 
+			 text="USE THE CIRCULAR ARROW TO TURN &#13;THE HANDWARMER OVER TO &#13;ENGRAVE THE BACK SURFACE" textAlign="center" verticalCenter="0"/>
 	
 </s:Group>

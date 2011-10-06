@@ -110,8 +110,8 @@
 		</s:List>
 		
 		<s:VGroup width="100%">
-			<s:Group width="100%"  toolTip="Price of the Lighter">
-				<s:Label   text="Lighter Price"/>
+			<s:Group width="100%"  toolTip="Price of the Product">
+				<s:Label   text="Product Price"/>
 				<s:Label id="txtLighterPrince" textAlign="right" right="18" styleName="price" text="$0.00"/>
 			</s:Group>
 			<s:Group width="100%"  toolTip="Price for this face only">

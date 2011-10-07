@@ -225,11 +225,11 @@ package  org.syncon.Customizer.controller
 					try{
 						if(product.Faces[0].Layers[0].fontFamily != "" && product.Faces[0].Layers[0].fontFamily != null)
 							exportObj['FONT'] = product.Faces[0].Layers[0].fontFamily;
-						else if(product.Faces[0].Layers[1].fontFamily != "" && product.Faces[0].Layers[1].fontFamily != null)
+						if(product.Faces[0].Layers[1].fontFamily != "" && product.Faces[0].Layers[1].fontFamily != null)
 							exportObj['FONT'] = product.Faces[0].Layers[1].fontFamily;
-						else if(product.Faces[1].Layers[0].fontFamily != "" && product.Faces[1].Layers[0].fontFamily != null)
+						if(product.Faces[1].Layers[0].fontFamily != "" && product.Faces[1].Layers[0].fontFamily != null)
 							exportObj['FONT'] = product.Faces[1].Layers[0].fontFamily;
-						else if(product.Faces[1].Layers[1].fontFamily != "" && product.Faces[1].Layers[1].fontFamily != null)
+						if(product.Faces[1].Layers[1].fontFamily != "" && product.Faces[1].Layers[1].fontFamily != null)
 							exportObj['FONT'] = product.Faces[1].Layers[1].fontFamily;
 						
 					}catch(e:Error){};

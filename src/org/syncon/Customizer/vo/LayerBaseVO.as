@@ -135,7 +135,18 @@ package org.syncon.Customizer.vo
 		 * */
 		public var nameHidden : String; 
 		
-		public var locked : Boolean = false; 
+		private var _locked : Boolean = false; 
+
+		public function get locked():Boolean
+		{
+			return _locked;
+		}
+
+		public function set locked(value:Boolean):void
+		{
+			_locked = value;
+		}
+
 		public var required : Boolean = false;
 		
 		public var location :  String = '' // = false; 

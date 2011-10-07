@@ -64,6 +64,10 @@
 				this.bg.width =0;// this.layer.width; 
 				
 				layer = value as TextLayerVO
+				if ( layer != null ) 
+				{
+					trace('layer_text_item_renderer', layer, layer.text, this, this.parent ) ; 
+				}
 				s.listenForObj( layer, LayerBaseVO.UPDATED, this.onUpdatedLayer ) ; 	
 				if ( layer == null ) 
 				{
@@ -105,7 +109,6 @@
 					if ( isNaN( this.layer.overrideFontSize ) )  
 					{
 						this.txt.setStyle('fontSize', this.layer.fontSize ) ;
-						
 					}
 					else
 					{

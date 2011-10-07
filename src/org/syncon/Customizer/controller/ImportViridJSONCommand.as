@@ -49,6 +49,9 @@ package  org.syncon.Customizer.controller
 				product.price = json.price;
 			else
 				product.price = 0;
+			
+			//json.Faces.push( json.Faces[0] ) //remove after debugging 
+			
 			for each( var faceImport:Object in json.Faces  )
 			{
 				var face : FaceVO = new FaceVO()

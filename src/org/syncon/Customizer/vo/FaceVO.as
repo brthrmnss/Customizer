@@ -41,6 +41,21 @@ package  org.syncon.Customizer.vo
 		public var oldMinTextSize : Number; 
 		public function updateFontSize(  newSize : Number ) : void
 		{
+			//when there is 1 layer, do not run this at all ... need a newer safer way...
+			/*if ( this.layers.length == 1 ) 
+			{
+				for each (   l  in this.layers ) 
+				{
+					if ( l.subType == ViridConstants.SUBTYPE_ENGRAVE ) 
+					{
+						t  = l as TextLayerVO; 
+						t.overrideFontSize = minT
+						this.oldMinTextSize = minT
+						t.fontSize = minT
+						t.update('fontSize')
+					}
+				}
+			}*/
 			var minT : Number = newSize 
 			//what is min size 
 			for each ( var l : LayerBaseVO in this.layers ) 
@@ -48,6 +63,8 @@ package  org.syncon.Customizer.vo
 				if ( l.subType == ViridConstants.SUBTYPE_ENGRAVE ) 
 				{
 					var t  :TextLayerVO = l as TextLayerVO; 
+					if ( t.text == '' ) //this will surpress 'hidden' layers ... which should be removed from import
+						continue; 
 					if (  isNaN(minT ) ||  t.fontSize < minT  )
 					{
 						minT = t.fontSize; 

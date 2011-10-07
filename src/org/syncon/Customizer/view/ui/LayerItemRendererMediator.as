@@ -597,6 +597,7 @@ package org.syncon.Customizer.view.ui
 			//this.model.objectHandles.unregisterModel( this.model ) ; 
 			//this.registered = false
 			//unlock any layre automatically
+
 			if ( this.layer.locked ) 
 			{
 				this.ui.buttonMode=false 
@@ -724,6 +725,15 @@ package org.syncon.Customizer.view.ui
 						new Point(-10,0) ) ); 
 					
 				}
+				/*this.layer.url; 
+				if ( this.layer.visible && this.isImage ) 
+				{
+					trace('debug', 'have i mage layer'); 
+				}
+				if ( this.layer.subType == ViridConstants.IMAGE_SOURCE_UPLOAD  ) 
+				{
+					trace('debug', 'have upload layer'); 
+				}*/
 				this.model.objectHandles.registerComponent( flexModel1, this.ui ,handleDesc, true, constraints);
 				if ( this.layer.visible && this.model.previewMode == false ) //dont' select invisible layers
 					this.model.objectHandles.selectionManager.setSelected( this.flexModel1 ) ; 
@@ -837,8 +847,10 @@ package org.syncon.Customizer.view.ui
 					this.model.objectHandles.selectionManager.clearSelection()
 					return true 
 				}
+				//for uploads the source or image must both be null ...
 				if (   this.layer.subType == ViridConstants.IMAGE_SOURCE_UPLOAD &&
-					(this.ui.image.layer.source  == null )  )
+					(this.ui.image.layer.source  == null )  &&
+					(this.ui.image.layer.url == '' || this.ui.image.layer.url == null )  )
 				{
 					this.model.objectHandles.selectionManager.clearSelection()
 					return true 
@@ -971,6 +983,11 @@ package org.syncon.Customizer.view.ui
 			//stop pover selecting ....
 			/*if ( this.model.currentLayer == this.ui.listData ) 
 			return;*/ 
+			if ( this.ui.layer != this.layer ) 
+			{
+				this.ui.text.layer
+				trace('LayerItemRendererMediator', 'onClick', 'warning, my layers are invalid'); 
+			}
 			if ( this.model.fxIsEngraveLayer( this.layer ) == false ) 
 			{
 				if ( this.layer.locked ) 

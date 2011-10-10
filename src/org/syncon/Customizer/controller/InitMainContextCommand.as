@@ -88,6 +88,7 @@ package org.syncon.Customizer.controller
 			var prefix : String = "assets/images/zippoLibrary/clipart/";
 			var cprefix : String = "assets/images/zippoLibrary/clipart/color/";
 			var backprefix : String = "assets/images/zippoLibrary/clipart/set2/";
+			var set3prefix : String = "assets/images/zippoLibrary/clipart/set3/";
 			var importImages : Array = [
 				/*['Four Pointed Star', prefix + '4ptstar-01.png'],
 				['Airplane', prefix + 'airplane.png'],
@@ -96,32 +97,32 @@ package org.syncon.Customizer.controller
 				['Apple', prefix + 'apple.png'],*/
 				
 				
-				['Four Pointed Star' , prefix + '4ptstar.png'],
+//				['Four Pointed Star' , prefix + '4ptstar.png'],
 				['Airplane' , prefix + 'airplane.png'],
 				['American Flag' , prefix + 'americanflag.png'],
 				['Angel' , prefix + 'angel.png'],
 				['Apple' , prefix + 'apple.png'],
-				['Ballons' , prefix + 'ballons.png'],
+//				['Ballons' , prefix + 'ballons.png'],
 				['Baseball' , prefix + 'baseball.png'],
 				['Baseball Bats' , prefix + 'baseballbats.png'],
 				['Basket Ball' , prefix + 'basketball.png'],
 				['Bats' , prefix + 'bats.png'],
-				['Beer Bottle' , prefix + 'beerbottle.png'],
+//				['Beer Bottle' , prefix + 'beerbottle.png'],
 				['Biohazard' , prefix + 'biohazard.png'],
 				['Birthday Cake' , prefix + 'birthdaycake.png'],
 				['Black Cat' , prefix + 'blackcat.png'],
-				['Bulklet' , prefix + 'bullet.png'],
+//				['Bulklet' , prefix + 'bullet.png'],
 				['Butterfly' , prefix + 'butterfly.png'],
 				['Candle' , prefix + 'candle.png'],
 				['Carpenter' , prefix + 'carpenter.png'],
 				['Checkered Flag' , prefix + 'checkflag.png'],
-				['Clover' , prefix + 'clover.png'],
+//				['Clover' , prefix + 'clover.png'],
 				['Club' , prefix + 'club.png'],
 				['Cross' , prefix + 'cross.png'],
 				['Deer' , prefix + 'deer.png'],
 				['Diamond' , prefix + 'diamond.png'],
 				['Dice' , prefix + 'dice.png'],
-				['Directory' , prefix + 'directory.txt'],
+//				['Directory' , prefix + 'directory.txt'],
 				['Doctor' , prefix + 'doctor.png'],
 				['Dog Tags' , prefix + 'dogtags.png'],
 				['Dove' , prefix + 'dove.png'],
@@ -141,13 +142,13 @@ package org.syncon.Customizer.controller
 				['Holly Berry' , prefix + 'hollyberry.png'],
 				['Horse Shoe' , prefix + 'horseshoe.png'],
 				['Hunter' , prefix + 'hunter.png'],
-				['Jocker' , prefix + 'joker.png'],
+//				['Jocker' , prefix + 'joker.png'],
 				['Lawyer' , prefix + 'lawyer.png'],
 				['Liberty Bell' , prefix + 'libertybell.png'],
 				['Militia Man' , prefix + 'militiaman.png'],
 				['Motorcross' , prefix + 'motorcrossbike.png'],
 				['Music Note' , prefix + 'musicnote.png'],
-				['Navy Ship' , prefix + 'navyship.png'],
+//				['Navy Ship' , prefix + 'navyship.png'],
 				['Paw Prints' , prefix + 'pawprints.png'],
 				['Peace' , prefix + 'peace.png'],
 				['Piano' , prefix + 'piano.png'],
@@ -168,13 +169,13 @@ package org.syncon.Customizer.controller
 				['Wine Glass' , prefix + 'wineglass.png'],
 				['Wings' , prefix + 'wings.png'],
 				['Witch' , prefix + 'witch.png'],
-				['Xmas Tree' , prefix + 'xmastree.png'],
+//				['Xmas Tree' , prefix + 'xmastree.png'],
 				['Ying Yang' , prefix + 'yinyang.png'],
 				
 				//color
 				
 				['White Border' , cprefix + 'Whiteborder onlavendar.png'],
-				['Aquad Butterfly' , cprefix + 'aquabutterfly.png'],
+				['Aqua Butterfly' , cprefix + 'aquabutterfly.png'],
 				['Black Snowflake' , cprefix + 'blacksnowflake.png'],
 				['Blue Graduate' , cprefix + 'bluegraduate.png'],
 				['Blue Music Note' , cprefix + 'bluemusicnote.png'],
@@ -183,7 +184,7 @@ package org.syncon.Customizer.controller
 				['Christmas Candel' , cprefix + 'christmascandel.png'],
 				['Color BBats' , cprefix + 'colorBBbats.png'],
 				['I Love You' , cprefix + 'colorIloveyou.png'],
-				['Color Backsetball' , cprefix + 'colorbasketball.png'],
+				['Color Basketball' , cprefix + 'colorbasketball.png'],
 				['Beer Bottle' , cprefix + 'colorbeerbottle.png'],
 				['Xmas Tree' , cprefix + 'colorchristmastree.png'],
 				['Fire Cracker' , cprefix + 'colorfirecracker.png'],
@@ -266,7 +267,18 @@ package org.syncon.Customizer.controller
 				['Frame' , backprefix + 'frame.png'],
 				['Scroll' , backprefix + 'scroll.png'],
 				['Shamrock' , backprefix + 'shamrock.png'],
-				['Sheild' , backprefix + 'shield.png']
+				['Sheild' , backprefix + 'shield.png'],
+				
+				['Bottle' , set3prefix + 'BROWNBOTTLE.png'],
+				['Ballons' , set3prefix + 'COLORBALLONS.png'],
+				['Ballons 2' , set3prefix + 'COLORBALLONS2.png'],
+				['Bats' , set3prefix + 'COLORBATS.png'],
+				['Candle' , set3prefix + 'COLORCANDLE.png'],
+				['Hearts 2' , set3prefix + 'COLORHEARTS2.png'],
+				['Hearts 3' , set3prefix + 'COLORHEARTS3.png'],
+				['Holiday Tree' , set3prefix + 'HOLIDAYTREE2.png'],
+				['Jack O\' Lantern' , set3prefix + "JACKOLANTERN.png"],
+				['Shield' , set3prefix + 'SHIELD.png']
 
 			]
 			var i : int = 0 ; 

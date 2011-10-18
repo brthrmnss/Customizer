@@ -86,8 +86,8 @@
 				if (  this.layer.type == ColorLayerVO.Type ) 
 				{
 					//this.enabledAllSubPanels(); 
-					/* this.rowOne.alpha = 1; 
-					this.rowOne.enabled = true;   */
+					 this.rowOne.alpha = 1; 
+					/*this.rowOne.enabled = true;   */
 					this.coverRowOne.visible = false; 
 					
 				}
@@ -95,20 +95,36 @@
 				if ( layer.type == ImageLayerVO.Type )
 				{
 					//09/16/11: have all avaialble 
-					enableImagePanels()
-					/* 
+					/* enableImagePanels()
+					*/
 					var imageLayer : ImageLayerVO = layer as ImageLayerVO
 					if (  imageLayer.image_source ==ViridConstants.IMAGE_SOURCE_UPLOAD ) 
 					{
+					/*this.rowOne.alpha = .2;
+					this.rowOne.enabled = false;
 					this.secondRow.alpha = 1; 
 					this.secondRow.enabled = true; 
+					this.thirdRow.enabled = false;
+					this.thirdRow.alpha = .2*/
+						
+					this.coverRowOne.visible = true; 
+					this.coverRowTwo.visible = false; 
+					this.coverRowThree.visible = true;
 					}
 					else if ( imageLayer.image_source ==ViridConstants.IMAGE_SOURCE_CLIPART ) 
 					{
-					this.thirdRow.alpha = 1; 
-					this.thirdRow.enabled = true; 
+						/*this.rowOne.alpha = .2;
+						this.rowOne.enabled = false;
+						this.secondRow.alpha = .2; 
+						this.secondRow.enabled = false; 
+						this.thirdRow.alpha = 1; 
+						this.thirdRow.enabled = true;*/ 
+						
+						this.coverRowOne.visible = true; 
+						this.coverRowTwo.visible = true; 
+						this.coverRowThree.visible = false;
 					}
-					*/
+					
 				}
 				/* else
 				{

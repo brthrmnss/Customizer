@@ -90,11 +90,13 @@ package org.syncon.Customizer.controller
 			var backprefix : String = "assets/images/zippoLibrary/clipart/set2/";
 			var set3prefix : String = "assets/images/zippoLibrary/clipart/set3/";
 			var importImages : Array = [
-				/*['Four Pointed Star', prefix + '4ptstar-01.png'],
+				/*
+				['Four Pointed Star', prefix + '4ptstar-01.png'],
 				['Airplane', prefix + 'airplane.png'],
 				['US Flag', prefix + 'americanflag-01.png'],
 				['Angel', prefix + 'angel.png'],
-				['Apple', prefix + 'apple.png'],*/
+				['Apple', prefix + 'apple.png'],
+				*/
 				
 				
 //				['Four Pointed Star' , prefix + '4ptstar.png'],

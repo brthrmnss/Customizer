@@ -6,7 +6,7 @@
 					  xmlns:mobile="org.syncon.TalkingClock.view.mobile.*"
 					  xmlns:net="flash.net"
 					  width="100%" height="100%" backgroundAlpha="0.0" creationComplete="onInit()"
-					  implements="org.syncon.popups.view.IPopup" xmlns:popup2="org.syncon.Customizer.view.popup.*">
+					  implements="org.syncon.popups.view.IPopup" xmlns:popup2="org.syncon.Customizer.view.popup.*" xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:smallComponents="org.virid.smallComponents.*">
 	
 	<fx:Metadata> 
 		[Event(name="cancel", type="flash.events.Event")] 		
@@ -192,6 +192,7 @@
 
 	</s:VGroup>
 	<s:HGroup horizontalCenter="0"  bottom="12">
+		<!-- <smallComponents:TextButton label="Browse" icon="assets/buttons/browse.png" /> -->
 		<s:Button label="Browse" click="onUpload(event)" toolTip="Upload an Image" />
 		<s:Button label="Select" id="btnSelect" click="onSelect(event)"  toolTip="Select this Image" />
 		<s:Button label="Cancel" click="onCancel(event)" toolTip="Close"/>

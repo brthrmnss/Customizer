@@ -85,10 +85,14 @@ package org.syncon.Customizer.controller
 			{
 			img.url = 'assets/images/img.jpg'; 
 			}*/
+			
+			
+			
 			var prefix : String = "assets/images/zippoLibrary/clipart/";
 			var cprefix : String = "assets/images/zippoLibrary/clipart/color/";
 			var backprefix : String = "assets/images/zippoLibrary/clipart/set2/";
 			var set3prefix : String = "assets/images/zippoLibrary/clipart/set3/";
+			var set4prefix : String = "assets/images/zippoLibrary/clipart/set4/";
 			var importImages : Array = [
 				/*
 				['Four Pointed Star', prefix + '4ptstar-01.png'],
@@ -96,7 +100,7 @@ package org.syncon.Customizer.controller
 				['US Flag', prefix + 'americanflag-01.png'],
 				['Angel', prefix + 'angel.png'],
 				['Apple', prefix + 'apple.png'],
-				*/
+				
 				
 				
 //				['Four Pointed Star' , prefix + '4ptstar.png'],
@@ -278,14 +282,79 @@ package org.syncon.Customizer.controller
 				['Hearts 3' , set3prefix + 'COLORHEARTS3.png'],
 				['Holiday Tree' , set3prefix + 'HOLIDAYTREE2.png'],
 				['Jack O\' Lantern' , set3prefix + "JACKOLANTERN.png"],
-				//['Sheild' , backprefix + 'shield.png']
+				//['Sheild' , backprefix + 'shield.png']*/
 
-			]
+			];
+			
+			var importImagesSet4:Array = [
+				['HEART1', set4prefix + 'Heart1.png'],
+				['HEART2', set4prefix + 'Heart2.png'],
+				['HEART3', set4prefix + 'Heart3.png'],
+				['HEART4', set4prefix + 'Heart4.png'],
+				['HEART5', set4prefix + 'Heart5.png'],
+				['HEART6', set4prefix + 'Heart6.png'],
+				['HEART7', set4prefix + 'Heart7.png'],
+				['HEART8', set4prefix + 'Heart8.png'],
+				['HEART9', set4prefix + 'Heart9.png'],
+				['HEART10', set4prefix + 'Heart10.png'],
+				['WEDDINGBANDS', set4prefix + 'WeddingBands.png'],
+				['GUITAR', set4prefix + 'Guitar.png'],
+				['HELICOPTER', set4prefix + 'Helicopter.png'],
+				['HOCKEY', set4prefix + 'Hockey.png'],
+				['SKIIING', set4prefix + 'skiiing.png'],
+				['SOCCERBALL', set4prefix + 'Soccerball.png'],
+				['DRAGONFLY', set4prefix + 'DragonFly.png'],
+				['BEER', set4prefix + 'Beer.png'],
+				['HORSE', set4prefix + 'Horse.png'],
+				['DOUBLEDRAGONS', set4prefix + 'DoubleDragons.png'],
+				['BALLOONS', set4prefix + 'Balloons.png'],
+				['AMERICANFLAG', set4prefix + 'AmericanFlag.png'],
+				['PAWPRINTS', set4prefix + 'Pawprints.png'],
+				['DOGTAGS', set4prefix + 'DogTags.png'],
+				['PEACESIGN', set4prefix + 'PeaceSign.png'],
+				['GOLFER', set4prefix + 'Golfer.png'],
+				['CROSS', set4prefix + 'Cross.png'],
+				['CHECKEREDFLAG', set4prefix + 'CheckeredFlag.png'],
+				['BASEBALL', set4prefix + 'Baseball.png'],
+				['TRUCK', set4prefix + 'Truck.png'],
+				['GUN', set4prefix + 'Gun.png'],
+				['SKULL', set4prefix + 'Skull.png'],
+				['BIOHAZARD', set4prefix + 'Biohazard.png'],
+				['REDSPLASH', set4prefix + 'RedSplash.png'],
+				['PROPERTYOF', set4prefix + 'PropertyOf.png'],
+				['WINE', set4prefix + 'Wine.png'],
+				['ALIEN1', set4prefix + 'Alien1.png'],
+				['ALIEN2', set4prefix + 'Alien2.png'],
+				['ALIEN3', set4prefix + 'Alien3.png'],
+				['ALIEN4', set4prefix + 'Alien4.png'],
+				['BASKETWEAVE', set4prefix + 'BasketWeave.png'],
+				['POLKADOT', set4prefix + 'PolkaDot.png'],
+				['ZEBRA1', set4prefix + 'Zebra1.png'],
+				['ZEBRA2', set4prefix + 'Zebra2.png'],
+				['PINK1', set4prefix + 'Pink.png'],
+				['MUSTACHE', set4prefix + 'Mustache.png'],
+				['SQUARE', set4prefix + 'Square.png'],
+				['CIRCLE', set4prefix + 'Circle.png'],
+				['WANTEDPOSTER', set4prefix + 'WantedPoster.png'],
+				['CLOVER', set4prefix + 'Clover.png'],
+				['BULLET', set4prefix + 'Bullet.png'],
+				['BASKETBALL', set4prefix + 'Basketball.png'],
+				['FOOTBALL', set4prefix + 'Football.png'],
+				['DIAMONDSTEELPLATE', set4prefix + 'DiamondSteelPlate.png'],
+				['SNOWFLAKE', set4prefix + 'Snowflake.png'],
+				['FIREWORKS', set4prefix + 'Fireworks.png'],
+				['BORDER1', set4prefix + 'Border1.png'],
+				['BORDER2', set4prefix + 'Border2.png'],
+				['BORDER3', set4prefix + 'Border3.png'],
+				['FLAME1', set4prefix + 'Flame1.png'],
+				['FLAME2', set4prefix + 'Flame2.png'],
+				['BRICKWALL', set4prefix + 'BrickWall.png']
+			];
 			var i : int = 0 ; 
 			var imgs : Array = []; 
-			for ( i  = 0 ; i < importImages.length; i++ )
+			for ( i  = 0 ; i < importImagesSet4.length; i++ )
 			{
-				var imageNameAndSourceArray : Array = importImages[i] as Array
+				var imageNameAndSourceArray : Array = importImagesSet4[i] as Array
 				var img  : ImageVO= new ImageVO()
 				img.name = imageNameAndSourceArray[0]
 				img.url = imageNameAndSourceArray[1];

@@ -135,7 +135,7 @@
 									quality="2" strength="1"/> 
 			</s:filters> 
 		</s:Group>
-		
+		<s:Spacer height="3" width="100%" />
 		<s:Label id="txtLbl" x="5"   color="0"   verticalCenter="0" textAlign="center"
 				 buttonMode.hovered="true"  useHandCursor.hovered="true"
 				 />

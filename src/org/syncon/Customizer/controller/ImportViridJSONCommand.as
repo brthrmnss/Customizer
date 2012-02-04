@@ -2,6 +2,7 @@ package  org.syncon.Customizer.controller
 {
 	import com.adobe.serialization.json.JSON;
 	
+	import mx.controls.Alert;
 	import mx.controls.Text;
 	
 	import org.robotlegs.mvcs.Command;
@@ -173,8 +174,28 @@ package  org.syncon.Customizer.controller
 						textLayer.fonts = fonts;
 						if(fonts.length > 0 )
 							textLayer.fontFamily = ( fonts[0].swf_name != null )?fonts[0].swf_name : fonts[0].name;
-						if(layerImport.Media.hasOwnProperty( 'font' ))
-							textLayer.fontFamily = layerImport.Media.font;
+						
+						
+						if(layerImport.Media.hasOwnProperty( 'font' ) && layerImport.Media.font != '')
+						{
+							var validFont:Boolean = false;
+							//if the layer already has a font set, use that.
+							for each(var fontToCheck:Object in textLayer.fonts)//but check it first to make sure its an eligible font
+							{
+								if(fontToCheck.hasOwnProperty('name') && layerImport.Media.font == fontToCheck.name)
+								{
+									
+									//Alert.show('valid font');
+									validFont = true;
+								}
+							}
+							if(validFont)
+							{
+								textLayer.fontFamily = layerImport.Media.font;
+								//Alert.show('We recieved a request for an invalid font - font reset to first available valid font','DEBUG');
+							}
+							
+						}
 						textLayer.text = layerImport.Media.source;
 						
 						textLayer.vertStartAlignment="";

@@ -115,6 +115,7 @@ package  org.syncon.Customizer.controller
 							
 							jsonMedia.source = textLayer.text;
 							jsonMedia.font = textLayer.fontFamily;
+
 							jsonMedia.fontsize = textLayer.fontSize;
 							var s:String = String(textLayer.color);
 							if(s.indexOf("0x") == 0)//if we have 0x in the color, remove it and use that
@@ -131,7 +132,28 @@ package  org.syncon.Customizer.controller
 							
 							
 							
-							jsonLayer.fontFamily = textLayer.fontFamily;								//engrave layer
+							//engrave layer
+							//check to make sure this is a valid fontfamily
+							/* code to validate font on export
+							var validFont:Boolean = false;
+							Alert.show(textLayer.fontFamily + ' vs ' + textLayer.fonts[0]);
+							for each(var fontToCheck:Object in textLayer.fonts)//but check it first to make sure its an eligible font
+							{
+								
+								if( textLayer.fontFamily == fontToCheck.name)
+								{
+									validFont = true;
+								}
+								
+								
+							}
+							if(validFont)
+							{
+								
+							}*/
+						
+							jsonLayer.fontFamily = textLayer.fontFamily;
+							
 							if(jsonLayer.fontFamily == "" || jsonLayer.fontFamily == null){
 								Alert.show("Please select a font for the Text Layer","Please Correct the Following Problem");
 								return;

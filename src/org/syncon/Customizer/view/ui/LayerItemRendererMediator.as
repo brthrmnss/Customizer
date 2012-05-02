@@ -805,7 +805,14 @@ package org.syncon.Customizer.view.ui
 					this.ui.addEventListener(ResizeEvent.RESIZE, this.onResize )
 					//if this is a new layer ... bring it to the front .... 
 					//also when clicked in layerlist 
-					this.ui.depth = this.ui.parent.numChildren-1
+					if ( this.layer.vertStartAlignment == '' && this.layer.horizStartAlignment == '' ) {
+						trace('skip');
+					}
+						
+					else {
+						this.ui.depth = this.ui.parent.numChildren-1
+					}
+						
 				}
 				//always resize the mask layers so they switch between faces
 				if ( this.isImage && this.ui.image.layer.mask ) 

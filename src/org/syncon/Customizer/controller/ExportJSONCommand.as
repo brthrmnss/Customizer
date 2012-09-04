@@ -240,6 +240,7 @@ package  org.syncon.Customizer.controller
 				
 				var exportObj:Object = new Object;
 				
+				
 				if(product.type == "engrave"){
 					exportObj['ACTION'] = "engrave";
 					exportObj['PRODUCTID'] = this.model.baseItem.sku;

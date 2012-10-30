@@ -264,7 +264,7 @@ package org.syncon.Customizer.controller
 							ExportJSONCommandTriggerEvent.EXPORT_NEW_IMAGE, '');
 						this.dispatch(trgevent);
 					}
-					if ( event.firstTime ) 
+					if ( event.firstTime && event.oldData != event.data ) //mm oct.30 2012 , making sure adding the same clipart doesnt cause resizing of layer 
 					{
 						imgLayer.update(ImageLayerVO.SOURCE_CHANGED)//'fontSize'); 
 						imgLayer.horizStartAlignment = LayerBaseVO.ALIGNMENT_CENTER

@@ -41,7 +41,11 @@
 			{
 				this.creationComplete = true; 
 				this.popupCode.center();
-				fileRef.addEventListener(Event.SELECT,onFileRefrenceSelect)
+				fileRef.addEventListener(Event.SELECT,onFileRefrenceSelect);
+				//fileRef.addEventListener(HTTPStatusEvent.HTTP_STATUS, httpStatusHandler);
+				fileRef.addEventListener(HTTPStatusEvent.HTTP_STATUS,httpStatusHandler);
+				fileRef.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+				fileRef.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
 				fileRef.addEventListener(Event.COMPLETE,onFileRefrenceComplete);
 			}
 			
@@ -155,6 +159,24 @@
 			{
 				fileRef.load();
 				
+			}
+			
+			protected function httpStatusHandler(event:HTTPStatusEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace(event);
+			}
+			
+			protected function ioErrorHandler(event:IOErrorEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace(event);
+			}
+			
+			protected function securityErrorHandler(event:SecurityErrorEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace(event);
 			}
 			
 		]]>

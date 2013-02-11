@@ -1,0 +1,15 @@
+
+.actionScriptProperties
+
+.flexProperties
+
+.project
+
+*.prefs
+
+Customizer.zip
+
+bin-debug/*
+
+bin-release/*
+note-howto_checkfontonexport
